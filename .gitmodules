@@ -10,3 +10,6 @@
 [submodule "Cronus"]
 	path = Cronus
 	url = git@github.com:Cronus-Emulator/Cronus.git
+[submodule "cronusdewata"]
+	path = cronusdewata
+	url = git@github.com:trojal/cronusdewata-mirror.git
