@@ -1,0 +1,3 @@
+[submodule "SeAr"]
+	path = SeAr
+	url = git@github.com:trojal/SeAr-mirror.git

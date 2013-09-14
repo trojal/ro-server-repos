@@ -1,0 +1,117 @@
+prontera,155,180,3	script	GM Helper	766,{
+
+if (getgmlevel() < 50){
+mes "[GM Assisant]";
+mes "Oh.... Hello there "+strcharinfo(0)+"";
+mes "How are you today?";
+mes "Follow the rules... GM Ombra is not one to be made mad";
+close;
+end;
+}
+mes "[GM Assistant]";
+mes "Hello there "+strcharinfo(0)+"";
+main_menu:
+mes "How may I help you today?";
+mes "I am here only to assist you";
+mes "(GMs, there might be more commands to come, so bear with us for now)";
+next;
+mes "Select what you would like from the menu below";
+menu "Give a player an event prize",give_prize,"Nothing",-;
+next;
+mes "Okay then, come back to me when I can assist in any way";
+close;
+end;
+
+give_prize:
+mes "Okay, I can help you with that";
+next;
+mes "Please enter the name of the character who won";
+mes "Be sure to spell the name correctly";
+mes "And be sure that the person is online";
+next;
+mes "Please enter the name now";
+input @win_name$;
+
+//Sample from command guide
+if(isloggedin(getcharid(3,@win_name$))==0){ 
+
+mes "Im sorry sir...";
+mes "But that person is not logged in";
+close;
+}
+next;
+mes "Okay, the person you have picked is "+@win_name$+"";
+mes "Now please pick what event that was won";
+menu "Hide and seek",hid_seek,"Monster Summon",mon_sum,"Race",c_race,"PvP",c_pvp,"RFYL",c_rfyl,"Other",c_other;
+
+hid_seek:
+next;
+mes "You have picked Hide and Seek";
+set @win_event$,"hide_seek1";
+goto win_prize;
+end;
+
+mon_sum:
+next;
+mes "You have picked Monster Summon";
+set @win_event$,"mon_sum1";
+goto win_prize;
+end;
+
+c_race:
+next;
+mes "You have picked Race";
+set @win_event$,"c_race1";
+goto win_prize;
+end;
+
+c_rfyl:
+next;
+mes "You have Picked RFYL";
+set @win_event$,"c_rfyl1";
+goto win_prize;
+end;
+
+c_pvp:
+next;
+mes "You have picked PvP";
+set @win_prize$,"c_pvp1";
+goto win_prize;
+end;
+
+c_other:
+next;
+mes "You have Picked Other";
+set @win_event$,"c_other1";
+goto win_prize;
+end;
+
+win_prize:
+mes "Your almost done";
+next;
+mes "Please input the name of the item you want to give";
+mes "(The item must be written like in the DB. exp. 'RED_POTION' ";
+mes "If you dont know the english name, use @idsearch";
+mes "If what you selected is not in the DB, the player will recieve an apple)";
+input @win_item$;
+next;
+mes "What is the quantitiy of the prize?";
+input @win_quant;
+next;
+mes "Okay, let me get everything clear";
+mes "You have chosen "+@win_name$+" to recive the prize";
+mes "He has won the "+@win_event$+" event";
+mes "And he has won "+@win_quant+", "+@win_item$+"(s)";
+next;
+mes "If this is all right, pick the second function";
+menu "No... I made a mistake",give_prize,"Its all correct",-;
+//getitem @win_item$,@win_quant,@win_name$;
+atcommand strcharinfo(0)+":@item "+@win_item$+" "+@win_quant+" "+@win_name$;
+query_sql "INSERT INTO `Event Log` (`GM_Name`, `Winner_name`, `Item`, `Event`) VALUES ("+strcharinfo(0)+", '" + @win_name$ + "', '" + @win_item$ + "'', '" + @win_event$ + "')";
+next;
+mes "Thank you for using me to give "+@win_name+" his prize";
+mes "If you used me illigimently, this transaction has been logged";
+mes "Have a nice day";
+close;
+end;
+}

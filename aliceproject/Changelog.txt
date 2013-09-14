@@ -1,0 +1,62 @@
+Yeah so I'm keeping tabs on the program in a change log now!
+Just so people now what's going on, starting from Version 1.50.
+
+Legend:
+
+   +  : A Feature was Added
+   -  : A Feature was taken out
+   =  : A Feature was Upgraded/Works better
+  Fix : A Bug was Fixed
+
+Changes in 1.70
+
+   +  : Added Time Format for Logs in Options (AM/PM, 24 Hour).
+   +  : Added Web Port to Options for Remote Admin.
+   +  : Added Backup for the Save Folder (Check out the Options).
+   +  : Added ability to Shutdown or Restart each Server individually for the
+        Web GUI and the Main Interface.
+
+Changes in 1.64
+
+  Fix : Security Fix with Logging in, anyone can log in knowing your username!
+        It is recommended you update to this version immediately!
+
+Changes in 1.63
+
+  Fix : Fixed WebGUI Log Refresh to work with Opera, FireFox and IE (Thanks Sebda).
+
+Changes in 1.62
+
+  Fix : Some lines were cut from the Web/File Logs.
+
+Changes in 1.61
+
+  Fix : Using the Shutdown option restarted the Server (after a delay).
+
+Changes in 1.60
+
+   =  : Remote Admin is now a Web Version, access it via a Web Browser.
+   +  : Added Auto-Restart Group in Options.
+  Fix : Fixed Small Timer Issue.
+
+Changes in 1.53
+
+   =  : Now uses look and feel of your Windows Theme.
+  Fix : Sets the Current Directory to where the Exe is (Thanks D-Kalik).
+
+Changes in 1.51
+
+  Fix : Fixed Auto-Start not hiding when automatically started from Windows.
+
+Changes in 1.50:
+
+   +  : Added Restart Buttons for each Server
+   +  : Added Auto Restart in 15 seconds (will have Option for it)
+   +  : Added Auto-Kill when Frozen (Currently 15 seconds, will have Option for it)
+   +  : Added Memory Usages for each Server (based on 10 Second Updates)
+
+   =  : Visual Logs now limit to 1000 lines
+   =  : Rewrote Parser to Output everything it can, instead of 'whole lines'
+   =  : Massive increase in speed with the Logs (only Saves on Exit now)
+
+  Fix : Fixed Bug when Closing the Program

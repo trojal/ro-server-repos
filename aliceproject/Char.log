@@ -1,0 +1,174 @@
+[17/11/2008 20:21:42]Error>Could not Load C:\Documents and Settings\Trent\Desktop\eathenachar-server_sql.exe.
+[17/11/2008 20:23:02]Error>Could not Load C:\Documents and Settings\Trent\Desktop\eathenachar-server_sql.exe.
+[17/11/2008 20:23:43]Status>Memory manager initialised: log/char-server_sql.leaks
+[17/11/2008 20:23:43]Info>SVN Revision: '13369'.
+[17/11/2008 20:23:43]Status>Done loading plugin 'UPnP'
+[17/11/2008 20:23:43]Info>Reading configuration file conf/char_athena.conf...
+[17/11/2008 20:23:43]Status>eAthena server has been initialized
+[17/11/2008 20:23:43]Info>Console Silent Setting: 0
+[17/11/2008 20:23:43]Info>Reading configuration file conf/import/char_conf.txt...
+[17/11/2008 20:23:43]Info>Done reading conf/import/char_conf.txt.
+[17/11/2008 20:23:43]Info>Done reading conf/char_athena.conf.
+[17/11/2008 20:23:43]Info>Reading the configuration file conf/subnet_athena.conf...
+[17/11/2008 20:23:43]Status>Read information about 1 subnetworks.
+[17/11/2008 20:23:43]Info>Reading file conf/inter_athena.conf...
+[17/11/2008 20:23:43]Status>set lowest_gm_level : 1
+[17/11/2008 20:23:43]Info>Reading file conf/import/inter_conf.txt...
+[17/11/2008 20:23:43]Info>Done reading conf/import/inter_conf.txt.
+[17/11/2008 20:23:43]Info>Done reading conf/inter_athena.conf.
+[17/11/2008 20:23:43]Error>Using the default user/password s1/p1 is NOT RECOMMENDED.
+[17/11/2008 20:23:43]Notice>Please edit your 'login' table to create a proper inter-server user/password (gender 'S')
+[17/11/2008 20:23:43]Notice>And then change the user/password to use in conf/char_athena.conf (or conf/import/char_conf.txt)
+[17/11/2008 20:23:43]Info>Finished reading the char-server configuration.
+[17/11/2008 20:23:43]Info>interserver initialize...
+[17/11/2008 20:23:43]Info>reading file conf/inter_athena.conf...
+[17/11/2008 20:23:43]Status>set login_server_ip : 127.0.0.1
+[17/11/2008 20:23:43]Status>set login_server_port : 3306
+[17/11/2008 20:23:43]Status>set login_server_id : ragnarok
+[17/11/2008 20:23:43]Status>set login_server_pw : ragnarok
+[17/11/2008 20:23:43]Status>set login_server_db : ragnarok
+[17/11/2008 20:23:43]Status>set char_server_ip : 127.0.0.1
+[17/11/2008 20:23:43]Status>set char_server_port : 3306
+[17/11/2008 20:23:43]Status>set char_server_id : ragnarok
+[17/11/2008 20:23:43]Status>set char_server_pw : ragnarok
+[17/11/2008 20:23:43]Status>set char_server_db : ragnarok
+[17/11/2008 20:23:43]Info>reading file conf/import/inter_conf.txt...
+[17/11/2008 20:23:43]Info>done reading conf/import/inter_conf.txt.
+[17/11/2008 20:23:43]Info>done reading conf/inter_athena.conf.
+[17/11/2008 20:23:43]Info>Connect Character DB server.... (Character Server)
+[17/11/2008 20:23:43]Status>Connect Success! (Character Server)
+[17/11/2008 20:23:43]Info>Finished reading the inter-server configuration.
+[17/11/2008 20:23:43]Info>Initializing char server.
+[17/11/2008 20:23:43]Info>Begin Initializing.......
+[17/11/2008 20:23:43]Status>Chars per Account: 'Unlimited'.......
+[17/11/2008 20:23:43]Info>Finished initilizing.......
+[17/11/2008 20:23:43]Info>char server initialized.
+[17/11/2008 20:23:43]Status>Defaulting to 192.168.1.2 as our IP address
+[17/11/2008 20:23:43]Info>Cleaning the 'char' table...
+[17/11/2008 20:23:43]Info>Cleaning the 'guild' table...
+[17/11/2008 20:23:43]Info>Cleaning the 'guild_member' table...
+[17/11/2008 20:23:43]Info>End of char server initilization function.
+[17/11/2008 20:23:43]Info>open port 6121.....
+[17/11/2008 20:23:43]Status>The char-server is ready (Server is listening on the port 6121).
+[17/11/2008 20:23:44]Info>Attempt to connect to login-server...
+[17/11/2008 20:23:44]Status>Connecting to 192.168.1.2:6900
+[17/11/2008 20:23:44]Status>Connected to login-server (connection #5).
+[17/11/2008 20:23:44]Status>Awaiting maps from map-server.
+[17/11/2008 20:23:44]Status>From login-server: receiving information of 0 GM accounts.
+[17/11/2008 20:24:15]Status>Map-Server 0 connected: 699 maps, from IP 192.168.1.2 port 5121.
+[17/11/2008 20:24:15]Status>Map-server 0 loading complete.
+[17/11/2008 21:15:43]Info>**** SERVER WAS SHUTDOWN MANUALLY ****
+[17/11/2008 21:17:53]Status>Memory manager initialised: log/char-server_sql.leaks
+[17/11/2008 21:17:53]Info>SVN Revision: '13369'.
+[17/11/2008 21:17:53]Status>Done loading plugin 'UPnP'
+[17/11/2008 21:17:53]Info>Reading configuration file conf/char_athena.conf...
+[17/11/2008 21:17:53]Status>eAthena server has been initialized
+[17/11/2008 21:17:53]Info>Console Silent Setting: 0
+[17/11/2008 21:17:53]Info>Reading configuration file conf/import/char_conf.txt...
+[17/11/2008 21:17:53]Info>Done reading conf/import/char_conf.txt.
+[17/11/2008 21:17:53]Info>Done reading conf/char_athena.conf.
+[17/11/2008 21:17:53]Info>Reading the configuration file conf/subnet_athena.conf...
+[17/11/2008 21:17:53]Status>Read information about 1 subnetworks.
+[17/11/2008 21:17:53]Info>Reading file conf/inter_athena.conf...
+[17/11/2008 21:17:53]Status>set lowest_gm_level : 1
+[17/11/2008 21:17:53]Info>Reading file conf/import/inter_conf.txt...
+[17/11/2008 21:17:53]Info>Done reading conf/import/inter_conf.txt.
+[17/11/2008 21:17:53]Info>Done reading conf/inter_athena.conf.
+[17/11/2008 21:17:53]Error>Using the default user/password s1/p1 is NOT RECOMMENDED.
+[17/11/2008 21:17:53]Notice>Please edit your 'login' table to create a proper inter-server user/password (gender 'S')
+[17/11/2008 21:17:53]Notice>And then change the user/password to use in conf/char_athena.conf (or conf/import/char_conf.txt)
+[17/11/2008 21:17:53]Info>Finished reading the char-server configuration.
+[17/11/2008 21:17:53]Info>interserver initialize...
+[17/11/2008 21:17:53]Info>reading file conf/inter_athena.conf...
+[17/11/2008 21:17:53]Status>set login_server_ip : 127.0.0.1
+[17/11/2008 21:17:53]Status>set login_server_port : 3306
+[17/11/2008 21:17:53]Status>set login_server_id : ragnarok
+[17/11/2008 21:17:53]Status>set login_server_pw : ragnarok
+[17/11/2008 21:17:53]Status>set login_server_db : ragnarok
+[17/11/2008 21:17:53]Status>set char_server_ip : 127.0.0.1
+[17/11/2008 21:17:53]Status>set char_server_port : 3306
+[17/11/2008 21:17:53]Status>set char_server_id : ragnarok
+[17/11/2008 21:17:53]Status>set char_server_pw : ragnarok
+[17/11/2008 21:17:53]Status>set char_server_db : ragnarok
+[17/11/2008 21:17:53]Info>reading file conf/import/inter_conf.txt...
+[17/11/2008 21:17:53]Info>done reading conf/import/inter_conf.txt.
+[17/11/2008 21:17:53]Info>done reading conf/inter_athena.conf.
+[17/11/2008 21:17:54]Info>Connect Character DB server.... (Character Server)
+[17/11/2008 21:17:54]Status>Connect Success! (Character Server)
+[17/11/2008 21:17:54]Info>Finished reading the inter-server configuration.
+[17/11/2008 21:17:54]Info>Initializing char server.
+[17/11/2008 21:17:54]Info>Begin Initializing.......
+[17/11/2008 21:17:54]Status>Chars per Account: 'Unlimited'.......
+[17/11/2008 21:17:54]Info>Finished initilizing.......
+[17/11/2008 21:17:54]Info>char server initialized.
+[17/11/2008 21:17:54]Status>Defaulting to 192.168.1.2 as our IP address
+[17/11/2008 21:17:54]Info>Cleaning the 'char' table...
+[17/11/2008 21:17:54]Info>Cleaning the 'guild' table...
+[17/11/2008 21:17:54]Info>Cleaning the 'guild_member' table...
+[17/11/2008 21:17:54]Info>End of char server initilization function.
+[17/11/2008 21:17:54]Info>open port 6121.....
+[17/11/2008 21:17:55]Status>The char-server is ready (Server is listening on the port 6121).
+[17/11/2008 21:17:55]Info>Attempt to connect to login-server...
+[17/11/2008 21:17:55]Status>Connecting to 192.168.1.2:6900
+[17/11/2008 21:17:55]Status>Connected to login-server (connection #5).
+[17/11/2008 21:17:55]Status>Awaiting maps from map-server.
+[17/11/2008 21:17:55]Status>From login-server: receiving information of 0 GM accounts.
+[17/11/2008 21:18:49]Status>Map-Server 0 connected: 699 maps, from IP 192.168.1.2 port 5121.
+[17/11/2008 21:18:49]Status>Map-server 0 loading complete.
+[17/11/2008 21:21:45]Info>**** SERVER RESTARTING FROM USER REQUEST ****
+[17/11/2008 21:21:47]Status>Memory manager initialised: log/char-server_sql.leaks
+[17/11/2008 21:21:48]Info>SVN Revision: '13369'.
+[17/11/2008 21:21:48]Status>Done loading plugin 'UPnP'
+[17/11/2008 21:21:48]Info>Reading configuration file conf/char_athena.conf...
+[17/11/2008 21:21:48]Status>eAthena server has been initialized
+[17/11/2008 21:21:48]Info>Console Silent Setting: 0
+[17/11/2008 21:21:48]Info>Reading configuration file conf/import/char_conf.txt...
+[17/11/2008 21:21:48]Info>Done reading conf/import/char_conf.txt.
+[17/11/2008 21:21:48]Info>Done reading conf/char_athena.conf.
+[17/11/2008 21:21:48]Info>Reading the configuration file conf/subnet_athena.conf...
+[17/11/2008 21:21:48]Status>Read information about 1 subnetworks.
+[17/11/2008 21:21:48]Info>Reading file conf/inter_athena.conf...
+[17/11/2008 21:21:48]Status>set lowest_gm_level : 1
+[17/11/2008 21:21:48]Info>Reading file conf/import/inter_conf.txt...
+[17/11/2008 21:21:48]Info>Done reading conf/import/inter_conf.txt.
+[17/11/2008 21:21:48]Info>Done reading conf/inter_athena.conf.
+[17/11/2008 21:21:48]Error>Using the default user/password s1/p1 is NOT RECOMMENDED.
+[17/11/2008 21:21:48]Notice>Please edit your 'login' table to create a proper inter-server user/password (gender 'S')
+[17/11/2008 21:21:48]Notice>And then change the user/password to use in conf/char_athena.conf (or conf/import/char_conf.txt)
+[17/11/2008 21:21:48]Info>Finished reading the char-server configuration.
+[17/11/2008 21:21:48]Info>interserver initialize...
+[17/11/2008 21:21:48]Info>reading file conf/inter_athena.conf...
+[17/11/2008 21:21:48]Status>set login_server_ip : 127.0.0.1
+[17/11/2008 21:21:48]Status>set login_server_port : 3306
+[17/11/2008 21:21:48]Status>set login_server_id : ragnarok
+[17/11/2008 21:21:48]Status>set login_server_pw : ragnarok
+[17/11/2008 21:21:48]Status>set login_server_db : ragnarok
+[17/11/2008 21:21:48]Status>set char_server_ip : 127.0.0.1
+[17/11/2008 21:21:48]Status>set char_server_port : 3306
+[17/11/2008 21:21:48]Status>set char_server_id : ragnarok
+[17/11/2008 21:21:48]Status>set char_server_pw : ragnarok
+[17/11/2008 21:21:48]Status>set char_server_db : ragnarok
+[17/11/2008 21:21:48]Info>reading file conf/import/inter_conf.txt...
+[17/11/2008 21:21:48]Info>done reading conf/import/inter_conf.txt.
+[17/11/2008 21:21:48]Info>done reading conf/inter_athena.conf.
+[17/11/2008 21:21:48]Info>Connect Character DB server.... (Character Server)
+[17/11/2008 21:21:49]Status>Connect Success! (Character Server)
+[17/11/2008 21:21:49]Info>Finished reading the inter-server configuration.
+[17/11/2008 21:21:49]Info>Initializing char server.
+[17/11/2008 21:21:49]Info>Begin Initializing.......
+[17/11/2008 21:21:49]Status>Chars per Account: 'Unlimited'.......
+[17/11/2008 21:21:54]Info>Finished initilizing.......
+[17/11/2008 21:21:54]Info>char server initialized.
+[17/11/2008 21:21:54]Status>Defaulting to 192.168.1.2 as our IP address
+[17/11/2008 21:21:54]Info>Cleaning the 'char' table...
+[17/11/2008 21:21:54]Info>Cleaning the 'guild' table...
+[17/11/2008 21:21:54]Info>Cleaning the 'guild_member' table...
+[17/11/2008 21:21:54]Info>End of char server initilization function.
+[17/11/2008 21:21:54]Info>open port 6121.....
+[17/11/2008 21:21:54]Status>The char-server is ready (Server is listening on the port 6121).
+[17/11/2008 21:21:54]Info>Attempt to connect to login-server...
+[17/11/2008 21:21:54]Status>Connecting to 192.168.1.2:6900
+[17/11/2008 21:21:54]Status>Connected to login-server (connection #5).
+[17/11/2008 21:21:54]Status>Awaiting maps from map-server.
+[17/11/2008 21:21:54]Status>From login-server: receiving information of 0 GM accounts.
+[17/11/2008 21:22:30]Info>**** SERVER WAS SHUTDOWN MANUALLY ****

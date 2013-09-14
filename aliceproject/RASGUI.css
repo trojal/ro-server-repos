@@ -1,0 +1,59 @@
+table.Default, table.Menu, table.Log, table.Options
+{
+  background: #E1EDF3;
+  border: solid 1px #68B9E3;
+}
+
+table.Default, table.Menu { width: 200px; }
+table.Log { width: 100%; }
+table.Options { width: 250px; }
+
+th.Default, th.Menu, th.Log, th.Options
+{
+  font: bold 11pt Arial;
+  background: #B4D9EC;
+  color: #000000;
+  border-bottom: solid 1px #68B9E3;
+}
+
+td.Default, td.Menu, td.Options
+{
+  font: 9pt Arial;
+}
+
+td.LogTime
+{
+  width: 105px;
+  font: bold 7pt Arial;
+}
+
+td.LogTitle
+{
+  width: 40px;
+  font: bold 8pt Arial;
+}
+
+td.LogDesc
+{
+  font: italic 8pt Arial;
+}
+
+td.Info { color: Silver; }
+td.Notice { color: Black; }
+td.Status { color: Gray; }
+td.Error { color: Red; }
+td.Debug { color: Blue; }
+td.SQL { color: Aqua; }
+
+td.LogTime, td.LogTitle, td.LogDesc { border-bottom: solid 1px #68B9E3; }
+td.LogTime, td.LogTitle { border-right: solid 1px #68B9E3; }
+
+a.Menu
+{
+  font: bold 9pt Arial;
+}
+
+a.LogMenu
+{
+  font: bold 8pt Arial;
+}

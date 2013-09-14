@@ -1,0 +1,687 @@
+//===== eAthena Script ======================================= 
+//= Ninja Job Quest
+//===== By: ================================================== 
+//= Legionaire
+//===== Current Version: ===================================== 
+//= 1.4
+//===== Compatible With: ===================================== 
+//= eAthena SVN that supports Ninjas
+//===== Description: ========================================= 
+//= Ninja Job Change Quest
+//===== Additional Comments: ================================= 
+//= 1.1 Optimized, updated, checked [Lupus]
+//= 1.2 Added Akagi [Playtester]
+//= 1.3 Updated dialogs to official ones and optimized [SinSloth]
+//= 1.4 Fixed a minor bug [SinSloth]
+//============================================================ 
+
+alberta,30,65,3	script	Akagi#nq	730,{
+
+	if(Class == Job_Novice)
+	{
+		if(JobLevel > 9)
+		{
+			mes "[Akagi]";
+			mes "Hmm...";
+			mes "Some force must have lead your feet to this dark alley because you are needed here.";
+			mes "Would you like to walk the path of Patience?";
+			next;
+			if(select("No, I don't want to go.:Yep, I'll walk the path.") == 1)
+			{
+				mes "[Akagi]";
+				mes "Ok.";
+				mes ".....";
+				mes "Then farewell.";
+				close;
+			}
+			else
+			{
+				mes "[Akagi]";
+				mes "Very well, I'll send you over right away.";
+				close2;
+				switch (rand(3)) {
+					case 1:  warp "amatsu", 170, 229; break;
+					case 2:  warp "amatsu", 216, 188; break;
+					default: warp "amatsu", 178, 176; break;
+				}
+				end;
+			}
+		}
+		else
+		{
+			mes "[Akagi]";
+			mes "This isn't where you should be.";
+			mes "Come back after you've become stronger.";
+			close;
+		}
+	}
+	else
+	{
+		mes "[Akagi]";
+		mes "I have nothing to say to you.";
+		mes "Go back to where you came from.";
+		close;
+	}
+}
+
+que_ng,30,65,3	script	Cougar Gai	730,{
+
+	if(Class == Job_Novice && JobLevel > 9)
+	{
+		switch(NINJ_Q)
+		{
+			case 0:
+				mes "["+strcharinfo(0)+"]";
+				mes "Excuse me.";
+				next;
+				mes "[Cougar Gai]";
+				mes "Hmm...?";
+				mes "What the~!!";
+				mes "You can see me!";
+				next;
+				mes "[Cougar Gai]";
+				mes "Toriyaaa~!";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "-He throws a bundle of wooden chopsticks at you-";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "-Dart dart dart!-";
+				mes "Oww~!";
+				mes "Jeez~! What do you think you're doing!";
+				next;
+				mes "[Cougar Gai]";
+				mes "Hmm...?";
+				mes "I see you're not a hitman sent to kill me.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Oh jeez... What did I get myself into.";
+				mes "This guy is nuts.";
+				mes "Hasn't even seen me and is throwing stuff around...";
+				next;
+				mes "[Cougar Gai]";
+				mes "Urrgh~! Anger, anger~~";
+				mes "My forever rival and enemy...";
+				mes "Field Cat Joe!";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "........";
+				next;
+				mes "[Cougar Gai]";
+				mes "Gahhhhh~~~!!!";
+				mes "Urrgh~Urrgh~";
+				mes "Pft! Pft! Pft~";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "-What the.. He's not listening to me at all-";
+				next;
+				mes "[Cougar Gai]";
+				mes "Hmm...";
+				mes "What the! Who are you?!";
+				mes "And how did you get so close to me out of nowhere?";
+				mes "Take this!";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Agh~";
+				mes "Ugh, please, can you quit that?";
+				mes "What you've done so far, anyway...";
+				next;
+				mes "[Cougar Gai]";
+				mes "Oho";
+				mes "What incredible skill~";
+				mes "You've evaded all my techniques.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "- What techniques is he talking about? -";
+				mes "- And he's still not listening to me... -";
+				next;
+				mes "[Cougar Gai]";
+				mes "Hmm~ Yes~";
+				mes "Do you have some business with me?";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes ".........";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Ah...umm...";
+				mes "Yes.";
+				mes "I came to see you because I want to be a Ninja.";
+				next;
+				mes "[Cougar Gai]";
+				mes "Oho~ You've come to the right person.";
+				mes "But!";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes ".....";
+				next;
+				mes "[Cougar Gai]";
+				mes "It might be a little tough.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Huh~ Why~";
+				next;
+				mes "[Cougar Gai]";
+				mes "First off, I don't know if I can really trust you, and in my opinion..";
+				mes "It seems you don't have enough experience.";
+				next;
+				mes "[Cougar Gai]";
+				mes "So that's why i'm going to say..";
+				mes "Go!!! Get Lost~!";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "...........";
+				next;
+				mes "[Cougar Gai]";
+				mes "Hmm yes...";
+				mes "That's my final word.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "...........";
+				next;
+				mes "[Cougar Gai]";
+				mes "Well, get going if you understood.";
+				mes "As you can see, I'm a very busy person...";
+				next;
+				mes "[Cougar Gai]";
+				mes "I have a lot of enemies around me, so I can't let my guard down for a single moment.";
+				next;
+				mes "[Cougar Gai]";
+				mes "I'm better leave to train for my next duel.";
+				mes "Yioooop~!";
+				next;
+				mes "[Cougar Gai]";
+				mes "Next time I will win for sure!";
+				mes "Just you wait!";
+				mes "Field Cat Joe!";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Field Cat Joe ?";
+				mes "Why are you fighting with a cat?";
+				next;
+				mes "[Cougar Gai]";
+				mes "Huh? Oh oops! Hahaha~ Hehe~";
+				mes "Field Cat is that guy nickname.";
+				next;
+				mes "[Cougar Gai]";
+				mes "He's a very mischievous fellow.";
+				mes "Ther's not a method he won't use to win.";
+				next;
+				mes "[Cougar Gai]";
+				mes "And not only that -- The skills he uses are very brilliant and very strong.";
+				next;	
+				mes "[Cougar Gai]";
+				mes "It just so happens him and I have run out of Shuriken and Scrolls, so we're in a truce. Haha.";
+				next;
+				mes "[Cougar Gai]";
+				mes "Well, if you really want to become a Ninja, how about you do me a favor?";
+				mes "If you fulfill this favor well, then although I can't make you a ninja, I can teach you a few techniques. You never know!";
+				next;
+				switch( select( "Accept to do the favor","Refuse to do the favor" ) )
+				{
+
+					case 1:
+						mes "["+strcharinfo(0)+"]";
+						mes "Hmm... Ok.";
+						next;
+						mes "[Cougar Gai]";
+						mes "Ok.. Very well.";
+						mes "Then deliver this letter to Field Cat Joe.";
+						next;
+						mes "[Cougar Gai]";
+						mes "It just says in there that until we're prepared, we should consider a truce.";
+						mes "Absolutely make sure to bring back his reply.";
+						next;
+						mes "[Cougar Gai]";
+						mes "By the way, my sources told me Field Cat Joe has gone to Einbroch.";
+						mes "Not sure why he went there though...";
+						next;
+						mes "[Cougar Gai]";
+						mes "He's pretty good in changing his appearance,";
+						mes "so it might be very difficult to find him.";
+						next;
+						mes "[Cougar Gai]";
+						mes "You'll have to look with your eyes peeled and search. He likes high places.";
+						mes "Look around well.";
+						next;
+						mes "["+strcharinfo(0)+"]";
+						mes "Ok~";
+						mes "I'll do it.";
+						set NINJ_Q,1;
+						close;
+
+					case 2:
+						mes "["+strcharinfo(0)+"]";
+						mes "I don't wish to simply learn a few techniques.";
+						mes "I'm sorry.";
+						mes "I'll go find someone else.";
+						mes "Find somebody else.";
+						next;
+						mes "[Cougar Gai]";
+						mes "Hmm... I see...";
+						mes "I understand.";
+						mes "I guess I wasted my breath.";
+						mes "Well, off with you now.";
+						close;
+				}
+
+			case 1:
+				mes "[Cougar Gai]";
+				mes "Hmm... It's nothing I need immediately, but do hurry.";
+				mes "Field Cat Joe is at Einbroch.";
+				close;
+
+			case 2:
+				mes "[Cougar Gai]";
+				mes "Don't forget to bring me back his reply.";
+				mes "I have to make sure he doesn't claim otherwise later.";
+				close;
+
+			case 3:
+				mes "[Cougar Gai]";
+				mes "Did you bring me back his reply?";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Yes, here it is.";
+				next;
+				mes "[Cougar Gai]";
+				mes "Ohh. I see you've met him and brought me his reply.";
+				mes "Well... Let's See.";
+				mes "- Rip rip... -";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "- He carefully reads the letter you brought to him -";
+				next;
+				mes "[Cougar Gai]";
+				mes "Ugh~!!! How can this be!";
+				mes "He refused my request for a short truce!!!";
+				mes "Did he remake his Kunai?";
+				mes "What now...";
+				next;
+				mes "[Cougar Gai]";
+				mes "I'm sorry, but I'd appreciate it if you can do me a favor.";
+				mes "I need to create weapons to fight against that Bastard Joe but I don't have enough ingredients.";
+				next;
+				mes "[Cougar Gai]";
+				mes "If you can get me these ingredients, then i'll acknowledge your abilities and make you a ninja.";
+				mes "What I need is...";
+				mes "1 Phracon and 5 Cyfar.";
+				mes "Time is of the essence, so please hurry.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Wait!!";
+				mes "Those are...";
+				next;
+				mes "[Cougar Gai]";
+				mes "What's the matter? Is there a problem?";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "I just got these ingredients for Joe...";
+				mes "Uggghhhh...";
+				next;
+				mes "[Cougar Gai]";
+				mes "What did you say?!!!";
+				mes "Then by sending you to him, I've ended up helping him...!";
+				mes "Ugh...";
+				mes "Aaahhh...";
+				mes "Why, why~ What a fool I am! An Idiot! A moron!!";
+				next;
+				mes "[Cougar Gai]";
+				mes "Ah.. Ah.. I'll calm down.";
+				mes "Hugh.. Hugh..";
+				next;
+				mes "[Cougar Gai]";
+				mes "You must help me, for now.";
+				mes "Since things have become like this, there's no time to explain now.";
+				mes "Hurry and get me what I need.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Uhh...Sure..";
+				next;
+				mes "[Cougar Gai]";
+				mes "Hurrrry~~!!";
+				mes "Sob~";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "- Let's bring Mr. Gai 1 Phracon -";
+				mes "- And 5 Cyfars -";
+				set NINJ_Q,4;
+				close;
+
+			case 4:
+				mes "[Cougar Gai]";
+				if(countitem(7053) < 5 || countitem(1010) < 1)
+				{
+					mes "Get me 1 Phracon and 5 Cyfars.";
+					mes "What you have isn't what I said I need before.";
+					mes "It's urgent, so please hurry.";
+					close;
+				}
+				if(skillpoint >0)
+				{
+					mes "Please come back after you've learned all the basic skills.";
+					close;
+				}
+				mes "Oh, Did you bring me the things I need?";
+				mes "Let's see...";
+				mes "Hmm~ I see you've brought me what I need.";
+				next;
+				mes "[Cougar Gai]";
+				mes "Whew~ You've made it in time.";
+				mes "You work better than I thought.";
+				next;
+				mes "[Cougar Gai]";
+				mes "Very well.";
+				mes "As promised, I'll officially turn you into a Ninja.";
+				next;
+				mes "[Cougar Gai]";
+				mes "Let me properly introduce myself.";
+				mes "I am an Upper Rank Ninja from the Doga Ninja Clan of the East.";
+				mes "I'm operating as a Search Captain to find Kazuma-san, the leader of the village I'm from.";
+				next;
+				mes "[Cougar Gai]";
+				mes "Tell you the truth, there's a lot of complication going on internally in the Ninja Clan lately, which was why I was hesitant to allow you to become a Ninja.";
+				next;
+				mes "[Cougar Gai]";
+				mes "But seeing how Joe has complimented you highly and have completed my request well, I've changed my mind.";
+				next;
+				mes "[Cougar Gai]";
+				mes "Being a Ninja is a lonely job.";
+				mes "You must value your jobs but also never forget your humanity.";
+				next;
+				mes "[Cougar Gai]";
+				mes "You're in for a lot of struggle from here on.";
+				mes "Although we keep our identity secret, we operate in every single town.";
+				next;
+				mes "[Cougar Gai]";
+				mes "The creation and usage of the basic equiptment of Ninjas is kept secret.";
+				mes "The purchase and sale of Ninja gear is strictly regulated, so try to be careful.";
+				next;
+				mes "[Cougar Gai]";
+				mes "Well, I hereby recognize you as a member of the Doga Ninja Clan.";
+				next;
+				mes "[Cougar Gai]";
+				mes "Be quick as a Hawk from the Wind of the East.";
+				mes "And light as a Leaf wavering in the Wind of the West!!";
+				next;
+				mes "[Cougar Gai]";
+				mes "Haaa!!!!";
+				next;
+				nude;
+				callfunc "Job_Change",Job_Ninja;
+				callfunc "F_ClearJobVar";				
+				getitem 13010,1;
+				close;
+
+		}
+	}
+	else if(Class == Job_Novice && JobLevel < 10)
+	{
+		mes "[Cougar Gai]";
+		mes "It looks like you need to train more.";
+		mes "Come back after you gained more muscle.";
+		close;
+	}
+	else if(Class == Job_Ninja)
+	{
+		mes "[Cougar Gai]";
+		mes "Hmm, how have you been?";
+		mes "You don't know when and where you may be asked to go on a mission, so don't put off your training for a single day.";
+		close;
+	}
+	else if(Class == Job_Baby)
+	{
+		mes "[Cougar Gai]";
+		mes "What the...! A super baby!";
+		mes "Has this location been so exposed that even babies know where it is?";
+		mes "Oh no~ Ah no~";
+		close;
+	}
+	else
+	{
+		mes "[Cougar Gai]";
+		mes "What the.. What's that stench?!";
+		mes "I was wondering what was causing that stench -- it was you.";
+		mes "Why, you're so young, there's still a milk mustache on your lips from drinking from your mother's bosoms.";
+		mes "Get lost, squirt.";
+		close;
+	}
+}
+
+einbroch,184,194,3	script	Suspicious Guy#nin	881,{
+
+	if(Class == Job_Ninja)
+	{
+		mes "[Crimson Panther Joe]";
+		mes "Oh, I see you've become a Ninja";
+		mes "There will be many hardships in the future, so don't slack off in training.";
+		close;
+	}
+	else if(!NINJ_Q)
+	{
+		mes "[Suspicious Guy]";
+		mes "Hyaa~ This sure is a high spot.";
+		mes "I've been to many different lands, but this is the highest place I've found so far.";
+		mes "My only regret is that I can't spend more time looking around this spectacular view...";
+		close;
+	}
+	switch(NINJ_Q)
+	{
+		case 1:
+			mes "[Suspicious Guy]";
+			mes "Hiyaa~ This sure is a high place, right?";
+			mes "I've traveled to many countries, but this is the first time I've seen such a tall building.";
+			next;
+			mes "[Suspicious Guy]";
+			mes "The air is clean, the town is quiet, and all the houses are short and cozy where I come from.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Ah! No way!";
+			mes "Amatsu?!!!";
+			next;
+			mes "[Suspicious Guy]";
+			mes "Nope.";
+			mes "....";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Hmm~";
+			mes "Not Amatsu...";
+			mes "Then are you from Izlude?";
+			next;
+			mes "[Suspicious Guy]";
+			mes "Yes, that's correct.";
+			mes "I'm from Izlude.";
+			next;
+			mes "[Suspicious Guy]";
+			mes "Due to personal reasons, I'm temporarily visiting this resource-rich country.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "I see...";
+			mes "Oh, do you happen to know a person named Field Cat Joe?";
+			mes "He's a Ninja from Amatsu";
+			mes "I need to find him.";
+			next;
+			mes "[Suspicious Guy]";
+			mes "I don't know. I've never heard of such a name.";
+			mes "I guess you must have some important reason why you must meet that person.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Yes. I have to deliver this letter to him so that I may become a Ninja too.";
+			next;
+			mes "[Suspicious Guy]";
+			mes "Hmm... Judging by your clothes, I see you're a traveler too.";
+			next;
+			mes "[Suspicious Guy]";
+			mes "Come to think of it, you may be able to find the person you are looking for.";
+			next;
+			mes "[Suspicious Guy]";
+			mes "I think I may have met him once in this village.";
+			next;
+			mes "[Suspicious Guy]";
+			mes "I'd like to help you find him together, but I still have some things to do first...";
+			next;
+			mes "[Suspicious Guy]";
+			mes "If you help me out with what I'm doing, then I will search for Crimson Panther Joe with you.";
+			next;
+			switch( select( "I'll just search for him alone.","Ok, I'll help you." ) )
+			{
+				case 1:
+					mes "[Suspicious Guy]";
+					mes "Ah, I understand.";
+					mes "Good luck looking for him. If you need help later, come and talk to me before I leave...";
+					close;
+
+				case 2:
+					mes "[Suspicious Guy]";
+					mes "Hmm.. Let's see.";
+					mes "I've come here to gather some raw materials so that I may create something I need.";
+					next;
+					mes "[Suspicious Guy]";
+					mes "I will be seeking the materials I need too, but I'm always running short in raw materials.";
+					mes "I'd be grateful if you could find me 1 Phracon and 5 Cyfar.";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "- Let's go find 1 Phracon and 5 Cyfar.-";
+					set NINJ_Q,2;
+					close;
+			}
+
+		case 2:
+			if(countitem(1010) < 1 || countitem(7053) < 5){
+				mes "[Suspicious Guy]";
+				mes "I asked for 1 Phracon and 5 Cyfar.";
+				mes "It looks like you didn't gather the amount I've requested.";
+				mes "I don't need it immediately, but I'd appreciate it if you could get those items for me.";
+				close;
+			}
+			mes "[Suspicious Guy]";
+			mes "I see you've accurately brought back what I need.";
+			mes "Hmm... Very well.";
+			mes "You've brought me the things I need, so I will not help you. Hmm...";
+			next;
+			mes "[Suspicious Guy]";
+			mes "Let's see that letter.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "?????!!";
+			next;
+			mes "[Suspicious Guy]";
+			mes "Hmm? Are you perhaps here because Gai sent you here?";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Gasp... Then you're Field Cat...";
+			next;
+			mes "[Suspicious Guy]";
+			mes "Nope.";
+			mes "I'm not Field Cat Joe, but Crimson Panther Joe.";
+			mes "The only person who teases me as 'Field Cat' is Gai. Haha.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Sigh... Is that how it is?";
+			next;
+			mes "[Crimson Panther Joe]";
+			mes "If you want to become a Ninja, you can't just trust your eyes.";
+			next;
+			mes "[Crimson Panther Joe]";
+			mes "Very few Ninjas, if any, where the stereotypical outfits depicted in picture books. And even if they did, you'd be lucky to spot one.";
+			next;
+			mes "[Crimson Panther Joe]";
+			mes "Don't forget that as soon as you reveal your identity as a Ninja, your life is at stake.";
+			next;
+			mes "[Crimson Panther Joe]";
+			mes "Even who I've said I am or anything I've said so far could be false.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Ok...";
+			mes "...........";
+			next;
+			mes "[Crimson Panther Joe]";
+			mes "Well, Let's see it -- that letter.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Ah, Yes.";
+			mes "Here.";
+			mes "-Rustle, rustle -";
+			next;
+			mes "[Crimson Panther Joe]";
+			mes "Hmm~~ Let's see...";
+			mes "I was thinking it might be another one of Gai's childish challenge letters, but I see it's a letter requesting truce.";
+			next;
+			mes "[Crimson Panther Joe]";
+			mes "But there's no need for a truce for me...";
+			mes "Thanks to you, I've already acquired all the raw materials needed to create a Kunai. Haha~";
+			next;
+			mes "[Crimson Panther Joe]";
+			mes "I'll write you a reply, regardless. Seeing how you've acquired my raw materials so quickly, with a bit of a sharper eye, I believe you could become an excellent Ninja.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes ".....";
+			next;
+			mes "[Crimson Panther Joe]";
+			mes "Wait a moment.";
+			mes "I'll write you a response to Gai's letter right now.";
+			mes "Hmm Hmm...";
+			mes "...Scribble... Scribble...";
+			next;
+			mes "[Crimson Panther Joe]";
+			mes "Here. Here it is.";
+			mes "You'll know what's written inside as soon as you show *him* the letter.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "- You recieve the letter that Joe-";
+			mes "- has just now scribbled down -";
+			mes "- on paper.-";
+			next;
+			mes "[Crimson Panther Joe]";
+			mes "Well, you better get a move on.";
+			mes "If you want to become a Ninja.";
+			next;
+			mes "[Crimson Panther Joe]";
+			mes "And if you do become a Ninja, we may end up meet each other frequently.";
+			mes "I'll be looking forward to it.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Yes... Well, I better get going...";
+			next;
+			mes "[Crimson Panther Joe]";
+			mes "Ah, It would probably take you a considerably long time to reach Amatsu.";
+			mes "Allow me to send you, "+strcharinfo(0)+" to Amatsu.";
+			mes "We'll meet again..";
+			delitem 1010,1;
+			delitem 7053,5;
+			set NINJ_Q,3;
+			close2;
+			warp "amatsu",113,127;
+			end;
+
+		case 3:
+			mes "[Crimson Panther Joe]";
+			mes "Hmm, I don't know what happened, but it seems you've returned to me without reaching Gai first.";
+			next;
+			mes "[Crimson Panther Joe]";
+			mes "If you would like, I can send you to amatsu again.";
+			mes "I'll take you back to Amatsu.";
+			next;
+			switch( select( "No thanks.","Yes, please send me to Amatsu." ) )
+			{
+				case 1 :
+					mes "[Crimson Panther Joe]";
+					mes "Hmm, very well.";
+					mes "Decisions are best when decided yourself.";
+					close;
+
+				case 2:
+					mes "[Crimson Panther Joe]";
+					mes "Very well.";
+					mes "I will now send you to Amatsu.";
+					close2;
+					warp "amatsu",113,127;
+					end;
+			}
+
+		case 4:
+			mes "[Crimson Panther Joe]";
+			mes "Is Gai bothering you with a lot of bothersome tasks?";
+			mes "Don't give up -- it'll all come in handy during your training.";
+			close;
+	}
+}

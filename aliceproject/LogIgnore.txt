@@ -1,0 +1,2 @@
+[Status]: Loading NPC
+[Status]: Progress:

@@ -1,0 +1,22 @@
+$ttranks	999999
+$signbmps	1
+$top_50min	5
+$top_60min	6
+$top_70min	7
+$top_80min	8
+$top_ptmin	10
+$ttnames$	Breezy Havana
+$ttnames$,9	Breezy Havana
+$ttnames$,7	Breezy Havana
+$ttnames$,5	Kafra Jasmine
+$timezonestring$	^FF0000GMT^000000
+$ttnames$,3	Antonio
+$ttnames$,12	Joo Jahk
+$ttnames$,1	RS125
+$ttnames$,10	Nari
+$ttnames$,8	RS125
+$ttnames$,6	Chris
+$ttnames$,4	Aragham
+$ttnames$,13	RS125
+$ttnames$,2	Hollgrehenn
+$ttnames$,11	Senorita Sylvia

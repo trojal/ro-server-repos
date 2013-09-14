@@ -1,0 +1,374 @@
+[17/11/2008 20:21:42]Error>Could not Load C:\Documents and Settings\Trent\Desktop\eathenamap-server_sql.exe.
+[17/11/2008 20:23:02]Error>Could not Load C:\Documents and Settings\Trent\Desktop\eathenamap-server_sql.exe.
+[17/11/2008 20:23:44]Status>Memory manager initialised: log/map-server_sql.leaks
+[17/11/2008 20:23:44]Info>SVN Revision: '13369'.
+[17/11/2008 20:23:44]Status>Done loading plugin 'UPnP'
+[17/11/2008 20:23:44]Info>Console Silent Setting: 0
+[17/11/2008 20:23:44]Error>Using the default user/password s1/p1 is NOT RECOMMENDED.
+[17/11/2008 20:23:44]Notice>Please edit your 'login' table to create a proper inter-server user/password (gender 'S')
+[17/11/2008 20:23:44]Notice>and then edit your user/password in conf/map_athena.conf (or conf/import/map_conf.txt)
+[17/11/2008 20:23:44]Info>Defaulting to 192.168.1.2 as our IP address
+[17/11/2008 20:23:44]Info>Map Server IP Address : '192.168.1.2' -> '192.168.1.2'.
+[17/11/2008 20:23:44]Info>Char Server IP Address : '192.168.1.2' -> '192.168.1.2'.
+[17/11/2008 20:23:44]Status>Using SQL dbs: no
+[17/11/2008 20:23:44]Notice>Logging Item Picks to table `picklog`
+[17/11/2008 20:23:44]Notice>Logging GM Level 40 Commands to table `atcommandlog`
+[17/11/2008 20:23:44]Notice>Logging Item Picks to file `log/picklog.log`.txt
+[17/11/2008 20:23:44]Notice>Logging GM Level 40 Commands to file `log/atcommandlog.log`.txt
+[17/11/2008 20:23:44]Info>Connecting to the Map DB Server....
+[17/11/2008 20:23:44]Status>connect success! (Map Server Connection)
+[17/11/2008 20:23:44]Status>Loading maps (using db/map_cache.dat as map cache)...
+[17/11/2008 20:23:44]Status>Loading maps [20/699]: force_4-1m
+[17/11/2008 20:23:45]Status>Loading maps [44/699]: gef_fild11
+[17/11/2008 20:23:45]Status>Loading maps [68/699]: in_monter1
+[17/11/2008 20:23:46]Status>Loading maps [92/699]: mjolnir_05
+[17/11/2008 20:23:46]Status>Loading maps [114/699]: moc_fild15
+[17/11/2008 20:23:47]Status>Loading maps [138/699]: new_1-4e04
+[17/11/2008 20:23:47]Status>Loading maps [162/699]: ordeal_3-2
+[17/11/2008 20:23:48]Status>Loading maps [185/699]: prt_fild00
+[17/11/2008 20:23:49]Status>Loading maps [208/699]: pvp_n_1-1m
+[17/11/2008 20:23:49]Status>Loading maps [231/699]: pvp_n_5-4m
+[17/11/2008 20:23:50]Status>Loading maps [254/699]: pvp_y_2-2m
+[17/11/2008 20:23:51]Status>Loading maps [277/699]: pvp_y_6-5m
+[17/11/2008 20:23:52]Status>Loading maps [301/699]: cmd_fild021
+[17/11/2008 20:23:53]Status>Loading maps [324/699]: aldeg_cas01
+[17/11/2008 20:23:54]Status>Loading maps [347/699]: guild_vs1-3
+[17/11/2008 20:23:55]Status>Loading maps [370/699]: job_duuehe2
+[17/11/2008 20:23:56]Status>Loading maps [393/699]: ama_test014
+[17/11/2008 20:23:57]Status>Loading maps [417/699]: yggdrasil24
+[17/11/2008 20:23:59]Status>Loading maps [440/699]: payon_in02e
+[17/11/2008 20:24:00]Status>Loading maps [463/699]: turbo_e_862
+[17/11/2008 20:24:01]Status>Loading maps [486/699]: lighthalzen
+[17/11/2008 20:24:03]Status>Loading maps [510/699]: hu_fild0501
+[17/11/2008 20:24:03]Status>Loading maps [533/699]: tha_t10ne01
+[17/11/2008 20:24:03]Status>Loading maps [557/699]: kh_dun02010
+[17/11/2008 20:24:03]Status>Loading maps [580/699]: ra_san01320
+[17/11/2008 20:24:03]Status>Loading maps [589/699]: que_san04l0
+[17/11/2008 20:24:03]Status>Loading maps [590/699]: ice_dun01l0
+[17/11/2008 20:24:03]Status>Loading maps [591/699]: ice_dun02l0
+[17/11/2008 20:24:03]Status>Loading maps [592/699]: ice_dun03l0
+[17/11/2008 20:24:03]Status>Loading maps [593/699]: ice_dun04l0
+[17/11/2008 20:24:03]Status>Loading maps [594/699]: que_thor4l0
+[17/11/2008 20:24:03]Status>Loading maps [595/699]: thor_campl0
+[17/11/2008 20:24:03]Status>Loading maps [596/699]: thor_v01pl0
+[17/11/2008 20:24:03]Status>Loading maps [597/699]: thor_v02pl0
+[17/11/2008 20:24:03]Status>Loading maps [598/699]: thor_v03pl0
+[17/11/2008 20:24:04]Status>Loading maps [599/699]: veinsv03pl0
+[17/11/2008 20:24:04]Status>Loading maps [600/699]: ve_inv03pl0
+[17/11/2008 20:24:04]Status>Loading maps [601/699]: ve_in023pl0
+[17/11/2008 20:24:04]Status>Loading maps [602/699]: ve_fild01l0
+[17/11/2008 20:24:04]Status>Loading maps [603/699]: ve_fild02l0
+[17/11/2008 20:24:04]Status>Loading maps [604/699]: ve_fild03l0
+[17/11/2008 20:24:04]Status>Loading maps [605/699]: ve_fild04l0
+[17/11/2008 20:24:09]Status>Loading maps [628/699]: itemmallkyn
+[17/11/2008 20:24:09]Status>Loading maps [651/699]: que_bald222
+[17/11/2008 20:24:09]Status>Loading maps [674/699]: que_qaru052
+[17/11/2008 20:24:09]Status>Loading maps [675/699]: 1@cataru052
+[17/11/2008 20:24:09]Status>Loading maps [676/699]: 2@cataru052
+[17/11/2008 20:24:09]Status>Loading maps [677/699]: e_toweru052
+[17/11/2008 20:24:09]Status>Loading maps [678/699]: 1@toweru052
+[17/11/2008 20:24:09]Status>Loading maps [679/699]: 2@toweru052
+[17/11/2008 20:24:09]Status>Loading maps [680/699]: 3@toweru052
+[17/11/2008 20:24:09]Status>Loading maps [681/699]: 4@toweru052
+[17/11/2008 20:24:09]Status>Loading maps [682/699]: 5@toweru052
+[17/11/2008 20:24:09]Status>Loading maps [683/699]: 6@toweru052
+[17/11/2008 20:24:10]Status>Loading maps [684/699]: mid_camp052
+[17/11/2008 20:24:10]Status>Loading maps [685/699]: mid_campin2
+[17/11/2008 20:24:10]Status>Loading maps [686/699]: man_fild012
+[17/11/2008 20:24:10]Status>Loading maps [687/699]: man_fild032
+[17/11/2008 20:24:10]Status>Loading maps [688/699]: spl_fild022
+[17/11/2008 20:24:10]Status>Loading maps [689/699]: spl_fild032
+[17/11/2008 20:24:10]Status>Loading maps [690/699]: moc_fild22b
+[17/11/2008 20:24:10]Status>Loading maps [691/699]: que_dan012b
+[17/11/2008 20:24:10]Status>Loading maps [692/699]: que_dan022b
+[17/11/2008 20:24:10]Status>Loading maps [693/699]: schg_que01b
+[17/11/2008 20:24:10]Status>Loading maps [694/699]: schg_dun01b
+[17/11/2008 20:24:10]Status>Loading maps [695/699]: arug_que01b
+[17/11/2008 20:24:10]Status>Loading maps [696/699]: arug_dun01b
+[17/11/2008 20:24:11]Status>Loading maps [697/699]: 1@orcsun01b
+[17/11/2008 20:24:11]Status>Loading maps [698/699]: 2@orcsun01b
+[17/11/2008 20:24:11]Info>Successfully loaded '699' maps.sun01b
+[17/11/2008 20:24:11]Status>Done reading packet database from 'packet_db.txt'. Using default packet version: 22.
+[17/11/2008 20:24:11]Status>Done reading '4445' entries in 'item_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading '0' entries in 'item_db2.txt'.
+[17/11/2008 20:24:11]Status>Done reading 'item_group_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading '1' entries in 'item_avail.txt'.
+[17/11/2008 20:24:11]Status>Done reading '11' entries in 'item_noequip.txt'.
+[17/11/2008 20:24:11]Status>Done reading '345' entries in 'item_trade.txt'.
+[17/11/2008 20:24:11]Status>Done reading '609' entries in 'db/skill_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading '410' entries in 'db/skill_require_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading '406' entries in 'db/skill_cast_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading '23' entries in 'db/skill_castnodex_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading '30' entries in 'db/skill_nocast_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading '71' entries in 'db/skill_unit_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading '145' entries in 'db/produce_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading '136' entries in 'db/create_arrow_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading '207' entries in 'db/abra_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading '959' entries in 'mob_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading '0' entries in 'mob_db2.txt'.
+[17/11/2008 20:24:11]Status>Done reading '0' entries in 'mob_avail.txt'.
+[17/11/2008 20:24:11]Status>Done reading 'mob_branch.txt'.
+[17/11/2008 20:24:11]Status>Done reading 'mob_poring.txt'.
+[17/11/2008 20:24:11]Status>Done reading 'mob_boss.txt'.
+[17/11/2008 20:24:11]Status>Done reading 'mob_pouch.txt'.
+[17/11/2008 20:24:11]Status>Done reading 'mob_skill_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading 'mob_skill_db2.txt'.
+[17/11/2008 20:24:11]Status>Done reading 'mob_race2_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading 'exp.txt'.
+[17/11/2008 20:24:11]Status>Done reading 'skill_tree.txt'.
+[17/11/2008 20:24:11]Status>Done reading 'attr_fix.txt'.
+[17/11/2008 20:24:11]Status>Done reading 'statpoint.txt'.
+[17/11/2008 20:24:11]Status>Done reading 'db/job_db1.txt'.
+[17/11/2008 20:24:11]Status>Done reading 'db/job_db2.txt'.
+[17/11/2008 20:24:11]Status>Done reading 'db/size_fix.txt'.
+[17/11/2008 20:24:11]Status>Done reading 'db/refine_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading '34' entries in 'castle_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading '15' entries in 'guild_skill_tree.txt'.
+[17/11/2008 20:24:11]Status>Done reading '38' pets in 'pet_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading '8' homunculus in 'db/homunculus_db.txt'.
+[17/11/2008 20:24:11]Status>Done reading '99' levels in 'exp_homun.txt'.
+[17/11/2008 20:24:11]Status>Done reading 'homun_skill_tree.txt'.
+[17/11/2008 20:24:16]Info>Done loading '19156' NPCs:ild2/schg_cas05.txtttxtls.txtxtxtt
+[17/11/2008 20:24:16]Status>Event 'OnInit' executed with '691' NPCs.
+[17/11/2008 20:24:16]Status>Server is 'ready' and listening on port '5121'.
+[17/11/2008 20:24:16]Status>Attempting to connect to Char Server. Please wait.
+[17/11/2008 20:24:16]Status>Connecting to 192.168.1.2:6121
+[17/11/2008 20:24:16]Status>Logging in to char server...
+[17/11/2008 20:24:16]Status>Successfully logged on to Char Server (Connection: '5').
+[17/11/2008 20:24:16]Status>Sending maps to char server...
+[17/11/2008 20:24:16]Status>Event 'OnCharIfInit' executed with '0' NPCs.
+[17/11/2008 20:24:16]Status>Event 'OnInterIfInit' executed with '0' NPCs.
+[17/11/2008 20:24:16]Status>Event 'OnInterIfInitOnce' executed with '31' NPCs.
+[17/11/2008 20:24:16]Info>From login-server: receiving information of '0' GM accounts.
+[17/11/2008 20:24:16]Status>Map sending complete. Map Server is now online.
+[17/11/2008 20:24:16]Info>Received Fame List of '0' characters.
+[17/11/2008 21:15:44]Info>**** SERVER WAS SHUTDOWN MANUALLY ****
+[17/11/2008 21:17:53]Status>Memory manager initialised: log/map-server_sql.leaks
+[17/11/2008 21:17:53]Info>SVN Revision: '13369'.
+[17/11/2008 21:17:53]Status>Done loading plugin 'UPnP'
+[17/11/2008 21:17:54]Info>Console Silent Setting: 0
+[17/11/2008 21:17:54]Error>Using the default user/password s1/p1 is NOT RECOMMENDED.
+[17/11/2008 21:17:54]Notice>Please edit your 'login' table to create a proper inter-server user/password (gender 'S')
+[17/11/2008 21:17:54]Notice>and then edit your user/password in conf/map_athena.conf (or conf/import/map_conf.txt)
+[17/11/2008 21:17:54]Info>Defaulting to 192.168.1.2 as our IP address
+[17/11/2008 21:17:54]Info>Map Server IP Address : '192.168.1.2' -> '192.168.1.2'.
+[17/11/2008 21:17:54]Info>Char Server IP Address : '192.168.1.2' -> '192.168.1.2'.
+[17/11/2008 21:17:54]Status>Using SQL dbs: no
+[17/11/2008 21:17:54]Notice>Logging Item Picks to table `picklog`
+[17/11/2008 21:17:54]Notice>Logging GM Level 40 Commands to table `atcommandlog`
+[17/11/2008 21:17:54]Notice>Logging Item Picks to file `log/picklog.log`.txt
+[17/11/2008 21:17:54]Notice>Logging GM Level 40 Commands to file `log/atcommandlog.log`.txt
+[17/11/2008 21:17:54]Info>Connecting to the Map DB Server....
+[17/11/2008 21:17:54]Status>connect success! (Map Server Connection)
+[17/11/2008 21:17:54]Status>Loading maps (using db/map_cache.dat as map cache)...
+[17/11/2008 21:17:54]Status>Loading maps [0/699]: alb_ship
+[17/11/2008 21:17:54]Status>Loading maps [2/699]: albertaa
+[17/11/2008 21:17:54]Status>Loading maps [3/699]: alberta_in
+[17/11/2008 21:17:54]Status>Loading maps [4/699]: alde_dun01
+[17/11/2008 21:17:54]Status>Loading maps [5/699]: alde_dun02
+[17/11/2008 21:17:55]Status>Loading maps [6/699]: alde_dun03
+[17/11/2008 21:17:55]Status>Loading maps [30/699]: gef_dun01m
+[17/11/2008 21:17:56]Status>Loading maps [53/699]: gl_chyard4
+[17/11/2008 21:17:57]Status>Loading maps [77/699]: iz_dun02x5
+[17/11/2008 21:17:57]Status>Loading maps [101/699]: moc_fild02
+[17/11/2008 21:17:58]Status>Loading maps [124/699]: moc_pryd05
+[17/11/2008 21:17:58]Status>Loading maps [148/699]: new_4-2e04
+[17/11/2008 21:17:59]Status>Loading maps [171/699]: pay_fild04
+[17/11/2008 21:17:59]Status>Loading maps [194/699]: prt_fild09
+[17/11/2008 21:18:00]Status>Loading maps [217/699]: pvp_n_3-1m
+[17/11/2008 21:18:01]Status>Loading maps [240/699]: pvp_n_7-4m
+[17/11/2008 21:18:03]Status>Loading maps [264/699]: pvp_y_4-1m
+[17/11/2008 21:18:04]Status>Loading maps [287/699]: pvp_y_8-4m
+[17/11/2008 21:18:05]Status>Loading maps [310/699]: comodo02091
+[17/11/2008 21:18:06]Status>Loading maps [333/699]: gefg_cas055
+[17/11/2008 21:18:07]Status>Loading maps [356/699]: payg_cas012
+[17/11/2008 21:18:08]Status>Loading maps [379/699]: yuno_fild02
+[17/11/2008 21:18:09]Status>Loading maps [403/699]: sec_in01014
+[17/11/2008 21:18:10]Status>Loading maps [426/699]: louyangd011
+[17/11/2008 21:18:11]Status>Loading maps [450/699]: que_god012e
+[17/11/2008 21:18:12]Status>Loading maps [473/699]: ein_fild062
+[17/11/2008 21:18:13]Status>Loading maps [496/699]: juperos_02n
+[17/11/2008 21:18:15]Status>Loading maps [519/699]: abyss_02306
+[17/11/2008 21:18:20]Status>Loading maps [543/699]: p_track0221
+[17/11/2008 21:18:20]Status>Loading maps [566/699]: ra_in01c020
+[17/11/2008 21:18:20]Status>Loading maps [590/699]: que_san04l0
+[17/11/2008 21:18:20]Status>Loading maps [613/699]: abbey02s_in
+[17/11/2008 21:18:20]Status>Loading maps [614/699]: abbey03s_in
+[17/11/2008 21:18:20]Status>Loading maps [615/699]: poring_w01n
+[17/11/2008 21:18:20]Status>Loading maps [616/699]: poring_w02n
+[17/11/2008 21:18:20]Status>Loading maps [617/699]: 06guild_r2n
+[17/11/2008 21:18:20]Status>Loading maps [618/699]: 06guild_01n
+[17/11/2008 21:18:20]Status>Loading maps [619/699]: 06guild_02n
+[17/11/2008 21:18:20]Status>Loading maps [620/699]: 06guild_03n
+[17/11/2008 21:18:21]Status>Loading maps [621/699]: 06guild_04n
+[17/11/2008 21:18:21]Status>Loading maps [622/699]: 06guild_05n
+[17/11/2008 21:18:21]Status>Loading maps [623/699]: 06guild_06n
+[17/11/2008 21:18:21]Status>Loading maps [624/699]: 06guild_07n
+[17/11/2008 21:18:21]Status>Loading maps [625/699]: 06guild_08n
+[17/11/2008 21:18:21]Status>Loading maps [631/699]: bossnia_03n
+[17/11/2008 21:18:21]Status>Loading maps [632/699]: bossnia_04n
+[17/11/2008 21:18:21]Status>Loading maps [633/699]: moscovia04n
+[17/11/2008 21:18:21]Status>Loading maps [634/699]: mosk_ina04n
+[17/11/2008 21:18:21]Status>Loading maps [635/699]: mosk_ship4n
+[17/11/2008 21:18:21]Status>Loading maps [636/699]: mosk_fild01
+[17/11/2008 21:18:23]Status>Loading maps [637/699]: mosk_fild02
+[17/11/2008 21:18:29]Status>Loading maps [660/699]: bat_room052
+[17/11/2008 21:18:29]Status>Loading maps [674/699]: que_qaru052
+[17/11/2008 21:18:30]Status>Loading maps [675/699]: 1@cataru052
+[17/11/2008 21:18:32]Status>Loading maps [676/699]: 2@cataru052
+[17/11/2008 21:18:32]Status>Loading maps [677/699]: e_toweru052
+[17/11/2008 21:18:33]Status>Loading maps [678/699]: 1@toweru052
+[17/11/2008 21:18:34]Status>Loading maps [679/699]: 2@toweru052
+[17/11/2008 21:18:37]Status>Loading maps [680/699]: 3@toweru052
+[17/11/2008 21:18:37]Status>Loading maps [681/699]: 4@toweru052
+[17/11/2008 21:18:37]Status>Loading maps [682/699]: 5@toweru052
+[17/11/2008 21:18:37]Status>Loading maps [683/699]: 6@toweru052
+[17/11/2008 21:18:37]Status>Loading maps [684/699]: mid_camp052
+[17/11/2008 21:18:37]Status>Loading maps [685/699]: mid_campin2
+[17/11/2008 21:18:38]Status>Loading maps [686/699]: man_fild012
+[17/11/2008 21:18:38]Info>Successfully loaded '699' maps.sun01b
+[17/11/2008 21:18:38]Status>Done reading packet database from 'packet_db.txt'. Using default packet version: 22.
+[17/11/2008 21:18:38]Status>Done reading '4445' entries in 'item_db.txt'.
+[17/11/2008 21:18:38]Status>Done reading '0' entries in 'item_db2.txt'.
+[17/11/2008 21:18:39]Status>Done reading 'item_group_db.txt'.
+[17/11/2008 21:18:39]Status>Done reading '1' entries in 'item_avail.txt'.
+[17/11/2008 21:18:39]Status>Done reading '11' entries in 'item_noequip.txt'.
+[17/11/2008 21:18:39]Status>Done reading '345' entries in 'item_trade.txt'.
+[17/11/2008 21:18:39]Status>Done reading '609' entries in 'db/skill_db.txt'.
+[17/11/2008 21:18:39]Status>Done reading '410' entries in 'db/skill_require_db.txt'.
+[17/11/2008 21:18:39]Status>Done reading '406' entries in 'db/skill_cast_db.txt'.
+[17/11/2008 21:18:39]Status>Done reading '23' entries in 'db/skill_castnodex_db.txt'.
+[17/11/2008 21:18:39]Status>Done reading '30' entries in 'db/skill_nocast_db.txt'.
+[17/11/2008 21:18:39]Status>Done reading '71' entries in 'db/skill_unit_db.txt'.
+[17/11/2008 21:18:39]Status>Done reading '145' entries in 'db/produce_db.txt'.
+[17/11/2008 21:18:39]Status>Done reading '136' entries in 'db/create_arrow_db.txt'.
+[17/11/2008 21:18:39]Status>Done reading '207' entries in 'db/abra_db.txt'.
+[17/11/2008 21:18:39]Status>Done reading '959' entries in 'mob_db.txt'.
+[17/11/2008 21:18:39]Status>Done reading '0' entries in 'mob_db2.txt'.
+[17/11/2008 21:18:39]Status>Done reading '0' entries in 'mob_avail.txt'.
+[17/11/2008 21:18:39]Status>Done reading 'mob_branch.txt'.
+[17/11/2008 21:18:39]Status>Done reading 'mob_poring.txt'.
+[17/11/2008 21:18:39]Status>Done reading 'mob_boss.txt'.
+[17/11/2008 21:18:39]Status>Done reading 'mob_pouch.txt'.
+[17/11/2008 21:18:39]Status>Done reading 'mob_skill_db.txt'.
+[17/11/2008 21:18:39]Status>Done reading 'mob_skill_db2.txt'.
+[17/11/2008 21:18:39]Status>Done reading 'mob_race2_db.txt'.
+[17/11/2008 21:18:39]Status>Done reading 'exp.txt'.
+[17/11/2008 21:18:39]Status>Done reading 'skill_tree.txt'.
+[17/11/2008 21:18:39]Status>Done reading 'attr_fix.txt'.
+[17/11/2008 21:18:39]Status>Done reading 'statpoint.txt'.
+[17/11/2008 21:18:39]Status>Done reading 'db/job_db1.txt'.
+[17/11/2008 21:18:39]Status>Done reading 'db/job_db2.txt'.
+[17/11/2008 21:18:39]Status>Done reading 'db/size_fix.txt'.
+[17/11/2008 21:18:39]Status>Done reading 'db/refine_db.txt'.
+[17/11/2008 21:18:39]Status>Done reading '34' entries in 'castle_db.txt'.
+[17/11/2008 21:18:39]Status>Done reading '15' entries in 'guild_skill_tree.txt'.
+[17/11/2008 21:18:39]Status>Done reading '38' pets in 'pet_db.txt'.
+[17/11/2008 21:18:39]Status>Done reading '8' homunculus in 'db/homunculus_db.txt'.
+[17/11/2008 21:18:39]Status>Done reading '99' levels in 'exp_homun.txt'.
+[17/11/2008 21:18:39]Status>Done reading 'homun_skill_tree.txt'.
+[17/11/2008 21:18:49]Info>Done loading '19157' NPCs:tras/Rewards.txttxtttxtls.txtxtxtt
+[17/11/2008 21:18:49]Status>Event 'OnInit' executed with '691' NPCs.
+[17/11/2008 21:18:49]Status>Server is 'ready' and listening on port '5121'.
+[17/11/2008 21:18:49]Status>Attempting to connect to Char Server. Please wait.
+[17/11/2008 21:18:49]Status>Connecting to 192.168.1.2:6121
+[17/11/2008 21:18:49]Status>Logging in to char server...
+[17/11/2008 21:18:49]Status>Successfully logged on to Char Server (Connection: '5').
+[17/11/2008 21:18:49]Status>Sending maps to char server...
+[17/11/2008 21:18:49]Status>Event 'OnCharIfInit' executed with '0' NPCs.
+[17/11/2008 21:18:49]Status>Event 'OnInterIfInit' executed with '0' NPCs.
+[17/11/2008 21:18:49]Status>Event 'OnInterIfInitOnce' executed with '31' NPCs.
+[17/11/2008 21:18:49]Info>From login-server: receiving information of '0' GM accounts.
+[17/11/2008 21:18:50]Status>Map sending complete. Map Server is now online.
+[17/11/2008 21:18:50]Info>Received Fame List of '0' characters.
+[17/11/2008 21:21:46]Info>**** SERVER RESTARTING FROM USER REQUEST ****
+[17/11/2008 21:21:47]Status>Memory manager initialised: log/map-server_sql.leaks
+[17/11/2008 21:21:47]Info>SVN Revision: '13369'.
+[17/11/2008 21:21:47]Status>Done loading plugin 'UPnP'
+[17/11/2008 21:21:48]Info>Console Silent Setting: 0
+[17/11/2008 21:21:48]Error>Using the default user/password s1/p1 is NOT RECOMMENDED.
+[17/11/2008 21:21:48]Notice>Please edit your 'login' table to create a proper inter-server user/password (gender 'S')
+[17/11/2008 21:21:48]Notice>and then edit your user/password in conf/map_athena.conf (or conf/import/map_conf.txt)
+[17/11/2008 21:21:48]Info>Defaulting to 192.168.1.2 as our IP address
+[17/11/2008 21:21:48]Info>Map Server IP Address : '192.168.1.2' -> '192.168.1.2'.
+[17/11/2008 21:21:48]Info>Char Server IP Address : '192.168.1.2' -> '192.168.1.2'.
+[17/11/2008 21:21:48]Status>Using SQL dbs: no
+[17/11/2008 21:21:48]Notice>Logging Item Picks to table `picklog`
+[17/11/2008 21:21:48]Notice>Logging GM Level 40 Commands to table `atcommandlog`
+[17/11/2008 21:21:48]Notice>Logging Item Picks to file `log/picklog.log`.txt
+[17/11/2008 21:21:48]Notice>Logging GM Level 40 Commands to file `log/atcommandlog.log`.txt
+[17/11/2008 21:21:48]Info>Connecting to the Map DB Server....
+[17/11/2008 21:21:48]Status>connect success! (Map Server Connection)
+[17/11/2008 21:21:49]Status>Loading maps (using db/map_cache.dat as map cache)...
+[17/11/2008 21:21:50]Status>Loading maps [23/699]: force_2-2m
+[17/11/2008 21:21:50]Status>Loading maps [46/699]: gef_fild14
+[17/11/2008 21:21:51]Status>Loading maps [71/699]: in_sphinx1
+[17/11/2008 21:21:51]Status>Loading maps [94/699]: mjolnir_08
+[17/11/2008 21:21:52]Status>Loading maps [117/699]: moc_fild18
+[17/11/2008 21:21:52]Status>Loading maps [141/699]: new_2-3e04
+[17/11/2008 21:21:52]Status>Loading maps [164/699]: pay_dun012
+[17/11/2008 21:21:54]Status>Loading maps [187/699]: prt_fild03
+[17/11/2008 21:21:54]Status>Loading maps [210/699]: pvp_n_1-4m
+[17/11/2008 21:21:55]Status>Loading maps [234/699]: pvp_n_6-2m
+[17/11/2008 21:21:55]Status>Loading maps [257/699]: pvp_y_2-5m
+[17/11/2008 21:21:57]Status>Loading maps [280/699]: pvp_y_7-3m
+[17/11/2008 21:21:57]Status>Loading maps [303/699]: cmd_fild051
+[17/11/2008 21:21:57]Status>Loading maps [327/699]: aldeg_cas03
+[17/11/2008 21:22:01]Status>Loading maps [349/699]: guild_vs2-2
+[17/11/2008 21:22:02]Status>Loading maps [373/699]: job_sageer2
+[17/11/2008 21:22:03]Status>Loading maps [396/699]: gon_dun0214
+[17/11/2008 21:22:05]Status>Loading maps [420/699]: louinniel01
+[17/11/2008 21:22:07]Status>Loading maps [443/699]: ayo_in0103e
+[17/11/2008 21:22:12]Status>Loading maps [466/699]: airplaneom2
+[17/11/2008 21:22:15]Status>Loading maps [489/699]: lhz_in03zen
+[17/11/2008 21:22:18]Status>Loading maps [512/699]: yuno_fild06
+[17/11/2008 21:22:19]Status>Loading maps [536/699]: auction_011
+[17/11/2008 21:22:21]Status>Loading maps [559/699]: kh_rossion0
+[17/11/2008 21:22:21]Status>Loading maps [583/699]: ra_san04320
+[17/11/2008 21:22:21]Status>Loading maps [607/699]: ve_fild05l0
+[17/11/2008 21:22:21]Status>Loading maps [630/699]: bossnia_01n
+[17/11/2008 21:22:21]Status>Loading maps [631/699]: bossnia_03n
+[17/11/2008 21:22:23]Status>Loading maps [654/699]: arug_cas012
+[17/11/2008 21:22:25]Status>Loading maps [677/699]: e_toweru052
+[17/11/2008 21:22:26]Info>Successfully loaded '699' maps.sun01b
+[17/11/2008 21:22:26]Status>Done reading packet database from 'packet_db.txt'. Using default packet version: 22.
+[17/11/2008 21:22:26]Status>Done reading '4445' entries in 'item_db.txt'.
+[17/11/2008 21:22:26]Status>Done reading '0' entries in 'item_db2.txt'.
+[17/11/2008 21:22:26]Status>Done reading 'item_group_db.txt'.
+[17/11/2008 21:22:26]Status>Done reading '1' entries in 'item_avail.txt'.
+[17/11/2008 21:22:26]Status>Done reading '11' entries in 'item_noequip.txt'.
+[17/11/2008 21:22:26]Status>Done reading '345' entries in 'item_trade.txt'.
+[17/11/2008 21:22:26]Status>Done reading '609' entries in 'db/skill_db.txt'.
+[17/11/2008 21:22:26]Status>Done reading '410' entries in 'db/skill_require_db.txt'.
+[17/11/2008 21:22:26]Status>Done reading '406' entries in 'db/skill_cast_db.txt'.
+[17/11/2008 21:22:26]Status>Done reading '23' entries in 'db/skill_castnodex_db.txt'.
+[17/11/2008 21:22:26]Status>Done reading '30' entries in 'db/skill_nocast_db.txt'.
+[17/11/2008 21:22:26]Status>Done reading '71' entries in 'db/skill_unit_db.txt'.
+[17/11/2008 21:22:26]Status>Done reading '145' entries in 'db/produce_db.txt'.
+[17/11/2008 21:22:26]Status>Done reading '136' entries in 'db/create_arrow_db.txt'.
+[17/11/2008 21:22:26]Status>Done reading '207' entries in 'db/abra_db.txt'.
+[17/11/2008 21:22:26]Status>Done reading '959' entries in 'mob_db.txt'.
+[17/11/2008 21:22:26]Status>Done reading '0' entries in 'mob_db2.txt'.
+[17/11/2008 21:22:26]Status>Done reading '0' entries in 'mob_avail.txt'.
+[17/11/2008 21:22:26]Status>Done reading 'mob_branch.txt'.
+[17/11/2008 21:22:26]Status>Done reading 'mob_poring.txt'.
+[17/11/2008 21:22:26]Status>Done reading 'mob_boss.txt'.
+[17/11/2008 21:22:26]Status>Done reading 'mob_pouch.txt'.
+[17/11/2008 21:22:27]Status>Done reading 'mob_skill_db.txt'.
+[17/11/2008 21:22:27]Status>Done reading 'mob_skill_db2.txt'.
+[17/11/2008 21:22:27]Status>Done reading 'mob_race2_db.txt'.
+[17/11/2008 21:22:27]Status>Done reading 'exp.txt'.
+[17/11/2008 21:22:27]Status>Done reading 'skill_tree.txt'.
+[17/11/2008 21:22:27]Status>Done reading 'attr_fix.txt'.
+[17/11/2008 21:22:27]Status>Done reading 'statpoint.txt'.
+[17/11/2008 21:22:27]Status>Done reading 'db/job_db1.txt'.
+[17/11/2008 21:22:27]Status>Done reading 'db/job_db2.txt'.
+[17/11/2008 21:22:27]Status>Done reading 'db/size_fix.txt'.
+[17/11/2008 21:22:27]Status>Done reading 'db/refine_db.txt'.
+[17/11/2008 21:22:27]Status>Done reading '34' entries in 'castle_db.txt'.
+[17/11/2008 21:22:27]Status>Done reading '15' entries in 'guild_skill_tree.txt'.
+[17/11/2008 21:22:27]Status>Done reading '38' pets in 'pet_db.txt'.
+[17/11/2008 21:22:27]Status>Done reading '8' homunculus in 'db/homunculus_db.txt'.
+[17/11/2008 21:22:27]Status>Done reading '99' levels in 'exp_homun.txt'.
+[17/11/2008 21:22:27]Status>Done reading 'homun_skill_tree.txt'.
+[17/11/2008 21:22:30]Info>**** SERVER WAS SHUTDOWN MANUALLY ****
