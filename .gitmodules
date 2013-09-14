@@ -1,3 +1,6 @@
 [submodule "SeAr"]
 	path = SeAr
 	url = git@github.com:trojal/SeAr-mirror.git
+[submodule "athena-fr"]
+	path = athena-fr
+	url = https://github.com/Cedroux/athena-fr
