@@ -7,3 +7,6 @@
 [submodule "bookofymir"]
 	path = bookofymir
 	url = git@github.com:trojal/bookofymir-mirror.git
+[submodule "Cronus"]
+	path = Cronus
+	url = git@github.com:Cronus-Emulator/Cronus.git
