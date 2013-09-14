@@ -16,3 +16,6 @@
 [submodule "ECTP"]
 	path = ECTP
 	url = git@github.com:trojal/ECTP-mirror.git
+[submodule "Hercules"]
+	path = Hercules
+	url = git@github.com:HerculesWS/Hercules.git
