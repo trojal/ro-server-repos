@@ -19,3 +19,6 @@
 [submodule "Hercules"]
 	path = Hercules
 	url = git@github.com:HerculesWS/Hercules.git
+[submodule "eathena"]
+	path = eathena
+	url = git@github.com:eathena/eathena.git
