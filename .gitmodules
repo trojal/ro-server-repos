@@ -13,3 +13,6 @@
 [submodule "cronusdewata"]
 	path = cronusdewata
 	url = git@github.com:trojal/cronusdewata-mirror.git
+[submodule "ECTP"]
+	path = ECTP
+	url = git@github.com:trojal/ECTP-mirror.git
