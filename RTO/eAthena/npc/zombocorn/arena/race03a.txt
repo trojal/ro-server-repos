@@ -1,0 +1,1431 @@
+// mapflags : nomemo, nowarp, nowarpto, nobranch, noicewall, noteleport, nosave, noreturn, nopvp, nopenalty
+//============================================================
+
+// Race Exiter -----------------------------------
+race03_np,102,25,3	script	Race Assistant#3	770,{
+	mes "[Race Assistant]";
+	mes "Hello there.  If you want, I can provide you with information about this track or just take you back to the Station!";
+	next;
+		menu "Back to the station",M_1,"No thanks, I'll stay",M_2,"Show Checkpoints",M_Checkpoint,"Information",M_3,"End Conversation",M_End;
+	M_1:
+		if (@03np_race == 18) goto M_1done;
+		if (@03np_race == 17) goto M_1done;
+		if ($@03np_racestart != 0) goto M_1a;
+		if ($@03np_countdown == 1) goto M_1a;
+		set @03np_race,18;
+		set @03np_mypos,0;
+		set @03np_raceid,0;
+		set @03np_char1place,0;
+		set @03np_char2place,0;
+		set @03np_char3place,0;
+		set @03np_char0place,0;
+		mes "[Race Assistant]";
+		mes "Please come again!";
+		next;
+		warp "pvp_m_room", 51, 38;
+		end;
+	M_1done:
+		set @03np_mypos,0;
+		set @03np_raceid,0;
+		set @03np_char1place,0;
+		set @03np_char2place,0;
+		set @03np_char3place,0;
+		set @03np_char0place,0;
+		mes "[Race Assistant]";
+		mes "Please come again!";
+		next;
+		warp "pvp_m_room", 51, 38;
+		end;
+	M_1a:
+		if (@03np_race == 18) goto M_1done;
+		if (@03np_race == 17) goto M_1done;
+		mes "[Race Assistant]";
+		mes "Hey, the clock is still ticking... you sure you want to leave the race?  If you leave before you finish, you won't be able to participate in the race until it's over.";
+		next;
+		menu "No, I'll stay",M_1b,"Yes, I want to leave",M_1c;
+		goto M_1c;
+	M_1b:
+		mes "[Race Assistant]";
+		mes "Good luck.";
+		close;	
+	M_1c:
+		set @03np_race,18;
+		set @03np_mypos,0;
+		set @03np_raceid,0;
+		set @03np_char1place,0;
+		set @03np_char2place,0;
+		set @03np_char3place,0;
+		set @03np_char0place,0;
+		warp "pvp_m_room", 51, 38;
+		end;
+	M_2:
+		mes "[Race Assistant]";
+		mes "Alright.  Good luck.";
+		close;
+	M_3:
+		mes "[Race Assistant]";
+		mes "This is the Hard Track.  It has a whopping total of fifteen checkpoints.  Checkpoints 4, 9, and 15 are in the same spot though.  They're sort of a 'Lap checkpoint'";
+		next;
+		mes "[Race Assistant]";
+		mes "Lap 1 has three checkpoints, Lap 2 has four checkpoints, and Lap 3 has five checkpoints.";
+		next;
+		mes "[Race Assistant]";
+		mes "You should make sure you know the checkpoints if you want to participate in this map.  You should also notice the fog!  Beware of the fog, there are some unpleasant things down there.";
+		next;
+		mes "[Race Assistant]";
+		mes "There must be atleast five people present to start the race, don't forget that either!!";
+		menu "Show me the Checkpoints",M_Checkpoint,"End Conversation",M_End;
+
+	M_Checkpoint:
+		mes "[Race Assistant]";
+		mes "Okay.  Before we start, be sure you pay attention, SERIOUSLY.  You have little hope of winning if you don't.  First I'll show you the starting line and finish line, okay?  Don't forget to keep your map zoomed out either.";
+		next;
+		viewpoint 1,95,33,1,0xFFFFFF;
+		mes "[Race Assistant]";
+		mes "This is the starting line and finish line in white.  It's infront of us, as you can see.";
+		next;
+		mes "[Race Assistant]";
+		mes "This is the First Checkpoint of Lap 1.";
+		viewpoint 1,42,174,2,0xFF0000;
+		next;
+		mes "[Race Assistant]";
+		mes "This is the Second Checkpoint of Lap 1.";
+		viewpoint 1,365,44,3,0xFF0000;
+		next;
+		mes "[Race Assistant]";
+		mes "This is the Third Checkpoint of Lap 1.";
+		viewpoint 1,42,278,4,0xFF0000;
+		next;
+		mes "[Race Assistant]";
+		mes "This is the Fourth Checkpoint, this is also called the Lap Checkpoint, since there are two other checkpoints in the same location.  So you'll be going here three times, thus, a Lap checkpoint.";
+		viewpoint 1,107,103,5,0xFF0000;
+		next;
+		mes "[Race Assistant]";
+		mes "This is the Fifth Checkpoint, and the start of Lap 2.";
+		viewpoint 1,263,15,6,0x0000FF;
+		next;
+		mes "[Race Assistant]";
+		mes "This is the Sixth Checkpoint, and the second checkpoint of lap 2.";
+		viewpoint 1,324,338,7,0x0000FF;
+		next;
+		mes "[Race Assistant]";
+		mes "This is the Seventh Checkpoint, and the third checkpoint of lap 2.";
+		viewpoint 1,366,183,8,0x0000FF;
+		next;
+		mes "[Race Assistant]";
+		mes "This is the Eighth Checkpoint, and the fourth checkpoint of lap 2.";
+		viewpoint 1,147,172,9,0x0000FF;
+		next;
+		viewpoint 2,107,103,5,0xFF0000;
+		mes "[Race Assistant]";
+		mes "This is the Ninth Checkpoint, and the Lap checkpoint.  After reaching Checkpoint Eight, you must come back here next.";
+		viewpoint 1,107,103,10,0x0000FF;
+		next;
+		mes "[Race Assistant]";
+		mes "This is the Tenth Checkpoint, and the first checkpoint of lap 3.";
+		viewpoint 1,84,315,11,0x00FF00;
+		next;
+		mes "[Race Assistant]";
+		mes "This is the Eleventh Checkpoint, and the second checkpoint of lap 3.";
+		viewpoint 1,196,230,12,0x00FF00;
+		next;
+		mes "[Race Assistant]";
+		mes "This is the Twelfth Checkpoint, and the third checkpoint of lap 3.";
+		viewpoint 1,356,92,13,0x00FF00;
+		next;
+		mes "[Race Assistant]";
+		mes "This is the Thirteenth Checkpoint, and the fourth checkpoint of lap 3.";
+		viewpoint 1,32,67,14,0x00FF00;
+		next;
+		mes "[Race Assistant]";
+		mes "This is the Fourteenth Checkpoint, and the fifth checkpoint of lap 3.";
+		viewpoint 1,211,370,15,0x00FF00;
+		next;
+		viewpoint 2,107,103,10,0x0000FF;
+		mes "[Race Assistant]";
+		mes "This is the Fifteenth Checkpoint, and the Lap checkpoint.  At this point, you've compelted all fifteen checkpoints, and all you have to do is just come back here, through the finish line to complete the race.";
+		viewpoint 1,107,103,16,0x00FF00;
+		next;
+		viewpoint 2,107,103,16,0x00FF00;
+		viewpoint 1,107,103,17,0xFFFFFF;
+		mes "[Race Assistant]";
+		mes "Take a good look, be sure you get all of them in the correct order.  There is not really a 'right path', just get from one checkpoint to the next as fast as you can.  You'll see the lap checkpoint in white here.";
+		next;
+		viewpoint 2,95,33,1,0xFFFFFF;
+		viewpoint 2,42,174,2,0xFF0000;
+		viewpoint 2,365,44,3,0xFF0000;
+		viewpoint 2,42,278,4,0xFF0000;
+		viewpoint 2,263,15,6,0x0000FF;
+		viewpoint 2,324,338,7,0x0000FF;
+		viewpoint 2,366,183,8,0x0000FF;
+		viewpoint 2,147,172,9,0x0000FF;
+		viewpoint 2,84,315,11,0x00FF00;
+		viewpoint 2,196,230,12,0x00FF00;
+		viewpoint 2,356,92,13,0x00FF00;
+		viewpoint 2,32,67,14,0x00FF00;
+		viewpoint 2,211,370,15,0x00FF00;
+		viewpoint 2,107,103,17,0xFFFFFF;
+		next;
+		mes "[Race Assistant]";
+		mes "Since that was quite a bit, do you need me to repeat it?";
+		next;
+		menu "Yes... ugh.",M_Checkpoint,"Nope, got it all!",M_Chkend;
+		close;
+	M_Chkend:
+		mes "[Race Assistant]";
+		mes "Good to know.  Now go win that thing!";
+		close;
+	M_End:
+		end;
+}
+
+// Hard Starter ----------------------------------
+race03_np,101,28,3	script	Hard Starter	770,{
+
+if ($@03np_racestart != 0) goto M_Started;
+if ($@03np_racecount == 1) goto M_Started;
+
+	M_Menu:
+		mes "[Hard Starter]";
+		mes "Welcome, " + strcharinfo(0) + ".  This is the Hard Racing Track.  If you're starting the race, please stay on the stone steps.";
+		next;
+		menu "Information",M_1,"Show Checkpoints",M_Checkpoint,"Start the race!",L_Count,"Cancel",M_Cancel;
+	M_NotEnough:
+		mes "[Hard Starter]";
+		mes "There needs to be atleast five people here to start the race, please get more people.";
+		next;
+		goto M_Menu;
+	M_Checkpoint:
+		mes "[Hard Starter]";
+		mes "Okay.  Before we start, be sure you pay attention, SERIOUSLY.  You have little hope of winning if you don't.  First I'll show you the starting line and finish line, okay?  Don't forget to keep your map zoomed out either.";
+		next;
+		viewpoint 1,95,33,1,0xFFFFFF;
+		mes "[Hard Starter]";
+		mes "This is the starting line and finish line in white.  It's infront of us, as you can see.";
+		next;
+		mes "[Hard Starter]";
+		mes "This is the First Checkpoint of Lap 1.";
+		viewpoint 1,42,174,2,0xFF0000;
+		next;
+		mes "[Hard Starter]";
+		mes "This is the Second Checkpoint of Lap 1.";
+		viewpoint 1,365,44,3,0xFF0000;
+		next;
+		mes "[Hard Starter]";
+		mes "This is the Third Checkpoint of Lap 1.";
+		viewpoint 1,42,278,4,0xFF0000;
+		next;
+		mes "[Hard Starter]";
+		mes "This is the Fourth Checkpoint, this is also called the Lap Checkpoint, since there are two other checkpoints in the same location.  So you'll be going here three times, thus, a Lap checkpoint.";
+		viewpoint 1,107,103,5,0xFF0000;
+		next;
+		mes "[Hard Starter]";
+		mes "This is the Fifth Checkpoint, and the start of Lap 2.";
+		viewpoint 1,263,15,6,0x0000FF;
+		next;
+		mes "[Hard Starter]";
+		mes "This is the Sixth Checkpoint, and the second checkpoint of lap 2.";
+		viewpoint 1,324,338,7,0x0000FF;
+		next;
+		mes "[Hard Starter]";
+		mes "This is the Seventh Checkpoint, and the third checkpoint of lap 2.";
+		viewpoint 1,366,183,8,0x0000FF;
+		next;
+		mes "[Hard Starter]";
+		mes "This is the Eighth Checkpoint, and the fourth checkpoint of lap 2.";
+		viewpoint 1,147,172,9,0x0000FF;
+		next;
+		viewpoint 2,107,103,5,0xFF0000;
+		mes "[Hard Starter]";
+		mes "This is the Ninth Checkpoint, and the Lap checkpoint.  After reaching Checkpoint Eight, you must come back here next.";
+		viewpoint 1,107,103,10,0x0000FF;
+		next;
+		mes "[Hard Starter]";
+		mes "This is the Tenth Checkpoint, and the first checkpoint of lap 3.";
+		viewpoint 1,84,315,11,0x00FF00;
+		next;
+		mes "[Hard Starter]";
+		mes "This is the Eleventh Checkpoint, and the second checkpoint of lap 3.";
+		viewpoint 1,196,230,12,0x00FF00;
+		next;
+		mes "[Hard Starter]";
+		mes "This is the Twelfth Checkpoint, and the third checkpoint of lap 3.";
+		viewpoint 1,356,92,13,0x00FF00;
+		next;
+		mes "[Hard Starter]";
+		mes "This is the Thirteenth Checkpoint, and the fourth checkpoint of lap 3.";
+		viewpoint 1,32,67,14,0x00FF00;
+		next;
+		mes "[Hard Starter]";
+		mes "This is the Fourteenth Checkpoint, and the fifth checkpoint of lap 3.";
+		viewpoint 1,211,370,15,0x00FF00;
+		next;
+		viewpoint 2,107,103,10,0x0000FF;
+		mes "[Hard Starter]";
+		mes "This is the Fifteenth Checkpoint, and the Lap checkpoint.  At this point, you've compelted all fifteen checkpoints, and all you have to do is just come back here, through the finish line to complete the race.";
+		viewpoint 1,107,103,16,0x00FF00;
+		next;
+		viewpoint 2,107,103,16,0x00FF00;
+		viewpoint 1,107,103,17,0xFFFFFF;
+		mes "[Hard Starter]";
+		mes "Take a good look, be sure you get all of them in the correct order.  There is not really a 'right path', just get from one checkpoint to the next as fast as you can.  You'll see the lap checkpoint in white here.";
+		next;
+		viewpoint 2,95,33,1,0xFFFFFF;
+		viewpoint 2,42,174,2,0xFF0000;
+		viewpoint 2,365,44,3,0xFF0000;
+		viewpoint 2,42,278,4,0xFF0000;
+		viewpoint 2,263,15,6,0x0000FF;
+		viewpoint 2,324,338,7,0x0000FF;
+		viewpoint 2,366,183,8,0x0000FF;
+		viewpoint 2,147,172,9,0x0000FF;
+		viewpoint 2,84,315,11,0x00FF00;
+		viewpoint 2,196,230,12,0x00FF00;
+		viewpoint 2,356,92,13,0x00FF00;
+		viewpoint 2,32,67,14,0x00FF00;
+		viewpoint 2,211,370,15,0x00FF00;
+		viewpoint 2,107,103,17,0xFFFFFF;
+		next;
+		mes "[Hard Starter]";
+		mes "Since that was quite a bit, do you need me to repeat it?";
+		next;
+		menu "Yes... ugh.",M_Checkpoint,"Nope, got it all!",M_Chkend;
+		close;
+	M_Chkend:
+		mes "[Hard Starter]";
+		mes "Good to know.  Now go win that thing!";
+		close;
+	M_1:
+		mes "[Hard Starter]";
+		mes "This is the Hard Track.  It is a windy run through this area, twice.  There are nine checkpoints, and two laps as well as a quick turnaround after the ninth checkpoint.";
+		next; 
+		mes "[Hard Starter]";
+		mes "You need atleast five people to race, and the race is two laps.  You need to be extra sure to get the Checkpoints.  You must step within 4 cells of one to get credit for it.";
+		next;
+		mes "[Hard Starter]";
+		mes "There are a few monsters that inhabit this map, by the way.  Though I doubt they would cause trouble for you.  Also, the racetrack resets automatically once every 10 minutes.";
+		close;
+	M_Cancel:
+		mes "[Hard Starter]";
+		mes "Okay.  If you need to start the race, talk to me.  Remember, I can't start it if there aren't atleast five people here.";
+		close;
+	L_Count:
+		if (getmapusers("race03_np") < 5) goto M_NotEnough;
+		stopnpctimer "Hard Starter";
+		setnpctimer 0;
+		set $@03np_countdown,1;
+		set $@03np_rmintime,0;
+		set $@03np_rsectime,0;
+		set $@03np_position,0;
+		set $@03np_racestart,1;
+		set $@03np_raceid,rand(1,999999);
+		set $@03np_spawnonce,0;
+		mapannounce "race03_np",strcharinfo(0) + " has started the countdown!  So get ready to race and stay behind the Starting Line.",1;
+
+		startnpctimer "Hard Starter";
+		close;
+	OnTimer1000:
+		if ($@03np_countdown == 0) end;
+		mapannounce "race03_np","[10]",1;
+		goto L_Spawn;
+		end;
+	OnTimer2000:
+		if ($@03np_countdown == 0) end;
+		mapannounce "race03_np","[9]",1;
+		end;
+	OnTimer3000:
+		if ($@03np_countdown == 0) end;
+		mapannounce "race03_np","[8]",1;
+		end;
+	OnTimer4000:
+		if ($@03np_countdown == 0) end;
+		mapannounce "race03_np","[7]",1;
+		end;
+	OnTimer5000:
+		if ($@03np_countdown == 0) end;
+		mapannounce "race03_np","[6]",1;
+		end;
+	OnTimer6000:
+		if ($@03np_countdown == 0) end;
+		mapannounce "race03_np","[5]",1;
+		end;
+	OnTimer7000:
+		if ($@03np_countdown == 0) end;
+		mapannounce "race03_np","[4]",1;
+		end;
+	OnTimer8000:
+		if ($@03np_countdown == 0) end;
+		mapannounce "race03_np","[3]",1;
+		end;
+	OnTimer9000:
+		if ($@03np_countdown == 0) end;
+		mapannounce "race03_np","[2]",1;
+		end;
+	OnTimer10000:
+		if ($@03np_countdown == 0) end;
+		mapannounce "race03_np","[1]",1;
+		end;
+	OnTimer11000:
+		if ($@03np_countdown == 0) end;
+		emotion 27;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		mapannounce "race03_np","[GO!]",1;
+		setnpctimer 0;
+		set $@03np_inprogress,1;
+		set $@03np_station$,"- Race in Progress";
+		set $@03np_countdown,0;
+		end;
+	OnTimer60000:
+		mapannounce "race03_np","Nineteen minutes remaining.",1;
+		end;
+	OnTimer120000:
+		mapannounce "race03_np","Eighteen minutes remaining.",1;
+		end;
+	OnTimer180000:
+		mapannounce "race03_np","Seventeen minutes remaining.",1;
+		end;
+	OnTimer240000:
+		mapannounce "race03_np","Sixteen minutes remaining.",1;
+		end;
+	OnTimer300000:
+		mapannounce "race03_np","Fifteen minutes remaining.",1;
+		end;
+	OnTimer360000:
+		mapannounce "race03_np","Fourteen minutes remaining.",1;
+		end;
+	OnTimer420000:
+		mapannounce "race03_np","Thirteen minutes remaining.",1;
+		end;
+	OnTimer480000:
+		mapannounce "race03_np","Twelve minutes remaining.",1;
+		end;
+	OnTimer540000:
+		mapannounce "race03_np","Eleven minutes remaining.",1;
+		end;
+	OnTimer600000:
+		mapannounce "race03_np","Ten minutes remaining.",1;
+		end;
+	OnTimer660000:
+		mapannounce "race03_np","Nine minutes remaining.",1;
+		end;
+	OnTimer720000:
+		mapannounce "race03_np","Eight minutes remaining.",1;
+		end;
+	OnTimer780000:
+		mapannounce "race03_np","Seven minutes remaining.",1;
+		end;
+	OnTimer840000:
+		mapannounce "race03_np","Six minutes remaining.",1;
+		end;
+	OnTimer900000:
+		mapannounce "race03_np","Five minutes remaining.",1;
+		end;
+	OnTimer960000:
+		mapannounce "race03_np","Four minutes remaining.",1;
+		end;
+	OnTimer1020000:
+		mapannounce "race03_np","Three minutes remaining.",1;
+		end;
+	OnTimer1080000:
+		mapannounce "race03_np","Two minutes remaining.",1;
+		end;
+	OnTimer1140000:
+		mapannounce "race03_np","One minute remaining.",1;
+		end;
+	OnTimer1170000:
+		mapannounce "race03_np","Thirty seconds remaining.",1;
+		end;
+	OnTimer1180000:
+		mapannounce "race03_np","Twenty seconds remaining.",1;
+		end;
+	OnTimer1190000:
+		mapannounce "race03_np","Ten seconds remaining.",1;
+		end;
+	OnTimer1195000:
+		mapannounce "race03_np","Five!",1;
+		end;
+	OnTimer1196000:
+		mapannounce "race03_np","Four!",1;
+		end;
+	OnTimer1197000:
+		mapannounce "race03_np","Three!!",1;
+		end;
+	OnTimer1198000:
+		mapannounce "race03_np","Two!!",1;
+		end;
+	OnTimer1199000:
+		mapannounce "race03_np","One!!!",1;
+		end;
+	OnTimer1200000:
+		Stopnpctimer "Hard Starter";
+		mapannounce "race03_np","Twenty minutes have elapsed, and the race is over.  The Racetrack will now restart automatically.",1;
+		set $@03np_raceid,0;
+		set $@03np_racestart,0;
+		set $@03np_racetime,0;
+		set $@03np_position,0;
+		set $@03np_rmintime,0;
+		set $@03np_rsectime,0;
+		set $@03np_station$,"";
+		set $@03np_inprogress,0;
+		killmonsterall "race03_np";
+		set $@03np_spawnonce,0;
+		end;
+	L_Spawn:
+		if ($@03np_spawnonce == 1) end;
+		monster "race03_np",109,51,"Mandragora",1020,1,12,12;
+		monster "race03_np",91,54,"Mandragora",1020,1,12,12;
+		monster "race03_np",73,83,"Mandragora",1020,1,12,12;
+		monster "race03_np",42,73,"Mandragora",1020,1,12,12;
+		monster "race03_np",56,75,"Mandragora",1020,1,12,12;
+		monster "race03_np",55,107,"Mandragora",1020,1,12,12;
+		monster "race03_np",103,136,"Mandragora",1020,1,12,12;
+		monster "race03_np",96,133,"Mandragora",1020,1,12,12;
+		monster "race03_np",80,142,"Mandragora",1020,1,12,12;
+		monster "race03_np",74,137,"Mandragora",1020,1,12,12;
+		monster "race03_np",49,179,"Mandragora",1020,1,12,12;
+		monster "race03_np",97,188,"Mandragora",1020,1,12,12;
+		monster "race03_np",113,180,"Mandragora",1020,1,12,12;
+		monster "race03_np",138,149,"Mandragora",1020,1,12,12;
+		monster "race03_np",134,152,"Mandragora",1020,1,12,12;
+		monster "race03_np",160,143,"Mandragora",1020,1,12,12;
+		monster "race03_np",169,149,"Mandragora",1020,1,12,12;
+		monster "race03_np",152,170,"Mandragora",1020,1,12,12;
+		monster "race03_np",156,173,"Mandragora",1020,1,12,12;
+		monster "race03_np",141,168,"Mandragora",1020,1,12,12;
+		monster "race03_np",139,175,"Mandragora",1020,1,12,12;
+		monster "race03_np",136,194,"Mandragora",1020,1,12,12;
+		monster "race03_np",103,154,"Mandragora",1020,1,12,12;
+		monster "race03_np",167,219,"Mandragora",1020,1,12,12;
+		monster "race03_np",172,216,"Mandragora",1020,1,12,12;
+		monster "race03_np",199,235,"Mandragora",1020,1,12,12;
+		monster "race03_np",192,218,"Mandragora",1020,1,12,12;
+		monster "race03_np",251,252,"Mandragora",1020,1,12,12;
+		monster "race03_np",238,256,"Mandragora",1020,1,12,12;
+		monster "race03_np",247,284,"Mandragora",1020,1,12,12;
+		monster "race03_np",262,273,"Mandragora",1020,1,12,12;
+		monster "race03_np",277,271,"Mandragora",1020,1,12,12;
+		monster "race03_np",285,261,"Mandragora",1020,1,12,12;
+		monster "race03_np",310,251,"Mandragora",1020,1,12,12;
+		monster "race03_np",300,238,"Mandragora",1020,1,12,12;
+		monster "race03_np",333,256,"Mandragora",1020,1,12,12;
+		monster "race03_np",310,287,"Mandragora",1020,1,12,12;
+		monster "race03_np",293,297,"Mandragora",1020,1,12,12;
+		monster "race03_np",325,326,"Mandragora",1020,1,12,12;
+		monster "race03_np",311,335,"Mandragora",1020,1,12,12;
+		monster "race03_np",302,325,"Mandragora",1020,1,12,12;
+		monster "race03_np",268,325,"Mandragora",1020,1,12,12;
+		monster "race03_np",281,327,"Mandragora",1020,1,12,12;
+		monster "race03_np",261,347,"Mandragora",1020,1,12,12;
+		monster "race03_np",258,350,"Mandragora",1020,1,12,12;
+		monster "race03_np",247,332,"Mandragora",1020,1,12,12;
+		monster "race03_np",251,333,"Mandragora",1020,1,12,12;
+		monster "race03_np",258,297,"Mandragora",1020,1,12,12;
+		monster "race03_np",248,284,"Mandragora",1020,1,12,12;
+		monster "race03_np",234,287,"Mandragora",1020,1,12,12;
+		monster "race03_np",220,343,"Mandragora",1020,1,12,12;
+		monster "race03_np",216,372,"Mandragora",1020,1,12,12;
+		monster "race03_np",217,368,"Mandragora",1020,1,12,12;
+		monster "race03_np",201,363,"Mandragora",1020,1,12,12;
+		monster "race03_np",200,358,"Mandragora",1020,1,12,12;
+		monster "race03_np",196,332,"Mandragora",1020,1,12,12;
+		monster "race03_np",120,310,"Mandragora",1020,1,12,12;
+		monster "race03_np",99,288,"Mandragora",1020,1,12,12;
+		monster "race03_np",81,303,"Mandragora",1020,1,12,12;
+		monster "race03_np",95,313,"Mandragora",1020,1,12,12;
+		monster "race03_np",66,320,"Mandragora",1020,1,12,12;
+		monster "race03_np",275,23,"Mandragora",1020,1,12,12;
+		monster "race03_np",280,40,"Mandragora",1020,1,12,12;
+		monster "race03_np",253,48,"Mandragora",1020,1,12,12;
+		monster "race03_np",249,22,"Mandragora",1020,1,12,12;
+		monster "race03_np",231,39,"Mandragora",1020,1,12,12;
+		monster "race03_np",231,34,"Mandragora",1020,1,12,12;
+		monster "race03_np",253,49,"Mandragora",1020,1,12,12;
+		monster "race03_np",239,65,"Mandragora",1020,1,12,12;
+		monster "race03_np",367,38,"Mandragora",1020,1,12,12;
+		monster "race03_np",361,34,"Mandragora",1020,1,12,12;
+		monster "race03_np",346,64,"Mandragora",1020,1,12,12;
+		monster "race03_np",344,85,"Mandragora",1020,1,12,12;
+		monster "race03_np",343,81,"Mandragora",1020,1,12,12;
+		monster "race03_np",315,91,"Mandragora",1020,1,12,12;
+		monster "race03_np",321,96,"Mandragora",1020,1,12,12;
+		monster "race03_np",326,103,"Mandragora",1020,1,12,12;
+		monster "race03_np",321,107,"Mandragora",1020,1,12,12;
+		monster "race03_np",293,121,"Mandragora",1020,1,12,12;
+		monster "race03_np",292,118,"Mandragora",1020,1,12,12;
+		monster "race03_np",299,136,"Mandragora",1020,1,12,12;
+		monster "race03_np",294,151,"Mandragora",1020,1,12,12;
+		monster "race03_np",312,183,"Mandragora",1020,1,12,12;
+		monster "race03_np",314,194,"Mandragora",1020,1,12,12;
+		monster "race03_np",312,214,"Mandragora",1020,1,12,12;
+		monster "race03_np",330,220,"Mandragora",1020,1,12,12;
+		monster "race03_np",201,125,"Mandragora",1020,1,12,12;
+		monster "race03_np",197,113,"Mandragora",1020,1,12,12;
+		monster "race03_np",218,119,"Mandragora",1020,1,12,12;
+		monster "race03_np",221,108,"Mandragora",1020,1,12,12;
+		monster "race03_np",194,84,"Mandragora",1020,1,12,12;
+		monster "race03_np",168,101,"Mandragora",1020,1,12,12;
+		monster "race03_np",164,95,"Mandragora",1020,1,12,12;
+		monster "race03_np",118,75,"Mandragora",1020,1,12,12;
+		monster "race03_np",118,80,"Mandragora",1020,1,12,12;
+		monster "race03_np",122,89,"Mandragora",1020,1,12,12;
+		monster "race03_np",330,220,"Mandragora",1020,1,12,12;
+		monster "race03_np",152,78,"Mandragora",1020,1,12,12;
+		monster "race03_np",271,17,"Mandragora",1020,1,12,12;
+		monster "race03_np",356,168,"Mandragora",1020,1,12,12;
+		monster "race03_np",369,189,"Mandragora",1020,1,12,12;
+		monster "race03_np",280,94,"Mandragora",1020,1,12,12;
+		monster "race03_np",248,113,"Mandragora",1020,1,12,12;
+		monster "race03_np",254,117,"Mandragora",1020,1,12,12;
+		monster "race03_np",217,85,"Mandragora",1020,1,12,12;
+		monster "race03_np",335,46,"Mandragora",1020,1,12,12;
+		monster "race03_np",300,77,"Mandragora",1020,1,12,12;
+		monster "race03_np",297,74,"Mandragora",1020,1,12,12;
+		monster "race03_np",289,82,"Mandragora",1020,1,12,12;
+		monster "race03_np",293,79,"Mandragora",1020,1,12,12;
+		monster "race03_np",332,186,"Mandragora",1020,1,12,12;
+		monster "race03_np",331,174,"Mandragora",1020,1,12,12;
+		if (getmapusers("race03_np") < 6) end;
+
+		monster "race03_np",197,138,"Mandragora",1020,1,12,12;
+		monster "race03_np",210,129,"Mandragora",1020,1,12,12;
+		monster "race03_np",315,208,"Mandragora",1020,1,12,12;
+		monster "race03_np",357,53,"Mandragora",1020,1,12,12;
+		monster "race03_np",126,149,"Flora",1118,1,26,26;
+		monster "race03_np",123,131,"Flora",1118,1,26,26;
+		monster "race03_np",244,320,"Mandragora",1020,1,12,12;
+		monster "race03_np",254,301,"Mandragora",1020,1,12,12;
+		monster "race03_np",41,164,"Mandragora",1020,1,12,12;
+		monster "race03_np",74,188,"Mandragora",1020,1,12,12;
+		monster "race03_np",72,177,"Mandragora",1020,1,12,12;
+		monster "race03_np",83,119,"Mandragora",1020,1,12,12;
+		monster "race03_np",147,75,"Flora",1118,1,26,26;
+		monster "race03_np",79,115,"Mandragora",1020,1,12,12;
+		monster "race03_np",47,81,"Mandragora",1020,1,12,12;
+		if (getmapusers("race03_np") < 7) end;
+
+		monster "race03_np",72,321,"Mandragora",1020,1,12,12;
+		monster "race03_np",73,302,"Mandragora",1020,1,12,12;
+		monster "race03_np",320,347,"Mandragora",1020,1,12,12;
+		monster "race03_np",280,36,"Mandragora",1020,1,12,12;
+		monster "race03_np",83,119,"Mandragora",1020,1,12,12;
+		monster "race03_np",215,147,"Mandragora",1020,1,12,12;
+		monster "race03_np",83,125,"Flora",1118,1,26,26;
+		monster "race03_np",74,141,"Flora",1118,1,26,26;
+		monster "race03_np",45,294,"Mandragora",1020,1,12,12;
+		monster "race03_np",61,266,"Mandragora",1020,1,12,12;
+		monster "race03_np",330,220,"Mandragora",1020,1,12,12;
+		monster "race03_np",204,213,"Mandragora",1020,1,12,12;
+		monster "race03_np",208,214,"Mandragora",1020,1,12,12;
+		if (getmapusers("race03_np") < 8) end;
+
+		monster "race03_np",111,77,"Flora",1118,1,26,26;
+		monster "race03_np",125,81,"Flora",1118,1,26,26;
+		monster "race03_np",97,101,"Flora",1118,1,26,26;
+		monster "race03_np",87,94,"Mandragora",1020,1,12,12;
+		monster "race03_np",34,82,"Mandragora",1020,1,12,12;
+		monster "race03_np",86,101,"Flora",1118,1,26,26;
+		monster "race03_np",326,344,"Mandragora",1020,1,12,12;
+		monster "race03_np",320,347,"Mandragora",1020,1,12,12;
+		monster "race03_np",280,36,"Mandragora",1020,1,12,12;
+		monster "race03_np",198,231,"Flora",1118,1,26,26;
+		monster "race03_np",223,228,"Flora",1118,1,26,26;
+		monster "race03_np",160,200,"Flora",1118,1,26,26;
+		if (getmapusers("race03_np") < 9) end;
+
+		monster "race03_np",359,189,"Mandragora",1020,1,12,12;
+		monster "race03_np",53,95,"Flora",1118,1,26,26;
+		monster "race03_np",188,167,"Flora",1118,1,26,26;
+		monster "race03_np",92,102,"Mandragora",1020,1,12,12;
+		monster "race03_np",350,58,"Mandragora",1020,1,12,12;
+		monster "race03_np",71,183,"Flora",1118,1,26,26;
+		monster "race03_np",104,185,"Flora",1118,1,26,26;
+		monster "race03_np",343,205,"Flora",1118,1,26,26;
+		monster "race03_np",305,150,"Mandragora",1020,1,12,12;
+		monster "race03_np",308,154,"Mandragora",1020,1,12,12;
+		monster "race03_np",341,46,"Flora",1118,1,26,26;
+		if (getmapusers("race03_np") < 10) end;
+
+		monster "race03_np",333,351,"Mantis",1139,1,26,26;
+		monster "race03_np",317,100,"Flora",1118,1,26,26;
+		monster "race03_np",270,94,"Flora",1118,1,26,26;
+		monster "race03_np",343,220,"Mantis",1139,1,26,26;
+		monster "race03_np",29,267,"Mantis",1139,1,26,26;
+		monster "race03_np",268,21,"Flora",1118,1,26,26;
+		monster "race03_np",223,81,"Mandragora",1020,1,12,12;
+		monster "race03_np",66,164,"Flora",1118,1,26,26;
+		monster "race03_np",167,74,"Flora",1118,1,26,26;
+		monster "race03_np",321,321,"Flora",1118,1,26,26;
+		monster "race03_np",269,314,"Flora",1118,1,26,26;
+		monster "race03_np",212,85,"Flora",1118,1,26,26;
+		if (getmapusers("race03_np") < 11) end;
+
+		monster "race03_np",333,125,"Geographer",1368,1,56,56;
+		monster "race03_np",208,114,"Mantis",1139,1,26,26;
+		monster "race03_np",147,123,"Flora",1118,1,26,26;
+		monster "race03_np",345,198,"Mantis",1139,1,26,26;
+		monster "race03_np",333,351,"Mantis",1139,1,26,26;
+		monster "race03_np",219,62,"Mantis",1139,1,26,26;
+		monster "race03_np",185,153,"Flora",1118,1,26,26;
+		monster "race03_np",284,48,"Flora",1118,1,26,26;
+		if (getmapusers("race03_np") < 12) end;
+
+		monster "race03_np",318,340,"Flora",1118,1,26,26;
+		monster "race03_np",326,74,"Flora",1118,1,26,26;
+		monster "race03_np",103,189,"Flora",1118,1,26,26;
+		monster "race03_np",244,94,"Geographer",1368,1,56,56;
+		monster "race03_np",182,75,"Mantis",1139,1,26,26;
+		monster "race03_np",322,197,"Flora",1118,1,26,26;
+		monster "race03_np",286,138,"Flora",1118,1,26,26;
+		monster "race03_np",332,142,"Flora",1118,1,26,26;
+		monster "race03_np",283,277,"Flora",1118,1,26,26;
+		if (getmapusers("race03_np") < 13) end;
+
+		monster "race03_np",53,175,"Flora",1118,1,26,26;
+		monster "race03_np",147,96,"Flora",1118,1,26,26;
+		monster "race03_np",115,111,"Flora",1118,1,26,26;
+		monster "race03_np",205,150,"Mandragora",1020,1,12,12;
+		monster "race03_np",58,290,"Mandragora",1020,1,12,12;
+		monster "race03_np",64,94,"Flora",1118,1,26,26;
+		monster "race03_np",37,77,"Flora",1118,1,26,26;
+		monster "race03_np",135,143,"Flora",1118,1,26,26;
+		if (getmapusers("race03_np") < 14) end;
+
+		monster "race03_np",107,188,"Flora",1118,1,26,26;
+		monster "race03_np",209,135,"Flora",1118,1,26,26;
+		monster "race03_np",88,51,"Flora",1118,1,26,26;
+		monster "race03_np",165,195,"Geographer",1368,1,56,56;
+		monster "race03_np",154,113,"Flora",1118,1,26,26;
+		monster "race03_np",310,277,"Flora",1118,1,26,26;
+		monster "race03_np",248,71,"Flora",1118,1,26,26;
+		if (getmapusers("race03_np") < 15) end;
+
+		monster "race03_np",260,293,"Flora",1118,1,26,26;
+		monster "race03_np",240,305,"Geographer",1368,1,56,56;
+		monster "race03_np",248,249,"Geographer",1368,1,56,56;
+		monster "race03_np",237,39,"Flora",1118,1,26,26;
+		monster "race03_np",191,104,"Geographer",1368,1,56,56;
+		monster "race03_np",326,177,"Geographer",1368,1,56,56;
+		monster "race03_np",244,347,"Mantis",1139,1,26,26;
+		monster "race03_np",319,215,"Flora",1118,1,26,26;
+		if (getmapusers("race03_np") < 16) end;
+
+		monster "race03_np",308,123,"Flora",1118,1,26,26;
+		monster "race03_np",337,222,"Geographer",1368,1,56,56;
+		monster "race03_np",363,174,"Mantis",1139,1,26,26;
+		monster "race03_np",272,336,"Mantis",1139,1,26,26;
+		monster "race03_np",116,319,"Mantis",1139,1,26,26;
+		monster "race03_np",221,331,"Geographer",1368,1,56,56;
+		monster "race03_np",245,180,"Mantis",1139,1,26,26;
+		monster "race03_np",212,244,"Mantis",1139,1,26,26;
+		monster "race03_np",67,327,"Mantis",1139,1,26,26;
+		if (getmapusers("race03_np") < 17) end;
+
+		monster "race03_np",161,193,"Geographer",1368,1,56,56;
+		monster "race03_np",44,287,"Geographer",1368,1,56,56;
+		monster "race03_np",161,193,"Geographer",1368,1,56,56;
+		monster "race03_np",298,286,"Mantis",1139,1,26,26;
+		monster "race03_np",212,244,"Mantis",1139,1,26,26;
+		monster "race03_np",182,75,"Mantis",1139,1,26,26;
+		monster "race03_np",200,343,"Mantis",1139,1,26,26;
+		monster "race03_np",51,155,"Mantis",1139,1,26,26;
+		monster "race03_np",343,220,"Mantis",1139,1,26,26;
+		monster "race03_np",165,189,"Geographer",1368,1,56,56;
+		monster "race03_np",143,179,"Geographer",1368,1,56,56;
+		if (getmapusers("race03_np") < 18) end;
+
+		monster "race03_np",272,336,"Mantis",1139,1,26,26;
+		monster "race03_np",224,375,"Mantis",1139,1,26,26;
+		monster "race03_np",62,107,"Mantis",1139,1,26,26;
+		monster "race03_np",51,155,"Mantis",1139,1,26,26;
+		monster "race03_np",152,154,"Mantis",1139,1,26,26;
+		monster "race03_np",62,107,"Mantis",1139,1,26,26;
+		monster "race03_np",296,172,"Flora",1118,1,26,26;
+		monster "race03_np",297,294,"Geographer",1368,1,56,56;
+		monster "race03_np",145,228,"Geographer",1368,1,56,56;
+		monster "race03_np",29,267,"Mantis",1139,1,26,26;
+		if (getmapusers("race03_np") < 19) end;
+
+		monster "race03_np",190,116,"Flora",1118,1,26,26;
+		monster "race03_np",200,343,"Mantis",1139,1,26,26;
+		monster "race03_np",294,259,"Mantis",1139,1,26,26;
+		monster "race03_np",29,267,"Mantis",1139,1,26,26;
+		monster "race03_np",164,113,"Mantis",1139,1,26,26;
+		monster "race03_np",280,140,"Mantis",1139,1,26,26;
+		monster "race03_np",236,119,"Mantis",1139,1,26,26;
+		monster "race03_np",60,204,"Mantis",1139,1,26,26;
+		if (getmapusers("race03_np") < 20) end;
+
+		monster "race03_np",60,204,"Mantis",1139,1,26,26;
+		monster "race03_np",268,69,"Geographer",1368,1,56,56;
+		monster "race03_np",318,69,"Geographer",1368,1,56,56;
+		monster "race03_np",60,204,"Mantis",1139,1,26,26;
+		monster "race03_np",219,62,"Mantis",1139,1,26,26;
+		monster "race03_np",128,95,"Mantis",1139,1,26,26;
+		monster "race03_np",272,336,"Mantis",1139,1,26,26;
+		monster "race03_np",224,375,"Mantis",1139,1,26,26;
+		monster "race03_np",219,62,"Mantis",1139,1,26,26;
+		monster "race03_np",219,62,"Mantis",1139,1,26,26;
+		if (getmapusers("race03_np") < 21) end;
+
+		monster "race03_np",182,75,"Mantis",1139,1,26,26;
+		monster "race03_np",219,238,"Geographer",1368,1,56,56;
+		monster "race03_np",333,351,"Mantis",1139,1,26,26;
+		monster "race03_np",210,334,"Flora",1118,1,26,26;
+		monster "race03_np",207,362,"Flora",1118,1,26,26;
+		monster "race03_np",152,166,"Geographer",1368,1,56,56;
+		monster "race03_np",62,64,"Geographer",1368,1,56,56;
+		if (getmapusers("race03_np") < 22) end;
+
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Horong",1129,1,34,34;
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		if (getmapusers("race03_np") < 23) end;
+
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		if (getmapusers("race03_np") < 24) end;
+
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Killer Mantis",1294,1,56,56;
+		if (getmapusers("race03_np") < 25) end;
+
+		areamonster "race03_np",29,71,321,335,"Horong",1129,1,34,34;
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Horong",1129,1,34,34;
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Killer Mantis",1294,1,56,56;
+		if (getmapusers("race03_np") < 26) end;
+
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		if (getmapusers("race03_np") < 27) end;
+
+		areamonster "race03_np",29,71,321,335,"Horong",1129,1,34,34;
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Killer Mantis",1294,1,56,56;
+		if (getmapusers("race03_np") < 28) end;
+
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Killer Mantis",1294,1,56,56;
+		if (getmapusers("race03_np") < 29) end;
+
+		areamonster "race03_np",29,71,321,335,"Gajomart",1309,1,63,63;
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		areamonster "race03_np",29,71,321,335,"Mantis",1139,1,26,26;
+		if (getmapusers("race03_np") < 30) end;
+
+		areamonster "race03_np",29,71,321,335,"Killer Mantis",1294,1,56,56;
+		areamonster "race03_np",29,71,321,335,"Killer Mantis",1294,1,56,56;
+		if (getmapusers("race03_np") < 31) end;
+
+		areamonster "race03_np",29,71,321,335,"Gajomart",1309,1,63,63;
+		areamonster "race03_np",29,71,321,335,"Killer Mantis",1294,1,56,56;
+		areamonster "race03_np",29,71,321,335,"Killer Mantis",1294,1,56,56;
+		if (getmapusers("race03_np") < 32) end;
+
+		areamonster "race03_np",29,71,321,335,"Gajomart",1309,1,63,63;
+		areamonster "race03_np",29,71,321,335,"Killer Mantis",1294,1,56,56;
+		areamonster "race03_np",29,71,321,335,"Killer Mantis",1294,1,56,56;
+		areamonster "race03_np",29,71,321,335,"Killer Mantis",1294,1,56,56;
+		end;
+
+	M_Started:
+		set $@03np_rmintime,(((getnpctimer(0,"Hard Starter") / 2000) / 60) %60);
+		set $@03np_rsectime,((getnpctimer(0,"Hard Starter") / 2000) % 60);
+		if ($@03np_countdown == 1) goto M_Counting;
+		if ($@03np_rsectime == 0 ) goto M_NewMin;
+		if ($@03np_rsectime >= 51 ) goto M_Addzero;
+		mes "[Hard Starter]";
+		mes "The race is underway.  The racetrack will reset when the timer reaches zero.  Please be patient.";
+		mes "[Time remaining: " + (19-$@03np_rmintime) + ":" + (60-$@03np_rsectime) + "]"; // Counts down, this is the base timer
+		close;
+	M_NewMin:
+		mes "[Hard Starter]";
+		mes "The race is underway.  The racetrack will reset when the timer reaches zero.  Please be patient.";
+		mes "[Time remaining: " + (20-$@03np_rmintime) + ":00]"; // Keeps the second from starting at 60
+		close;
+	M_Addzero:
+		mes "[Hard Starter]";
+		mes "The race is underway.  The racetrack will reset when the timer reaches zero.  Please be patient.";
+		mes "[Time remaining: " + (19-$@03np_rmintime) + ":0" + (60-$@03np_rsectime) + "]"; // Adds a 0 infront of 1-9
+		close;
+	M_Counting:
+		mes "[Hard Starter]";
+		mes "The countdown has already started.";
+		close;
+}
+
+// Starting Line
+race03_np,102,32,-1	script	HardStartline	139,17,0,{
+	OnTouch:
+		if (@03np_race == 18) goto L_WrongRace;
+		if ($@03np_racestart == 1) goto L_RunRace;
+		message strcharinfo(0),"The race has not started, please stay on the stone steps.";
+		end;
+	L_Race:
+		set @03np_race,0;
+		if ($@03np_countdown == 1) goto L_Counting;	
+		if ($@03np_racestart == 1) goto L_Started;
+		end;
+	L_RunRace:
+		if (@03np_raceid != $@03np_raceid) goto L_Race;
+		if (@03np_race == 0) goto L_Race;
+		if (@03np_race == 18) goto L_WrongRace;
+		if (@03np_race == 17) goto L_Finished;
+		end;
+	L_WrongRace:
+		message strcharinfo(0),"Hey, you're not in this race!";
+		end;
+	L_Counting:
+		message strcharinfo(0),"No headstarts! Get back there!";
+		end;
+	L_Started:
+		set @03np_goalie,2;
+		set @03np_race,1;
+		set @03np_raceid,$@03np_raceid;
+		end;
+	L_Finished:
+		dispbottom "You have already completed the race.";
+		end;
+	}
+
+
+// Starting Line Posts
+race03_np,102,32,3	script	Starting Line#5	722,{
+end;
+}
+race03_np,89,32,5	script	Starting Line#6	722,{
+end;
+}
+
+
+// This thing is special, and acts as three checkpoints instead of just one.
+
+
+// Lap Checkpoint - This checkpoint acts as the fourth checkpoint, ninth checkpoint, and fifteenth checkpoint.
+race03_np,107,103,-1	script	Hardchkpt0	139,6,5,{
+	end;
+	OnTouch:
+		if (@03np_raceid != $@03np_raceid) goto L_Finished;
+		if (@03np_race == 0) goto L_Finished;
+		if (@03np_race == 16) goto L_Finished;
+		if (@03np_race == 10) goto L_Finished;
+		if (@03np_race == 5) goto L_Finished;
+		if (@03np_race < 4) goto L_Miss;
+		if (@03np_race == 4) goto L_4th;
+		if (@03np_race < 9) goto L_Miss;
+		if (@03np_race == 9) goto L_9th;
+		if (@03np_race < 15) goto L_Miss;
+		if (@03np_race == 15) goto L_15th;
+		if (@03np_race != 0) goto L_Finished;
+		end;
+	L_15th:
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached the Fifteenth Checkpoint and completed Lap 3!",1;		
+		set @03np_race,16;	
+		end;
+	L_9th:
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached the Ninth Checkpoint and completed Lap 2!",1;		
+		set @03np_race,10;
+		end;
+	L_4th:
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached the Fourth Checkpoint and completed Lap 1!",1;		
+		set @03np_race,5;
+		end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@03np_race;
+		end;
+	L_Finished:
+		end;
+}
+// Lap Checkpoint Post
+race03_np,107,103,8	script	Fifteenth Checkpoint	722,{
+end;
+}
+// Lap Checkpoint Post
+race03_np,104,102,1	script	Fourth Checkpoint#3	722,{
+end;
+}
+// Lap Checkpoint Post
+race03_np,110,102,7	script	Ninth Checkpoint#3	722,{
+end;
+}
+
+// First Checkpoint
+race03_np,42,174,-1	script	Hardchkpt1a	139,4,4,{
+	end;
+	OnTouch:
+		if (@03np_raceid != $@03np_raceid) goto L_Finished;
+		if (@03np_race != 1) goto L_Finished;
+		set @03np_race,2;
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached the First Checkpoint! [Lap 1]",1;
+		end;
+	L_Finished:
+		end;
+}
+// First Checkpoint Post
+race03_np,42,174,5	script	First Checkpoint#3	722,{
+end;
+}
+
+// Second Checkpoint
+race03_np,365,44,-1	script	Hardchkpt2a	139,4,4,{
+	end;
+	OnTouch:
+		if (@03np_raceid != $@03np_raceid) goto L_Finished;
+		if (@03np_race == 0) goto L_Finished;
+		if (@03np_race < 2) goto L_Miss;
+		if (@03np_race != 2) goto L_Finished;
+		set @03np_race,3;
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached the Second Checkpoint! [Lap 1]",1;
+		end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@03np_race;
+		end;
+	L_Finished:
+		end;
+}
+// Second Checkpoint Post
+race03_np,365,44,2	script	Second Checkpoint#	722,{
+end;
+}
+
+// Third Checkpoint
+race03_np,42,278,6	script	Hardchkpt3a	139,4,4,{
+	end;
+	OnTouch:
+		if (@03np_raceid != $@03np_raceid) goto L_Finished;
+		if (@03np_race == 0) goto L_Finished;
+		if (@03np_race < 3) goto L_Miss;
+		if (@03np_race != 3) goto L_Finished;
+		set @03np_race,4;
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached the Third Checkpoint! [Lap 1]",1;
+		end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@03np_race;
+		end;
+	L_Finished:
+		end;
+}
+// Third Checkpoint Post
+race03_np,42,278,6	script	Third Checkpoint#	722,{
+end;
+}
+
+
+
+// Lap 1 ends
+// Fourth checkpoint is the Lap checkpoint
+
+
+
+// Fifth Checkpoint
+race03_np,263,15,-1	script	Hardchkpt1b	139,4,4,{
+	end;
+	OnTouch:
+		if (@03np_raceid != $@03np_raceid) goto L_Finished;
+		if (@03np_race == 0) goto L_Finished;
+		if (@03np_race < 5) goto L_Miss;
+		if (@03np_race != 5) goto L_Finished;
+		set @03np_race,6;
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached the Fifth Checkpoint! [Lap 2]",1;
+		end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@03np_race;
+		end;
+	L_Finished:
+		end;
+}
+// Fifth Checkpoint Post
+race03_np,263,15,8	script	Fifth Checkpoint#	722,{
+end;
+}
+
+// Sixth Checkpoint
+race03_np,324,338,-1	script	Hardchkpt2b	139,4,4,{
+	end;
+	OnTouch:
+		if (@03np_raceid != $@03np_raceid) goto L_Finished;
+		if (@03np_race == 0) goto L_Finished;
+		if (@03np_race < 6) goto L_Miss;
+		if (@03np_race != 6) goto L_Finished;
+		set @03np_race,7;
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached the Sixth Checkpoint! [Lap 2]",1;
+		end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@03np_race;
+		end;
+	L_Finished:
+		end;
+}
+// Sixth Checkpoint Post
+race03_np,324,338,3	script	Sixth Checkpoint#	722,{
+end;
+}
+
+// Seventh Checkpoint
+race03_np,366,183,-1	script	Hardchkpt3b	139,4,4,{
+	end;
+	OnTouch:
+		if (@03np_raceid != $@03np_raceid) goto L_Finished;
+		if (@03np_race == 0) goto L_Finished;
+		if (@03np_race < 7) goto L_Miss;
+		if (@03np_race != 7) goto L_Finished;
+		set @03np_race,8;
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached the Seventh Checkpoint! [Lap 2]",1;
+		end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@03np_race;
+		end;
+	L_Finished:
+		end;
+}
+// Seventh Checkpoint Post
+race03_np,366,183,2	script	Seventh Checkpoint#	722,{
+end;
+}
+
+// Eighth Checkpoint
+race03_np,147,172,-1	script	Hardchkpt4b	139,4,4,{
+	end;
+	OnTouch:
+		if (@03np_raceid != $@03np_raceid) goto L_Finished;
+		if (@03np_race == 0) goto L_Finished;
+		if (@03np_race < 8) goto L_Miss;
+		if (@03np_race != 8) goto L_Finished;
+		set @03np_race,9;
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached the Eighth Checkpoint! [Lap 2]",1;
+		end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@03np_race;
+		end;
+	L_Finished:
+		end;
+}
+// Eighth Checkpoint Post
+race03_np,147,172,6	script	Eighth Checkpoint#	722,{
+end;
+}
+
+
+
+// Lap 2 ends
+// Ninth checkpoint is the Lap checkpoint
+
+
+
+// Tenth Checkpoint
+race03_np,84,315,-1	script	Hardchkpt1c	139,4,4,{
+	end;
+	OnTouch:
+		if (@03np_raceid != $@03np_raceid) goto L_Finished;
+		if (@03np_race == 0) goto L_Finished;
+		if (@03np_race < 10) goto L_Miss;
+		if (@03np_race != 10) goto L_Finished;
+		set @03np_race,11;
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached the Tenth Checkpoint! [Lap 3]",1;
+		end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@03np_race;
+		end;
+	L_Finished:
+		end;
+}
+// Tenth Checkpoint Post
+race03_np,84,315,5	script	Tenth Checkpoint#	722,{
+end;
+}
+
+// Eleventh Checkpoint
+race03_np,196,230,-1	script	Hardchkpt2c	139,4,4,{
+	end;
+	OnTouch:
+		if (@03np_raceid != $@03np_raceid) goto L_Finished;
+		if (@03np_race == 0) goto L_Finished;
+		if (@03np_race < 11) goto L_Miss;
+		if (@03np_race != 11) goto L_Finished;
+		set @03np_race,12;
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached the Eleventh Checkpoint! [Lap 3]",1;
+		end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@03np_race;
+		end;
+	L_Finished:
+		end;
+}
+// Eleventh Checkpoint Post
+race03_np,196,230,4	script	Eleventh Checkpoint#	722,{
+end;
+}
+
+// Twelfth Checkpoint
+race03_np,356,92,-1	script	Hardchkpt3c	139,4,4,{
+	end;
+	OnTouch:
+		if (@03np_raceid != $@03np_raceid) goto L_Finished;
+		if (@03np_race == 0) goto L_Finished;
+		if (@03np_race < 12) goto L_Miss;
+		if (@03np_race != 12) goto L_Finished;
+		set @03np_race,13;
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached the Twelfth Checkpoint! [Lap 3]",1;
+		end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@03np_race;
+		end;
+	L_Finished:
+		end;
+}
+// Twelfth Checkpoint Post
+race03_np,356,92,1	script	Twelfth Checkpoint#	722,{
+end;
+}
+
+// Thirteenth Checkpoint
+race03_np,32,67,-1	script	Hardchkpt4c	139,4,4,{
+	end;
+	OnTouch:
+		if (@03np_raceid != $@03np_raceid) goto L_Finished;
+		if (@03np_race == 0) goto L_Finished;
+		if (@03np_race < 13) goto L_Miss;
+		if (@03np_race != 13) goto L_Finished;
+		set @03np_race,14;
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached the Thirteenth Checkpoint! [Lap 3]",1;
+		end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@03np_race;
+		end;
+	L_Finished:
+		end;
+}
+// Thirteenth Checkpoint Post
+race03_np,32,67,6	script	Thirteenth Checkpoint#	722,{
+end;
+}
+
+// Fourteenth Checkpoint
+race03_np,211,370,-1	script	Hardchkpt5c	139,4,4,{
+	end;
+	OnTouch:
+		if (@03np_raceid != $@03np_raceid) goto L_Finished;
+		if (@03np_race == 0) goto L_Finished;
+		if (@03np_race < 14) goto L_Miss;
+		if (@03np_race != 14) goto L_Finished;
+		set @03np_race,15;
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached the Fourteenth Checkpoint! [Lap 3]",1;
+		end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@03np_race;
+		end;
+	L_Finished:
+		end;
+}
+// Fourteenth Checkpoint Post
+race03_np,211,370,4	script	Fourteenth Checkpoint#	722,{
+end;
+}
+
+
+
+// Lap 3 ends
+// Fifteenth checkpoint is the lap checkpoint, from there the player goes to the finish line to win
+
+
+
+// Finish Line
+race03_np,101,35,1	script	HardFinishline	139,17,0,{
+	end;
+	OnTouch:
+		if (@03np_raceid != $@03np_raceid) goto L_Finished;
+		if (@03np_race == 0) goto L_Finished;
+		if (@03np_race == 1) goto L_Finished;
+		if (@03np_race < 16) goto L_Miss;
+		if (@03np_race != 16) goto L_Finished;
+		if (@03np_goalie == 1) goto L_Finished;
+		set @03np_race,17;
+		set @03np_goalie,1;
+		set $@03np_rmintime,(((getnpctimer(0,"Hard Starter") / 2000) / 60) %60);
+		set $@03np_rsectime,((getnpctimer(0,"Hard Starter") / 2000) % 60);
+		if ($@03np_position == 0) goto L_Firstplace;
+		if ($@03np_position == 1) goto L_Secondplace;
+		if ($@03np_position == 2) goto L_Thirdplace;
+		if ($@03np_position >= 3) goto L_Loser;
+		end;
+	L_Firstplace:
+		set $@03np_position, $@03np_position + 1;
+		set @03np_char1place,1;
+		if ($@03np_rsectime == 0 ) goto sL_1PNewMin;
+		if ($@03np_rsectime < 10 ) goto sL_1PAddzero;
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 1st] [Time: " + ($@03np_rmintime) + ":" + ($@03np_rsectime)+"]",1;
+		end;
+		sL_1PNewMin:
+			mapannounce "race03_np","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 1st] [Time: " + (1+$@03np_rmintime) + ":00]",1;
+			end;
+		sL_1PAddzero:
+			mapannounce "race03_np","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 1st] [Time: " + ($@03np_rmintime) + ":0" + ($@03np_rsectime)+"]",1;
+			end;
+	L_Secondplace:
+		set $@03np_position, $@03np_position + 1;
+		set @03np_char2place,1;
+		if ($@03np_rsectime == 0 ) goto sL_2PNewMin;
+		if ($@03np_rsectime < 10 ) goto sL_2PAddzero;
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 2nd] [Time: " + ($@03np_rmintime) + ":" + ($@03np_rsectime)+"]",1;
+		end;
+		sL_2PNewMin:
+			mapannounce "race03_np","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 2nd] [Time: " + (1+$@03np_rmintime) + ":00]",1;
+			end;
+		sL_2PAddzero:
+			mapannounce "race03_np","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 2nd] [Time: " + ($@03np_rmintime) + ":0" + ($@03np_rsectime)+"]",1;
+			end;
+	L_Thirdplace:
+		set $@03np_position, $@03np_position + 1;
+		set @03np_char3place,1;
+		if ($@03np_rsectime == 0 ) goto sL_3PNewMin;
+		if ($@03np_rsectime < 10 ) goto sL_3PAddzero;
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 3rd] [Time: " + ($@03np_rmintime) + ":" + ($@03np_rsectime)+"]",1;
+		end;
+		sL_3PNewMin:
+			mapannounce "race03_np","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 3rd] [Time: " + (1+$@03np_rmintime) + ":00]",1;
+			end;
+		sL_3PAddzero:
+			mapannounce "race03_np","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 3rd] [Time: " + ($@03np_rmintime) + ":0" + ($@03np_rsectime)+"]",1;
+			end;
+	L_Loser:
+		set $@03np_position, $@03np_position + 1;
+		set @03np_th,"th";
+		if (@03np_mypos == 32) set @th,"nd";
+		if (@03np_mypos == 31) set @th,"st";
+		if (@03np_mypos == 23) set @th,"rd";
+		if (@03np_mypos == 22) set @th,"nd";
+		if (@03np_mypos == 21) set @th,"st";
+		set @03np_mypos,$@03np_position;
+		if ($@03np_rsectime == 0 ) goto sL_4PNewMin;
+		if ($@03np_rsectime < 10 ) goto sL_4PAddzero;
+		mapannounce "race03_np","[" + strcharinfo(0) +"] has completed the race. [Position: "+@03np_mypos + @03np_th+"] [Time: " + ($@03np_rmintime) + ":" + ($@03np_rsectime)+"]",1;
+		end;
+		sL_4PNewMin:
+			mapannounce "race03_np","[" + strcharinfo(0) +"] has completed the race. [Position: "+@03np_mypos + @03np_th+"] [Time: " + (1+$@03np_rmintime) + ":00]",1;
+			end;
+		sL_4PAddzero:
+			mapannounce "race03_np","[" + strcharinfo(0) +"] has completed the race. [Position: "+@03np_mypos + @03np_th+"] [Time: " + ($@03np_rmintime) + ":0" + ($@03np_rsectime)+"]",1;
+			end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@03np_race;
+		end;
+	L_Finished:
+		end;
+}
+
+// Finishing Line Posts
+race03_np,101,35,8	script	Finish Line#5 	722,{
+end;
+}
+race03_np,90,35,8	script	Finish Line#6	722,{
+end;
+}
+
+// Goalie
+race03_np,103,19,1	script	Hard Goalie	770,{
+
+	if (@03np_goalie == 2) goto M_End;
+	if (@03np_goalie == 0) goto M_Menu;
+	if (@03np_char1place == 1) goto M_First;
+	if (@03np_char2place == 1) goto M_Second;
+	if (@03np_char3place == 1) goto M_Third;
+	if (@03np_char0place == 1) goto M_Lost;
+
+	M_Menu:
+		mes "[Hard Goalie]";
+		mes "What would you like to do?  If you really want... I can send you back to the station.  But the assistant over there can do it too.";
+		next;
+		menu "No thanks.",M_1,"The Station please",M_2;
+	M_End:
+		end;
+	M_1:
+		mes "[Hard Goalie]";
+		mes "Alright, take care.";
+		close;
+	M_2:
+		mes "[Hard Goalie]";
+		mes "Alright then, off you go!";
+		next;
+		if (@03np_race == 18) goto M_2done;
+		if (@03np_race == 17) goto M_2done;
+		set @03np_race,18;
+		set @03np_mypos,0;
+		set @03np_raceid,0;
+		set @03np_char1place,0;
+		set @03np_char2place,0;
+		set @03np_char3place,0;
+		set @03np_char0place,0;
+		warp "pvp_m_room", 51, 38;
+		end;
+	M_2done:
+		set @03np_mypos,0;
+		set @03np_raceid,0;
+		set @03np_char1place,0;
+		set @03np_char2place,0;
+		set @03np_char3place,0;
+		set @03np_char0place,0;
+		warp "pvp_m_room", 51, 38;
+		end;
+	M_First:
+		emotion 46;
+		specialeffect 267;
+		mes "[Hard Goalie]";
+		mes "Congratulations "+strcharinfo(0)+", you won!!";
+		next;
+		mes "[Hard Goalie]";
+		mes "Here is the prize for being First Place, 3000 zeny and " +(90+(5*getmapusers("race02_np")))+ " Kafra Reserve Points!";
+		next;
+		set @03np_goalie,0;
+		set @03np_char1place,0;
+		set Zeny, Zeny + 3000;
+		set RESRVPTS, RESRVPTS + 72 + (4*getmapusers("race02_np"));
+		dispbottom "[You have "+RESRVPTS+" Kafra Reserve Points]";
+		goto M_Menu;
+	M_Second:
+		mes "[Hard Goalie]";
+		mes "Way to go "+strcharinfo(0)+"!  You're the runner up!";
+		next;
+		mes "[Hard Goalie]";
+		mes "Congratulations "+strcharinfo(0)+", you are the runner up!  Here is your prize, 2000 zeny and " +(54+(3*getmapusers("race02_np")))+ " Kafra Reserve Points!";
+		next;
+		set @03np_goalie,0;
+		set @03np_char2place,0;
+		set Zeny, Zeny + 2000;
+		set RESRVPTS, RESRVPTS + 54 + (3*getmapusers("race02_np"));
+		dispbottom "[You have "+RESRVPTS+" Kafra Reserve Points]";
+		goto M_Menu;
+	M_Third:
+		mes "[Hard Goalie]";
+		mes "Great job "+strcharinfo(0)+"!  You got third place!";
+		next;
+		mes "[Hard Goalie]";
+		mes "Here is the prize for being Third Place, 1000 zeny and " +(36+(2*getmapusers("race02_np")))+ " Kafra Reserve Points!";
+		next;
+		set @03np_goalie,0;
+		set @03np_char3place,0;
+		set Zeny, Zeny + 1000;
+		set RESRVPTS, RESRVPTS + 32 + (2*getmapusers("race02_np"));
+		dispbottom "[You have "+RESRVPTS+" Kafra Reserve Points]";
+		goto M_Menu;
+	M_Lost:
+		if (@03np_mypos == 0) goto M_Menu;
+		mes "[Hard Goalie]";
+		mes "Well, atleast you tried your hardest!  ... Right??  Guess this course is just too much for you!";
+		next;
+		set @03np_goalie,0;
+		set @03np_char0place,0;
+		goto M_Menu;
+}		

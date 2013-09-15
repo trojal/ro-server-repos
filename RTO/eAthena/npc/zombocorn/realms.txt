@@ -1,0 +1,3577 @@
+//--- The Mighty PvP Realm Server Divide! --------------- By Dubby ----------------------------
+
+//--- Mapflags --------------------------------------------------------------------------------
+serverlobby	mapflag	noreturn
+serverlobby	mapflag	indoors
+serverlobby	mapflag	pvp	off
+serverlobby	mapflag	nopenalty
+serverlobby	mapflag	nozenypenalty
+serverlobby	mapflag	nomemo
+serverlobby	mapflag	nobranch
+serverlobby	mapflag	noteleport
+serverlobby	mapflag	nowarp
+serverlobby	mapflag	nowarpto
+pvplobby	mapflag	noreturn
+pvplobby	mapflag	indoors
+pvplobby	mapflag	pvp	off
+pvplobby	mapflag	nopenalty
+pvplobby	mapflag	nozenypenalty
+pvplobby	mapflag	nomemo
+pvplobby	mapflag	nobranch
+pvplobby	mapflag	noteleport
+pvplobby	mapflag	nowarp
+pvplobby	mapflag	nowarpto
+rplobby	mapflag	noreturn
+rplobby	mapflag	indoors
+rplobby	mapflag	pvp	off
+rplobby	mapflag	nopenalty
+rplobby	mapflag	nozenypenalty
+rplobby	mapflag	nomemo
+rplobby	mapflag	nobranch
+rplobby	mapflag	noteleport
+rplobby	mapflag	nowarp
+rplobby	mapflag	nowarpto
+pvprealm01	mapflag	noreturn
+pvprealm01	mapflag	indoors
+pvprealm01	mapflag	pvp	off
+pvprealm01	mapflag	noexp
+pvprealm01	mapflag	nomemo
+pvprealm01	mapflag	nobranch
+pvprealm01	mapflag	noteleport
+pvprealm01	mapflag	nowarp
+pvprealm01	mapflag	nowarpto
+pvprealm02	mapflag	pvp
+pvprealm02	mapflag	noexp
+pvprealm02	mapflag	nomemo
+pvprealm03	mapflag	pvp
+pvprealm03	mapflag	noexp
+pvprealm03	mapflag	nomemo
+pvprealm04	mapflag	pvp
+pvprealm04	mapflag	noexp
+pvprealm04	mapflag	nomemo
+pvprealm05	mapflag	pvp
+pvprealm05	mapflag	noexp
+pvprealm05	mapflag	nomemo
+pvprealm06	mapflag	pvp
+pvprealm06	mapflag	noexp
+pvprealm06	mapflag	nomemo
+pvprealm07	mapflag	pvp
+pvprealm07	mapflag	noexp
+pvprealm07	mapflag	nomemo
+pvprealm08	mapflag	pvp
+pvprealm08	mapflag	noexp
+pvprealm08	mapflag	nomemo
+pvprealm09	mapflag	pvp
+pvprealm09	mapflag	noexp
+pvprealm09	mapflag	nomemo
+pvprealm10	mapflag	pvp
+pvprealm10	mapflag	noexp
+pvprealm10	mapflag	nomemo
+pvprealm11	mapflag	pvp
+pvprealm11	mapflag	noexp
+pvprealm11	mapflag	nomemo
+pvprealm12	mapflag	pvp
+pvprealm12	mapflag	noexp
+pvprealm12	mapflag	nomemo
+pvprealm13	mapflag	pvp
+pvprealm13	mapflag	noexp
+pvprealm13	mapflag	nomemo
+pvprealm14	mapflag	pvp
+pvprealm14	mapflag	noexp
+pvprealm14	mapflag	nomemo
+pvprealm15	mapflag	pvp
+pvprealm15	mapflag	noexp
+pvprealm15	mapflag	nomemo
+pvprealm16	mapflag	pvp
+pvprealm16	mapflag	noexp
+pvprealm16	mapflag	nomemo
+pvprealm17	mapflag	pvp
+pvprealm17	mapflag	noexp
+pvprealm17	mapflag	nomemo
+pvprealm18	mapflag	pvp
+pvprealm18	mapflag	noexp
+pvprealm18	mapflag	nomemo
+pvprealm19	mapflag	pvp
+pvprealm19	mapflag	noexp
+pvprealm19	mapflag	nomemo
+pvprealm20	mapflag	pvp
+pvprealm20	mapflag	noexp
+pvprealm20	mapflag	nomemo
+pvprealm20	mapflag	noteleport
+pvprealm02	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm03	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm04	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm05	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm06	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm07	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm08	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm09	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm10	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm11	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm12	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm13	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm14	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm15	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm16	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm17	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm18	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm19	mapflag	pvp_nightmaredrop	random,item,1000
+pvprealm20	mapflag	pvp_nightmaredrop	random,item,1000
+
+//pvprealm20 = alde_tt02
+//pvprealm19 = beach_dun
+//pvprealm18 = beach_dun2
+//pvprealm17 = mag_dun02
+//pvprealm16 = mag_dun01
+//pvprealm15 = prt_maze03
+//pvprealm14 = prt_maze01
+//pvprealm13 = izlu2dun
+//pvprealm12 = prt_are01
+//pvprealm11 = ordeal_a00
+//pvprealm10 = xmas_dun02
+//pvprealm09 = xmas_dun01
+//pvprealm08 = um_dun01
+//pvprealm07 = um_dun02
+//pvprealm06 = in_sphinx5
+//pvprealm05 = in_sphinx4
+//pvprealm04 = gl_step
+//pvprealm03 = prt_sewb4
+
+//--- Warps ------------------------------------------------------------------------------------
+serverlobby,86,22,8	script	REALMWP1	45,1,1,{
+	// PVP SIDE
+	if (!@NOETALK1) goto L_Mes;
+	set @NOETALK1,0;
+	set @PVPRLEV,0;
+	set @RPLEV,0;
+	warp "pvplobby",63,68;
+	savepoint "pvplobby",69,66;
+	end;
+L_Mes:
+	callfunc "F_STNGFOR";
+}
+serverlobby,86,22,8	script	REALMDISPLAY1	1187,{
+OnInit:
+	setnpcdisplay "REALMDISPLAY1","",1187;
+	waitingroom "-- PvP Realm --",0;
+	end;
+}
+serverlobby,53,22,8	script	REALMWP2	45,1,1,{
+	// RP SIDE
+	if (!@NOETALK2) goto L_Mes;
+	set @NOETALK2,0;
+	set @PVPRLEV,0;
+	set @RPLEV,0;
+	warp "rplobby",32,69;
+	savepoint "rplobby",69,66;
+	end;
+L_Mes:
+	callfunc "F_STNGFOR";
+}
+serverlobby,53,22,8	script	REALMDISPLAY2	1187,{
+OnInit:
+	setnpcdisplay "REALMDISPLAY2","",1187;
+	waitingroom "-- RP Realm --",0;
+	end;
+}
+pvplobby,80,69,8	warp	REALMWP3	1,1,pvplobby,19,73
+pvplobby,80,69,8	script	REALMDISPLAY3	1187,{
+OnInit:
+	setnpcdisplay "REALMDISPLAY3","",1187;
+	waitingroom "To the PVP Realm!",0;
+	end;
+}
+pvplobby,19,76,0	warp	REALMWP4	1,1,pvplobby,77,69
+pvplobby,95,68,0	script	REALMWP5	45,1,1,{
+	callfunc "F_STNGFOR";
+	// Normally this warp warps you here: pvplobby,33,69
+}
+pvplobby,113,34,0	warp	REALMWP6	1,1,pvplobby,19,52
+pvplobby,19,49,0	warp	REALMWP7	1,1,pvplobby,113,31
+pvplobby,36,69,0	script	REALMWP8	45,1,1,{
+	callfunc "F_STNGFOR";
+	// Normally this warp portal warps here: pvplobby,98,68
+}
+
+pvplobby,112,49,0	warp	REALMWP9	1,1,pvplobby,19,31
+pvplobby,19,34,0	warp	REALMWP10	1,1,pvplobby,112,53
+pvplobby,60,68,0	script	REALMWP11	45,1,1,{
+	if (countitem(15201)>0) goto L_WarpOtherRealm;
+	if (!@PVPRLEV) goto L_Mes;
+	set @PVPRLEV,0;
+	warp "serverlobby",82,21;
+	savepoint "serverlobby",70,11;
+	end;
+L_WarpOtherRealm:
+	set @PVPRLEV,0;
+	warp "rplobby",32,69;
+	savepoint "rplobby",69,66;
+	end;
+L_Mes:
+	callfunc "F_STNGFOR";
+}
+pvplobby,41,23,0	warp	REALMWP12	1,1,pvplobby,19,95
+pvplobby,19,92,0	warp	REALMWP13	1,1,pvplobby,38,23
+pvplobby,98,22,0	script	REALMWP14	45,1,1,{
+	if (!PVPACS) goto L_Mes;
+	warp "pvprealm01",28,268;
+	savepoint "pvprealm01",19,273;
+	end;
+L_Mes:
+	callfunc "F_STNGFOR2";
+}
+pvprealm01,28,265,0	script	REALMWP15	45,1,1,{
+	if (PVPACS) goto L_Mes;
+	warp "pvplobby",101,23;
+	savepoint "pvplobby",125,16;
+	end;
+L_Mes:
+	message strcharinfo(0),"If you're leaving the PvPRealm, please talk to Linne first then Fredrece next!";
+	end;
+}
+
+rplobby,36,69,0	script	REALMWP242	45,1,1,{
+	if (countitem(15201)>0) goto L_WarpOtherRealm;
+	if (!@RPLEV) goto L_Mes;
+	set @RPLEV,0;
+	warp "serverlobby",57,21;
+	savepoint "serverlobby",70,11;
+	end;
+L_WarpOtherRealm:
+	set @RPLEV,0;
+	warp "pvplobby",63,68;
+	savepoint "pvplobby",69,66;
+	end;
+L_Mes:
+	callfunc "F_STNGFOR";
+}
+
+rplobby,19,76,0	warp	REALMWP243	1,1,rplobby,113,52
+rplobby,113,49,0	warp	REALMWP244	1,1,rplobby,19,74
+
+rplobby,95,68,0	warp	REALMWP245	1,1,rplobby,77,69
+
+rplobby,80,69,0	script	REALMWP246	45,1,1,{
+	if (countitem(15201)>0) goto L_WarpOtherRealm;
+	if (!@RPLEAV) goto L_Mes;
+	if (!@RPACS) set @RPLEAV,0;
+	warp "rplobby",98,68;
+	savepoint "rplobby",101,65;
+	end;
+L_WarpOtherRealm:
+	if (!@RPACS) set @RPLEAV,0;
+	warp "rplobby",98,68;
+	savepoint "rplobby",101,65;
+	end;
+L_Mes:
+	callfunc "F_STNGFOR";
+}
+rplobby,61,68,0	script	REALMWP247	45,1,1,{
+	callfunc "F_STNGFOR";
+	// Normally this warp portal warps here: rplobby,38,23
+}
+rplobby,19,49,0	script	REALMWP248	45,1,1,{
+	if (!@RPACS) goto L_Mes;
+	warp "payo1",72,103;
+	savepoint "payo1",72,103;
+	set @RPACS,0;
+	end;
+L_Mes:
+	callfunc "F_STNGFOR";
+}
+rplobby,41,23,0	warp	REALMWP249	1,1,rplobby,64,70
+rplobby,19,34,0	warp	REALMWP250	1,1,rplobby,102,20
+rplobby,99,22,0	warp	REALMWP251	1,1,rplobby,19,31
+rplobby,113,34,0	warp	REALMWP252	1,1,rplobby,19,95
+rplobby,19,92,0	warp	REALMWP253	1,1,rplobby,113,31
+new_zone02,100,7,0	script	REALMWP254	45,1,1,{
+	callfunc "F_STNGFOR";
+}	
+pvprealm01,12,284,0	script	REALMWP16	45,1,1,{
+	if (!PVPACS) goto L_Mes;
+	warp "pvprealm01",238,171;
+	end;
+L_Mes:
+	callfunc "F_STNGFOR";
+}
+pvprealm01,238,168,0	warp	REALMWP17	1,1,pvprealm01,15,284
+pvprealm01,238,168,0	script	REALMDISPLAY17	1187,{
+OnInit:
+	setnpcdisplay "REALMDISPLAY17","",1187;
+	waitingroom "Go straight!",0;
+	end;
+}
+//pvprealm01,230,182,0	warp	REALMWP18	1,1,pvprealm01,100,155
+//pvprealm01,230,200,0	warp	REALMWP19	1,1,pvprealm01,22,194
+pvprealm01,35,137,0	warp	REALMWP20	1,1,pvprealm01,252,213
+//pvprealm01,255,213,0	warp	REALMWP21	1,1,pvprealm01,38,137
+pvprealm01,260,278,0	warp	REALMWP22	1,1,pvprealm01,112,273
+pvprealm01,115,273,0	warp	REALMWP23	1,1,pvprealm01,263,279
+pvprealm01,95,285,0	warp	REALMWP24	1,1,pvprealm01,15,154
+pvprealm01,44,29,0	warp	REALMWP25	1,1,pvprealm01,233,263
+pvprealm01,211,284,0	warp	REALMWP26	1,1,pvprealm01,239,219
+pvprealm01,236,219,0	warp	REALMWP27	1,1,pvprealm01,208,284
+pvprealm01,12,155,0	warp	REALMWP28	1,1,pvprealm01,92,285
+pvprealm01,233,260,0	warp	REALMWP29	1,1,pvprealm01,41,29
+pvprealm01,103,155,0	warp	REALMWP30	1,1,pvprealm01,233,182
+pvprealm01,128,199,0	warp	REALMWP31	1,1,pvprealm01,248,279
+pvprealm01,251,279,0	warp	REALMWP32	1,1,pvprealm01,132,199
+pvprealm01,275,82,0	warp	REALMWP33	1,1,pvprealm01,269,14
+pvprealm01,265,14,0	warp	REALMWP34	1,1,pvprealm01,272,83
+pvprealm01,289,31,0	warp	REALMWP35	1,1,pvprealm01,106,27
+pvprealm01,109,27,0	warp	REALMWP36	1,1,pvprealm01,286,31
+pvprealm01,49,155,0	warp	REALMWP37	1,1,pvprealm01,283,82
+pvprealm01,283,79,0	warp	REALMWP38	1,1,pvprealm01,46,154
+pvprealm01,22,191,0	warp	REALMWP39	1,1,pvprealm01,233,200
+pvprealm01,39,205,0	warp	REALMWP40	1,1,pvprealm01,239,152
+pvprealm01,239,155,0	warp	REALMWP41	1,1,pvprealm01,36,205
+pvprealm01,88,144,0	warp	REALMWP42	1,1,pvprealm01,214,201
+pvprealm01,98,134,0	warp	REALMWP43	1,1,pvprealm01,214,183
+pvprealm01,217,201,0	warp	REALMWP44	1,1,pvprealm01,91,144
+pvprealm01,217,183,0	warp	REALMWP45	1,1,pvprealm01,98,137
+pvprealm03,100,96,0	script	REALMWP46	45,1,1,{
+	savepoint "pvprealm02",0,0;
+	warp "pvprealm02",37,63;
+}
+pvprealm02,33,59,0	script	REALMWP47	45,1,1,{
+	savepoint "pvprealm03",0,0;
+	warp "pvprealm03",100,92;
+}
+pvprealm04,119,123,0	script	REALMWP48	45,1,1,{
+	savepoint "pvprealm02",0,0;
+	warp "pvprealm02",235,29;
+}
+pvprealm02,240,30,0	script	REALMWP49	45,1,1,{
+	savepoint "pvprealm04",0,0;
+	warp "pvprealm04",115,123;
+}
+pvprealm05,10,224,0	script	REALMWP50	45,1,1,{
+	savepoint "pvprealm02",0,0;
+	warp "pvprealm02",278,181;
+}
+pvprealm02,282,184,0	script	REALMWP51	45,1,1,{
+	savepoint "pvprealm05",0,0;
+	warp "pvprealm05",10,220;
+}
+pvprealm06,100,96,0	script	REALMWP52	45,1,1,{
+	savepoint "pvprealm05",0,0;
+	warp "pvprealm05",120,118;
+}
+pvprealm05,120,113,0	script	REALMWP53	45,1,1,{
+	savepoint "pvprealm06",0,0;
+	warp "pvprealm06",100,101;
+}
+pvprealm06,11,16,0	warp	REALMWP54	3,1,pvprealm06,189,181
+pvprealm06,11,183,0	warp	REALMWP55	3,1,pvprealm06,11,18
+pvprealm06,189,16,0	warp	REALMWP56	3,1,pvprealm06,11,181
+pvprealm06,16,188,0	warp	REALMWP57	1,3,pvprealm06,181,188
+pvprealm06,16,10,0	warp	REALMWP58	1,3,pvprealm06,181,10
+pvprealm06,183,10,0	warp	REALMWP59	1,3,pvprealm06,18,188
+pvprealm06,183,188,0	warp	REALMWP60	1,3,pvprealm06,18,10
+pvprealm06,189,183,0	warp	REALMWP61	3,1,pvprealm06,189,18
+pvprealm02,23,275,0	script	REALMWP62	45,1,1,{
+	savepoint "pvprealm07",0,0;
+	warp "pvprealm07",126,152;
+}
+pvprealm07,125,163,0	script	REALMWP63	45,1,1,{
+	savepoint "pvprealm02",0,0;
+	warp "pvprealm02",27,271;
+}
+
+pvprealm07,103,208,0	warp	REALMWP64	1,1,pvprealm07,116,208
+pvprealm07,113,208,0	warp	REALMWP65	1,1,pvprealm07,100,208
+pvprealm07,169,38,0	warp	REALMWP66	1,1,pvprealm07,180,38
+pvprealm07,177,38,0	warp	REALMWP67	1,1,pvprealm07,166,38
+pvprealm07,216,77,0	warp	REALMWP68	1,1,pvprealm07,217,88
+pvprealm07,216,84,0	warp	REALMWP69	1,1,pvprealm07,214,74
+pvprealm07,222,259,0	warp	REALMWP70	1,1,pvprealm07,234,255
+pvprealm07,231,255,0	warp	REALMWP71	1,1,pvprealm07,219,260
+pvprealm07,25,244,0	warp	REALMWP72	1,1,pvprealm07,35,251
+pvprealm07,33,249,0	warp	REALMWP73	1,1,pvprealm07,23,242
+pvprealm07,51,26,0	script	REALMWP74	45,1,1,{
+	savepoint "pvprealm08",0,0;
+	warp "pvprealm08",153,201;
+}
+pvprealm07,60,88,0	warp	REALMWP75	1,1,pvprealm07,66,77
+pvprealm07,63,80,0	warp	REALMWP76	1,1,pvprealm07,59,92
+pvprealm08,150,198,0	script	REALMWP77	45,1,1,{
+	savepoint "pvprealm07",0,0;
+	warp "pvprealm07",48,30;
+}
+pvprealm02,127,278,0	script	REALMWP78	45,1,1,{
+	savepoint "pvprealm09",0,0;
+	warp "pvprealm09",205,18;
+}
+pvprealm09,205,18,0	script	REALMWP255	45,1,1,{
+	savepoint "pvprealm02",0,0;
+	warp "pvprealm02",127,272;
+}
+pvprealm09,129,130,0	script	REALMWP79	45,1,1,{
+	savepoint "pvprealm02",0,0;
+	warp "pvprealm02",127,273;
+}
+pvprealm09,128,131,0	script	REALMWP80	45,3,3,{
+	savepoint "pvprealm10",0,0;
+	warp "pvprealm10",129,133;
+}
+pvprealm10,129,129,0	script	REALMWP81	45,3,3,{
+	savepoint "pvprealm09",0,0;
+	warp "pvprealm09",126,128;
+}
+pvprealm11,150,150,0	script	REALMWP82	45,1,1,{
+	savepoint "pvprealm02",0,0;
+	warp "pvprealm02",129,147;
+}
+pvprealm02,130,150,0	script	REALMWP83	45,1,1,{
+	savepoint "pvprealm11",0,0;
+	warp "pvprealm11",147,147;
+}
+pvprealm11,100,150,0	warp	REALMWP84a	1,1,pvprealm11,128,150
+pvprealm11,123,150,0	warp	REALMWP85b	1,1,pvprealm11,95,150
+pvprealm11,114,183,0	warp	REALMWP86a	1,1,pvprealm11,135,163
+pvprealm11,130,168,0	warp	REALMWP87b	1,1,pvprealm11,109,188
+pvprealm11,115,115,0	warp	REALMWP88a	1,1,pvprealm11,136,136
+pvprealm11,131,131,0	warp	REALMWP89b	1,1,pvprealm11,110,110
+pvprealm11,148,176,0	warp	REALMWP90a	1,1,pvprealm11,149,204
+pvprealm11,149,199,0	warp	REALMWP91b	1,1,pvprealm11,148,171
+pvprealm11,149,99,0	warp	REALMWP92a	1,1,pvprealm11,151,129
+pvprealm11,151,124,0	warp	REALMWP93b	1,1,pvprealm11,151,94
+pvprealm11,168,168,0	warp	REALMWP94a	1,1,pvprealm11,189,189
+pvprealm11,184,184,0	warp	REALMWP95b	1,1,pvprealm11,163,163
+pvprealm11,169,131,0	warp	REALMWP96a	1,1,pvprealm11,188,111
+pvprealm11,183,116,0	warp	REALMWP97b	1,1,pvprealm11,164,136
+pvprealm11,176,150,0	warp	REALMWP98a	1,1,pvprealm11,204,150
+pvprealm11,199,150,0	warp	REALMWP99b	1,1,pvprealm11,171,150
+pvprealm11,53,53,0	script	REALMWP100	45,1,1,{
+	savepoint "pvprealm12",0,0;
+	warp "pvprealm12",78,78;
+}
+pvprealm11,246,51,0	script	REALMWP101	45,1,1,{
+	savepoint "pvprealm12",0,0;
+	warp "pvprealm12",221,78;
+}
+pvprealm11,246,246,0	script	REALMWP102	45,1,1,{
+	savepoint "pvprealm12",0,0;
+	warp "pvprealm12",221,221;
+}
+pvprealm11,53,246,0	script	REALMWP103	45,1,1,{
+	savepoint "pvprealm12",0,0;
+	warp "pvprealm12",78,221;
+}
+pvprealm12,224,224,0	script	REALMWP104	45,1,1,{
+	savepoint "pvprealm11",0,0;
+	warp "pvprealm11",242,243;
+}
+pvprealm12,75,224,0	script	REALMWP105	45,1,1,{
+	savepoint "pvprealm11",0,0;
+	warp "pvprealm11",56,243;
+}
+pvprealm12,75,75,0	script	REALMWP106	45,1,1,{
+	savepoint "pvprealm11",0,0;
+	warp "pvprealm11",56,56;
+}
+pvprealm12,224,75,0	script	REALMWP107	45,1,1,{
+	savepoint "pvprealm11",0,0;
+	warp "pvprealm11",243,54;
+}
+pvprealm13,107,82,0	script	REALMWP108	45,1,1,{
+	savepoint "pvprealm11",0,0;
+	warp "pvprealm11",30,150;
+}
+pvprealm11,25,150,0	script	REALMWP109	45,1,1,{
+	savepoint "pvprealm13",0,0;
+	warp "pvprealm13",107,87;
+}
+pvprealm11,150,274,0	script	REALMWP110	45,1,1,{
+	savepoint "pvprealm14",0,0;
+	warp "pvprealm14",176,9;
+}
+pvprealm14,176,4,0	script	REALMWP111	45,1,1,{
+	savepoint "pvprealm11",0,0;
+	warp "pvprealm11",150,270;
+}
+pvprealm14,100,35,0	warp	REALMWP112	5,2,pvprealm14,139,47	
+pvprealm14,102,165,0	warp	REALMWP113	5,2,pvprealm14,98,151	
+pvprealm14,105,115,0	warp	REALMWP114	5,2,pvprealm14,175,168	
+pvprealm14,105,75,0	warp	REALMWP115	5,2,pvprealm14,54,8	
+pvprealm14,115,145,0	warp	REALMWP116	2,5,pvprealm14,8,186	
+pvprealm14,115,21,0	warp	REALMWP117	2,5,pvprealm14,167,22	
+pvprealm14,115,56,0	warp	REALMWP118	2,5,pvprealm14,7,57	
+pvprealm14,115,96,0	warp	REALMWP119	2,5,pvprealm14,128,105	
+pvprealm14,124,105,0	warp	REALMWP120	2,5,pvprealm14,111,96	
+pvprealm14,124,169,0	warp	REALMWP121	2,5,pvprealm14,191,139	
+pvprealm14,138,124,0	warp	REALMWP122	5,2,pvprealm14,142,111	
+pvprealm14,139,44,0	warp	REALMWP123	5,2,pvprealm14,100,32	
+pvprealm14,14,75,0	warp	REALMWP124	5,2,pvprealm14,63,128	
+pvprealm14,140,75,0	warp	REALMWP125	5,2,pvprealm14,96,47	
+pvprealm14,142,115,0	warp	REALMWP126	5,2,pvprealm14,138,128	
+pvprealm14,155,133,0	warp	REALMWP127	2,5,pvprealm14,8,140	
+pvprealm14,155,181,0	warp	REALMWP128	2,5,pvprealm14,88,145	
+pvprealm14,155,21,0	warp	REALMWP129	2,12,pvprealm14,87,13	
+pvprealm14,164,140,0	warp	REALMWP130	2,5,pvprealm14,70,68	
+pvprealm14,164,22,0	warp	REALMWP131	2,5,pvprealm14,112,21	
+pvprealm14,164,93,0	warp	REALMWP132	2,5,pvprealm14,72,11	
+pvprealm14,17,115,0	warp	REALMWP133	5,2,pvprealm14,50,48	
+pvprealm14,17,34,0	warp	REALMWP134	5,3,pvprealm14,23,128	
+pvprealm14,175,164,0	warp	REALMWP135	5,2,pvprealm14,105,111	
+pvprealm14,176,35,0	warp	REALMWP136	5,3,pvprealm14,182,88	
+pvprealm14,176,44,0	warp	REALMWP137	5,2,pvprealm14,18,152	
+pvprealm14,18,155,0	warp	REALMWP138	5,2,pvprealm14,176,47	
+pvprealm14,182,84,0	warp	REALMWP139	5,2,pvprealm14,177,31	
+pvprealm14,195,139,0	warp	REALMWP140	2,5,pvprealm14,129,174	
+pvprealm14,195,15,0	warp	REALMWP141	2,5,pvprealm14,47,105	
+pvprealm14,195,174,0	warp	REALMWP142	2,5,pvprealm14,47,23	
+pvprealm14,195,55,0	warp	REALMWP143	2,5,pvprealm14,87,97	
+pvprealm14,195,93,0	warp	REALMWP144	2,5,pvprealm14,88,55	
+pvprealm14,22,84,0	warp	REALMWP145	5,2,pvprealm14,55,151	
+pvprealm14,23,124,0	warp	REALMWP146	5,2,pvprealm14,17,30	
+pvprealm14,25,5,0	warp	REALMWP147	5,3,pvprealm14,65,113
+pvprealm14,4,140,0	warp	REALMWP148	2,5,pvprealm14,151,133	
+pvprealm14,4,186,0	warp	REALMWP149	2,5,pvprealm14,111,145	
+pvprealm14,4,57,0	warp	REALMWP150	2,5,pvprealm14,112,56	
+pvprealm14,44,105,0	warp	REALMWP151	2,5,pvprealm14,192,15	
+pvprealm14,44,23,0	warp	REALMWP152	2,5,pvprealm14,192,174	
+pvprealm14,50,44,0	warp	REALMWP153	4,2,pvprealm14,17,111	
+pvprealm14,51,195,0	warp	REALMWP154	7,2,pvprealm14,63,88	
+pvprealm14,54,4,0	warp	REALMWP155	5,2,pvprealm14,105,71	
+pvprealm14,55,155,0	warp	REALMWP156	5,2,pvprealm14,22,88	
+pvprealm14,63,124,0	warp	REALMWP157	5,2,pvprealm14,14,71	
+pvprealm14,63,195,0	warp	REALMWP158	7,2,pvprealm14,63,88	
+pvprealm14,63,84,0	warp	REALMWP159	6,2,pvprealm14,58,192	
+pvprealm14,65,116,0	warp	REALMWP160	5,2,pvprealm14,23,9	
+pvprealm14,70,75,0	warp	REALMWP161	7,3,pvprealm14,169,140	
+pvprealm14,75,11,0	warp	REALMWP162	2,5,pvprealm14,167,93	
+pvprealm14,75,66,0	warp	REALMWP163	3,10,pvprealm14,169,140	
+pvprealm14,75,95,0	warp	REALMWP164	2,5,pvprealm14,88,173	
+pvprealm14,84,10,0	warp	REALMWP165	2,5,pvprealm14,152,25	
+pvprealm14,84,145,0	warp	REALMWP166	2,5,pvprealm14,151,181	
+pvprealm14,84,173,0	warp	REALMWP167	2,5,pvprealm14,71,95	
+pvprealm14,84,55,0	warp	REALMWP168	2,5,pvprealm14,191,93	
+pvprealm14,84,97,0	warp	REALMWP169	2,5,pvprealm14,192,55	
+pvprealm14,96,44,0	warp	REALMWP170	5,2,pvprealm14,140,72	
+pvprealm14,98,155,0	warp	REALMWP171	5,2,pvprealm14,102,169	
+pvprealm14,19,195,0	script	REALMWP172	45,1,1,{
+	savepoint "pvprealm15",0,0;
+	warp "pvprealm15",23,8;
+}
+pvprealm15,25,4,0	script	REALMWP173	45,1,1,{
+	savepoint "pvprealm14",0,0;
+	warp "pvprealm14",22,191;
+}
+pvprealm15,100,35,0	warp	REALMWP174	4,2,pvprealm15,63,88	
+pvprealm15,102,164,0	warp	REALMWP175	3,2,pvprealm15,143,111	
+pvprealm15,104,115,0	warp	REALMWP176	4,2,pvprealm15,22,88	
+pvprealm15,105,75,0	warp	REALMWP177	6,2,pvprealm15,140,47	
+pvprealm15,115,145,0	warp	REALMWP178	2,3,pvprealm15,88,173	
+pvprealm15,115,21,0	warp	REALMWP179	2,4,pvprealm15,128,105	
+pvprealm15,115,56,0	warp	REALMWP180	2,3,pvprealm15,88,145	
+pvprealm15,115,96,0	warp	REALMWP181	2,7,pvprealm15,167,22	
+pvprealm15,124,105,0	warp	REALMWP182	2,4,pvprealm15,111,21	
+pvprealm15,124,168,0	warp	REALMWP183	2,8,pvprealm15,69,69	
+pvprealm15,137,124,0	warp	REALMWP184	10,2,pvprealm15,177,32	
+pvprealm15,14,75,0	warp	REALMWP185	5,2,pvprealm15,54,8	
+pvprealm15,140,44,0	warp	REALMWP186	6,2,pvprealm15,105,72	
+pvprealm15,140,75,0	warp	REALMWP187	3,2,pvprealm15,97,48	
+pvprealm15,143,115,0	warp	REALMWP188	3,2,pvprealm15,102,168	
+pvprealm15,155,133,0	warp	REALMWP189	2,3,pvprealm15,8,186	
+pvprealm15,155,181,0	warp	REALMWP190	2,3,pvprealm15,88,56	
+pvprealm15,155,21,0	warp	REALMWP191#a	2,15,pvprealm15,48,22	
+pvprealm15,164,139,0	warp	REALMWP191	2,4,pvprealm15,191,16	
+pvprealm15,164,22,0	warp	REALMWP192	2,8,pvprealm15,111,95	
+pvprealm15,17,115,0	warp	REALMWP193	8,2,pvprealm15,49,47	
+pvprealm15,175,164,0	warp	REALMWP194	5,2,pvprealm15,18,30	
+pvprealm15,176,35,0	warp	REALMWP195	5,2,pvprealm15,137,127	
+pvprealm15,176,44,0	warp	REALMWP196	7,2,pvprealm15,55,151	
+pvprealm15,178,75,0	warp	REALMWP197	3,2,pvprealm15,182,88	
+pvprealm15,18,155,0	warp	REALMWP198	4,2,pvprealm15,63,128	
+pvprealm15,18,34,0	warp	REALMWP199	5,3,pvprealm15,175,168	
+pvprealm15,182,84,0	warp	REALMWP200	3,2,pvprealm15,178,71	
+pvprealm15,195,139,0	warp	REALMWP201	2,13,pvprealm15,167,22	
+pvprealm15,195,16,0	warp	REALMWP202	2,4,pvprealm15,168,139	
+pvprealm15,195,174,0	warp	REALMWP203	2,5,pvprealm15,48,105	
+pvprealm15,195,54,0	warp	REALMWP204	2,3,pvprealm15,88,96	
+pvprealm15,22,195,0	warp	REALMWP205	4,2,pvprealm15,65,111	
+pvprealm15,22,84,0	warp	REALMWP206	6,2,pvprealm15,104,111	
+pvprealm15,23,124,0	warp	REALMWP207	5,2,pvprealm15,98,151	
+pvprealm15,4,140,0	warp	REALMWP208	2,3,pvprealm15,60,192	
+pvprealm15,4,186,0	warp	REALMWP209	2,4,pvprealm15,151,133	
+pvprealm15,4,57,0	warp	REALMWP210	2,4,pvprealm15,71,95	
+pvprealm15,44,105,0	warp	REALMWP211	2,4,pvprealm15,191,174	
+pvprealm15,44,22,0	warp	REALMWP212	2,5,pvprealm15,151,25	
+pvprealm15,49,44,0	warp	REALMWP213	10,2,pvprealm15,17,112	
+pvprealm15,53,195,0	warp	REALMWP214	10,2,pvprealm15,7,140	
+pvprealm15,54,4,0	warp	REALMWP215	5,2,pvprealm15,14,71	
+pvprealm15,55,155,0	warp	REALMWP216	3,2,pvprealm15,176,48	
+pvprealm15,63,124,0	warp	REALMWP217	4,2,pvprealm15,18,151	
+pvprealm15,63,195,0	warp	REALMWP218	10,2,pvprealm15,7,140	
+pvprealm15,63,84,0	warp	REALMWP219	4,2,pvprealm15,100,31	
+pvprealm15,65,115,0	warp	REALMWP220	4,2,pvprealm15,22,191	
+pvprealm15,71,75,0	warp	REALMWP221	6,2,pvprealm15,127,173	
+pvprealm15,75,12,0	warp	REALMWP222	2,5,pvprealm15,88,13	
+pvprealm15,75,64,0	warp	REALMWP223	2,10,pvprealm15,127,173	
+pvprealm15,75,95,0	warp	REALMWP224	2,4,pvprealm15,8,57	
+pvprealm15,84,10,0	warp	REALMWP225	2,5,pvprealm15,71,12	
+pvprealm15,84,145,0	warp	REALMWP226	2,3,pvprealm15,111,56	
+pvprealm15,84,173,0	warp	REALMWP227	2,3,pvprealm15,111,145	
+pvprealm15,84,56,0	warp	REALMWP228	2,3,pvprealm15,151,181	
+pvprealm15,84,96,0	warp	REALMWP229	2,3,pvprealm15,191,54	
+pvprealm15,97,44,0	warp	REALMWP230	3,2,pvprealm15,140,71	
+pvprealm15,98,155,0	warp	REALMWP231	3,2,pvprealm15,23,128	
+//Molten Cave Floor 1 to Main Tower, Floor 1
+pvprealm16,126,66,0	script	REALMWP232	45,1,1,{
+	savepoint "pvprealm11",0,0;
+	warp "pvprealm11",270,150;
+}
+//Main Tower, Floor 1 to Molten Cave Floor 1
+pvprealm11,274,150,0	script	REALMWP233	45,1,1,{
+	savepoint "pvprealm16",0,0;
+	warp "pvprealm16",126,70;
+}
+//Molten Cave Floor 1 to Molten Cave Floor 2
+pvprealm16,242,241,0	script	REALMWP234	45,1,1,{
+	savepoint "pvprealm17",0,0;	
+	warp "pvprealm17",47,30;
+}
+pvprealm17,47,28,0	script	REALMWP235	45,1,1,{
+	savepoint "pvprealm16",0,0;
+	warp "pvprealm16",242,239;
+}
+//River Cave Floor 1 to Main Tower, Second Floor
+pvprealm18,154,12,0	script	REALMWP236	45,1,1,{
+	savepoint "pvprealm11",0,0;
+	warp "pvprealm11",149,29;
+}
+//Main Tower, Second Floor to River Cave Floor 1
+pvprealm11,149,25,0	script	REALMWP237	45,1,1,{
+	savepoint "pvprealm18",0,0;
+	warp "pvprealm18",154,16;
+}
+//River Cave Floor 1 to River Cave Floor 2
+pvprealm18,259,244,0	script	REALMWP238	45,1,1,{
+	savepoint "pvprealm19",0,0;
+	warp "pvprealm19",272,67;
+}
+//River Cave Floor 2 to River Cave Floor 1
+pvprealm19,277,67,0	script	REALMWP239	45,1,1,{
+	savepoint "pvprealm18",0,0;
+	warp "pvprealm18",255,244;
+}
+pvprealm20,259,365,0	script	REALMWP240	45,1,1,{
+	savepoint "pvprealm04",0,0;
+	warp "pvprealm04",12,7;
+}
+pvprealm04,8,7,0	script	REALMWP241	45,1,1,{
+	savepoint "pvprealm20",231,364;
+	warp "pvprealm20",255,365;
+}
+
+//--- Functions --------------------------------------------------------------------------------
+function	script	F_STNGFOR	{
+	message strcharinfo(0),"A strange force prevents you from passing.";
+	end;
+}
+function	script	F_STNGFOR2	{
+	message strcharinfo(0),"Please talk to the realm clerk first before entering the realm!";
+	end;
+}
+function	script	F_PVPSTORE	{
+	if (getarg(1)==1) mes "[Claire]";
+	if (getarg(1)==2) mes "[Joyce]";
+	if (getarg(1)==3) mes "[Mindy]";
+	mes "How many would you like?";
+	input @PVPITEM;
+	if (@PVPITEM>500) set @PVPITEM,500;
+	set Zeny,Zeny - getarg(2);
+	getitem getarg(0),@PVPITEM;
+	set @PVPITEM,0;
+	next;
+	if (getarg(1)==1) mes "[Claire]";
+	if (getarg(1)==2) mes "[Joyce]";
+	if (getarg(1)==3) mes "[Mindy]";
+	mes "What do you need?";
+	return;
+L_NotEnough:
+	mes "[Mindy]";
+	mes "Hey, I told you, you need to pay for these items!  No cash no stash!";
+	return;
+}
+
+function	script	F_PVPSETUP	{
+	if (getarg(0)) goto L_Revert;
+	specialeffect2 9;
+	specialeffect2 6;
+	specialeffect2 344;
+	specialeffect2 70;
+	set PVPACS,2;
+	nude;
+	set PVPStr,readparam(bStr);
+	set PVPAgi,readparam(bAgi);
+	set PVPVit,readparam(bVit);
+	set PVPInt,readparam(bInt);
+	set PVPDex,readparam(bDex);
+	set PVPLuk,readparam(bLuk);
+	set PVPStatPt,StatusPoint;
+	set PVPSkillPt,SkillPoint;
+	if (checkriding()) set PVPState,1;
+	if (checkfalcon()) set PVPState,2;
+	if (checkcart()) set PVPState,3;
+	setoption 0;
+	getskilllist;
+	cleararray @skilllist_flag[0],0,@skilllist_count;
+	set P1a,@skilllist_id[0];
+	set P1b,@skilllist_lv[0];
+	if(@skilllist_count==1) goto L_Clear;
+	set P2a,@skilllist_id[1];
+	set P2b,@skilllist_lv[1];
+	if(@skilllist_count==2) goto L_Clear;
+	set P3a,@skilllist_id[2];
+	set P3b,@skilllist_lv[2];
+	if(@skilllist_count==3) goto L_Clear;
+	set P4a,@skilllist_id[3];
+	set P4b,@skilllist_lv[3];
+	if(@skilllist_count==4) goto L_Clear;
+	set P5a,@skilllist_id[4];
+	set P5b,@skilllist_lv[4];
+	if(@skilllist_count==5) goto L_Clear;
+	set P6a,@skilllist_id[5];
+	set P6b,@skilllist_lv[5];
+	if(@skilllist_count==6) goto L_Clear;
+	set P7a,@skilllist_id[6];
+	set P7b,@skilllist_lv[6];
+	if(@skilllist_count==7) goto L_Clear;
+	set P8a,@skilllist_id[7];
+	set P8b,@skilllist_lv[7];
+	if(@skilllist_count==8) goto L_Clear;
+	set P9a,@skilllist_id[8];
+	set P9b,@skilllist_lv[8];
+	if(@skilllist_count==9) goto L_Clear;
+	set P10a,@skilllist_id[9];
+	set P10b,@skilllist_lv[9];
+	if(@skilllist_count==10) goto L_Clear;
+	set P11a,@skilllist_id[10];
+	set P11b,@skilllist_lv[10];
+	if(@skilllist_count==11) goto L_Clear;
+	set P12a,@skilllist_id[11];
+	set P12b,@skilllist_lv[11];
+	if(@skilllist_count==12) goto L_Clear;
+	set P13a,@skilllist_id[12];
+	set P13b,@skilllist_lv[12];
+	if(@skilllist_count==13) goto L_Clear;
+	set P14a,@skilllist_id[13];
+	set P14b,@skilllist_lv[13];
+	if(@skilllist_count==14) goto L_Clear;
+	set P15a,@skilllist_id[14];
+	set P15b,@skilllist_lv[14];
+	if(@skilllist_count==15) goto L_Clear;
+	set P16a,@skilllist_id[15];
+	set P16b,@skilllist_lv[15];
+	if(@skilllist_count==16) goto L_Clear;
+	set P17a,@skilllist_id[16];
+	set P17b,@skilllist_lv[16];
+	if(@skilllist_count==17) goto L_Clear;
+	set P18a,@skilllist_id[17];
+	set P18b,@skilllist_lv[17];
+	if(@skilllist_count==18) goto L_Clear;
+	set P19a,@skilllist_id[18];
+	set P19b,@skilllist_lv[18];
+	if(@skilllist_count==19) goto L_Clear;
+	set P20a,@skilllist_id[19];
+	set P20b,@skilllist_lv[19];
+	if(@skilllist_count==20) goto L_Clear;
+	set P21a,@skilllist_id[20];
+	set P21b,@skilllist_lv[20];
+	if(@skilllist_count==21) goto L_Clear;
+	set P22a,@skilllist_id[21];
+	set P22b,@skilllist_lv[21];
+	if(@skilllist_count==22) goto L_Clear;
+	set P23a,@skilllist_id[22];
+	set P23b,@skilllist_lv[22];
+	if(@skilllist_count==23) goto L_Clear;
+	set P24a,@skilllist_id[23];
+	set P24b,@skilllist_lv[23];
+	if(@skilllist_count==24) goto L_Clear;
+	set P25a,@skilllist_id[24];
+	set P25b,@skilllist_lv[24];
+	if(@skilllist_count==25) goto L_Clear;
+	set P26a,@skilllist_id[25];
+	set P26b,@skilllist_lv[25];
+	if(@skilllist_count==26) goto L_Clear;
+	set P27a,@skilllist_id[26];
+	set P27b,@skilllist_lv[26];
+	if(@skilllist_count==27) goto L_Clear;
+	set P28a,@skilllist_id[27];
+	set P28b,@skilllist_lv[27];
+	if(@skilllist_count==28) goto L_Clear;
+	set P29a,@skilllist_id[28];
+	set P29b,@skilllist_lv[28];
+	if(@skilllist_count==29) goto L_Clear;
+	set P30a,@skilllist_id[29];
+	set P30b,@skilllist_lv[29];
+	if(@skilllist_count==30) goto L_Clear;
+	set P31a,@skilllist_id[30];
+	set P31b,@skilllist_lv[30];
+	if(@skilllist_count==31) goto L_Clear;
+	set P32a,@skilllist_id[31];
+	set P32b,@skilllist_lv[31];
+	if(@skilllist_count==32) goto L_Clear;
+	set P33a,@skilllist_id[32];
+	set P33b,@skilllist_lv[32];
+	if(@skilllist_count==33) goto L_Clear;
+	set P34a,@skilllist_id[33];
+	set P34b,@skilllist_lv[33];
+	if(@skilllist_count==34) goto L_Clear;
+	set P35a,@skilllist_id[34];
+	set P35b,@skilllist_lv[34];
+	if(@skilllist_count==35) goto L_Clear;
+	set P36a,@skilllist_id[35];
+	set P36b,@skilllist_lv[35];
+	if(@skilllist_count==36) goto L_Clear;
+	set P37a,@skilllist_id[36];
+	set P37b,@skilllist_lv[36];
+	if(@skilllist_count==37) goto L_Clear;
+	set P38a,@skilllist_id[37];
+	set P38b,@skilllist_lv[37];
+	if(@skilllist_count==38) goto L_Clear;
+	set P39a,@skilllist_id[38];
+	set P39b,@skilllist_lv[38];
+	if(@skilllist_count==39) goto L_Clear;
+	set P40a,@skilllist_id[39];
+	set P40b,@skilllist_lv[39];
+	if(@skilllist_count==40) goto L_Clear;
+	set P41a,@skilllist_id[40];
+	set P41b,@skilllist_lv[40];
+	if(@skilllist_count==41) goto L_Clear;
+	set P42a,@skilllist_id[41];
+	set P42b,@skilllist_lv[41];
+	if(@skilllist_count==42) goto L_Clear;
+	set P43a,@skilllist_id[42];
+	set P43b,@skilllist_lv[42];
+	if(@skilllist_count==43) goto L_Clear;
+	set P44a,@skilllist_id[43];
+	set P44b,@skilllist_lv[43];
+	if(@skilllist_count==44) goto L_Clear;
+	set P45a,@skilllist_id[44];
+	set P45b,@skilllist_lv[44];
+	if(@skilllist_count==45) goto L_Clear;
+	set P46a,@skilllist_id[45];
+	set P46b,@skilllist_lv[45];
+	if(@skilllist_count==46) goto L_Clear;
+	set P47a,@skilllist_id[46];
+	set P47b,@skilllist_lv[46];
+	if(@skilllist_count==47) goto L_Clear;
+	set P48a,@skilllist_id[47];
+	set P48b,@skilllist_lv[47];
+	if(@skilllist_count==48) goto L_Clear;
+	set P49a,@skilllist_id[48];
+	set P49b,@skilllist_lv[48];
+	if(@skilllist_count==49) goto L_Clear;
+	set P50a,@skilllist_id[49];
+	set P50b,@skilllist_lv[49];
+	if(@skilllist_count==50) goto L_Clear;
+	set P51a,@skilllist_id[50];
+	set P51b,@skilllist_lv[50];
+	if(@skilllist_count==51) goto L_Clear;
+L_Clear:
+	cleararray @skilllist_id[0],0,@skilllist_count;
+	cleararray @skilllist_lv[0],0,@skilllist_count;
+	set PSkl,@skilllist_count;
+	set @skilllist_count,0;
+	Resetstatus;
+	Resetskill;
+	set PVPBLvl,BaseLevel;
+	set PVPBExp,BaseExp;
+	set PVPDie,PC_DIE_COUNTER;
+	set PC_DIE_COUNTER,0;
+	set BaseExp,0;
+	set BaseLevel,0;
+	setoption 0;
+	set BaseLevel,75+PVPBLUP;
+	return;
+L_Revert:
+	specialeffect2 9;
+	specialeffect2 6;
+	specialeffect2 344;
+	specialeffect2 70;
+	set PVPACS,1;
+	nude;
+	resetstatus;
+	resetskill;
+	set BaseLevel,0;
+	set StatusPoint,0;
+	set SkillPoint,0;
+	set BaseExp,0;
+	set BaseLevel,PVPBLvl;
+	set StatusPoint,PVPStatPt;
+	statusup2 bStr,(PVPStr-1);
+	statusup2 bVit,(PVPVit-1);
+	statusup2 bInt,(PVPInt-1);
+	statusup2 bAgi,(PVPAgi-1);
+	statusup2 bDex,(PVPDex-1);
+	statusup2 bLuk,(PVPLuk-1);
+	skill P1a,P1b,0;
+	set P1a,0;
+	set P1b,0;
+	if(PSkl==1) goto L_Reset;
+	skill P2a,P2b,0;
+	set P2a,0;
+	set P2b,0;
+	if(PSkl==2) goto L_Reset;
+	skill P3a,P3b,0;
+	set P3a,0;
+	set P3b,0;
+	if(PSkl==3) goto L_Reset;
+	skill P4a,P4b,0;
+	set P4a,0;
+	set P4b,0;
+	if(PSkl==4) goto L_Reset;
+	skill P5a,P5b,0;
+	set P5a,0;
+	set P5b,0;
+	if(PSkl==5) goto L_Reset;
+	skill P6a,P6b,0;
+	set P6a,0;
+	set P6b,0;
+	if(PSkl==6) goto L_Reset;
+	skill P7a,P7b,0;
+	set P7a,0;
+	set P7b,0;
+	if(PSkl==7) goto L_Reset;
+	skill P8a,P8b,0;
+	set P8a,0;
+	set P8b,0;
+	if(PSkl==8) goto L_Reset;
+	skill P9a,P9b,0;
+	set P9a,0;
+	set P9b,0;
+	if(PSkl==9) goto L_Reset;
+	skill P10a,P10b,0;
+	set P10a,0;
+	set P10b,0;
+	if(PSkl==10) goto L_Reset;
+	skill P11a,P11b,0;
+	set P11a,0;
+	set P11b,0;
+	if(PSkl==11) goto L_Reset;
+	skill P12a,P12b,0;
+	set P12a,0;
+	set P12b,0;
+	if(PSkl==12) goto L_Reset;
+	skill P13a,P13b,0;
+	set P13a,0;
+	set P13b,0;
+	if(PSkl==13) goto L_Reset;
+	skill P14a,P14b,0;
+	set P14a,0;
+	set P14b,0;
+	if(PSkl==14) goto L_Reset;
+	skill P15a,P15b,0;
+	set P15a,0;
+	set P15b,0;
+	if(PSkl==15) goto L_Reset;
+	skill P16a,P16b,0;
+	set P16a,0;
+	set P16b,0;
+	if(PSkl==16) goto L_Reset;
+	skill P17a,P17b,0;
+	set P17a,0;
+	set P17b,0;
+	if(PSkl==17) goto L_Reset;
+	skill P18a,P18b,0;
+	set P18a,0;
+	set P18b,0;
+	if(PSkl==18) goto L_Reset;
+	skill P19a,P19b,0;
+	set P19a,0;
+	set P19b,0;
+	if(PSkl==19) goto L_Reset;
+	skill P20a,P20b,0;
+	set P20a,0;
+	set P20b,0;
+	if(PSkl==20) goto L_Reset;
+	skill P21a,P21b,0;
+	set P21a,0;
+	set P21b,0;
+	if(PSkl==21) goto L_Reset;
+	skill P22a,P22b,0;
+	set P22a,0;
+	set P22b,0;
+	if(PSkl==22) goto L_Reset;
+	skill P23a,P23b,0;
+	set P23a,0;
+	set P23b,0;
+	if(PSkl==23) goto L_Reset;
+	skill P24a,P24b,0;
+	set P24a,0;
+	set P24b,0;
+	if(PSkl==24) goto L_Reset;
+	skill P25a,P25b,0;
+	set P25a,0;
+	set P25b,0;
+	if(PSkl==25) goto L_Reset;
+	skill P26a,P26b,0;
+	set P26a,0;
+	set P26b,0;
+	if(PSkl==26) goto L_Reset;
+	skill P27a,P27b,0;
+	set P27a,0;
+	set P27b,0;
+	if(PSkl==27) goto L_Reset;
+	skill P28a,P28b,0;
+	set P28a,0;
+	set P28b,0;
+	if(PSkl==28) goto L_Reset;
+	skill P29a,P29b,0;
+	set P29a,0;
+	set P29b,0;
+	if(PSkl==29) goto L_Reset;
+	skill P30a,P30b,0;
+	set P30a,0;
+	set P30b,0;
+	if(PSkl==30) goto L_Reset;
+	skill P31a,P31b,0;
+	set P31a,0;
+	set P31b,0;
+	if(PSkl==31) goto L_Reset;
+	skill P32a,P32b,0;
+	set P32a,0;
+	set P32b,0;
+	if(PSkl==32) goto L_Reset;
+	skill P33a,P33b,0;
+	set P33a,0;
+	set P33b,0;
+	if(PSkl==33) goto L_Reset;
+	skill P34a,P34b,0;
+	set P34a,0;
+	set P34b,0;
+	if(PSkl==34) goto L_Reset;
+	skill P35a,P35b,0;
+	set P35a,0;
+	set P35b,0;
+	if(PSkl==35) goto L_Reset;
+	skill P36a,P36b,0;
+	set P36a,0;
+	set P36b,0;
+	if(PSkl==36) goto L_Reset;
+	skill P37a,P37b,0;
+	set P37a,0;
+	set P37b,0;
+	if(PSkl==37) goto L_Reset;
+	skill P38a,P38b,0;
+	set P38a,0;
+	set P38b,0;
+	if(PSkl==38) goto L_Reset;
+	skill P39a,P39b,0;
+	set P39a,0;
+	set P39b,0;
+	if(PSkl==39) goto L_Reset;
+	skill P40a,P40b,0;
+	set P40a,0;
+	set P40b,0;
+	if(PSkl==40) goto L_Reset;
+	skill P41a,P41b,0;
+	set P41a,0;
+	set P41b,0;
+	if(PSkl==41) goto L_Reset;
+	skill P42a,P42b,0;
+	set P42a,0;
+	set P42b,0;
+	if(PSkl==42) goto L_Reset;
+	skill P43a,P43b,0;
+	set P43a,0;
+	set P43b,0;
+	if(PSkl==43) goto L_Reset;
+	skill P44a,P44b,0;
+	set P44a,0;
+	set P44b,0;
+	if(PSkl==44) goto L_Reset;
+	skill P45a,P45b,0;
+	set P45a,0;
+	set P45b,0;
+	if(PSkl==45) goto L_Reset;
+	skill P46a,P46b,0;
+	set P46a,0;
+	set P46b,0;
+	if(PSkl==46) goto L_Reset;
+	skill P47a,P47b,0;
+	set P47a,0;
+	set P47b,0;
+	if(PSkl==47) goto L_Reset;
+	skill P48a,P48b,0;
+	set P48a,0;
+	set P48b,0;
+	if(PSkl==48) goto L_Reset;
+	skill P49a,P49b,0;
+	set P49a,0;
+	set P49b,0;
+	if(PSkl==49) goto L_Reset;
+	skill P50a,P50b,0;
+	set P50a,0;
+	set P50b,0;
+	if(PSkl==50) goto L_Reset;
+	skill P51a,P51b,0;
+	set P51a,0;
+	set P51b,0;
+	if(PSkl==51) goto L_Reset;
+L_Reset:
+	set PSkl,0;
+	if (PVPState==1) setriding;
+	if (PVPState==2) setfalcon;
+	if (PVPState==3) setcart;
+	set PVPState,0;
+	set SkillPoint,PVPSkillPt;
+	set BaseExp,PVPBExp;
+	set PC_DIE_COUNTER,PVPDie;
+	set PVPSkillPt,0;
+	set PVPStatPt,0;
+	set PVPBLvl,0;
+	set PVPBExp,0;
+	set PVPDie,0;
+	set PVPStr,0;
+	set PVPVit,0;
+	set PVPInt,0;
+	set PVPAgi,0;
+	set PVPDex,0;
+	set PVPLuk,0;
+	delitem 15202,(countitem(15202));
+	delitem 15203,(countitem(15203));
+	delitem 15204,(countitem(15204));
+	delitem 15205,(countitem(15205));
+	delitem 15206,(countitem(15206));
+	delitem 15207,(countitem(15207));
+	delitem 15208,(countitem(15208));
+	delitem 15209,(countitem(15209));
+	delitem 15210,(countitem(15210));
+	delitem 15211,(countitem(15211));
+	delitem 15212,(countitem(15212));
+	delitem 15213,(countitem(15213));
+	delitem 15214,(countitem(15214));
+	delitem 15215,(countitem(15215));
+	delitem 15216,(countitem(15216));
+	delitem 15217,(countitem(15217));
+	delitem 15218,(countitem(15218));
+	delitem 15219,(countitem(15219));
+	delitem 15220,(countitem(15220));
+	delitem 15221,(countitem(15221));
+	delitem 15222,(countitem(15222));
+	delitem 15223,(countitem(15223));
+	delitem 15224,(countitem(15224));
+	delitem 15225,(countitem(15225));
+	delitem 15226,(countitem(15226));
+	delitem 15227,(countitem(15227));
+	delitem 15228,(countitem(15228));
+	delitem 15229,(countitem(15229));
+	delitem 15230,(countitem(15230));
+	delitem 15231,(countitem(15231));
+	delitem 15232,(countitem(15232));
+	delitem 15233,(countitem(15233));
+	return;
+}
+
+function	script	F_PVPEXIT	{
+	specialeffect2 234;
+	set KillPts,KillPts-((KillLvl/5)+1);
+	if (KillPts < (KillToNext-(KillLvl+1))) set KillPts,(KillToNext-(KillLvl+1));
+	if (KillPts < 0) set KillPts,0;
+	dispbottom "[Level "+KillLvl+" : "+Killbar+" / "+KillToNext+"][Total Kills: "+KillPts+"]";
+	savepoint "pvprealm01",146,186;
+	warp "pvprealm01",146,186;
+	end;
+}
+
+-	script	PCKillEVENTS	111,{
+OnPCDieEvent:
+	//if (getgmlevel()>10) end;
+	if (PVPACS!=2) end;
+	specialeffect2 234;
+	set KillBar,KillBar-1;
+	set KillPts,KillPts-1; 
+	if (KillPts < 0) set KillPts,0;
+	if (KillBar < 0) set KillBar,0;
+	//if (KillPts < (KillToNext-(KillLvl+1))) set KillPts,(KillToNext-(KillLvl+1));
+	dispbottom "[Level "+KillLvl+" : "+KillBar+" / "+KillToNext+"][Total KillerPoints: "+KillPts+"]"; 
+	if (killerrid<150000) end;
+	set @killerid,killerrid;
+	set killerrid,0;
+	if (!@killerid) end;
+	attachrid @killerid;
+	set KillBar,KillBar+1;
+	set KillPts,KillPts+1; 
+	specialeffect2 366;
+	if (KillBar==KillToNext || KillPts==1) goto L_LevelUp; 
+	dispbottom "[Level "+KillLvl+" : "+KillBar+" / "+KillToNext+"][Total KillerPoints: "+KillPts+"]";
+	callfunc "F_PVPLADDER";
+L_LevelUp:
+	specialeffect2 342;
+	specialeffect2 225;
+	message strcharinfo(0),"Level Up!";
+	set KillLvl,KillLvl+1;
+	set KillPrize,KillPrize+1;
+if(KillLvl > 30) set KillToNext,((KillLvl+1)+KillPts-9);
+if((KillLvl > 15) && (KillLvl < 31) set KillToNext,((KillLvl+1)+KillPts-6); 
+if((KillLvl > 5) && (KillLvl < 16)) set KillToNext,((KillLvl+1)+KillPts-3);
+if(KillLvl < 6) set KillToNext,((KillLvl+1)+KillPts);
+	set KillBar,0;
+	dispbottom "[Level "+KillLvl+" : "+KillBar+" / "+KillToNext+"][Total KillerPoints: "+KillPts+"]";
+	callfunc "F_PVPLADDER";
+}
+
+function	script	F_PVPLADDER	{
+	set @CYCLE,0;
+L_CheckforName:
+	if (@CYCLE==(getarraysize($PVPLADDER_PT[0])+1)) goto L_CheckLad;
+	if ($PVPLADDER_NAME$[@CYCLE]==strcharinfo(0)) goto L_MoveName;
+	set @CYCLE,@CYCLE+1;
+	goto L_CheckforName;
+L_MoveName:
+	if (KillPts < $PVPLADDER_PT[@CYCLE]) end;
+	copyarray $PVPLADDER_PT[@CYCLE],$PVPLADDER_PT[(@CYCLE+1)],1;
+	copyarray $PVPLADDER_NAME$[@CYCLE],$PVPLADDER_NAME$[(@CYCLE+1)],1;
+L_CheckLad:
+	set @CYCLE,0;
+L_CheckLadder:
+	if (@CYCLE==(getarraysize($PVPLADDER_PT[0])+1)) end;
+	if (KillPts > $PVPLADDER_PT[@CYCLE]) goto L_ChangeLadder;
+	set @CYCLE,@CYCLE+1;
+	goto L_CheckLadder;
+L_ChangeLadder:
+	copyarray $PVPLADDER_PT[(1+@CYCLE)],$PVPLADDER_PT[@CYCLE],1;
+	copyarray $PVPLADDER_NAME$[(1+@CYCLE)],$PVPLADDER_NAME$[@CYCLE],1;
+	set $PVPLADDER_PT[@CYCLE],KillPts;
+	set $PVPLADDER_NAME$[@CYCLE],strcharinfo(0);
+	if ($PVPLADDER_NAME$[@CYCLE]==$PVPLADDER_NAME$[(1+@CYCLE)]) goto L_NameDouble;
+	set @CYCLE,0;
+	end;
+L_NameDouble:
+	set $PVPLADDER_PT[(1+@CYCLE)],0;
+	set $PVPLADDER_NAME$[(1+@CYCLE)],"";
+	set @CYCLE,0;
+	end;
+}
+
+-	script	blvlup_events	111,{
+OnPCBaseLvUpEvent:
+	//if (getgmlevel()>10) end;
+	if (!RPLADID) set RPLADID,$LADDERCOUNT;
+	if (RPLADID!=$LADDERCOUNT) end;
+	if (PVPACS) end;
+	set @CYCLE,0;
+L_CheckforName:
+	if (@CYCLE==(getarraysize($RPLADDER_PT[0])+1)) goto L_CheckLad;
+	if ($RPLADDER_NAME$[@CYCLE]==strcharinfo(0)) goto L_Movename;
+	set @CYCLE,@CYCLE+1;
+	goto L_CheckforName;
+L_Movename:
+	if (BaseLevel < $RPLADDER_PT[@CYCLE]) end;
+	copyarray $RPLADDER_PT[@CYCLE],$RPLADDER_PT[(@CYCLE+1)],1;
+	copyarray $RPLADDER_NAME$[@CYCLE],$RPLADDER_NAME$[(@CYCLE+1)],1;
+	set @CYCLE,@CYCLE+1;
+	goto L_CheckforName;
+L_CheckLad:
+	set @CYCLE,0;
+L_CheckLadder:
+	if (@CYCLE==(getarraysize($RPLADDER_PT[0])+1)) end;
+	if (BaseLevel > $RPLADDER_PT[@CYCLE]) goto L_ChangeLadder;
+	set @CYCLE,@CYCLE+1;
+	goto L_CheckLadder;
+L_ChangeLadder:
+	copyarray $RPLADDER_PT[(@CYCLE+1)],$RPLADDER_PT[@CYCLE],1;
+	copyarray $RPLADDER_NAME$[(@CYCLE+1)],$RPLADDER_NAME$[@CYCLE],1;
+	set $RPLADDER_PT[@CYCLE],BaseLevel;
+	set $RPLADDER_NAME$[@CYCLE],strcharinfo(0);
+	if ($RPLADDER_NAME$[@CYCLE]==$RPLADDER_NAME$[(1+@CYCLE)]) goto L_NameDouble;
+L_ChangeResume:
+	set @CYCLE,@CYCLE+1;
+	if (@CYCLE==1||(!@CYCLE%11 && @CYCLE!=11)) dispbottom "[Ladder] Current Position : "+@CYCLE+"st";
+	if (@CYCLE==2||(!@CYCLE%12 && @CYCLE!=12)) dispbottom "[Ladder] Current Position : "+@CYCLE+"nd";
+	if (@CYCLE==3||(!@CYCLE%13 && @CYCLE!=13)) dispbottom "[Ladder] Current Position : "+@CYCLE+"rd";
+	if ((@CYCLE!=1&&@CYCLE!=2&&@CYCLE!=3)&&(@CYCLE%11&&@CYCLE%12&&@CYCLE%13)) dispbottom "[Ladder] Current Position : "+@CYCLE+"th";
+	set @CYCLE,0;
+	end;
+L_NameDouble:
+	set $RPLADDER_PT[(1+@CYCLE)],0;
+	set $RPLADDER_NAME$[(1+@CYCLE)],"";
+	goto L_ChangeResume;
+}
+
+-	script	N_PVPLADDER	111,{
+OnInit:
+	if (!$LADDERCOUNT) set $LADDERCOUNT,1;
+	end;
+OnClock0000:
+	if ($LADDERDATE<1) set $LADDERDATE,1;
+	set $LADDERDATE,$LADDERDATE+1;
+	if ($LADDERDATE>=50) goto L_LadderOver;
+	announce "[PvP Ladder]",16;
+	if ($LADDERDATE>1) announce "There are "+(50-$LADDERDATE)+" days left before Ladder "+$LADDERCOUNT+" is over.",16;
+	if ($LADDERDATE==49) announce "Today is the last day in Ladder "+$LADDERCOUNT+"!  The PvP Ladder ends today!",16;
+	end;
+L_LadderOver:
+	announce "[PvP Ladder]",16;
+	announce "The PvP Ladder has ended! Top Ranking individuals are...",16;
+	announce "1st : "+$PVPLADDER_NAME$[0],16;
+	announce "2nd : "+$PVPLADDER_NAME$[1],16;
+	announce "3rd : "+$PVPLADDER_NAME$[2],16;
+	announce "4nd : "+$PVPLADDER_NAME$[3],16;
+	announce "5th : "+$PVPLADDER_NAME$[4],16;
+	announce "6th : "+$PVPLADDER_NAME$[5],16;
+	announce "7th : "+$PVPLADDER_NAME$[6],16;
+	announce "8th : "+$PVPLADDER_NAME$[7],16;
+	announce "9th : "+$PVPLADDER_NAME$[8],16;
+	announce "10th : "+$PVPLADDER_NAME$[9],16;
+	announce "---------------------",16;
+	announce "[RP Ladder]",16;
+	announce "The RP Ladder has ended! Top Ranking individuals are...",16;
+	announce "1st : "+$RPLADDER_NAME$[0],16;
+	announce "2nd : "+$RPLADDER_NAME$[1],16;
+	announce "3rd : "+$RPLADDER_NAME$[2],16;
+	announce "4nd : "+$RPLADDER_NAME$[3],16;
+	announce "5th : "+$RPLADDER_NAME$[4],16;
+	announce "6th : "+$RPLADDER_NAME$[5],16;
+	announce "7th : "+$RPLADDER_NAME$[6],16;
+	announce "8th : "+$RPLADDER_NAME$[7],16;
+	announce "9th : "+$RPLADDER_NAME$[8],16;
+	announce "10th : "+$RPLADDER_NAME$[9],16;
+	logmes "---------------------";
+	logmes "Ladder "+$LADDERCOUNT+" Results | "+gettimestr("%Y-%m/%d",8);
+	set $LADCYCLE,0;
+L_LogPvPLadder:
+	if ($LADCYCLE==50) goto L_ResetCycle;
+	logmes ($LADCYCLE+1)+") "+$PVPLADDER_NAME$[$LADCYCLE]+" :: Kills "+$PVPLADDER_PT[$LADCYCLE];
+	set $LADCYCLE,$LADCYCLE+1;
+	goto L_LogPvPLadder;
+L_ResetCycle:
+	logmes "---------------------";
+	set $LADCYCLE,0;
+L_LogRPLadder:
+	if ($LADCYCLE==50) goto L_LogFinish;
+	logmes ($LADCYCLE+1)+") "+$RPLADDER_NAME$[$LADCYCLE]+" :: Level "+$RPLADDER_PT[$LADCYCLE];
+	set $LADCYCLE,$LADCYCLE+1;
+	goto L_LogRPLadder;
+L_LogFinish:
+	logmes "---------------------";
+	set $LADCYCLE,0;
+	set $LADDERCOUNT,$LADDERCOUNT+1;
+	cleararray $PVPLADDER_PT[0],0,50;
+	cleararray $PVPLADDER_NAME$[0],"",50;
+	end;
+}
+
+//--- NPCs -------------------------------------------------------------------------------------
+serverlobby,69,20,4	script	Conductor#EN	874,{
+	if (getgmlevel() > 0 && getgmlevel() < 99) end;
+//	set PCBaseUpEvent,1;
+	if (@NOETALK1 || @NOETALK2) goto L_Oops;
+	savepoint "serverlobby",69,11;
+	mes "[Conductor]";
+	mes "Welcome "+strcharinfo(0)+", to DuskRO Amethyst.  To your left you will be able to access the RP Realm, or role playing realm.  To your right, you will be able to access the PvP Realm, or Player versus Player realm.";
+L_Info:	
+	next;
+	mes "[Conductor]";
+	mes "In the RP realm, the game plays out normally.  With countless custom modifications, of course.  If you wish to return here however, you will need to purchase a Realm Ticket.";
+	next;	
+	mes "[Conductor]";
+	mes "In the PvP realm, you will automatically be placed at level 75, and all healing items you could ever need will be provided free of charge.";
+	next;
+	mes "[Conductor]";
+	mes "You are limited to the job, skills, and equipment you earn in the RP realm.  Your stats will be reset and preset to level 75 accordingly once you participate in the PvP Realm, however.";
+L_Repick:	
+	next;
+	if (!Class || Class == 4001) goto L_RecJobHigher;
+	mes "[Conductor]";
+	mes "Very well, that settles things then.  Please make your choice.";
+	mes "Which realm would you like to participate in?";
+	menu "RP Realm",-,"PVP Realm",R_PVP,"What was the RP Realm again?",L_Info,"What was the PVP Realm again?",L_Info;
+	next;
+	mes "[Conductor]";
+	mes "Very well. I shall open the RP Realm portal for you now.";
+	mes "Please enter it on your left.";
+	set @NOETALK1,0;
+	set @NOETALK2,1;
+	close;
+R_PVP:
+	next;
+	mes "[Conductor]";
+	mes "Very well. I shall open the PVP Realm portal now.";
+	mes "Please enter it on your right.";
+	set @NOETALK2,0;
+	set @NOETALK1,1;
+	close;
+	
+L_Oops:
+	if (!Class || Class == 4001) goto L_OopsNovice;
+	mes "[Conductor]";
+	mes "Did you choose the wrong realm?";
+	menu "Nope, I'm good, thanks.",-,"Yeah, I'd like to choose a different realm.",L_Repick;
+	next;
+	mes "[Conductor]";
+	mes "Alright then.";
+	close;
+L_OopsNovice:
+	mes "[Conductor]";
+	mes "As a novice, you can only enter the RP Realm. The PVP Realm is strictly forbidden to all Novices. Sorry for this inconvenience.";
+	mes "Please enter the portal on your left.";
+	close;
+	
+L_RecJobHigher:
+	mes "[Conductor]";
+	mes "Oh... I see that you're of the Novice class...";
+	next;
+	mes "[Conductor]";
+	mes "Unfortunately due to the amount of novices entering the PVP Realm and complaining that they didn't know they couldn't change jobs, we're current disallowing novice classes from entering the PVP Realm.";
+	next;
+	mes "[Conductor]";
+	mes "This does not include Super Novices, however. Super Novices are still allowed to enter as they wish.";
+	next;
+	mes "[Conductor]";
+	mes "When you're ready, I have opened the RP Realm for you. Please head to the portal on your left.";
+	set @NOETALK2,1;
+	close;
+	
+}
+
+rplobby,69,79,4	script	Realm Clerk#1	861,{
+	if (getgmlevel() > 0 && getgmlevel() < 99) end;
+	if (!@RPLEV) goto L_Start;
+	mes "[Realm Clerk]";
+	mes "Hallo.";
+	close;
+L_Start:
+	if (!Class&&BaseLevel==1) goto L_Novice;
+	mes "[Realm Clerk]";
+	mes "Hallo!  Let's see, you are ^FF0000"+strcharinfo(0)+"^000000!  My, what a cute name!";
+	next;
+	if (countitem(15201)==0) menu "Hi again!",-,"I'd like to leave",L_Leave,"Take me to the RP Realm.",L_Info;
+	if (countitem(15201)>0) menu "Hi again!",-,"Take me to the RP Realm.",L_Info;
+	mes "[Realm Clerk]";
+	mes "Lalala... *whistle*";
+	close;
+L_Registered:
+	mes "[Realm Clerk]";
+	mes "You'll find the training hall down the hallway to your right.";
+	close;
+L_Novice:
+	if (@RPACS) goto L_Registered;
+	mes "[Realm Clerk]";
+	mes "Well hi there!  You must be new.  I'm sure you are.  Let's see, ah here we go!  You're "+strcharinfo(0)+", nice to meet you!";
+	next;
+	mes "[Realm Clerk]";
+	mes "So... you're here to enter the RP Realm, right?";
+	next;
+	if (Select("Yeup.","No...")==2) goto L_Leave;
+	mes "[Realm Clerk]";
+	mes "Okay, great!  The RP Realm is a normal realm, you fight monsters, get loot, level up.  That sorta stuff.  Jobs, skills, and items you acquire in the RP Realm you can use in the PvP Realm!";
+	next;
+	mes "[Realm Clerk]";
+	mes "^FF0000However, let me warn you... anyone caught violating the server rules and guidelines will be prosecuted.^000000";
+	mes "^FF0000We have ways of monitoring accounts for rule breaking.^000000";
+	next;
+	mes "[Realm Clerk]";
+	mes "By entering the RP Realm, you agree to follow all the rules and guidelines located on our forum at http://duskro.net/forum";
+	mes "Now, back to business...";
+	next;
+	mes "[Realm Clerk]";
+	mes "So here, let's check your information and get you ready to go...";
+	next;
+	goto L_Checkout;
+L_Info:
+	mes "[Realm Clerk]";
+	mes "Sure!  No problem.  First, I'll tell you a little about the RP Realm.";
+	next;
+	mes "[Realm Clerk]";
+	mes "The RP Realm is a normal realm, you fight monsters, get loot, level up.  That sorta stuff.  Jobs, skills, and items you acquire in the RP Realm you can use in the PvP Realm too!";
+	next;
+	mes "[Realm Clerk]";
+	mes "^FF0000However, let me warn you... anyone caught violating the server rules and guidelines will be prosecuted.^000000";
+	mes "^FF0000We have ways of monitoring accounts for rule breaking.^000000";
+	next;
+	mes "[Realm Clerk]";
+	mes "By entering the RP Realm, you agree to follow all the rules and guidelines located on our forum at http://duskro.net/forum";
+	mes "Now, back to business...";
+	next;
+	mes "[Realm Clerk]";
+	mes "Okay then, let's just check your information...";
+	next;
+	if (BaseLevel>1) goto L_ArenaWarp;
+L_Checkout:
+	set @RPACS,1;
+	set @RPLEAV,1;
+	mes "[Realm Clerk]";
+	mes "Okay, everything checks out just fine and dandy!  You'll find the training hall through the hallway down on your right, just go south.";
+	close;
+L_ArenaWarp:
+	mes "[Realm Clerk]";
+	mes "Okay, everything checks out great!  I'll just take that Realm Pass now and you can be on your way!";
+	next;
+	delitem 15201,1;
+	warp "prt_are_in",123,140;
+	savepoint "prt_are_in",123,140;
+	end;
+L_Leave:
+	set @RPLEV,1;
+	set @RPLEAV,1;
+	mes "[Realm Clerk]";	
+	mes "Aww, sorry to hear that.  Well, you'll find the exit to your right.";
+	close;
+}
+
+pvplobby,69,79,4	script	Realm Clerk#2	833,{
+	if (getgmlevel() > 0 && getgmlevel() < 99) end;
+	if (!@PVPRLEV) goto L_Start;
+	mes "[Realm Clerk]";
+	mes "Yes, yes.  I see you.  Now please, I have important duties to focus on.  You'll find your way out on the portal to the left of me.";
+	close;
+L_Start:
+	if (PVPACS) goto L_SignedUp;
+	if (!ZRLM) goto L_NewPerson;
+	mes "[Realm Clerk]";
+	mes "Hello... ";
+	next;
+	mes "*he flips through papers*";
+	next;
+	mes "[Realm Clerk]";
+	mes "^FF0000"+strcharinfo(0)+"^000000!!  Good to see you again.";
+	next;
+	if (countitem(15201)==0) menu "Yes, Hi to you too.",-,"I'd like to leave.",L_Leave,"I'd like to enter the PvP Realm.",L_Info;
+	if (countitem(15201)>0) menu "Yes, Hi to you too.",-,"I'd like to enter the PvP Realm.",L_Info;
+	close;
+L_Info:
+	mes "[Realm Clerk]";
+	mes "Indeed now?  That's what I like to hear.  Allow me to tell you more!";
+	next;
+	mes "[Realm Clerk]";
+	mes "First off, let me warn you... ^FF0000anyone caught abusing the PVP Realm in order to gain Killer Levels/Killer Points with the use of bots, dual accounts, purposefully dying, or any other way that is considered 'Cheating' will be automatically banned.^000000";
+	mes "^FF0000We have ways of monitoring accounts for this purpose.^000000";
+	next;
+	mes "[Realm Clerk]";
+	mes "By entering the PVP Realm, you agree to follow all the rules and guidelines located on our forum at http://duskro.net/forum";
+	mes "Now, back to business...";
+	next;
+	mes "[Realm Clerk]";
+	mes "The PvP Realm is a game in and of itself!  The two realms stand side by side, and players can travel too and from them.  The rules are different on each realm, too.";
+	next;
+	mes "[Realm Clerk]";
+	mes "Inside the PvP Realm, you do not gain levels, or exp, nor is there exp to lose.  All healing items are provided free of charge in the PvP Realm Lobby.";
+	next;
+	mes "[Realm Clerk]";
+	mes "The job you have in the RP Realm, is the job you will have on the PvP Realm.  Same goes for your equipment, pets, and skills.  If you come here as a novice and enter the PvP Realm, you are going to be a novice inside the PvP Realm.";
+	next;
+	mes "[Realm Clerk]";
+	mes "Though the RP Realm does have its own PvP Arena, everyone is uneven there, and the levels vary from 1 to 99.  In the PvP Realm, everyone is Level 75.  The PvP Realm is also much, much larger then the pvp provided by the arena.";
+	next;
+	mes "[Realm Clerk]";
+	mes "The PvP Realm is comprised of a lobby, and an extensive PvP Dungeon that players can traverse through.  There are some special items that can be gained inside the dungeon to help augment your character!";
+	next;
+	mes "[Realm Clerk]";
+	mes "Though augmentation through items is not the only way to improve your PvP Realm Character!  For each player you slay, you gain one Killer Point.  Every X+(n+1=n)=X points, you gain a Killer Level.  Each Level increase, you can increase one stat by 1.  The point calculating works a little like this...";
+	next;
+	mes "*He shows you a piece of paper*";
+	mes "At 1 Kill, Level 1. (0+1)";
+	mes "At 3 Kills, Level 2. (1+2)";
+	mes "At 6 Kills, Level 3. (3+3)";
+	mes "At 10 Kills, Level 4. (6+4)";
+	mes "At 15 Kills, Level 5. (10+5)";
+	mes "At 21 Kills, Level 6. (15+6)";
+	mes "At 28 Kills, Level 7. (21+7)";
+	next;
+	mes "[Realm Clerk]";
+	mes "And so on.  There is no maximum killer level.  However, after you reach Killer Level 99, something good may happen!  Also, if you die, you will lose a Killer Point.  You can't lose Killer Levels, though.";
+	next;
+	mes "[Realm Clerk]";
+	mes "There is also a monthly PvP Realm Ladder!  Get kills to climb up the ladder!";
+	next;
+	mes "[Realm Clerk]";
+	mes "And that's all there is to tell about the PvP Realm.  Still interested in joining?";
+	next;
+	if (select("Yes! Sign me up!","No thanks...")==2) goto L_Leave;
+	mes "[Realm Clerk]";
+	mes "Splendid, looks like I have some work to do afterall!  Very well, I shall now give you access to the PvP Realm Portal.";
+	set PVPACS,1;
+	set @PVPRLEV,0;
+	delitem 15201,1;
+	next;
+L_SignedUp:
+	mes "[Realm Clerk]";
+	mes "You'll find the portal in the library room in the eastern complex of the facility.  Enjoy!";
+	close;
+L_NewPerson:
+	if (@ZHAH) goto L_YouAgain;
+	mes "[Realm Clerk]";
+	mes "Ah yes, hello.  You are new, yes?  Let's see... your name your name...";
+	next;
+	mes "[Realm Clerk]";
+	mes "Ah, here we are.  Your name is "+strcharinfo(0)+", yes?";
+	next;
+	if (select("Yes!","No...")==2) goto L_WrongJoke;
+L_CorrectJoke:
+	set ZRLM,1;
+	set @ZHAH,0;
+	mes "[Realm Clerk]";
+	mes "Ahem, "+strcharinfo(0)+", you have entered the PvP Realm entrance.  Here you may partake in the joys of fighting other human combatants to the death till you stain yourself red.";
+	next;
+	if (select("I'd like to leave","Tell me more")==2) goto L_Info;
+L_Leave:
+	mes "[Realm Clerk]";
+	mes "Indeed?  Pity.  Very well.  I allow you access to the main lobby hall again.  Simply walk out the portal on your left.";
+	set @PVPRLEV,1;
+	set PVPACS,0;
+	close;
+L_YouAgain:
+	mes "[Realm Clerk]";
+	mes "Ah... you again.  You must be "+strcharinfo(0)+"!  My records never lie.  Well then.";
+	next;
+	goto L_CorrectJoke;
+L_WrongJoke:
+	next;
+	mes "[Realm Clerk]";
+	mes "Wh-what?  No that's proposterous!  My records are always correct!";
+	next;
+	mes "[Realm Clerk]";
+	mes "N-never! *He appears furious and flustered now*";
+	set @ZHAH,1;
+	close;
+}
+
+pvprealm01,21,18,6	script	Linne#PVP	860,{
+	if (getgmlevel() > 0 && getgmlevel() < 99) end;
+	mes "[Linne]";
+	if (@PVPSTORING) goto L_Resume;
+	if (PVPACS==1) goto L_Setup;
+	if (PVPACS==3) goto L_Quit1;
+	mes "Hello there!  Enjoying your stay in the PvP Realm?";
+	next;
+	menu "Yes, I am!",-,"Reset my Stats",L_StatReset,"Reset my Skills",L_SkillReset,"I'm tired, I want to quit.",L_Quit;
+	mes "[Linne]";
+	mes "Hehe, good!  Have fun!";
+	close;
+L_SkillReset:
+	set @RES,1;
+L_StatReset:
+	mes "[Linne]";
+	mes "Alright hun! Hold still, okay?";
+	next;
+	if (!@RES) resetstatus;
+	if (@RES) resetskill;
+	specialeffect2 332;
+	specialeffect2 320;
+	specialeffect2 313;
+	mes "[Linne]";
+	mes "There we go, all done!";
+	set @res,0;
+	close;
+L_Quit1:
+	mes "[Linne]";
+	mes "Hehe, got lost in the times?  Don't worry, you'll be right as rain in a jiffy!  Just leave it to me!  First, lemme get your file.";
+	goto L_Quit2;
+L_Quit:
+	mes "[Linne]";
+	mes "Aw.  Okay, I'll do what needs to be done...";
+L_Quit2:
+	next;
+	mes "[Linne]";
+	mes "Let's see... here we go, I have your information right here.  Okay, I'll do my thing now!";
+	next;
+	callfunc "F_PVPSETUP",1;
+
+L_GMEnd:
+	mes "[Linne]";
+	mes "Okay, all done.  Thank you for your patronage, have a safe trip home!";
+	if (@DI) atcommand strcharinfo(0)+":@undisguise";
+	if (@DI) set @DI,0;
+	close;
+L_Cancel:
+	mes "[Linne]";
+	mes "Aw, really?  Too bad.";
+	close;
+L_Setup:
+	mes "Ah hello there!";
+	next;
+	mes "[Linne]";
+	mes "Let's see... your name is... "+strcharinfo(0)+".  Nice to meet you!  I'm Linne, I'll be in charge of setting your character up for the realm.";
+	next;
+	mes "[Linne]";
+	mes "You ARE here to enter the PVP realm, right?";
+	next;
+	if (Select("Yeah, sign me up!","No, sorry wrong person.")==2) goto L_Cancel;
+	mes "[Linne]";
+	mes "Good, good!  First though, I need to catalogue some of your information.";
+	next;
+	mes "[Linne]";
+	mes "First, I'll open up your storage so you can manage your items right here and now.  Okay?";
+	set @PVPSTORING,1;
+	close2;
+	openstorage;
+	end;
+
+//currently this is disabled due to a change in item type mechanics.
+L_RepeatList:
+	mes "[Linne]";
+	mes "^FF0000Keep in mind ALL of the following items will be taken from you when you quit!  So if you have any of the following items, STORE THEM!^000000";
+	next;
+	mes "[Linne]";
+	mes "^FF0000Spell Catalysts -";
+	mes "Yellow, Red, & Blue Gemstones";
+	mes "Holy Water";
+	mes "Red Blood";
+	mes "Crystal Blue";
+	mes "Wind of Verdure";
+	mes "Green Live";
+	mes "Bottle Grenade";
+	mes "Acid Bottle";
+	mes "Plant Bottle";
+	mes "Marine Sphere Bottle";
+	mes "Deadly Poison Bottles^000000";
+	next;
+	mes "[Linne]";
+	mes "^FF0000Healing Items -";
+	mes "All Potions";
+	mes "Yggdrasil Leaf";
+	mes "Pet Food";
+	mes "Pet Incubator";
+	mes "Fly Wing";
+	mes "Concentration Potion";
+	mes "Awakening Potion";
+	mes "Berserk Potion^000000";
+	next;
+	mes "[Linne]";
+	mes "^FF0000Ammo -";
+	mes "Arrow";
+	mes "Iron Arrow";
+	mes "Steel Arrow";
+	mes "Oridecon Arrow";
+	mes "Silver Arrow";
+	mes "Fire Arrow";
+	mes "Crystal Arrow";
+	mes "Arrow of Wind";
+	mes "Stone Arrow";
+	mes "Immaterial Arrow";
+	mes "Stun Arrow";
+	mes "Freeze Arrow";
+	mes "Flash Arrow";
+	mes "Cursed Arrow";
+	mes "Rusty Arrow";
+	mes "Poison Arrow";
+	mes "Sharp Arrow";
+	mes "Arrow of Counter Evil";
+	mes "Arrow of Shadow";
+	mes "Sleep Arrow";
+	mes "Mute Arrow";
+	mes "Trap^000000";
+	next;
+	mes "[Linne]";
+	mes "^FF0000IF YOU HAVE ANY OF THESE ITEMS, STORE THEM NOW OR YOU WILL LOSE THEM.^000000";
+	next;
+	mes "[Linne]";
+	mes "... so, do you need me to repeat the list?";
+	next;
+	if(select("Yes...","Nope, I'm good.")==1) goto L_RepeatList;
+	mes "[Linne]";
+	mes "Okay!  I will open your storage now.  Please, talk to me again when you are finished.";
+	set @PVPSTORING,1;
+	close2;
+	openstorage;
+	end;
+//end changes 
+
+L_Resume:
+	set @PVPSTORING,0;
+	mes "Done?  I hope so.  Let's get started then shall we?  Alright, I'll note this... and this...";
+	next;
+	mes "[Linne]";
+	mes "*She starts furiously jotting down information*";
+	next;
+	if (!Class) goto L_Novice;
+	if ((Class > 0 && Class < 7) || Class == Job_Taekwon || Class == Job_Gunslinger || Class == Job_Ninja) goto L_FirstJob;
+	if ((Class > 6 && Class < 22) || Class == Job_SoulLinker || Class == Job_StarGladiator) goto L_SecondJob;
+	if (Class==23) goto L_Mavin;
+	if (Class==4001) goto L_HighNovice;
+	if (Class > 4001 && Class < 4008) goto L_HighJob;
+	if (Class > 4007 && Class < 4023) goto L_2ndAdvJob;
+	if (Class==4023) goto L_BabyNovice;
+	if (Class > 4023 && Class < 4030) goto L_BabyFirst;
+	if (Class > 4029 && Class < 4045) goto L_BabySecond;
+	if (Class==4045) goto L_BabyMavin;
+	debugmes "Error with determining job. Job ID "+Class+", "+strcharinfo(0);
+	end;
+L_Novice:
+L_HighNovice:
+L_BabyNovice:
+	mes "[Linne]";
+	if (!Class || Class==4023) mes "Oh.  You're um...  You're a novice.  Right.  Anyways, let's set you up!";
+	if (Class==4001) mes "Ah, a high novice.  Right... I'll get you all setup!";
+	next;
+	callfunc "F_PVPSETUP",0;
+	set StatusPoint,500+(PVPSTUP*5);
+	set SkillPoint,9+(PVPSKUP);
+	goto L_AllDone;
+L_FirstJob:
+L_BabyFirst:
+	mes "[Linne]";
+	if (Class==4024 || Class==1 && !Sex) mes "Okay swordgirl!  Let's get you a rearin' to go!";
+	if (Class==4024 || Class==1 && Sex) mes "Okay swordman!  Let's get you all prepped up and ready!";
+	if (Class==4025 || Class==2) mes "Alright then, magician?  Right!  Time to set you up.";
+	if (Class==4026 || Class==3) mes "Okay!  Archer is it?  Right!  Let's set you up!";
+	if (Class==4027 || Class==4) mes "Aw a softy, well I hope not.  Okay acolyte, I'll set you up now.";
+	if (Class==4028 || Class==5) mes "There's not much for zeny here, merchant... But I will set you up.";
+	if (Class==4029 || Class==6 && Sex) mes "Watch those hands thief!  I'll set you up... but I'm watching you!";
+	if (Class==4029 || Class==6 && !Sex) mes "Hey, a cute thief!  Aw, I'll set you up!";
+	if (Class==Job_Taekwon) mes "Whoa, a taekwon. I'll set you up.";
+	if (Class==Job_Gunslinger) mes "That's one awesome gun! I'll set you up!";
+	if (Class==Job_Ninja) mes "Don't kill me please, I'll set you up.";
+	next;
+	callfunc "F_PVPSETUP",0;
+	if (Class < 4000) set StatusPoint,700+(PVPSTUP*5);
+	if (Class < 4000) set SkillPoint,35+(PVPSKUP)+9;
+	if (Class > 4000) set StatusPoint,600+(PVPSTUP*5);
+	if (Class > 4000) set SkillPoint,30+(PVPSKUP)+9;
+	goto L_AllDone;
+L_SecondJob:
+L_BabySecond:
+	mes "[Linne]";
+	if (Class==4030 || Class==4036 || Class==7 || Class==13) mes "Ooh, a knight!  Right then, let's get you ready!";
+	if (Class==4031 || Class==8) mes "Oh a priest!  My your holiness, what are you doing here?  Let's prepare you!";
+	if (Class==4032 || Class==9) mes "Ah, a wizard.  Very well, I will set you up now.";
+	if (Class==4033 || Class==10) mes "Hey a big strong blacksmith!  Cool!  Okay, time to get set up!";
+	if (Class==4034 || Class==11) mes "Ooh, a hunter are you?  Sneaky sneaky?  Shooty shooty?  Let's get you ready, shall we?";
+	if (Class==4035 || Class==12) mes "Eek! An assassin!  Dangerous thing, aren't you?  I'll set you up now.";
+	if (Class==4037 || Class==4044 || Class==14 || Class==21) mes "Oh wow, a crusader!  Right-o then!  Time to go!";
+	if (Class==4038 || Class==15) mes "You're a monk aren't you?  Be nice to those people in there!";
+	if (Class==4039 || Class==16) mes "A... a sage?  Your wisdom!  So bright it is!  Right well, here we go.";
+	if (Class==4040 || Class==17) mes "Eek!  Rogue!  Watch yourself, I'm watching you!  But let's set you up, too.";
+	if (Class==4041 || Class==18) mes "Cool!  An alchemist!  Making things is fun, huh?  Time to make you into something!";
+	if (Class==4042 || Class==19) mes "Aah~ Bard!  Sing for me!  Please!  Will you sing for me if I set you up?";
+	if (Class==4043 || Class==20) mes "Hey a Dancer.  Naughty girl.  Play nice with the boys in there.  Here, let me set you up.";
+	if (Class==Job_SoulLinker) mes "A Soul Linker. Why don't you help me set you up?";
+	if (Class==Job_StarGladiator) mes "Oh wow! A Star Gladiator. Let me set you up.";
+	next;
+	callfunc "F_PVPSETUP",0;
+	if (Class < 4000) set StatusPoint,850+(PVPSTUP*5);
+	if (Class < 4000) set SkillPoint,50+(PVPSKUP)+9;
+	if (Class > 4000) set StatusPoint,750+(PVPSTUP*5);
+	if (Class > 4000) set SkillPoint,45+(PVPSKUP)+9;
+	goto L_AllDone;
+L_Mavin:
+L_BabyMavin:
+	mes "[Linne]";
+	mes "Neato!  A Mavin!  All fancy, aren't we?  Don't worry, I'll set you up nice and good!";
+	next;
+	callfunc "F_PVPSETUP",0;
+	if (Class < 4000) set StatusPoint,900+(PVPSTUP*5);
+	if (Class < 4000) set SkillPoint,90+(PVPSKUP)+9;
+	if (Class > 4000) set StatusPoint,800+(PVPSTUP*5);
+	if (Class > 4000) set SkillPoint,80+(PVPSKUP)+9;
+	goto L_AllDone;
+L_HighJob:
+	mes "[Linne]";
+	if (Class==4002 && Sex) mes "Oh, big tall swordman.  I'll get you setup, don't worry sweety!";
+	if (Class==4002 && !Sex) mes "Hey, a well acclaimed adventerous swordgirl.  Let's get you ready, shall we?";
+	if (Class==4003) mes "Hi Magician.  Let's get you ready to go, shall we?";
+	if (Class==4004) mes "Hello my Archer friend! Lets get you setup right now.";
+	if (Class==4005) mes "I hope you can help those people in there, and not be too violent yourself!  Here, let me get you ready.";
+	if (Class==4006) mes "Money money money, no?  Well maybe there is invisible money inside.  Here, I shall get you ready.";
+	if (Class==4007) mes "Ah, a high thief.  I hope you do well inside.  And steal their stuff, not mine.  Here, I'll set you up.";
+	next;
+	callfunc "F_PVPSETUP",0;
+	set StatusPoint,800+(PVPSTUP*5);
+	set SkillPoint,50+(PVPSKUP)+9;
+	goto L_AllDone;
+L_2ndAdvJob:
+	mes "[Linne]";
+	if (Class==4008 || Class==4014) mes "Oh wow!  A Gladiator!  You must be awesome at fighting.  Let's get you ready, shall we?";
+	if (Class==4009) mes "Wonderful, a Curate!  I'm sure you'll do well.  Let's get you ready, okay?";
+	if (Class==4010) mes "Super!  An Invoker!  Go slam the hell out of those noobies!  Let's set you up right now!";
+	if (Class==4011) mes "Ah, neat.  An Artisan.  Could you make me something, maybe?  Maybe after I set you up?";
+	if (Class==4012) mes "A Ranger, cool cool.  Look, be nice in there okay?  I'll set you up now.";
+	if (Class==4013) mes "Oh wow!  A Slayer!  You must be extremely dangerous, or I'd hope so.  Let's get you ready now!";
+	if (Class==4015 || Class==4022) mes "A Paladin!  My you must be tough.  Let's get you into shape then!";
+	if (Class==4016) mes "Ooh, an Archon.  Power be thy will, or something?  Let's get you into the fray!";
+	if (Class==4017) mes "Oh a Professor!  I bet you're just soo smart!  I'll set you up then, to go fling your smarts at them!";
+	if (Class==4018) mes "Sneaky sneaky, pouncy pouncy!  Stalky stalky!  Eehehe!  *ahem*  I'll get you ready, now.";
+	if (Class==4019) mes "Ah, a Creator.  You must be so busy.  Right, I won't waste your time then.  Let's set you up right now.";
+	if (Class==4020) mes "Ahahahaha A CLOWN!  Teehee!  Sorry, I like clowns.  Let's get you ready to go runamuck!";
+	if (Class==4021) mes "Oh my, a Gypsy!  Could you tell me my future?  Will I ever find the right man?  I'll set you up while you're thinking.";
+	next;
+	callfunc "F_PVPSETUP",0;
+	set StatusPoint,1000+(PVPSTUP*5);
+	set SkillPoint,80+(PVPSKUP)+9;
+L_AllDone:
+	mes "[Linne]";
+	mes "Okay, all done!  That should cover everything!  Don't forget to assign your status points, too.  Oh, and don't worry, you'll be back to normal whenever you want to leave.  Just talk to me, kay?";
+	close;
+}
+
+pvprealm01,21,24,6	script	Caroline#PVP	861,{
+	if (getgmlevel() > 0 && getgmlevel() < 99) end;
+	mes "[Caroline]";
+	if (PVPACS==1 || PVPACS==3) goto L_Setup;
+	mes "Well hello there, sweety.  Here to cash in your points for upgrades?";
+	next;
+	if (select("You betcha!","Um, no.")==2) goto L_No;
+	mes "[Caroline]";
+	mes "Oohoho!  Let met just grab your file...";
+	next;
+	if (!KillPrize) goto L_NoPoints;
+	mes "[Caroline]";
+	mes "Okay.  Says here you are Level "+KillLvl+", with "+KillPts+" kills, and ^FF0000"+KillPrize+"^000000 points unspent.";
+L_SpendPoints:
+	next;
+	mes "[Caroline]";
+	if (KillPrize==1) mes "Right!  So let's spend that point!  Shall we?  Just tell me what you'd like to upgrade!";
+	if (KillPrize>1) mes "Right then!  So let's spend those points!  Shall we?  Just tell me what you'd like to upgrade!";
+	next;
+	menu "Sorry, Changed my mind",L_No,"5 Status Points",L_Status,"1 Skill Point",L_Skill,"1 Base Level",L_Level;
+L_Status:
+	mes "[Caroline]";
+	mes "Okay then.  Here you are!  Five Status Points!";
+	set StatusPoint,StatusPoint+5;
+	set KillPrize,KillPrize-1;
+	set PVPSTUP,PVPSTUP+1;
+	dispbottom "[Level Points Remaining : "+KillPrize+"]";
+	if (!KillPrize) close;
+	next;
+	menu "Upgrade again",-,"Upgrade somethign else",L_SpendPoints,"I'm done.",L_No;
+	goto L_Status;
+L_Skill:
+	mes "[Caroline]";
+	mes "Okay then.  Here you are!  One Skill Point!";
+	set SkillPoint,SkillPoint+1;
+	set KillPrize,KillPrize-1;
+	set PVPSKUP,PVPSKUP+1;
+	dispbottom "[Level Points Remaining : "+KillPrize+"]";
+	if (!KillPrize) close;
+	next;
+	menu "Upgrade again",-,"Upgrade somethign else",L_SpendPoints,"I'm done.",L_No;
+	goto L_Skill;
+L_Level:
+	mes "[Caroline]";
+	if (KillPrize < 5) goto sL_NotEnough;
+	mes "Hoho!  Climbing up eh?  Here you go!";
+	next;
+	set KillPrize,KillPrize-5;
+	set BaseLevel,BaseLevel+1;
+	set PVPBLUP,PVPBLUP+1;
+	dispbottom "[Level Points Remaining : "+KillPrize+"]";
+	if (!KillPrize) close;
+	next;
+	menu "Upgrade again",-,"Upgrade somethign else",L_SpendPoints,"I'm done.",L_No;
+	goto L_Level;
+sL_NotEnough:
+	mes "Ooh, you need 5 Points to get one base level increase!  And!  You don't have enough! Sorry!";
+	next;
+	goto L_SpendPoints;
+L_NoPoints:
+	mes "[Caroline]";
+	mes "What's this?  You don't have any points?  Well that's no good.  Off ye go!";
+	close;
+L_No:
+	mes "[Caroline]";
+	mes "Whaat, really?  Well scamper away then.";
+	close;
+L_Setup:
+	mes "Hay... what's up with you?  Go talk to Linne first!";
+	close;
+}
+
+pvprealm01,21,30,6	script	Sheryl#PVP	862,{
+	if (getgmlevel() > 0 && getgmlevel() < 99) end;
+	mes "[Sheryl]";
+	if (PVPACS==1 || PVPACS==3) goto L_Setup;
+	if (!PLADID) goto L_SetupLadder;
+	mes "Well hello there!  Seems like you're ready to go.  You've got all your stats and skills setup the way you like, and decked out with healing items, yes?";
+	next;
+	mes "[Sheryl]";
+	mes "Once you're inside, you have to use a special item to leave.  When you die, you'll respawn randomly on the same map.";
+	next;
+	mes "[Sheryl]";
+	mes "There is one thing you should keep in mind before using the Realm Exit Ticket.  You'll lose 1 Kill point per every 5 levels by using the ticket.";
+	next;
+	mes "[Sheryl]";
+	mes "Another point of interest is, if you venture into the second level of the dungeon it becomes nightmare drop.";
+	next;
+	mes "[Sheryl]";
+	mes "This means that if you're killed, you'll drop a random item at a random chance, so be careful!";
+	mes "If you want to stay safe, stay in the first dungeon.";
+	next;
+	mes "[Sheryl]";
+	mes "So... would you like to enter the PvP Realm Dungeon?";
+	next;
+	if (Select("You betcha!","Nah, thanks though.")==2) goto L_NoThanks;
+	mes "[Sheryl]";
+	if (PLADID!=$LADDERCOUNT) goto L_WrongLadder;
+	mes "Alrighty then, just press the close button and you'll be on your way!";
+	close2;
+	set killerrid,0;
+	getitem 15200,1;
+	percentheal 100,100;
+	savepoint "pvprealm02",0,0;
+	warp "pvprealm02",0,0;
+	end;
+L_WrongLadder:
+	mes "Hmm. Funny.  Apparently, you're in the wrong ladder.  Go talk to Cornelius so he can fix this problem.  Then I can let you in.";
+	close;
+L_NoThanks:
+	mes "[Sheryl]";
+	mes "Truly?  Too bad.  Well, see you!";
+	close;
+L_SetupLadder:
+	mes "Oi!  I'm sorry but you gotta talk to Cornelius first to get setup for the Ladder.";
+	close;
+L_Setup:
+	mes "Oi!  Talk to Linne first!";
+	close;
+}
+
+pvprealm01,21,36,6	script	Misa#PVP	859,{
+	if (getgmlevel() > 0 && getgmlevel() < 99) end;
+	mes "[Misa]";
+	if (PVPACS==1 || PVPACS==3) goto L_Setup;
+	mes "Hiya.  I can change your appearance and size!  Yup, I'm a master of disguise!";
+	next;
+	menu "Change my appearance!",L_Disguise,"No, nothing...",-;
+L_Cancel:
+	mes "[Misa]";
+	mes "Awww, really?  Well bye bye!!";
+	close;
+L_Undisguise:
+	mes "[Misa]";
+	mes "Alright hold still... Juuga boolamboogle!";
+	atcommand strcharinfo(0)+":@undisguise";
+	specialeffect 88;
+	specialeffect2 458;
+	specialeffect2 376;
+	specialeffect2 384;
+	specialeffect2 65;
+	set @DI,0;
+	goto L_Done;
+L_DisguiseMe:
+	set @rand,0;
+	mes "[Misa]";
+	mes "Good choice!  Here I go!";
+	next;
+	mes "[Misa]";
+	mes "Oomfa boomfa lookboo foolo roompa tooloomtibu!  Huff puff!";
+	atcommand strcharinfo(0)+":@disguise "+@DISGUISE$;
+	set @DISGUISE$,"";
+	set @DI,1;
+	specialeffect 88;
+	specialeffect2 402;
+	specialeffect2 403;
+	specialeffect2 458;
+	goto L_Done;
+L_Stylist:
+	mes "[Misa]";
+	mes "Aaaarright!  What would you like done?";
+	next;
+	menu "Change my hair color",L_HColor,"Change my hair style",L_HStyle,"Change my clothing color",L_CStyle,"No, nothing...",L_Cancel;
+L_HStyle:
+	mes "[Misa]";
+	mes "Okay, so do you want to browse through the choices, or do you know what you want?";
+	next;
+	menu "I'll browse.",L_HBrowseStyle,"I know what I want",L_HWantStyle;
+L_HWantStyle:
+	mes "[Misa]";
+	mes "Good!  So, which one do you want?  Be sure to only enter a number between 1 and 23!";
+	next;
+	input @sty;
+	if (@sty>23) close;
+	if (@sty<1) close;
+	setlook 1,@sty;
+	next;
+	mes "[Misa]";
+	mes "How's that?  Like it?";
+	next;
+	menu "Yes, this is good",-,"Nah, I want something else",L_WantStyle;
+	next;
+L_ResCosm:
+	next;
+	mes "[Misa]";
+	mes "Good good, how else may I help you?";
+	next;
+	goto L_Disguise;
+L_HBrowseStyle:
+	set @stylook,1;
+	mes "[Misa]";
+	mes "Just let me know when to stop!";
+	set @stylook,@stylook+1;
+	next;
+L_HBrowseSDown:
+	next;
+	set @stylook,@stylook-1;
+	setlook 1,@stylook;
+	mes "Hairstyle No."+@stylook;
+	if(@stylook <= 1) menu "Next",L_HBrowseSUp,"I'll take this one",L_ResCosm;
+	if(@stylook == 23) menu "Start over",L_HBrowseStyle,"I'll take this one",L_ResCosm;
+	if(@stylook != 23) menu "Next",L_HBrowseSUp,"Previous",L_HBrowseSDown,"I'll take this one",L_ResCosm;
+L_HBrowseSUp:
+	next;
+	set @stylook,@stylook+1;
+	setlook 1,@stylook;
+	mes "Hairstyle No."+@stylook;
+	if(@stylook == 23) menu "Start over",L_HBrowseStyle,"I'll take this one",L_ResCosm;
+	if(@stylook != 23) menu "Next",L_HBrowseSUp,"Previous",L_HBrowseSDown,"I'll take this one",L_ResCosm;
+L_HColor:
+	mes "[Misa]";
+	mes "Time to dye it!  Do you want to browse through the dyes, or do you know what you want already?";
+	next;
+	menu "I'll browse",L_HBrowseColor,"I know what I want",L_HWantColor;
+L_HWantColor:
+	mes "[Misa]";
+	mes "Alright!  Pick a color then, there are 251 hair colors you know.";
+	next;
+	input @color;
+	if (@color>251) close;
+	if (@color<0) close;
+	setlook 6,@color;
+	next;
+	mes "[Misa]";
+	mes "There we go, how do you like that?";
+	next;
+	menu "This is good!",-,"Different color",L_HWantColor;
+	next;
+	goto L_ResCosm;
+L_HBrowseColor:
+	set @hlook, 0;
+	mes "[Misa]";
+	mes "Here I go then!  Just tell me when to stop.";
+	set @hlook,@hlook+1;
+	next;
+L_Hbrowsecoldow:
+	next;
+	set @hlook,@hlook-1;
+	setlook 6,@hlook;
+	mes "Hair Color No."+@hlook;
+	if(@hlook <= 0) menu "Next",L_Hbrowsecolup,"I like this one",L_ResCosm;
+	if(@hlook == 251) menu "Start over",L_Hbrowsecolor,"I like this one",L_ResCosm;
+	if(@hlook != 251) menu "Next",L_Hbrowsecolup,"Previous",L_Hbrowsecoldow,"I like this one",L_ResCosm;
+L_Hbrowsecolup:
+	next;
+	set @hlook,@hlook+1;
+	setlook 6,@hlook;
+	mes "Hair Color No."+@hlook;
+	if(@hlook == 251) menu "Start over",L_Hbrowsecolor,"I like this one",L_ResCosm;
+	if(@hlook != 251) menu "Next",L_Hbrowsecolup,"Previous",L_Hbrowsecoldow,"I like this one",L_ResCosm;
+L_CStyle:
+	mes "[Misa]";
+	mes "Okay then, do you want to browse through the choices or do you know exactly what you want?";
+	next;
+	menu "Browse",L_Cbrowse,"I know what I want",L_Cwant;
+L_Cwant:
+	mes "[Misa]";
+	mes "Alright, just name a palette number.  Remember, there are 77 palettes!";
+	next;
+	input @cpal;
+	if (@cpal>77) close;
+	if (@cpal<1) close;
+	setlook 7,@cpal;
+	next;
+	mes "[Misa]";
+	mes "How does this do?";
+	next;
+	menu "This is good",-,"Different palette, please",L_Cwant;
+	next;
+	goto L_ResCosm;
+L_Cbrowse:
+	set @cpal,0;
+	mes "[Misa]";
+	mes "Just tell me when to stop!";
+	set @cpal,@cpal+1;
+	next;
+L_Cbrowseclodow:
+	next;
+	set @cpal,@cpal-1;
+	setlook 7,@cpal;
+	mes "Palette No."+@cpal;
+	if(@cpal <= 0) menu "Next",L_Cbrowsecloup,"I like this one",L_ResCosm;
+	if(@cpal == 77) menu "Start over",L_Cbrowse,"I like this one",L_ResCosm;
+	if(@cpal != 77) menu "Next",L_Cbrowsecloup,"Previous",L_Cbrowseclodow,"I like this one",L_ResCosm;
+L_Cbrowsecloup:
+	next;
+	set @cpal,@cpal+1;
+	setlook 7,@cpal;
+	mes "Palette No."+@cpal;
+	if(@cpal == 77) menu "Start over",L_Cbrowse,"I like this one",L_ResCosm;
+	if(@cpal != 77) menu "Next",L_Cbrowsecloup,"Previous",L_Cbrowseclodow,"I like this one",L_ResCosm;
+L_Disguise:
+	mes "[Misa]";
+	mes "Alright you mischevious lil scamp!  How may I help you?";
+	next;
+	if (@DI) menu "Take off the Disguise",L_Undisguise,"Disguise me as a monster!",-,"No, nothing...",L_Cancel;
+	if (!@DI) menu "Disguise me as a monster!",-,"Change my appearance",L_Stylist,"No, nothing...",L_Cancel;
+	mes "[Misa]";
+	mes "Really?  You want to masquerade around as a scary monster?  Wonderful!  Please pick from this list of disguises!";
+	next;
+L_Menu1:
+	menu "Scorpion",L_Scorpion,"Poring",L_Poring,"Hornet",L_Hornet,"Bat",L_Bat,"Fabre",L_Fabre,"Condor",L_Condor,
+	"Willow",L_Willow,"Fly",L_Fly,"Frog",L_Frog,"Wolf",L_Wolf,"Spore",L_Spore,"Zombie",L_Zombie,
+	"Skeleton Archer",L_SkelArcher,"Creamy",L_Creamy,"Peco Peco",L_PecoPeco,
+	"Werewolf",L_Werewolf,"Orc Warrior",L_OrcWarrior,"Worm Tail",L_WormTail,
+	"Snake",L_Snake,"Munak",L_Munak,"Raptice",L_Raptice,"Skeleton Soldier",L_SkelSoldier,"Isis",L_Isis,"Verit",L_Verit,
+	"Golem",L_Golem,"Mummy",L_Mummy,"Picky",L_Picky,"Rocker",L_Rocker,"Muka",L_Muka,
+	"Smokie",L_Smokie,"Yoyo",L_Yoyo,"Bear",L_Bigfoot,"Nightmare",L_Nightmare,
+	"Lunatic",L_Lunatic,"Megalodon",L_Megalodon,"Vadon",L_Vadon,"Swordfish",L_Swordfish,"Kukre",L_Kukre,
+	"Pirate Skeleton",L_PirateSkeleton,"Kaho",L_Kaho,"Crab",L_Crab,"Skeleton",L_Skeleton,"Ant",L_Ant,
+	"Argiope",L_Argiope,"Argos",L_Argos,"Baphomet Jr.",L_BaphoJr,"Bathory",L_Bathory,"Coco",L_Coco,
+	"Desert Wolf",L_DesertWolf,"Desert Wolf Puppy",L_DesertWolfPup,"Little Demon",L_LittleDemon,"Dokebi",L_Dokebi,
+	"Dustiness",L_Dustiness,"Eggyra",L_Eggyra,"Evil Druid",L_EvilDruid,"Frilldora",L_Frilldora,"Giearth",L_Giearth,
+	"Goblin",L_Goblin,"Hode",L_Hode,"Horn",L_Horn,"Fire Spirit",L_FireSpirit,"-> Next",L_Menu2;
+L_Menu2:
+	menu "Jakk",L_Jakk,"Khalitzburg",L_Khalitzburg,
+	"Kobold",L_Kobold,"Magnolia",L_Magnolia,"Mantis",L_Mantis,"Marduk",L_Marduk,"Marina",L_Marina,"Marionette",L_Marionette,
+	"Mars",L_Mars,"Martin",L_Martin,"Matyr",L_Matyr,"Medusa",L_Medusa,"Minotaur",L_Minotaur,"Myst",L_Myst,
+	"Orc Skeleton",L_OrcSkeleton,"Orc Zombie",L_OrcZombie,"Pasana",L_Pasana,"Petit",L_Petit,"Sky Petit",L_SkyPetit,
+	"Phen",L_Phen,"Plankton",L_Plankton,"Rafflesia",L_Rafflesia,"Raydric",L_Raydric,"Requiem",L_Requiem,
+	"Sandman",L_Sandman,"Savage",L_Savage,"Savage Babe",L_SavageBabe,"Rockipillar",L_Rockipillar,"Skeleton Worker",L_SkeletonWorker,"Sohee",L_Sohee,
+	"Stainer",L_Stainer,"Tarou",L_Tarou,"Vitata",L_Vitata,"Zenorc",L_Zenorc,"Zerom",L_Zerom,"Ninetail",L_Ninetail,
+	"Whisper",L_Whisper,"Spook",L_Spook,"Bongun",L_Bongun,"Orc Archer",L_OrcArcher,"Mimic",L_Mimic,"Wraith",L_Wraith,
+	"Alarm",L_Alarm,"Arclouse",L_Arclouse,"Rideword",L_Rideword,"Skeleton Prisoner",L_SkelPrisoner,"Dark Priest",L_DarkPriest,
+	"Punk",L_Punk,"Zealot",L_Zealot,"Rybio",L_Rybio,"Phendark",L_Phendark,"Mysteltainn",L_Mysteltainn,"Tirfing",L_Tirfing,
+	"Executioner",L_Executioner,"Anolian",L_Anolian,"Sting",L_Sting,"Wanderer",L_Wanderer,"High Orc",L_HighOrc,
+	"Knight Of The Abyss",L_KnightOfAbyss,"Antonio",L_Antonio,"-> Next",L_Menu3,"<- Previous",L_Menu1;
+L_Menu3:
+	menu "Cruiser",L_Cruiser,"Mystcase",L_Mystcase,"Chepet",L_Chepet,
+	"Gargoyle",L_Gargoyle,"Raggler",L_Raggler,"Neraid",L_Neraid,"Pest",L_Pest,"Injustice",L_Injustice,"Gryphon",L_Gryphon,
+	"Dark Frame",L_DarkFrame,"Wild Rose",L_WildRose,"Mutant Dragonoid",L_MutantDragonoid,"Wind Ghost",L_WindGhost,
+	"Merman",L_Merman,"Cookie",L_Cookie,"Aster",L_Aster,"Carat",L_Carat,"Hell Knight",L_HellKnight,"Clock",L_Clock,
+	"Clock Tower Manager",L_ClockTowerMngr,"Alligator",L_Alligator,"Orc Lady",L_OrcLady,"Alice",L_Alice,"Raydric Archer",L_RaydricArcher,
+	"Stalactic Golem",L_StalacticGolem,"Tri-Joint",L_TriJoint,"Steam Goblin",L_SteamGoblin,"Chimera",L_Chimera,
+	"Skeleton General",L_SkelGeneral,"Owl Baron",L_OwlBaron,"Giant Hornet",L_GiantHornet,"Giant Spider",L_GiantSpider,
+	"Cat O Nine Tails",L_FemmeFelix,"Mobster",L_Mobster,"Perimeter",L_Perimeter,"Assaulter",L_Assaulter,"Solider",L_Solider,
+	"Fur Seal",L_FurSeal,"Heater",L_Heater,"Freezer",L_Freezer,"Owl Duke",L_OwlDuke,"Dragon Tail",L_DragonTail,
+	"Mad Jack",L_MadJack,"Sea Otter",L_SeaOtter,"Apocalypse",L_Apocalypse,"Lava Golem",L_LavaGolem,"Blazer",L_Blazer,
+	"Succubus",L_Succubus,"Fake Angel",L_FakeAngel,"Goat",L_Goat,"Incubus",L_Incubus,
+	"The Paper",L_ThePaper,"Harpy",L_Harpy,"Elder",L_Elder,"Explosion",L_Explosion,
+	"Deleter",L_Deleter,"Sky Deleter",L_SkyDeleter,"-> Next",L_Menu4,"<- Previous",L_Menu2;
+L_Menu4:
+	menu "Violy",L_Violy,"Galapago",L_Galapago,"Rotar Zero",L_RotarZero,
+	"Crystal",L_Crystal,"Karakasa",L_Karakasa,"Shinobi",L_Shinobi,"Poison Toad",L_PoisonToad,"Antique Flintlock",L_AntiqueFlint,
+	"Miyabi Ningyo",L_MiyabiNingyo,"Tengu",L_Tengu,"Kapha",L_Kapha,"Blood Butterfly",L_BloodButterfly,"Rice Cake Boy",L_RiceCakeBoy,
+	"Neighbor Ent",L_NeighborEnt,"Evil Cloud Hermit",L_EvilCloudHermit,"Wild Ginseng",L_WildGinseng,"Baby Leopard",L_BabyLeopard,
+	"Wicked Nymph",L_WickedNymph,"Dryad",L_Dryad,"Antler Beetle",L_AntlerBeetle,"Bellowing Ent",L_BellowingEnt,
+	"Wooden Golem",L_WoodenGolem,"Wootan Shooter",L_WootanShooter,"Wootan Fighter",L_WootanFighter,"Parasite",L_Parasite,
+	"Gibbet",L_Gibbet,"Dullahan",L_Dullahan,"Loli Ruri",L_LoliRuri,"Disguise",L_DisguiseMob,"Bloody Murderer",L_BloodyMurderer,
+	"Quve",L_Quve,"Lude",L_Lude,"Hylozoist",L_Hylozoist,"Civil Servant",L_CivilServant,"Dancing Dragon",L_DancingDragon,
+	"Baby Hatii",L_BabyHatii,"Increase Soil",L_IncreaseSoil,"Li Me Mang Ryang",L_LiMeMangRyang,"Chun Li",L_ChunLi,
+	"Boiled Rice",L_BoiledRice,"Tamruan",L_Tamruan,"Mime Monkey",L_MimeMonkey,"Leaf Cat",L_LeafCat,"Kraben",L_Kraben,
+	"Metaling",L_Metaling,"Mineral",L_Mineral,"Obsidian",L_Obsidian,"Pitman",L_Pitman,"Waste Stove",L_WasteStove,
+	"Ungoliant",L_Ungoliant,"Porcellio",L_Porcellio,"Teddy Bear",L_TeddyBear,"Mole",L_Mole,
+	"Hill Wind",L_HillWind,"Gremlin",L_Gremlin,"-> Next",L_Menu5,"<- Previous",L_Menu4;
+L_Menu5:
+	menu "Beholder",L_Beholder,"Dimik",L_Dimik,"Archdam",L_Archdam,"Gaseous Cloud",L_GasCloud,"Super Apocalypse",L_SuperApocalypse,
+	"Venatu",L_Venatu,"Gemini",L_Gemini,"Removal",L_Removal,"Photon Cannon",L_PhotonCannon,"-> MVP Disguises",L_Menu6,"<- Previous",L_Menu5;
+L_Menu6:
+	if (KillerLvl < 99) goto L_TooLow;
+	menu "RSX 0806",L_RSX0806,"Baphomet",L_Baphomet,"Osiris",L_Osiris,"Mistress",L_Mistress,"Golden Thief Bug",L_GTB,
+	"Eliza",L_Eliza,"Maya",L_Maya,"Moonlight",L_Moonlight,"Turtle General",L_TurtleGeneral,"Dark_Lord",L_DarkLord,
+	"Dark Illusion",L_DarkIllusion,"Hatii",L_Hatii,"Windstorm Knight",L_Windstorm,"Tao Gunka",L_TaoGunka,
+	"Ink Serpent",L_InkSerpent,"Bacsojin",L_Bacsojin,"Incantation Samurai",L_IncantationSam,"Fifth Horseman",L_FifthHorseman,
+	"Amon Ra",L_AmonRa,"Pharaoh",L_Pharaoh,"Doppelganger",L_Doppelganger,"<- Previous",L_Menu5;
+L_TooLow:
+	mes "[Misa]";
+	mes "Sorry, but you're not vicious enough to be a big bad boss monster!";
+	next;
+	mes "[Misa]";
+	mes "So pick a normal monster instead!";
+	next;
+	goto L_Menu5;
+L_Doppelganger:
+	set @DISGUISE$,"Doppelganger";
+	goto L_DisguiseMe;
+L_Pharaoh:
+	set @DISGUISE$,"Pharaoh";
+	goto L_DisguiseMe;
+L_AmonRa:
+	set @DISGUISE$,"Amon_Ra";
+	goto L_DisguiseMe;
+L_TaoGunka:
+	set @DISGUISE$,"Tao_Gunka";
+	goto L_DisguiseMe;
+L_Windstorm:
+	set @DISGUISE$,"Windstorm_Knight";
+	goto L_DisguiseMe;
+L_Hatii:
+	set @DISGUISE$,"Hatii";
+	goto L_DisguiseMe;
+L_DarkIllusion:
+	set @DISGUISE$,"Dark_Illusion";
+	goto L_DisguiseMe;
+L_DarkLord:
+	set @DISGUISE$,"Dark_Lord";
+	goto L_DisguiseMe;
+L_TurtleGeneral:
+	set @DISGUISE$,"Turtle_General";
+	goto L_DisguiseMe;
+L_Moonlight:
+	set @DISGUISE$,"Moonlight";
+	goto L_DisguiseMe;
+L_Maya:
+	set @DISGUISE$,"Maya";
+	goto L_DisguiseMe;
+L_Eliza:
+	set @DISGUISE$,"Eliza";
+	goto L_DisguiseMe;
+L_GTB:
+	set @DISGUISE$,"Golden_Thief_Bug";
+	goto L_DisguiseMe;
+L_Mistress:
+	set @DISGUISE$,"Mistress";
+	goto L_DisguiseMe;
+L_Osiris:
+	set @DISGUISE$,"Osiris";
+	goto L_DisguiseMe;
+L_Baphomet:
+	set @DISGUISE$,"Baphomet";
+	goto L_DisguiseMe;
+L_SuperApocalypse:
+	set @DISGUISE$,"1685";
+	goto L_DisguiseMe;
+L_Poring:
+	set @rand,rand(1,10);
+	if (@rand==1) set @DISGUISE$,"Poring";
+	if (@rand==2) set @DISGUISE$,"Drops";
+	if (@rand==3) set @DISGUISE$,"Poporing";
+	if (@rand==4) set @DISGUISE$,"Marin";
+	if (@rand==5) set @DISGUISE$,"Angeling";
+	if (@rand==6) set @DISGUISE$,"ArchAngeling";
+	if (@rand==7) set @DISGUISE$,"Deviling";
+	if (@rand==8) set @DISGUISE$,"Mastering";
+	if (@rand==9) set @DISGUISE$,"Metaling";
+	if (@rand==10) set @DISGUISE$,"Santa_Poring";
+	goto L_DisguiseMe;
+L_Scorpion:
+	set @rand,rand(1,3);
+	if (@rand==1) set @DISGUISE$,"Scorpion";
+	if (@rand==2) set @DISGUISE$,"Gig";
+	if (@rand==3) set @DISGUISE$,"Iron_fist";
+	goto L_DisguiseMe;
+L_Hornet:
+	set @DISGUISE$,"Hornet";
+	goto L_DisguiseMe;
+L_Bat:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Bat";
+	if (@rand==2) set @DISGUISE$,"Drainliar";
+	goto L_DisguiseMe;
+L_Fabre:
+	set @DISGUISE$,"Fabre";
+	goto L_DisguiseMe;
+L_Condor:
+	set @DISGUISE$,"Condor";
+	goto L_DisguiseMe;
+L_Willow:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Willow";
+	if (@rand==2) set @DISGUISE$,"Elder_Willow";
+	goto L_DisguiseMe;
+L_Fly:
+	set @rand,rand(1,3);
+	if (@rand==1) set @DISGUISE$,"ChonChon";
+	if (@rand==2) set @DISGUISE$,"Steel_ChonChon";
+	if (@rand==3) set @DISGUISE$,"Hunter_Fly";
+	goto L_DisguiseMe;
+L_Frog:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Roda_Frog";
+	if (@rand==2) set @DISGUISE$,"Thara_Frog";
+	goto L_DisguiseMe;
+L_Wolf:
+	set @DISGUISE$,"Wolf";
+	goto L_DisguiseMe;
+L_Spore:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Spore";
+	if (@rand==2) set @DISGUISE$,"Poison_Spore";	
+	goto L_DisguiseMe;
+L_Zombie:
+	set @rand,rand(1,3);
+	if (@rand==1) set @DISGUISE$,"Zombie";
+	if (@rand==2) set @DISGUISE$,"Ghoul";
+	if (@rand==3) set @DISGUISE$,"Zombie_Master";
+	goto L_DisguiseMe;
+L_SkelArcher:
+	set @DISGUISE$,"Skeleton_Archer";
+	goto L_DisguiseMe;
+L_Creamy:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Creamy";
+	if (@rand==2) set @DISGUISE$,"Death_Creamy";
+	goto L_DisguiseMe;
+L_PecoPeco:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Grand Peco";
+	if (@rand==2) set @DISGUISE$,"PecoPeco";
+	goto L_DisguiseMe;
+L_ThiefBug:
+	set @rand,rand(1,3);
+	if (@rand==1) set @DISGUISE$,"Thief_Bug_Larva";
+	if (@rand==2) set @DISGUISE$,"Female_Thief_Bug";
+	if (@rand==3) set @DISGUISE$,"Male_Thief_Bug";
+	goto L_DisguiseMe;
+L_Werewolf:
+	set @DISGUISE$,"Werewolf";
+	goto L_DisguiseMe;
+L_OrcWarrior:
+	set @DISGUISE$,"Orc_Warrior";
+	goto L_DisguiseMe;
+L_WormTail:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Worm_Tail";
+	if (@rand==2) set @DISGUISE$,"Stem_Worm";
+	goto L_DisguiseMe;
+L_Snake:
+	set @rand,rand(1,3);
+	if (@rand==1) set @DISGUISE$,"Snake";
+	if (@rand==2) set @DISGUISE$,"Anacondaq";
+	if (@rand==3) set @DISGUISE$,"Sidewinder";
+	goto L_DisguiseMe;
+L_Munak:
+	set @DISGUISE$,"Munak";
+	goto L_DisguiseMe;
+L_Raptice:
+	set @DISGUISE$,"Raptice";
+	goto L_DisguiseMe;
+L_SkelSoldier:
+	set @DISGUISE$,"Skeleton_Soldier";
+	goto L_DisguiseMe;
+L_Isis:
+	set @DISGUISE$,"Isis";
+	goto L_DisguiseMe;
+L_Verit:
+	set @DISGUISE$,"Verit";
+	goto L_DisguiseMe;
+L_Golem:
+	set @DISGUISE$,"Golem";
+	goto L_DisguiseMe;
+L_Mummy:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Mummy";
+	if (@rand==2) set @DISGUISE$,"Ancient_Mummy";
+	goto L_DisguiseMe;
+L_Picky:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Picky";
+	if (@rand==2) set @DISGUISE$,"Super_Picky";
+	goto L_DisguiseMe;
+L_Rocker:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Rocker";
+	if (@rand==2) set @DISGUISE$,"Metaller";
+	goto L_DisguiseMe;
+L_Muka:
+	set @DISGUISE$,"Muka";
+	goto L_DisguiseMe;
+L_Smokie:
+	set @DISGUISE$,"Smokie";
+	goto L_DisguiseMe;
+L_Yoyo:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Choco";
+	if (@rand==2) set @DISGUISE$,"Yoyo";
+	goto L_DisguiseMe;
+L_Bigfoot:
+	set @rand,rand(1,5);
+	if (@rand==1) set @DISGUISE$,"Bigfoot";
+	if (@rand==2) set @DISGUISE$,"Leib_Olmai";
+	if (@rand==3) set @DISGUISE$,"Sasquatch";
+	if (@rand==4) set @DISGUISE$,"Grizzly";
+	if (@rand==5) set @DISGUISE$,"Zipper_Bear";
+	goto L_DisguiseMe;
+L_Nightmare:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Nightmare";
+	if (@rand==2) set @DISGUISE$,"Terrible_Nightmare";
+	goto L_DisguiseMe;
+L_Lunatic:
+	set @DISGUISE$,"Lunatic";
+	goto L_DisguiseMe;
+L_Megalodon:
+	set @DISGUISE$,"Megalodon";
+	goto L_DisguiseMe;
+L_Vadon:
+	set @DISGUISE$,"Vadon";
+	goto L_DisguiseMe;
+L_Swordfish:
+	set @DISGUISE$,"Swordfish";
+	goto L_DisguiseMe;
+L_Kukre:
+	set @DISGUISE$,"Kukre";
+	goto L_DisguiseMe;
+L_PirateSkeleton:
+	set @DISGUISE$,"Pirate_Skeleton";
+	goto L_DisguiseMe;
+L_Kaho:
+	set @DISGUISE$,"Kaho";
+	goto L_DisguiseMe;
+L_Crab:
+	set @DISGUISE$,"Crab";
+	goto L_DisguiseMe;
+L_Skeleton:
+	set @DISGUISE$,"Skeleton";
+	goto L_DisguiseMe;
+L_Ant:
+	set @rand,rand(1,3);
+	if (@rand==1) set @DISGUISE$,"Andre";
+	if (@rand==2) set @DISGUISE$,"Piere";
+	if (@rand==3) set @DISGUISE$,"Deniro";
+	goto L_DisguiseMe;
+L_Argiope:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Argiope";
+	if (@rand==2) set @DISGUISE$,"Ancient_Worm";
+	goto L_DisguiseMe;
+L_Argos:
+	set @DISGUISE$,"Argos";
+	goto L_DisguiseMe;
+L_BaphoJr:
+	set @DISGUISE$,"Baphomet_Jr.";
+	goto L_DisguiseMe;
+L_Bathory:
+	set @DISGUISE$,"Bathroy";
+	goto L_DisguiseMe;
+L_Coco:
+	set @DISGUISE$,"Coco";
+	goto L_DisguiseMe;
+L_DesertWolf:
+	set @DISGUISE$,"Desert_Wolf";
+	goto L_DisguiseMe;
+L_DesertWolfPup:
+	set @DISGUISE$,"Desert_Wolf_Puppy";
+	goto L_DisguiseMe;
+L_LittleDemon:
+	set @rand,rand(1,3);
+	if (@rand==1) set @DISGUISE$,"Deviruchi";
+	if (@rand==2) set @DISGUISE$,"Diabolic";
+	if (@rand==3) set @DISGUISE$,"Mini_Demon";
+	goto L_DisguiseMe;
+L_Dokebi:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Am_Mut";
+	if (@rand==2) set @DISGUISE$,"Dokebi";
+	goto L_DisguiseMe;
+L_Dustiness:
+	set @DISGUISE$,"Dustiness";
+	goto L_DisguiseMe;
+L_Eggyra:
+	set @DISGUISE$,"Eggyra";
+	goto L_DisguiseMe;
+L_EvilDruid:
+	set @DISGUISE$,"Evil_Druid";
+	goto L_DisguiseMe;
+L_Frilldora:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Driller";
+	if (@rand==2) set @DISGUISE$,"Frilldora";
+	goto L_DisguiseMe;
+L_Giearth:
+	set @DISGUISE$,"Giearth";
+	goto L_DisguiseMe;
+L_Goblin:
+	set @rand,rand(1,8);
+	if (@rand==1) set @DISGUISE$,"Knife_Goblin";
+	if (@rand==2) set @DISGUISE$,"Flail_Goblin";
+	if (@rand==3) set @DISGUISE$,"Axe_Goblin";
+	if (@rand==4) set @DISGUISE$,"Hammer_Goblin";
+	if (@rand==5) set @DISGUISE$,"Morningstar_Goblin";
+	if (@rand==6) set @DISGUISE$,"Xmas_Goblin";
+	if (@rand==7) set @DISGUISE$,"Archer_Goblin";
+	if (@rand==8) set @DISGUISE$,"Goblin_Leader";
+	goto L_DisguiseMe;
+L_Hode:
+	set @DISGUISE$,"Hode";
+	goto L_DisguiseMe;
+L_Horn:
+	set @DISGUISE$,"Horn";
+	goto L_DisguiseMe;
+L_FireSpirit:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Horong";
+	if (@rand==2) set @DISGUISE$,"Gajomart";
+	goto L_DisguiseMe;
+L_Jakk:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Xmas_Jakk";
+	if (@rand==2) set @DISGUISE$,"Jakk";
+	goto L_DisguiseMe;
+L_Khalitzburg:
+	set @DISGUISE$,"Khalitzburg";
+	goto L_DisguiseMe;
+L_Kobold:
+	set @rand,rand(1,7);
+	if (@rand==1) set @DISGUISE$,"Axe_Kobold";
+	if (@rand==2) set @DISGUISE$,"Hammer_Kobold";
+	if (@rand==3) set @DISGUISE$,"Morningstar_Kobold";
+	if (@rand==4) set @DISGUISE$,"Battleaxe_Kobold";
+	if (@rand==5) set @DISGUISE$,"Dagger_Kobold";
+	if (@rand==6) set @DISGUISE$,"Kobold_Archer";
+	if (@rand==7) set @DISGUISE$,"Kobold_Leader";
+	goto L_DisguiseMe;
+L_Magnolia:
+	set @DISGUISE$,"Magnolia";
+	goto L_DisguiseMe;
+L_Mantis:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Killer_Mantis";
+	if (@rand==2) set @DISGUISE$,"Mantis";
+	goto L_DisguiseMe;
+L_Marduk:
+	set @DISGUISE$,"Marduk";
+	goto L_DisguiseMe;
+L_Marina:
+	set @DISGUISE$,"Marina";
+	goto L_DisguiseMe;
+L_Marionette:
+	set @DISGUISE$,"Marionette";
+	goto L_DisguiseMe;
+L_Mars:
+	set @DISGUISE$,"Mars";
+	goto L_DisguiseMe;
+L_Martin:
+	set @DISGUISE$,"Martin";
+	goto L_DisguiseMe;
+L_Matyr:
+	set @DISGUISE$,"Matyr";
+	goto L_DisguiseMe;
+L_Medusa:
+	set @DISGUISE$,"Medusa";
+	goto L_DisguiseMe;
+L_Minotaur:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Majoruros";
+	if (@rand==2) set @DISGUISE$,"Minorous";
+	goto L_DisguiseMe;
+L_Myst:
+	set @DISGUISE$,"Myst";
+	goto L_DisguiseMe;
+L_OrcSkeleton:
+	set @DISGUISE$,"Orc_Skeleton";
+	goto L_DisguiseMe;
+L_OrcZombie:
+	set @DISGUISE$,"Orc_Zombie";
+	goto L_DisguiseMe;
+L_Pasana:
+	set @DISGUISE$,"Pasana";
+	goto L_DisguiseMe;
+L_Petit:
+	set @DISGUISE$,"Petit";
+	goto L_DisguiseMe;
+L_SkyPetit:
+	set @DISGUISE$,"Sky_Petit";
+	goto L_DisguiseMe;
+L_Phen:
+	set @DISGUISE$,"Phen";
+	goto L_DisguiseMe;
+L_Plankton:
+	set @DISGUISE$,"Plankton";
+	goto L_DisguiseMe;
+L_Rafflesia:
+	set @DISGUISE$,"Rafflesia";
+	goto L_DisguiseMe;
+L_Raydric:
+	set @DISGUISE$,"Raydric";
+	goto L_DisguiseMe;
+L_Requiem:
+	set @DISGUISE$,"Requiem";
+	goto L_DisguiseMe;
+L_Sandman:
+	set @DISGUISE$,"Sandman";
+	goto L_DisguiseMe;
+L_Savage:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Gullinbursti";
+	if (@rand==2) set @DISGUISE$,"Savage";
+	goto L_DisguiseMe;
+L_SavageBabe:
+	set @DISGUISE$,"Savage_Babe";
+	goto L_DisguiseMe;
+L_Rockipillar:
+	set @DISGUISE$,"Rockipillar";
+	goto L_DisguiseMe;
+L_SkeletonWorker:
+	set @DISGUISE$,"Skeleton_Worker";
+	goto L_DisguiseMe;
+L_Sohee:
+	set @DISGUISE$,"Sohee";
+	goto L_DisguiseMe;
+L_Stainer:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Brilight";
+	if (@rand==2) set @DISGUISE$,"Stainer";
+	goto L_DisguiseMe;
+L_Tarou:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Tarou";
+	if (@rand==2) set @DISGUISE$,"Cramp";
+	goto L_DisguiseMe;
+L_Vitata:
+	set @DISGUISE$,"Vitata";
+	goto L_DisguiseMe;
+L_Zenorc:
+	set @DISGUISE$,"Zenorc";
+	goto L_DisguiseMe;
+L_Zerom:
+	set @DISGUISE$,"Zerom";
+	goto L_DisguiseMe;
+L_Ninetail:
+	set @DISGUISE$,"Ninetail";
+	goto L_DisguiseMe;
+L_Whisper:
+	set @DISGUISE$,"Whisper";
+	goto L_DisguiseMe;
+L_Spook:
+	set @DISGUISE$,"Spook";
+	goto L_DisguiseMe;
+L_Bongun:
+	set @DISGUISE$,"Bongun";
+	goto L_DisguiseMe;
+L_OrcArcher:
+	set @DISGUISE$,"Orc_Archer";
+	goto L_DisguiseMe;
+L_Mimic:
+	set @DISGUISE$,"Mimic";
+	goto L_DisguiseMe;
+L_Wraith:
+	set @DISGUISE$,"Wraith";
+	goto L_DisguiseMe;
+L_Alarm:
+	set @DISGUISE$,"Alarm";
+	goto L_DisguiseMe;
+L_Arclouse:
+	set @DISGUISE$,"Arclouse";
+	goto L_DisguiseMe;
+L_Rideword:
+	set @DISGUISE$,"Rideword";
+	goto L_DisguiseMe;
+L_SkelPrisoner:
+	set @DISGUISE$,"Skeleton_Prisoner";
+	goto L_DisguiseMe;
+L_DarkPriest:
+	set @DISGUISE$,"Dark_Priest";
+	goto L_DisguiseMe;
+L_Punk:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Punk";
+	if (@rand==2) set @DISGUISE$,"Demon_Pungus";
+	goto L_DisguiseMe;
+L_Zealot:
+	set @DISGUISE$,"Zealot";
+	goto L_DisguiseMe;
+L_Rybio:
+	set @DISGUISE$,"Rybio";
+	goto L_DisguiseMe;
+L_Phendark:
+	set @DISGUISE$,"Phendark";
+	goto L_DisguiseMe;
+L_Mysteltainn:
+	set @DISGUISE$,"Mysteltainn";
+	goto L_DisguiseMe;
+L_Tirfing:
+	set @DISGUISE$,"Tirfing";
+	goto L_DisguiseMe;
+L_Executioner:
+	set @DISGUISE$,"Executioner";
+	goto L_DisguiseMe;
+L_Anolian:
+	set @DISGUISE$,"Anolian";
+	goto L_DisguiseMe;
+L_Sting:
+	set @DISGUISE$,"Sting";
+	goto L_DisguiseMe;
+L_Wanderer:
+	set @DISGUISE$,"Wanderer";
+	goto L_DisguiseMe;
+L_HighOrc:
+	set @DISGUISE$,"High_Orc";
+	goto L_DisguiseMe;
+L_KnightOfAbyss:
+	set @DISGUISE$,"Knight_of_the_Abyss";
+	goto L_DisguiseMe;
+L_Antonio:
+	set @DISGUISE$,"Antonio";
+	goto L_DisguiseMe;
+L_Cruiser:
+	set @DISGUISE$,"Cruiser";
+	goto L_DisguiseMe;
+L_Mystcase:
+	set @DISGUISE$,"Mystcase";
+	goto L_DisguiseMe;
+L_Chepet:
+	set @DISGUISE$,"Chepet";
+	goto L_DisguiseMe;
+L_Gargoyle:
+	set @DISGUISE$,"Gargoyle";
+	goto L_DisguiseMe;
+L_Raggler:
+	set @DISGUISE$,"Raggler";
+	goto L_DisguiseMe;
+L_Neraid:
+	set @DISGUISE$,"Neraid";
+	goto L_DisguiseMe;
+L_Pest:
+	set @DISGUISE$,"Pest";
+	goto L_DisguiseMe;
+L_Injustice:
+	set @DISGUISE$,"Injustice";
+	goto L_DisguiseMe;
+L_Gryphon:
+	set @DISGUISE$,"Gryphon";
+	goto L_DisguiseMe;
+L_DarkFrame:
+	set @DISGUISE$,"Dark_Frame";
+	goto L_DisguiseMe;
+L_WildRose:
+	set @DISGUISE$,"Wild_Rose";
+	goto L_DisguiseMe;
+L_MutantDragonoid:
+	set @DISGUISE$,"Mutant_Dragonoid";
+	goto L_DisguiseMe;
+L_WindGhost:
+	set @DISGUISE$,"Wind_Ghost";
+	goto L_DisguiseMe;
+L_Merman:
+	set @DISGUISE$,"Merman";
+	goto L_DisguiseMe;
+L_Cookie:
+	set @DISGUISE$,"Cookie";
+	goto L_DisguiseMe;
+L_Aster:
+	set @DISGUISE$,"Aster";
+	goto L_DisguiseMe;
+L_Carat:
+	set @DISGUISE$,"Carat";
+	goto L_DisguiseMe;
+L_HellKnight:
+	set @DISGUISE$,"Hell_Knight";
+	goto L_DisguiseMe;
+L_Clock:
+	set @DISGUISE$,"Clock";
+	goto L_DisguiseMe;
+L_ClockTowerMngr:
+	set @DISGUISE$,"Clock_Tower_Manager";
+	goto L_DisguiseMe;
+L_Alligator:
+	set @DISGUISE$,"Alligator";
+	goto L_DisguiseMe;
+L_OrcLady:
+	set @DISGUISE$,"Orc_Lady";
+	goto L_DisguiseMe;
+L_Alice:
+	set @DISGUISE$,"Alice";
+	goto L_DisguiseMe;
+L_RaydricArcher:
+	set @DISGUISE$,"Raydric_Archer";
+	goto L_DisguiseMe;
+L_StalacticGolem:
+	set @DISGUISE$,"Stalactic_Golem";
+	goto L_DisguiseMe;
+L_TriJoint:
+	set @DISGUISE$,"Tri-Joint";
+	goto L_DisguiseMe;
+L_SteamGoblin:
+	set @DISGUISE$,"Steam_Goblin";
+	goto L_DisguiseMe;
+L_Chimera:
+	set @DISGUISE$,"Chimera";
+	goto L_DisguiseMe;
+L_SkelGeneral:
+	set @DISGUISE$,"Skeleton_General";
+	goto L_DisguiseMe;
+L_OwlBaron:
+	set @DISGUISE$,"Owl_Baron";
+	goto L_DisguiseMe;
+L_GiantHornet:
+	set @DISGUISE$,"Giant_Hornet";
+	goto L_DisguiseMe;
+L_GiantSpider:
+	set @DISGUISE$,"Giant_Spider";
+	goto L_DisguiseMe;
+L_FemmeFelix:
+	set @DISGUISE$,"Cat_O_Nine_Tail";
+	goto L_DisguiseMe;
+L_Mobster:
+	set @DISGUISE$,"Mobster";
+	goto L_DisguiseMe;
+L_Perimeter:
+	set @DISGUISE$,"Perimeter";
+	goto L_DisguiseMe;
+L_Assaulter:
+	set @DISGUISE$,"Assaulter";
+	goto L_DisguiseMe;
+L_Solider:
+	set @DISGUISE$,"Solider";
+	goto L_DisguiseMe;
+L_FurSeal:
+	set @DISGUISE$,"Fur_Seal";
+	goto L_DisguiseMe;
+L_Heater:
+	set @DISGUISE$,"Heater";
+	goto L_DisguiseMe;
+L_Freezer:
+	set @DISGUISE$,"Freezer";
+	goto L_DisguiseMe;
+L_OwlDuke:
+	set @DISGUISE$,"Owl_Duke";
+	goto L_DisguiseMe;
+L_DragonTail:
+	set @DISGUISE$,"Dragon_Tail";
+	goto L_DisguiseMe;
+L_MadJack:
+	set @DISGUISE$,"Mad_Jack";
+	goto L_DisguiseMe;
+L_SeaOtter:
+	set @DISGUISE$,"Sea_Otter";
+	goto L_DisguiseMe;
+L_Apocalypse:
+	set @DISGUISE$,"Apocalypse";
+	goto L_DisguiseMe;
+L_LavaGolem:
+	set @DISGUISE$,"Lava_Golem";
+	goto L_DisguiseMe;
+L_Blazer:
+	set @DISGUISE$,"Blazer";
+	goto L_DisguiseMe;
+L_Succubus:
+	set @DISGUISE$,"Succubus";
+	goto L_DisguiseMe;
+L_FakeAngel:
+	set @DISGUISE$,"Fake_Angel";
+	goto L_DisguiseMe;
+L_Goat:
+	set @DISGUISE$,"Goat";
+	goto L_DisguiseMe;
+L_Incubus:
+	set @DISGUISE$,"Incubus";
+	goto L_DisguiseMe;
+L_ThePaper:
+	set @DISGUISE$,"The_Paper";
+	goto L_DisguiseMe;
+L_Harpy:
+	set @DISGUISE$,"Harpy";
+	goto L_DisguiseMe;
+L_Elder:
+	set @DISGUISE$,"Elder";
+	goto L_DisguiseMe;
+L_Explosion:
+	set @DISGUISE$,"Explosion";
+	goto L_DisguiseMe;
+L_Deleter:
+	set @DISGUISE$,"Deleter";
+	goto L_DisguiseMe;
+L_SkyDeleter:
+	set @DISGUISE$,"Sky_Deleter";
+	goto L_DisguiseMe;
+L_Violy:
+	set @DISGUISE$,"Violy";
+	goto L_DisguiseMe;
+L_Galapago:
+	set @DISGUISE$,"Galapago";
+	goto L_DisguiseMe;
+L_RotarZero:
+	set @DISGUISE$,"Rotar_Zero";
+	goto L_DisguiseMe;
+L_Crystal:
+	set @rand,rand(1,4);
+	if (@rand==1) set @DISGUISE$,"DFKK540SDFFEOIPJ";
+	if (@rand==2) set @DISGUISE$,"ZXCIOD65SHD34DFL";
+	if (@rand==3) set @DISGUISE$,"FIUEH45FJP0Z9jIB";
+	if (@rand==4) set @DISGUISE$,"PIOMTJHFB6498FDB";
+	goto L_DisguiseMe;
+L_Karakasa:
+	set @DISGUISE$,"Karakasa";
+	goto L_DisguiseMe;
+L_Shinobi:
+	set @DISGUISE$,"Shinobi";
+	goto L_DisguiseMe;
+L_PoisonToad:
+	set @DISGUISE$,"Poison_Toad";
+	goto L_DisguiseMe;
+L_AntiqueFlint:
+	set @DISGUISE$,"Antique_Flintlock";
+	goto L_DisguiseMe;
+L_MiyabiNingyo:
+	set @DISGUISE$,"Miyabi_Ningyo";
+	goto L_DisguiseMe;
+L_Tengu:
+	set @DISGUISE$,"Tengu";
+	goto L_DisguiseMe;
+L_Kapha:
+	set @DISGUISE$,"Kapha";
+	goto L_DisguiseMe;
+L_BloodButterfly:
+	set @DISGUISE$,"Blood_Butterfly";
+	goto L_DisguiseMe;
+L_RiceCakeBoy:
+	set @DISGUISE$,"Rice_Cake_Boy";
+	goto L_DisguiseMe;
+L_NeighborEnt:
+	set @DISGUISE$,"Neighbor_Ent";
+	goto L_DisguiseMe;
+L_EvilCloudHermit:
+	set @DISGUISE$,"Evil_Cloud_Hermit";
+	goto L_DisguiseMe;
+L_WildGinseng:
+	set @DISGUISE$,"Wild_Ginseng";
+	goto L_DisguiseMe;
+L_BabyLeopard:
+	set @DISGUISE$,"Baby_Leopard";
+	goto L_DisguiseMe;
+L_WickedNymph:
+	set @DISGUISE$,"Wicked_Nymph";
+	goto L_DisguiseMe;
+L_Dryad:
+	set @DISGUISE$,"Dryad";
+	goto L_DisguiseMe;
+L_AntlerBeetle:
+	set @DISGUISE$,"Antler_Beetle";
+	goto L_DisguiseMe;
+L_BellowingEnt:
+	set @DISGUISE$,"Bellowing_Ent";
+	goto L_DisguiseMe;
+L_WoodenGolem:
+	set @DISGUISE$,"Wooden Golem";
+	goto L_DisguiseMe;
+L_WootanShooter:
+	set @DISGUISE$,"Wootan_Shooter";
+	goto L_DisguiseMe;
+L_WootanFighter:
+	set @DISGUISE$,"Wootan_Fighter";
+	goto L_DisguiseMe;
+L_Parasite:
+	set @DISGUISE$,"Parasite";
+	goto L_DisguiseMe;
+L_Gibbet:
+	set @DISGUISE$,"Gibbet";
+	goto L_DisguiseMe;
+L_Dullahan:
+	set @DISGUISE$,"Dullahan";
+	goto L_DisguiseMe;
+L_LoliRuri:
+	set @DISGUISE$,"Loli_Ruri";
+	goto L_DisguiseMe;
+L_DisguiseMob:
+	set @DISGUISE$,"Disguise";
+	goto L_DisguiseMe;
+L_BloodyMurderer:
+	set @DISGUISE$,"Bloody_Murderer";
+	goto L_DisguiseMe;
+L_Quve:
+	set @DISGUISE$,"Quve";
+	goto L_DisguiseMe;
+L_Lude:
+	set @DISGUISE$,"Lude";
+	goto L_DisguiseMe;
+L_Hylozoist:
+	set @DISGUISE$,"Hylozoist";
+	goto L_DisguiseMe;
+L_CivilServant:
+	set @DISGUISE$,"Civil_Servant";
+	goto L_DisguiseMe;
+L_DancingDragon:
+	set @DISGUISE$,"Dancing_Dragon";
+	goto L_DisguiseMe;
+L_BabyHatii:
+	set @DISGUISE$,"Baby_Hatii";
+	goto L_DisguiseMe;
+L_IncreaseSoil:
+	set @DISGUISE$,"Increase_Soil";
+	goto L_DisguiseMe;
+L_LiMeMangRyang:
+	set @DISGUISE$,"Li_Me_Mang_Ryang";
+	goto L_DisguiseMe;
+L_ChunLi:
+	set @DISGUISE$,"Chun_li";
+	goto L_DisguiseMe;
+L_BoiledRice:
+	set @DISGUISE$,"Boiled_Rice";
+	goto L_DisguiseMe;
+L_Tamruan:
+	set @DISGUISE$,"Tamruan";
+	goto L_DisguiseMe;
+L_MimeMonkey:
+	set @DISGUISE$,"Mime_MOnkey";
+	goto L_DisguiseMe;
+L_LeafCat:
+	set @DISGUISE$,"Leaf_Cat";
+	goto L_DisguiseMe;
+L_Kraben:
+	set @DISGUISE$,"Kraben";
+	goto L_DisguiseMe;
+L_Metaling:
+	set @DISGUISE$,"Metaling";
+	goto L_DisguiseMe;
+L_Mineral:
+	set @DISGUISE$,"Mineral";
+	goto L_DisguiseMe;
+L_Obsidian:
+	set @DISGUISE$,"Obsidian";
+	goto L_DisguiseMe;
+L_Pitman:
+	set @DISGUISE$,"Pitman";
+	goto L_DisguiseMe;
+L_WasteStove:
+	set @DISGUISE$,"Waste_Stove";
+	goto L_DisguiseMe;
+L_Ungoliant:
+	set @DISGUISE$,"Ungoliant";
+	goto L_DisguiseMe;
+L_Porcellio:
+	set @DISGUISE$,"Porcellio";
+	goto L_DisguiseMe;
+L_TeddyBear:
+	set @DISGUISE$,"Teddy_Bear";
+	goto L_DisguiseMe;
+L_RSX0806:
+	set @DISGUISE$,"RSX_0806";
+	goto L_DisguiseMe;
+L_Mole:
+	set @DISGUISE$,"Mole";
+	goto L_DisguiseMe;
+L_HillWind:
+	set @DISGUISE$,"Hill_Wind";
+	goto L_DisguiseMe;
+L_Gremlin:
+	set @DISGUISE$,"Gremlin";
+	goto L_DisguiseMe;
+L_Beholder:
+	set @DISGUISE$,"Beholder";
+	goto L_DisguiseMe;
+L_Dimik:
+	set @rand,rand(1,5);
+	if (@rand==1) set @DISGUISE$,"Dimik_1";
+	if (@rand==2) set @DISGUISE$,"Dimik_2";
+	if (@rand==3) set @DISGUISE$,"Dimik_3";
+	if (@rand==4) set @DISGUISE$,"Dimik_4";
+	if (@rand==5) set @DISGUISE$,"Dimik_5";
+	goto L_DisguiseMe;
+L_Archdam:
+	set @DISGUISE$,"Archdam";
+	goto L_DisguiseMe;
+L_Venatu:
+	set @rand,rand(1,5);
+	if (@rand==1) set @DISGUISE$,"Venatu_1";
+	if (@rand==2) set @DISGUISE$,"Venatu_2";
+	if (@rand==3) set @DISGUISE$,"Venatu_3";
+	if (@rand==4) set @DISGUISE$,"Venatu_4";
+	if (@rand==5) set @DISGUISE$,"Venatu_5";
+	goto L_DisguiseMe;
+L_Gemini:
+	set @DISGUISE$,"Gemini";
+	goto L_DisguiseMe;
+L_Removal:
+	set @DISGUISE$,"Removal";
+	goto L_DisguiseMe;
+L_PhotonCannon:
+	set @rand,rand(1,4);
+	if (@rand==1) set @DISGUISE$,"Photon_Canon_1";
+	if (@rand==2) set @DISGUISE$,"Photon_Canon_2";
+	if (@rand==3) set @DISGUISE$,"Photon_Canon_3";
+	if (@rand==4) set @DISGUISE$,"Photon_Canon_4";
+	goto L_DisguiseMe;
+//L_Lif:
+//	set @DISGUISE$,"Lif";
+//	goto L_DisguiseMe;
+//L_Amistr:
+//	set @DISGUISE$,"Amistr";
+//	goto L_DisguiseMe;
+//L_Filir:
+//	set @DISGUISE$,"Filir";
+//	goto L_DisguiseMe;
+//L_Vanilmirth:
+//	set @DISGUISE$,"Vanilmirth";
+//	goto L_DisguiseMe;
+L_GasCloud:
+	set @rand,rand(1,2);
+	if (@rand==1) set @DISGUISE$,"Venomous";
+	if (@rand==2) set @DISGUISE$,"Noxious";
+	goto L_DisguiseMe;
+L_Done:
+	next;
+	mes "[Misa]";
+	mes "There you go, all done!";
+	close;
+L_Setup:
+	mes "Hey, you should really talk to Linne first, you know?";
+	close;
+}
+
+pvprealm01,21,42,6	script	Cornelius#PVP	865,{
+	if (getgmlevel() > 0 && getgmlevel() < 99) end;
+L_Menu:
+	mes "[Cornelius]";
+	if (PVPACS==1) goto L_Setup;
+	if (!PLADID) goto L_NewLadPerson;
+	if (PLADID!=$LADDERCOUNT) mes "Greetings to you.  Would you like to enter yourself in the PvP Ladder Board?";
+	mes "Hello "+strcharinfo(0)+", would you like to view the ladder?";
+	next;
+L_Menu1:
+	if (PLADID!=$LADDERCOUNT) menu "No Thanks.",L_Cancel,"Enter me in the Ladder",L_EnterLadder,"Where do I Check the Ladder?",L_Where;
+	if (PLADID==$LADDERCOUNT) menu "No Thanks.",L_Cancel,"Yes Please",-,"Where do I check the Ladder?",L_Where;
+	mes "[Cornelius]";
+	mes "Very well, let me pull up a current sheet...";
+	next;
+	mes "PvP Ladder "+$LADDERCOUNT+" | "+(50-$LADDERDATE)+" Days Left.";
+	set @CYCLE,0;
+L_PvPLadder:
+	if (@CYCLE==50 || !$PVPLADDER_PT[@CYCLE]) goto L_StopPvP;
+	mes (@CYCLE+1)+") "+$PVPLADDER_NAME$[@CYCLE]+" :: Kills "+$PVPLADDER_PT[@CYCLE];
+	set @CYCLE,@CYCLE+1;
+	goto L_PvPLadder;
+L_StopPvP:
+	if (!$PVPLADDER_PT[0]) mes "No Ladder participants yet.";
+	set @CYCLE,0;
+	next;
+	mes "[Cornelius]";
+	mes "Anything else?";
+	next;
+	if (Select("No","Yes")==2) goto L_Menu;
+	mes "[Cornelius]";
+	mes "Good day to you.";
+	close;
+L_NewLadPerson:
+	mes "Ah, you need to be setup for the Ladder, correct?  Very well hold one moment while I do the paperwork.";
+	next;
+	goto L_FixLadNew;
+L_EnterLadder:
+	mes "[Cornelius]";
+	mes "Very well, let's get things situated.";
+	next;
+	goto L_FixLadder;
+L_BadLadder:
+	mes "[Cornelius]";
+	mes "Oh my!  It would seem you're still in the past.  Here, let me get you up to date!";
+	next;
+L_FixLadder:
+	set PLADID,$LADDERCOUNT;
+	set KillPts,0;
+	set KillLvl,0;
+	set KillPrize,0;
+	set PVPSTUP,0;
+	set PVPSKUP,0;
+	set PVPBLUP,0;
+	set PVPACS,3;
+	mes "[Cornelius]";
+	mes "There we go, all done.  You are now entered in term "+#LADDERCOUNT+" of the PvP Ladder.  You'll need to go speak to Linne now.";
+	close;
+L_FixLadNew:
+	set PLADID,$LADDERCOUNT;
+	set KillPts,0;
+	set KillLvl,0;
+	set KillPrize,0;
+	set PVPSTUP,0;
+	set PVPSKUP,0;
+	set PVPBLUP,0;
+	mes "[Cornelius]";
+	mes "There we go, all done.  You are now entered in this term's PvP Ladder.  Have fun!";
+	close;
+L_Where:
+	mes "[Cornelius]";
+	mes "There are numerous Bullitens planted in all the cities in the RP Realm, and several here in the PvP Realm.  You may check the Ladder status there.";
+	next;
+	mes "[Cornelius]";
+	mes "How may I help you?";
+	next;
+	goto L_Menu1;
+L_Cancel:
+	mes "[Cornelius]";
+	mes "Truly?  Goodbye then.";
+	close;
+L_Setup:
+	mes "Please talk to Linne first.";
+	close;
+}
+
+pvprealm01,35,275,4	script	Fredrece#PVP	778,{
+	if (getgmlevel() > 0 && getgmlevel() < 99) end;
+	mes "[Fredrece]";
+	if (PVPACS==1) mes "Heya.  Just go up those stairs there to take care of what you need to.";
+	if (PVPACS==2) mes "Hey there.  Having a good time?  I hope so.  This place can get a little crazy at night you know.";
+	if (PVPACS==3) mes "Hey woah!  Stop!  You can't leave here yet, you have to go talk to Linne.  Sorry, guild policy on late ladder arrivals.";
+	if (PVPACS==3) close;
+	next;
+	if (select("Goodbye","I wanna leave.")==1) close;
+	mes "[Fredrece]";
+	if (PVPACS==2) goto L_CantLeave;
+	mes "Oh really?  Alrighty then.  Just go into that portal there.  Oh, yes and let me check your backpack too.";
+	delitem 15202,(countitem(15202));
+	delitem 15203,(countitem(15203));
+	delitem 15204,(countitem(15204));
+	delitem 15205,(countitem(15205));
+	delitem 15206,(countitem(15206));
+	delitem 15207,(countitem(15207));
+	delitem 15208,(countitem(15208));
+	delitem 15209,(countitem(15209));
+	delitem 15210,(countitem(15210));
+	delitem 15211,(countitem(15211));
+	delitem 15212,(countitem(15212));
+	delitem 15213,(countitem(15213));
+	delitem 15214,(countitem(15214));
+	delitem 15215,(countitem(15215));
+	delitem 15216,(countitem(15216));
+	delitem 15217,(countitem(15217));
+	delitem 15218,(countitem(15218));
+	delitem 15219,(countitem(15219));
+	delitem 15220,(countitem(15220));
+	delitem 15221,(countitem(15221));
+	delitem 15222,(countitem(15222));
+	delitem 15223,(countitem(15223));
+	delitem 15224,(countitem(15224));
+	delitem 15225,(countitem(15225));
+	delitem 15226,(countitem(15226));
+	delitem 15227,(countitem(15227));
+	delitem 15228,(countitem(15228));
+	delitem 15229,(countitem(15229));
+	delitem 15230,(countitem(15230));
+	delitem 15231,(countitem(15231));
+	delitem 15232,(countitem(15232));
+	delitem 15233,(countitem(15233));
+	set PVPACS,0;
+	close;
+L_CantLeave:
+	mes "Eeh, hey... You're already participating in the realm, so I can't take you back.  Go talk to Linne if you want to revert to your other self, then I can let you go.";
+	close;
+}
+
+pvprealm01,237,284,4	script	Rolace#Option	92,{
+	if (getgmlevel() > 0 && getgmlevel() < 99) end;
+	mes "[Rolace]";
+	if (PVPACS==1) goto L_Setup;
+	if (getskilllv(63)>0 && checkriding()==0) goto L_Peco;
+	if (getskilllv(127)>0 && checkfalcon()==0) goto L_Falc;
+	if (getskilllv(39)>0 && checkcart()==0) goto L_Merch;
+	mes "Oi!";
+	close;
+L_Merch:
+	mes "Need a Cart?";
+	next;
+	menu "Set Cart",L_Cart,"Cancel",L_Cancel;
+L_Falc:
+	mes "Need a Falcon?";
+	next;
+	menu "Set Falcon",L_Falcon,"Cancel",L_Cancel;
+L_Peco:
+	mes "Need a PecoPeco?";
+	next;
+	menu "Set Peco Peco",L_PecoPeco,"Cancel",L_Cancel;
+L_Falcon:
+	setfalcon;
+	close;
+L_PecoPeco:
+	setriding;
+	close;
+L_Cart:
+	setcart;
+	close;
+L_Cancel:
+	close;
+L_Setup:
+	mes "Eehm, go talk to Linne.";
+	close;
+}
+pvprealm01,234,284,4	script	Claire#Arrows	101,{
+	if (getgmlevel() > 0 && getgmlevel() < 99) end;
+	if (PVPACS==1 || PVPACS==3) goto L_Setup;
+	mes "[Claire]";
+	mes "I carry arrows.  What do you need?  All these items are provided free, for your use.  They will be taken away from you when you leave.";
+L_Store:
+	next;
+	menu "Arrow",L_Arrow,"Iron Arrow",L_IronArrow,"Steel Arrow",L_SteelArrow,"Oridecon Arrow",L_OrideconArrow,
+	"Silver Arrow",L_SilverArrow,"Fire Arrow",L_FireArrow,"Crystal Arrow",L_CrystalArrow,"Arrow of Wind",L_WindArrow,
+	"Stone Arrow",L_StoneArrow,"Immaterial Arrow",L_Immaterial,"Stun Arrow",L_StunArrow,"Freeze Arrow",L_FrozenArrow,
+	"Flash Arrow",L_FlashArrow,"Cursed Arrow",L_CursedArrow,"Rusty Arrow",L_RustyArrow,"Poison Arrow",L_PoisonArrow,
+	"Sharp Arrow",L_SharpArrow,"Arrow of Counter Evil",L_CounterEvil,"Arrow of Shadow",L_ShadowArrow,"Sleep Arrow",L_SleepArrow,
+	"Mute Arrow",L_MuteArrow,"Cancel",L_Cancel;
+L_Arrow:
+	callfunc "F_PVPSTORE",15202,1,0;
+	goto L_Store;
+L_IronArrow:
+	callfunc "F_PVPSTORE",15222,1,0;
+	goto L_Store;
+L_SteelArrow:
+	callfunc "F_PVPSTORE",15205,1,0;
+	goto L_Store;
+L_OrideconArrow:
+	callfunc "F_PVPSTORE",15217,1,0;
+	goto L_Store;
+L_SilverArrow:
+	callfunc "F_PVPSTORE",15203,1,0;
+	goto L_Store;
+L_FireArrow:
+	callfunc "F_PVPSTORE",15204,1,0;
+	goto L_Store;
+L_CrystalArrow:
+	callfunc "F_PVPSTORE",15206,1,0;
+	goto L_Store;
+L_WindArrow:
+	callfunc "F_PVPSTORE",15207,1,0;
+	goto L_Store;
+L_StoneArrow:
+	callfunc "F_PVPSTORE",15208,1,0;
+	goto L_Store;
+L_Immaterial:
+	callfunc "F_PVPSTORE",15209,1,0;
+	goto L_Store;
+L_StunArrow:
+	callfunc "F_PVPSTORE",15210,1,0;
+	goto L_Store;
+L_FrozenArrow:
+	callfunc "F_PVPSTORE",15211,1,0;
+	goto L_Store;
+L_FlashArrow:
+	callfunc "F_PVPSTORE",15212,1,0;
+	goto L_Store;
+L_CursedArrow:
+	callfunc "F_PVPSTORE",15213,1,0;
+	goto L_Store;
+L_RustyArrow:
+	callfunc "F_PVPSTORE",15214,1,0;
+	goto L_Store;
+L_PoisonArrow:
+	callfunc "F_PVPSTORE",15215,1,0;
+	goto L_Store;
+L_SharpArrow:
+	callfunc "F_PVPSTORE",15216,1,0;
+	goto L_Store;
+L_CounterEvil:
+	callfunc "F_PVPSTORE",15218,1,0;
+	goto L_Store;
+L_ShadowArrow:
+	callfunc "F_PVPSTORE",15219,1,0;
+	goto L_Store;
+L_SleepArrow:
+	callfunc "F_PVPSTORE",15220,1,0;
+	goto L_Store;
+L_MuteArrow:
+	callfunc "F_PVPSTORE",15221,1,0;
+	goto L_Store;
+L_Cancel:
+	mes "[Claire]";
+	mes "Goodbye!";
+	close;
+L_Setup:
+	mes "[Claire]";	
+	mes "Please enter the room south of here and talk to Linne first.";
+	close;
+}
+
+pvprealm01,231,284,4	script	Joyce#HealItems	74,{
+	if (getgmlevel() > 0 && getgmlevel() < 99) end;
+	if (PVPACS==1 || PVPACS==3) goto L_Setup;
+	mes "[Joyce]";
+	mes "Hi there, I can provide you with healing items.  All these items are provided free, for your use.  They will be taken away from you when you leave.";
+L_Store:
+	next;
+	menu "Red Potion",L_Red,"Orange Potion",L_Orange,"Yellow Potion",L_Yellow,
+	"White Potion",L_White,"Blue Potion",L_Blue,"Green Potion",L_Green,
+	"Yggdrasil Leaf",L_Leaf,"Fly Wing",L_FlyWing,"Concentration Potion",L_ConcPot,
+	"Awakening Potion",L_AwakePot,"Berserk Potion",L_Berserk,"Cancel",L_Cancel;
+L_Red:
+	callfunc "F_PVPSTORE",15223,2,0;
+	goto L_Store;
+L_Orange:
+	callfunc "F_PVPSTORE",15224,2,0;
+	goto L_Store;
+L_Yellow:
+	callfunc "F_PVPSTORE",15225,2,0;
+	goto L_Store;
+L_White:
+	callfunc "F_PVPSTORE",15226,2,0;
+	goto L_Store;
+L_Blue:
+	callfunc "F_PVPSTORE",15227,2,0;
+	goto L_Store;
+L_Green:
+	callfunc "F_PVPSTORE",15228,2,0;
+	goto L_Store;
+L_Leaf:
+	callfunc "F_PVPSTORE",15232,2,0;
+	goto L_Store;
+L_ConcPot:
+	callfunc "F_PVPSTORE",15229,2,0;
+	goto L_Store;
+L_Berserk:
+	callfunc "F_PVPSTORE",15231,2,0;
+	goto L_Store;
+L_AwakePot:
+	callfunc "F_PVPSTORE",15230,2,0;
+	goto L_Store;
+L_FlyWing:
+	callfunc "F_PVPSTORE",15233,2,0;
+	goto L_Store;
+L_Cancel:
+	mes "[Joyce]";
+	mes "Goodbye!";
+	close;
+L_Setup:
+	mes "[Joyce]";	
+	mes "Ahem, you need to talk to Linne first.  She is in the room south of here, just follow the red carpet down.";
+	close;
+}
+
+pvprealm01,228,284,4	script	Mindy#SpellItems	73,{
+	if (getgmlevel() > 0 && getgmlevel() < 99) end;
+	if (PVPACS==1 || PVPACS==3) goto L_Setup;
+	mes "[Mindy]";
+	mes "Hey-ho!  I carry spell and skill components!  These items aren't free though, so expect to pay for them.";
+L_Store:
+	next;
+	menu "Yellow Gemstone - 300z",L_YellowGem,"Red Gemstone - 300z",L_RedGem,"Blue Gemstone - 300z",L_BlueGem,
+	"Holy Water - 10z",L_Holy,"Red Blood - 1000z",L_RedBlood,"Crystal Blue - 1000z",L_CrystalBlue,"Wind of Verdure - 1000z",L_Verdure,
+	"Green Live - 1000z",L_GreenLive,"Trap - 40z",L_Trap,"Pet Food - 200z",L_PetFood,"Pet Incubator - 3000z",L_Incubator,"Cancel",L_Cancel;
+
+//"Bottle Grenade",L_Grenade,"Acid Bottle",L_Acid,"Plant Bottle",L_Plant,"Marine Sphere Bottle",L_Mine,
+
+L_Trap:
+	callfunc "F_PVPSTORE",1065,3,40;
+	goto L_Store;
+L_PetFood:
+	callfunc "F_PVPSTORE",537,3,200;
+	goto L_Store;
+L_Incubator:
+	callfunc "F_PVPSTORE",643,3,3000;
+	goto L_Store;
+L_YellowGem:
+	callfunc "F_PVPSTORE",715,3,300;
+	goto L_Store;
+L_RedGem:
+	callfunc "F_PVPSTORE",716,3,300;
+	goto L_Store;
+L_BlueGem:
+	callfunc "F_PVPSTORE",717,3,300;
+	goto L_Store;
+L_Holy:
+	callfunc "F_PVPSTORE",523,3,10;
+	goto L_Store;
+L_RedBlood:
+	callfunc "F_PVPSTORE",990,3,1000;
+	goto L_Store;
+L_CrystalBlue:
+	callfunc "F_PVPSTORE",991,3,1000;
+	goto L_Store;
+L_Verdure:
+	callfunc "F_PVPSTORE",992,3,1000;
+	goto L_Store;
+L_GreenLive:
+	callfunc "F_PVPSTORE",993,3,1000;
+	goto L_Store;
+
+// below is off for now.
+//L_Grenade:
+//	callfunc "F_PVPSTORE",7135,3;
+//	goto L_Store;
+//L_Acid:
+//	callfunc "F_PVPSTORE",7136,3;
+//	goto L_Store;
+//L_Plant:
+//	callfunc "F_PVPSTORE",7137,3;
+//	goto L_Store;
+//L_Mine:
+//	callfunc "F_PVPSTORE",7138,3;
+//	goto L_Store;
+//end off
+
+L_Cancel:
+	mes "[Mindy]";
+	mes "Goodbye!";
+	close;
+L_Setup:
+	mes "[Mindy]";	
+	mes "You should really talk to Linne first.  Otherwise we can't help you.  She's in the room just south of here.";
+	close;
+}

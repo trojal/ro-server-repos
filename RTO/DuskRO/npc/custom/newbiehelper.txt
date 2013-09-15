@@ -1,0 +1,42 @@
+payo1,66,108,5	script	Newbie Helper	952,{
+
+	if (newb_payo==1) goto Done;
+	mes "[ ^9966CC Newbie Helper ^000000 ]";
+	mes "Hi there, you must be new here. I've been collecting things to help new people!";
+	next;
+	mes "[ ^9966CC Newbie Helper ^000000 ]";
+	mes "I should tell you a few things first.";
+	next;
+	mes "[ ^9966CC Newbie Helper ^000000 ]";
+	mes "You can find most of what you need around the center of payon. You might need to look around a bit to find some.";
+	next;
+	mes "[ ^9966CC Newbie Helper ^000000 ]";
+	mes "You can find most of the items you will need in the Tool Dealer.";
+	next;
+	mes "[ ^9966CC Newbie Helper ^000000 ]";
+	mes "The refiner and repairman are in the top left building.";
+	next;
+	mes "[ ^9966CC Newbie Helper ^000000 ]";
+	mes "Also, don't forget to report any bugs on the forums.";
+	next;
+	getitem 569,300;
+	getitem 601,20;
+	getitem 602,5;
+	getitem 5039,1;
+	getitem 5015,1;
+	getitem 2201,1;
+	getitem 2501,1;
+	getitem 2401,1;
+	getitem 2305,1;
+	getitem 2101,1;
+	getitem 1207,1;
+	set newb_payo, 1;
+	mes "[ ^9966CC Newbie Helper ^000000 ]";
+	mes "Have fun!";
+	close;
+
+Done:
+	mes "[ ^9966CC Newbie Helper ^000000 ]";
+	mes "I've already helped you! Go off and explore or something!";
+	close;
+}

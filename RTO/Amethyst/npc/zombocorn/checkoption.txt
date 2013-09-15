@@ -1,0 +1,10 @@
+prontera,160,150,5	script	CHECKMEUP	113,{
+	if(checkoption2(0x1)) {
+		mes "You are poisoned.";
+		close;
+	}
+	else {
+		mes "You're not poisoned.";
+		close;
+	}
+}

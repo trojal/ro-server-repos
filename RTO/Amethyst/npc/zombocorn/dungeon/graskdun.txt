@@ -1,0 +1,329 @@
+// Grasken Pits script
+//
+
+//warps
+turven05,32,30,0	warp	graskwarp01	1,1,oldtun2,178,127
+oldtun2,181,127,0	warp	graskwarp02	1,1,turven05,36,32
+oldtun2,18,128,0	warp	graskwarp03	1,1,oldtun2,43,50
+oldtun2,40,50,0	warp	graskwarp04	1,1,oldtun2,22,128
+oldtun2,79,47,0	warp	graskwarp05	1,1,oldtun2,166,47
+oldtun2,166,43,0	warp	graskwarp06	1,1,oldtun2,75,47
+oldtun2,55,67,0	warp	graskwarp07	1,1,grasken01,149,269
+grasken01,149,273,0	warp	graskwarp08	1,1,oldtun2,55,64
+//------------------
+grasken01,149,197,4	script	graskwarp09	45,1,1,{
+	mes "It doesn't look like you'll be able to climb back up if you jump...";
+	switch(select("On second thought...:Go for it!")) {
+		case 1: close;
+		case 2:
+			set .@gr,rand(1,8);
+			set .@gr1,1000+rand(1,1000)-(readparam(bVit)*rand(5,20));
+			if (.@gr1 > hp) set .@gr1,(hp-1);
+			heal -(.@gr1),0;
+			switch(.@gr) {
+				case 1: warp "grasken02",242,282; break;
+				case 2: warp "grasken02",178,193; break;
+				case 3: warp "grasken02",290,130; break;
+				case 4: warp "grasken02",66,25; break;
+				case 5: warp "grasken02",106,154; break;
+				case 6: warp "grasken02",74,266; break;
+				case 7: warp "grasken02",130,193; break;
+				case 8: warp "grasken02",202,129; break;
+			}
+			if (readparam(bVit) < (30+rand(1,40))) {
+				sc_start SC_Stan,(4000+(rand(1,11)*1000)),0;
+				dispbottom "Ow! You have sustained "+.@gr1+" damage from the fall, and hit your head.";
+			} else {
+				dispbottom "Ow! You have sustained "+.@gr1+" damage from the fall.";
+			}
+			end;
+	}
+}
+function	script	F_graskfall1	{
+	mes "It doesn't look like you'll be able to climb back up if you jump...";
+	switch(select("On second though...:Go for it!")) {
+		case 1: close;
+		case 2:
+			set .@gr,1000+rand(1,1000)-(readparam(bVit)*rand(5,20));
+			if (.@gr > hp) set .@gr1,(hp-1);
+			heal -(.@gr),0;
+			if (readparam(bVit) < (30+rand(1,40))) {
+				sc_start SC_Stan,(4000+(rand(1,11)*1000)),0;
+				dispbottom "Ow! You have sustained "+.@gr+" damage from the fall, and hit your head.";
+			} else {
+				dispbottom "Ow! You have sustained "+.@gr+" damage from the fall.";
+			}
+			return;
+	}
+}
+grasken02,214,255,4	script	graskwarp10	45,6,6,{
+	callfunc "F_graskfall1";
+	warp "grasken03",81,85;
+	end;
+}
+grasken02,206,183,4	script	graskwarp11	45,6,6,{
+	callfunc "F_graskfall1";
+	warp "grasken04",22,17;
+	end;
+}
+grasken02,174,62,4	script	graskwarp12	45,7,7,{
+	callfunc "F_graskfall1";
+	warp "grasken05",81,85;
+	end;
+}
+grasken02,61,53,4	script	graskwarp13	45,6,6,{
+	callfunc "F_graskfall1";
+	warp "grasken06",22,17;
+	end;
+}
+grasken02,37,182,4	script	graskwarp14	45,5,5,{
+	callfunc "F_graskfall1";
+	warp "grasken07",81,85;
+	end;
+}
+grasken02,125,253,4	script	graskwarp15	45,7,7,{
+	callfunc "F_graskfall1";
+	warp "grasken08",22,17;
+	end;
+}
+grasken02,92,211,4	script	graskwarp16	45,6,6,{
+	callfunc "F_graskfall1";
+	warp "grasken09",81,85;
+	end;
+}
+grasken02,118,130,4	script	graskwarp17	45,6,6,{
+	callfunc "F_graskfall1";
+	warp "grasken10",22,17;
+	end;
+}
+//------------------
+
+//32,92 = left (72,14)
+//72,11 = right (32,89)
+
+grasken03,32,92,0	warp	graskwarp18	1,1,grasken05,72,14
+grasken03,72,11,0	warp	graskwarp19	1,1,grasken10,32,89
+grasken04,32,92,0	warp	graskwarp20	1,1,grasken03,72,14
+grasken04,72,11,0	warp	graskwarp21	1,1,grasken08,32,89
+grasken05,32,92,0	warp	graskwarp22	1,1,grasken09,72,14
+grasken05,72,11,0	warp	graskwarp23	1,1,grasken06,32,89
+grasken06,32,92,0	warp	graskwarp24	1,1,grasken04,72,14
+grasken06,72,11,0	warp	graskwarp25	1,1,grasken09,32,89
+grasken07,32,92,0	warp	graskwarp26	1,1,grasken08,72,14
+grasken07,72,11,0	warp	graskwarp27	1,1,grasken11,32,89
+grasken08,32,92,0	warp	graskwarp28	1,1,grasken10,72,14
+grasken08,72,11,0	warp	graskwarp29	1,1,grasken03,32,89
+grasken09,32,92,0	warp	graskwarp30	1,1,grasken07,72,14
+grasken09,72,11,0	warp	graskwarp31	1,1,grasken05,32,89
+grasken10,32,92,0	warp	graskwarp32	1,1,grasken06,72,14
+grasken10,72,11,0	warp	graskwarp33	1,1,grasken07,32,89
+grasken11,32,92,0	warp	graskwarp34	1,1,grasken04,32,89
+grasken11,72,11,0	warp	graskwarp??#1	1,1,grasken12,243,68
+grasken12,247,68,0	warp	graskwarp??#2	1,1,grasken11,72,14
+grasken12,48,28,0	warp	graskwarp??#3	1,1,grasken13,240,238
+grasken13,242,241,0	warp	graskwarp??#4	1,1,grasken12,47,32
+grasken13,126,66,0	warp	graskwarp??#5	1,1,oldtun3,7,91
+oldtun3,4,91,0	warp	graskwarp??#6	1,1,grasken13,126,70
+
+//monsters
+//-- Old Tunnel 2
+//
+//-- Grasken Pits 1
+grasken01,145,201,154,255	monster	Black Mushroom	1084,6,1,1,0,0,0
+grasken01,139,256,162,273	monster	Black Mushroom	1084,4,1,1,0,0,0
+//-- Grasken Pits 2
+grasken02,82,30,0,0	monster	Shadow	2617,5,80,80,0,90000,0
+grasken02,84,49,0,0	monster	Shadow	2617,5,80,80,0,90000,0
+grasken02,55,35,0,0	monster	Shadow	2617,3,80,80,0,90000,0
+grasken02,55,62,0,0	monster	Shadow	2617,2,80,80,0,90000,0
+grasken02,111,32,0,0	monster	Shadow	2617,7,80,80,0,90000,0
+grasken02,117,54,0,0	monster	Shadow	2617,2,80,80,0,90000,0
+grasken02,100,79,0,0	monster	Shadow	2617,8,80,80,0,90000,0
+grasken02,133,47,0,0	monster	Shadow	2617,3,80,80,0,90000,0
+grasken02,124,109,0,0	monster	Shadow	2617,4,80,80,0,90000,0
+grasken02,93,110,0,0	monster	Shadow	2617,3,80,80,0,90000,0
+grasken02,78,103,0,0	monster	Shadow	2617,3,80,80,0,90000,0
+grasken02,66,127,0,0	monster	Shadow	2617,7,80,80,0,90000,0
+grasken02,36,115,0,0	monster	Shadow	2617,5,80,80,0,90000,0
+grasken02,15,132,0,0	monster	Shadow	2617,3,80,80,0,90000,0
+grasken02,14,125,0,0	monster	Shadow	2617,1,80,80,0,90000,0
+grasken02,53,89,0,0	monster	Shadow	2617,4,80,80,0,90000,0
+grasken02,26,57,0,0	monster	Shadow	2617,10,80,80,0,90000,0
+grasken02,135,125,0,0	monster	Shadow	2617,4,80,80,0,90000,0
+grasken02,66,163,0,0	monster	Shadow	2617,6,80,80,0,90000,0
+grasken02,54,166,0,0	monster	Shadow	2617,3,80,80,0,90000,0
+grasken02,70,197,0,0	monster	Shadow	2617,5,80,80,0,90000,0
+grasken02,30,190,0,0	monster	Shadow	2617,2,80,80,0,90000,0
+grasken02,45,214,0,0	monster	Shadow	2617,2,80,80,0,90000,0
+grasken02,23,234,0,0	monster	Shadow	2617,7,80,80,0,90000,0
+grasken02,285,236,0,0	monster	Shadow	2617,1,80,80,0,90000,0
+grasken02,285,213,0,0	monster	Shadow	2617,1,80,80,0,90000,0
+grasken02,284,174,0,0	monster	Shadow	2617,4,80,80,0,90000,0
+grasken02,236,192,0,0	monster	Shadow	2617,3,80,80,0,90000,0
+grasken02,285,145,0,0	monster	Shadow	2617,4,80,80,0,90000,0
+grasken02,286,165,0,0	monster	Shadow	2617,2,80,80,0,90000,0
+grasken02,206,205,0,0	monster	Shadow	2617,3,80,80,0,90000,0
+grasken02,177,206,0,0	monster	Shadow	2617,5,80,80,0,90000,0
+grasken02,191,197,0,0	monster	Shadow	2617,2,80,80,0,90000,0
+grasken02,191,228,0,0	monster	Shadow	2617,4,80,80,0,90000,0
+grasken02,253,276,0,0	monster	Shadow	2617,3,80,80,0,90000,0
+grasken02,238,230,0,0	monster	Shadow	2617,5,80,80,0,90000,0
+grasken02,229,284,0,0	monster	Shadow	2617,6,80,80,0,90000,0
+grasken02,206,258,0,0	monster	Shadow	2617,3,80,80,0,90000,0
+grasken02,197,293,0,0	monster	Shadow	2617,3,80,80,0,90000,0
+grasken02,170,292,0,0	monster	Shadow	2617,9,80,80,0,90000,0
+grasken02,214,230,0,0	monster	Shadow	2617,5,80,80,0,90000,0
+grasken02,190,227,0,0	monster	Shadow	2617,2,80,80,0,90000,0
+grasken02,261,119,0,0	monster	Shadow	2617,4,80,80,0,90000,0
+grasken02,253,154,0,0	monster	Shadow	2617,5,80,80,0,90000,0
+grasken02,128,238,0,0	monster	Shadow	2617,6,80,80,0,90000,0
+grasken02,141,252,0,0	monster	Shadow	2617,5,80,80,0,90000,0
+grasken02,111,280,0,0	monster	Shadow	2617,8,80,80,0,90000,0
+grasken02,101,259,0,0	monster	Shadow	2617,4,80,80,0,90000,0
+grasken02,82,278,0,0	monster	Shadow	2617,11,80,80,0,90000,0
+grasken02,84,253,0,0	monster	Shadow	2617,3,80,80,0,90000,0
+grasken02,78,229,0,0	monster	Shadow	2617,4,80,80,0,90000,0
+grasken02,61,238,0,0	monster	Shadow	2617,2,80,80,0,90000,0
+grasken02,97,281,0,0	monster	Shadow	2617,5,80,80,0,90000,0
+grasken02,133,280,0,0	monster	Shadow	2617,7,80,80,0,90000,0
+grasken02,128,245,0,0	monster	Shadow	2617,5,80,80,0,90000,0
+grasken02,181,260,0,0	monster	Shadow	2617,1,80,80,0,90000,0
+grasken02,77,150,0,0	monster	Shadow	2617,4,80,80,0,90000,0
+grasken02,99,166,0,0	monster	Shadow	2617,3,80,80,0,90000,0
+grasken02,93,151,0,0	monster	Shadow	2617,4,80,80,0,90000,0
+grasken02,30,89,0,0	monster	Shadow	2617,2,80,80,0,900000
+grasken02,124,223,0,0	monster	Shadow	2617,3,80,80,0,90000,0
+grasken02,113,217,0,0	monster	Shadow	2617,4,80,80,0,90000,0
+grasken02,125,179,0,0	monster	Shadow	2617,10,80,80,0,90000,0
+grasken02,140,185,0,0	monster	Shadow	2617,7,80,80,0,90000,0
+grasken02,286,54,0,0	monster	Shadow	2617,14,80,80,0,90000,0
+grasken02,254,93,0,0	monster	Shadow	2617,6,80,80,0,90000,0
+grasken02,272,86,0,0	monster	Shadow	2617,2,80,80,0,90000,0
+grasken02,231,110,0,0	monster	Shadow	2617,4,80,80,0,90000,0
+grasken02,221,91,0,0	monster	Shadow	2617,5,80,80,0,90000,0
+grasken02,200,109,0,0	monster	Shadow	2617,8,80,80,0,90000,0
+grasken02,253,33,0,0	monster	Shadow	2617,10,80,80,0,90000,0
+grasken02,238,50,0,0	monster	Shadow	2617,3,80,80,0,90000,0
+grasken02,293,139,0,0	monster	Shadow	2617,1,80,80,0,90000,0
+grasken02,196,117,0,0	monster	Shadow	2617,3,80,80,0,90000,0
+grasken02,158,117,0,0	monster	Shadow	2617,1,80,80,0,90000,0
+grasken02,206,125,0,0	monster	Shadow	2617,1,80,80,0,90000,0
+grasken02,214,153,0,0	monster	Shadow	2617,2,80,80,0,90000,0
+grasken02,152,109,0,0	monster	Shadow	2617,30,80,80,0,90000,0
+grasken02,261,286,0,0	monster	Shadow	2617,1,80,80,0,90000,0
+//-- Grasken Pits 3
+grasken03,0,0,0,0	monster	Trilomite	2613,5,61,61,0,0,0
+grasken03,0,0,0,0	monster	Bomb	2626,1,93,93,0,15000,0
+grasken03,0,0,0,0	monster	Qisling	2620,4,86,86,0,0,0
+grasken03,0,0,0,0	monster	Phlogiston	2625,5,89,89,0,0,0
+grasken03,0,0,0,0	monster	Coruscatite	2623,4,101,101,0,0,0
+grasken03,0,0,0,0	monster	Grouser	2622,3,103,103,0,0,0
+grasken03,0,0,0,0	monster	Firebat	2621,5,94,94,0,0,0
+grasken03,0,0,0,0	monster	Menace	2619,3,98,98,0,0,0
+grasken03,0,0,0,0	monster	Ignus	2618,2,108,108,0,0,0
+grasken03,0,0,0,0	monster	Fire Crystal	1397,1,1,1,0,0,0
+//-- Grasken Pits 4
+grasken04,0,0,0,0	monster	Trilomite	2613,5,61,61,0,0,0
+grasken04,0,0,0,0	monster	Bomb	2626,3,93,93,0,15000,0
+grasken04,0,0,0,0	monster	Phlogiston	2625,6,89,89,0,0,0
+grasken04,0,0,0,0	monster	Pharos	2624,3,96,96,0,0,0
+grasken04,0,0,0,0	monster	Firebat	2621,4,94,94,0,0,0
+grasken04,0,0,0,0	monster	Coruscatite	2623,3,101,101,0,0,0
+grasken04,0,0,0,0	monster	Ignus	2618,1,108,108,0,0,0
+grasken04,0,0,0,0	monster	Menace	2619,3,98,98,0,0,0
+grasken04,0,0,0,0	monster	Grouser	2622,4,103,103,0,0,0
+grasken04,0,0,0,0	monster	Fire Crystal	1397,1,1,1,0,0,0
+//-- Grasken Pits 5
+grasken05,0,0,0,0	monster	Trilomite	2613,5,61,61,0,0,0
+grasken05,0,0,0,0	monster	Qisling	2620,2,86,86,0,0,0
+grasken05,0,0,0,0	monster	Phlogiston	2625,8,89,89,0,0,0
+grasken05,0,0,0,0	monster	Pharos	2624,3,96,96,0,0,0
+grasken05,0,0,0,0	monster	Firebat	2621,5,94,94,0,0,0
+grasken05,0,0,0,0	monster	Grouser	2622,2,103,103,0,0,0
+grasken05,0,0,0,0	monster	Menace	2619,4,98,98,0,0,0
+grasken05,0,0,0,0	monster	Coruscatite	2623,4,101,101,0,0,0
+//-- Grasken Pits 6
+grasken06,0,0,0,0	monster	Trilomite	2613,5,61,61,0,0,0
+grasken06,0,0,0,0	monster	Qisling	2620,4,86,86,0,0,0
+grasken06,0,0,0,0	monster	Firebat	2621,6,94,94,0,0,0
+grasken06,0,0,0,0	monster	Phlogiston	2625,6,89,89,0,0,0
+grasken06,0,0,0,0	monster	Pharos	2624,3,96,96,0,0,0
+grasken06,0,0,0,0	monster	Ignus	2618,3,108,108,0,0,0
+grasken06,0,0,0,0	monster	Menace	2619,6,98,98,0,0,0
+grasken06,0,0,0,0	monster	Fire Crystal	1397,1,1,1,0,0,0
+//-- Grasken Pits 7
+grasken07,0,0,0,0	monster	Trilomite	2613,5,61,61,0,0,0
+grasken07,0,0,0,0	monster	Bomb	2626,1,93,93,0,15000,0
+grasken07,0,0,0,0	monster	Firebat	2621,3,94,94,0,0,0
+grasken07,0,0,0,0	monster	Pharos	2624,4,96,96,0,0,0
+grasken07,0,0,0,0	monster	Menace	2619,2,98,98,0,0,0
+grasken07,0,0,0,0	monster	Ignus	2618,3,108,108,0,0,0
+grasken07,0,0,0,0	monster	Qisling	2620,2,86,86,0,0,0
+grasken07,0,0,0,0	monster	Grouser	2622,5,103,103,0,0,0
+grasken07,0,0,0,0	monster	Coruscatite	2623,5,101,101,0,0,0
+grasken07,0,0,0,0	monster	Fire Crystal	1397,1,1,1,0,0,0
+//-- Grasken Pits 8
+grasken08,0,0,0,0	monster	Trilomite	2613,5,61,61,0,0,0
+grasken08,0,0,0,0	monster	Qisling	2620,5,86,86,0,0,0
+grasken08,0,0,0,0	monster	Phlogiston	2625,5,89,89,0,0,0
+grasken08,0,0,0,0	monster	Menace	2619,4,98,98,0,0,0
+grasken08,0,0,0,0	monster	Bomb	2626,2,93,93,0,15000,0
+grasken08,0,0,0,0	monster	Firebat	2621,6,94,94,0,0,0
+grasken08,0,0,0,0	monster	Coruscatite	2623,4,101,101,0,0,0
+grasken08,0,0,0,0	monster	Grouser	2622,4,103,103,0,0,0
+//-- Grasken Pits 9
+grasken09,0,0,0,0	monster	Trilomite	2613,5,61,61,0,0,0
+grasken09,0,0,0,0	monster	Bomb	2626,3,93,93,0,15000,0
+grasken09,0,0,0,0	monster	Qisling	2620,4,86,86,0,0,0
+grasken09,0,0,0,0	monster	Ignus	2618,4,108,108,0,0,0
+grasken09,0,0,0,0	monster	Firebat	2621,7,94,94,0,0,0
+grasken09,0,0,0,0	monster	Menace	2619,4,98,98,0,0,0
+grasken09,0,0,0,0	monster	Phlogiston	2625,4,89,89,0,0,0
+grasken09,0,0,0,0	monster	Coruscatite	2623,3,101,101,0,0,0
+grasken09,0,0,0,0	monster	Fire Crystal	1397,1,1,1,0,0,0
+//-- Grasken Pits 10
+grasken10,0,0,0,0	monster	Trilomite	2613,5,61,61,0,0,0
+grasken10,0,0,0,0	monster	Bomb	2626,4,93,93,0,15000,0
+grasken10,0,0,0,0	monster	Menace	2619,2,98,98,0,0,0
+grasken10,0,0,0,0	monster	Phlogiston	2625,5,89,89,0,0,0
+grasken10,0,0,0,0	monster	Grouser	2622,3,103,103,0,0,0
+grasken10,0,0,0,0	monster	Ignus	2618,3,108,108,0,0,0
+grasken10,0,0,0,0	monster	Firebat	2621,5,94,94,0,0,0
+grasken10,0,0,0,0	monster	Pharos	2624,4,96,96,0,0,0
+grasken10,0,0,0,0	monster	Coruscatite	2623,2,101,101,0,0,0
+//-- Grasken Pits 11
+grasken11,0,0,0,0	monster	Trilomite	2613,5,61,64,0,0,0
+grasken11,0,0,0,0	monster	Qisling	2620,4,86,88,0,0,0
+grasken11,0,0,0,0	monster	Bomb	2626,5,93,96,0,15000,0
+grasken11,0,0,0,0	monster	Menace	2619,5,98,101,0,0,0
+grasken11,0,0,0,0	monster	Ignus	2618,5,108,110,0,0,0
+grasken11,0,0,0,0	monster	Firebat	2621,5,94,97,0,0,0
+grasken11,0,0,0,0	monster	Phlogiston	2625,8,89,91,0,0,0
+grasken11,0,0,0,0	monster	Pharos	2624,5,96,99,0,0,0
+grasken11,0,0,0,0	monster	Coruscatite	2623,5,101,103,0,0,0
+grasken11,0,0,0,0	monster	Fire Crystal	1397,1,1,1,0,0,0
+//-- Grasken Pits 12
+grasken12,0,0,0,0	monster	Trilomite	2613,40,63,68,0,0,0
+grasken12,0,0,0,0	monster	Qisling	2620,10,87,90,0,0,0
+grasken12,0,0,0,0	monster	Bomb	2626,7,93,96,0,15000,0
+grasken12,0,0,0,0	monster	Menace	2619,10,99,103,0,0,0
+grasken12,0,0,0,0	monster	Ignus	2618,6,109,112,0,0,0
+grasken12,0,0,0,0	monster	Firebat	2621,13,96,100,0,0,0
+grasken12,0,0,0,0	monster	Phlogiston	2625,30,90,93,0,0,0
+grasken12,0,0,0,0	monster	Pharos	2624,10,98,102,0,0,0
+grasken12,0,0,0,0	monster	Coruscatite	2623,15,102,106,0,0,0
+grasken12,0,0,0,0	monster	Whelp	2628,10,103,106,0,0,0
+grasken12,0,0,0,0	monster	Fire Crystal	1397,1,1,1,0,0,0
+//-- Grasken Pits 13
+grasken13,0,0,0,0	monster	Trilomite	2613,40,63,70,0,0,0
+grasken13,0,0,0,0	monster	Qisling	2620,15,87,92,0,0,0
+grasken13,0,0,0,0	monster	Bomb	2626,10,95,98,0,15000,0
+grasken13,0,0,0,0	monster	Menace	2619,10,102,105,0,0,0
+grasken13,0,0,0,0	monster	Ignus	2618,8,111,115,0,0,0
+grasken13,0,0,0,0	monster	Firebat	2621,15,99,103,0,0,0
+grasken13,0,0,0,0	monster	Phlogiston	2625,30,92,97,0,0,0
+grasken13,0,0,0,0	monster	Pharos	2624,10,101,105,0,0,0
+grasken13,0,0,0,0	monster	Coruscatite	2623,15,104,108,0,0,0
+grasken13,0,0,0,0	monster	Whelp	2628,12,105,108,0,0,0
+grasken13,0,0,0,0	monster	Wyvern	2627,12,108,112,0,0,0
+grasken13,0,0,0,0	monster	Fire Crystal	1397,2,1,1,0,0,0

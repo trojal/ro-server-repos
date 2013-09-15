@@ -1,0 +1,377 @@
+pvp_n_1-5	mapflag	noloot
+
+function	script	getcharname	{
+	if (attachrid(getarg(0))) {
+		set $@name$,strcharinfo(0);
+		set @hd_kills,0;
+		detachrid;
+		return($@name$);
+	} else {
+		return();
+	}
+}
+
+payo1.gat,64,155,5	script	Hero Defence	939,{
+	HD_START:
+	mes "[Hero Defence]";
+	if (getmapusers("pvp_n_1-5.gat") > 0) {
+		mes "The room is currently ^FF0000occupied^000000 by ^00FF00" + $@hero_names$ + "^000000.";
+	} else {
+		mes "The room is currently ^00FF00Available^000000. Join the waiting room to participate.";
+	}
+	next;
+
+	// Set up GM menu
+	set @reset$,"";
+	if (getgmlevel()>=99) set @reset$,"[GM] Reset Records";
+	
+	switch(select("Level Records","Total Record",@reset$,"Cancel")) {
+		case 1:
+			mes "[Hero Defence]";
+			set @i,0;
+			while (@i < getarraysize($hd_record)) {
+				mes "Level ^CC6633" + @i + "^000000: ^CC6600" + $hd_record[@i] + "^000000 seconds by";
+				mes "^CC6600" + $hd_record_team$[@i] + "^000000";
+				set @i,@i+1;
+			}
+			next;
+			goto HD_START;
+
+		case 2:
+			mes "[Hero Defence]";
+			if ($hd_record_total > 0) {
+				mes "^00FF00" + $hd_record_total_team$ + "^000000 completed Hero Defence in ^00FF00" + $hd_record_total + "^000000 seconds, the fastest time ever recorded!";
+			} else {
+				mes "No record currently set.";
+			}
+			next;
+			goto HD_START;
+
+		case 3:
+			mes "[Hero Defence]";
+			mes "Which records would you like to reset?";
+			next;
+			switch(select("Total Record","All Level Records","Specify Level Record","Cancel")) {
+				case 1:
+					set $hd_record_total,0;
+					set $hd_record_total_team$,"";
+					break;
+				case 2:
+					cleararray $hd_record[0],0,getarraysize($hd_record);
+					break;
+				case 3:
+					mes "[Hero Defence]";
+					mes "Please input a level number.";
+					next;
+					input @level;
+					set $hd_record[@level],0;
+					break;
+				case 4:
+					goto HD_START;
+			}
+			mes "[Hero Defence]";
+			mes "Record(s) reset.";
+			close;
+
+		case 4:
+			break;
+	}
+	close;
+
+	end;
+
+	OnStart:
+		if (getmapusers("pvp_n_1-5.gat") > 0) end;
+	
+		killmonsterall "pvp_n_1-5.gat";
+		warpwaitingpc "pvp_n_1-5.gat",100,88,6;
+		debugmes "1";
+		
+		// Find one of the players to attach to.
+		set $@i,0;
+		while (attachrid($@warpwaitingpc[$@i]) != 1 && $@i < $@warpwaitingpcnum) {
+			set $@i,$@i+1;
+		}
+		
+		debugmes "2";
+		set $@hero_names$,callfunc("getcharname",$@warpwaitingpc[0]) + ", " + callfunc("getcharname",$@warpwaitingpc[1]) + ", " + callfunc("getcharname",$@warpwaitingpc[2]) + ", " + callfunc("getcharname",$@warpwaitingpc[3]) + ", " + callfunc("getcharname",$@warpwaitingpc[4]) + " & " + callfunc("getcharname",$@warpwaitingpc[5]);
+		attachrid $@warpwaitingpc[$@i];
+		debugmes "3";
+		mapannounce "payo1.gat",$@hero_names$ + " have entered Hero Defence",bc_map,0x00FF00;
+		//announce $@hero_names$ + " have entered Hero Defence",bc_map;
+		
+		debugmes "4";
+		addtimer 5000,"hero_float::OnStart";
+		debugmes "5";
+		disablewaitingroomevent;
+
+	OnInit:
+		enablewaitingroomevent;
+		waitingroom "Hero Defence",6,"Hero Defence::OnStart",6;
+		end;
+}
+
+pvp_n_1-5.gat,0,0,0	script	hero_float	-1,{
+	OnStart:
+		killmonsterall "pvp_n_1-5.gat";
+		announce "Welcome to Hero Defence! Please form a party. The game will commence shortly.",bc_map;
+		set $@hd_level,0;
+		set $@hd_timer_total,0;
+		set $@hd_sleep,0;
+		enablenpc "Hero Healer";
+		debugmes "6";
+		sleep 10000;
+		
+	OnMobSpawn:
+		if ($@hd_sleep == 1) end;
+		debugmes "7";
+		
+		// Summon Monsters
+		killmonster "pvp_n_1-5.gat","hero_float::OnMobDie";
+		set $@hd_kills,0;
+		set $@hd_started,1;
+		set $@hd_timer,0;
+		
+		set $@j,0;
+		set $@hd_summoning,1;
+		while ($@j < $@hd_qty[$@hd_level]) {
+			monster "pvp_n_1-5.gat",99+rand(-20,20),100+rand(-20,20),"--ja--",$@hd_mob[$@hd_level],1,"hero_float::OnMobDie";
+			sleep 100;
+			set $@j,$@j+1;
+		}
+		set $@hd_summoning,0;
+		debugmes "8";
+		while ($@hd_started == 1) {
+			set $@hd_timer,$@hd_timer+1;
+			sleep2 1000;
+
+			if ($@hd_timer == 600000) {
+				announce "10 minutes have elapsed since the beginning of the round, please hurry up!",bc_map,0xFF0000;
+			}
+			if ($@hd_timer == 900000) {
+				announce "15 minutes have elapsed since the beginning of the round!",bc_map,0xFF0000;
+				announce "You will be ejected from the game if you do not finish within 5 minutes!",bc_map;
+			}
+			if ($@hd_timer == 1200000) {
+				announce "You are being ejected from the game",bc_map;
+				goto HD_ABORT;
+			}
+			if (getmapusers("pvp_n_1-5.gat") <= 0) {
+				goto HD_ABORT;
+			}
+			
+		}
+		end;
+
+	OnMobDie:
+		set $@hd_kills,$@hd_kills+1;
+		if (mobcount("pvp_n_1-5.gat","hero_float::OnMobDie") < 2 && $@hd_summoning == 0) {
+			announce "Level " + $@hd_level + " cleared! Stand by for next round!",bc_map;
+			
+			set $@hd_started,0;
+			
+			// Check time records
+			if ($hd_record[$@hd_level] < 1) set $hd_record[$@hd_level],999999;
+
+			if ($hd_record[$@hd_level] > $@hd_timer) {
+			
+				announce "New Record! You did it in " + $@hd_timer + " seconds!",bc_map;
+				announce "Previous record was " + $hd_record[$@hd_level] + " seconds by " + $hd_record_team$[$@hd_level] + "!",bc_map;
+				set $hd_record[$@hd_level],$@hd_timer;
+				set $hd_record_team$[$@hd_level],$@hero_names$;
+			} else {
+				announce "Your time was " + $@hd_timer + " seconds",bc_map;
+				announce "Current record is " + $hd_record[$@hd_level] + " seconds by " + $hd_record_team$[$@hd_level] + "!",bc_map;
+			}
+			
+			set $@hd_timer_total,$@hd_timer_total+$@hd_timer;
+			set $@hd_level,$@hd_level+1;
+			
+			if ($@hd_level >= $@hd_total-1) {
+			
+				// Game is finished
+				if ($hd_record_total < 1) set $hd_record_total,999999;
+				announce "Congratulations! You have completed Hero Defence!",bc_map;
+				announce "Your total time was " + $@hd_timer_total + " seconds",bc_map;
+				if ($@hd_timer_total < $hd_record_total) {
+					announce "You beat the previous record of " + $hd_record_total + " seconds set by " + $hd_record_total_team$ + "!",bc_map;
+					set $hd_record_total,$@hd_timer_total;
+					set $hd_record_total_team$,$@hero_names$;
+				} else {
+					announce "The current record is " + $hd_record_total + " seconds set by " + $hd_record_total_team$ + "!",bc_map;
+				}
+				
+				sleep 5000;
+				
+				HD_ABORT:
+				mapwarp "pvp_n_1-5","payo1.gat",76,155;
+				enablewaitingroomevent "Hero Defence";
+				mapannounce "payo1.gat","Hero Defence is now available!",bc_map,0x00FF00;
+				
+			} else {
+				enablenpc "Hero Healer";
+				set $@hd_sleep,1;
+				sleep 15000;
+				set $@hd_sleep,0;
+				goto OnMobSpawn;
+			}
+			
+		} else {
+			set @hd_kills,@hd_kills+1;
+			announce "Blue[" + (mobcount("pvp_n_1-5.gat","hero_float::OnMobDie")-1) + " monsters remaining] : " + strcharinfo(0) + " has " + @hd_kills + " kills",bc_map;
+			//announce "Blue[" + ($@hd_qty[$@hd_level]-$@hd_kills) + " monsters remaining] : " + strcharinfo(0) + " has " + @hd_kills + " kills",bc_map;
+		}
+		end;
+
+	OnInit:
+	
+		// Hero TD Configuration
+		set $@hd_mobmode,1;			// 0 for Manual - Set mobs below
+									// 1 for SQL - Get monsters from mob_db according to level
+									// 2 for Mixed Mode - Do 1 then 0
+
+		if ($@hd_mobmode > 0) {
+			// SQL Mode - Get monsters from DB; Generate new monsters every OnInit;
+			set $@hd_startlvl,35;		// Start Level
+			set $@hd_inclvl,2;			// Mob level increment
+			set $@hd_lvlrange,3;		// Summon monsters within this level range of the specified level
+			set $@hd_mobsperlevel,2;	// How many monsters from the same level to spawn
+			set $@hd_stoplvl,99;		// End Level
+			set $@hd_mobmode_qty,15;	// How many monsters to spawn
+			set $@hd_mobmode_mvp,0;		// Include MVPs in the spawn (0 - no, 1 - yes, 2 - MVPs only)
+			set $@hd_new_int,3600000;	// Time before monsters are repicked (In seconds). Set to 0 to disable
+			// The default settings will spawn monsters from level 35 to 99 and contains 96 stages
+			
+			set $@hd_totalmobs,(((($@hd_stoplvl - $@hd_startlvl)*$@hd_mobsperlevel)/$@hd_inclvl));
+			// Check if levels exceed maximum array capacity
+			if ($@hd_totalmobs > 127) {
+				debugmes "Hero Defence Error: Levels exceed 127";
+			}
+			
+			
+			switch ($@hd_mobmode_mvp) {
+				case 0:
+					set $@hd_mobmode_mvp_str$," AND `MEXP`=0";
+					break;
+				case 1:
+					set $@hd_mobmode_mvp_str$,"";
+					break;
+				case 2:
+					set $@hd_mobmode_mvp_str$," AND `MEXP`>0";
+					break;
+			}
+			
+			// Query database to gather a list if mobs
+			set $@i,0;
+			set $@l,0;
+			while ($@i < $@hd_totalmobs) {
+				set $@hd_mobmode_level,$@l*$@hd_inclvl + $@hd_startlvl;
+				
+				set $@x,0;
+				while ($@x < $@hd_mobsperlevel && $@i < 128 && $@l <= 99) {
+					set $@hd_mobmode_mob[0],0;
+					
+					// Banned monsters; currently in SQL format
+					set $@hd_banmobs$," AND	`ID`!=1388";
+					
+					query_sql "SELECT `ID` FROM `mob_db` WHERE `LV`>" + ($@hd_mobmode_level-$@hd_lvlrange) + " AND `LV`< " + ($@hd_mobmode_level+$@hd_lvlrange) + "" + $@hd_mobmode_mvp_str$ + "" + $@hd_banmobs$ + " ORDER BY RAND() LIMIT 0,1",$@hd_mobmode_mob;
+					
+					if ($@hd_mobmode_mob[0] > 0) {
+						set $@hd_mob[$@i+$@x],$@hd_mobmode_mob[0];
+						set $@hd_qty[$@i+$@x],$@hd_mobmode_qty;
+						debugmes "HD Mob Added - Stage: " + ($@i+$@x) + ", ID: " + $@hd_mob[$@i+$@x] + ", QTY: " + $@hd_qty[$@i+$@x];
+					} else {
+						// No mobs fit criteria; add the previously found mob
+						set $@hd_mob[$@i+$@x],$@hd_mob[$@i+$@x-1];
+						set $@hd_qty[$@i+$@x],$@hd_qty[$@i+$@x-1];
+						debugmes "HD Mob Error: " + ($@i+$@x);
+						set $@l,$@l+$@hd_inclvl;
+					}
+					set $@x,$@x+1;
+				}
+				set $@l,$@l+1;
+				set $@i,$@i+$@x;
+			}
+		}
+		if ($@hd_mobmode != 1) {
+			// Manual Mode - Set mobs here. Index = level
+			
+			set $@hd_mob[5],1115;	// Eddga
+			set $@hd_qty[5],3;
+			
+			set $@hd_mob[10],1150;	// Moonlight Flower
+			set $@hd_qty[10],3;
+			
+			set $@hd_mob[15],1046;	// Doppelganger
+			set $@hd_qty[15],3;
+			
+			set $@hd_mob[20],1688;	// Tanee;
+			set $@hd_qty[20],2;
+			
+			set $@hd_mob[25],1630;	// White Lady
+			set $@hd_qty[25],2;
+			
+			set $@hd_mob[30],1373;	// LoD
+			set $@hd_qty[30],2;
+			
+			set $@hd_mob[35],1190;	// Orc Lord
+			set $@hd_qty[35],2;
+			
+			set $@hd_mob[40],1779;	// Ktullanux
+			set $@hd_qty[40],1;
+			
+			set $@hd_mob[45],1658;	// Egnigem
+			set $@hd_qty[45],1;
+			
+			set $@hd_mob[50],1272;	// Dark Lord
+			set $@hd_qty[50],1;
+			
+			set $@hd_mob[55],1039;	// Baphomet
+			set $@hd_qty[55],1;
+			
+			set $@hd_mob[60],1708;	// Thanatos
+			set $@hd_qty[60],1;
+			
+			set $@hd_mob[64],1002;
+			set $@hd_mob[64],100;
+			
+			set $@hd_mob[65],1751;	// Valk
+			set $@hd_qty[65],1;
+
+		}
+		set $@hd_total,getarraysize($@hd_mob);
+		
+		// Reset monsters if interval is set
+		if ($@hd_new_int > 0 && $@hd_mobmode > 0) {
+			sleep2 $@hd_new_int;
+			goto OnInit;
+		}
+		end;
+		
+		OnWhisperGlobal:
+			if (getgmlevel() >= 60) {
+				if (@whispervar0$ == "next") {
+						dispbottom "Starting next level...";
+						goto OnMobSpawn;
+				}
+				if (@whispervar0$ == "setlevel") {
+						dispbottom "Setting level...";
+						set $@hd_level,@whispervar1$;
+				}
+				if (@whispervar0$ == "randommobs") {
+						dispbottom "Regenerating mobs...";
+						goto OnInit;
+				}
+			}
+			if (@whispervar0$ == "stuck" && mobcount("pvp_n_1-5.gat","hero_float::OnMobDie") < 1 && $@hd_sleep == 0) {
+				goto OnMobSpawn;
+			}
+			end;
+}
+
+pvp_n_1-5.gat,99,96,5	script	Hero Healer	935,{
+	specialeffect2 14;
+	percentheal 100,100;
+	npctalk strcharinfo(0) + ", you are now healed.";
+	disablenpc "Hero Healer";
+}

@@ -1,0 +1,66 @@
+//===== eAthena Script ======================================= 
+//= Monk Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen, Samuray22
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= [Aegis Conversion]
+//= Quests for skills: Spiritual Bestowment, Excruciating Palm
+//===== Additional Comments: ================================= 
+//= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//============================================================
+
+prt_fild03,358,274,3	script	Krate	823,{
+	mes "[Krate]";
+	if(BaseJob!=Job_Monk) goto L_nomonk;
+	if(getskilllv(1015) && getskilllv(1016)) goto L_alreadyhave;
+	if(monk_skill) goto L_verif;
+	if(Weight>0) goto L_heavymonk;
+	mes "I'll teach you all I know, but you must bring me:";
+	mes "40 Stems";
+	mes "3 Shoots";
+	set monk_skill, 1;
+	next;
+	goto L_verif;
+	
+L_verif:
+	mes "Let me check your items.";
+	next;
+	if(countitem(711)<3 || countitem(905)<40) goto L_noitems;//Items: Shoot, Stem,
+	delitem 711, 3;//Items: Shoot,
+	delitem 905, 40;//Items: Stem,
+	next;
+	mes "[Krate]";
+	mes "I see you have what you need,";
+	mes "so I'll teach you my talent.";
+	skill 1015,1,0;
+	skill 1016,1,0;
+	set monk_skill, 0;
+	close;
+	
+L_noitems:
+	mes "[Krate]";
+	mes "You don't have enough items.";
+	mes "Come back when you have all";
+	mes "the required items for me.";
+	close;
+	
+L_nomonk:
+	mes "It seems that your soul is disagree with your body.";
+	mes "Come back when your body and your soul will be like Yin and Yang.";
+	emotion e_gasp;
+	close;
+	
+L_alreadyhave:
+	mes "I've already taught you";
+	mes "everything I know...";
+	close;
+
+L_heavymonk:
+	mes "Come back when you've cleansed";
+	mes "yourself of your worldly possessions.";
+	close;
+}

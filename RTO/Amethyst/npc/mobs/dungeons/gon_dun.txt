@@ -1,0 +1,43 @@
+//===== eAthena Script =======================================
+//= Gonryun Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Additional Comments: =================================
+//= 1.1 Official kRO 10.1 spawns [Playtester]
+//============================================================
+
+//==================================================
+// gon_dun01 - Shrine of Gonryun Queen
+//==================================================
+gon_dun01,0,0,0,0	monster	Bloody Butterfly	1408,55,55,55,650000,350000,0
+gon_dun01,0,0,0,0	monster	Enchanted Peach Tree	1410,35,53,53,0,0,0
+gon_dun01,0,0,0,0	monster	Zipper Bear	1417,30,35,35,0,0,0
+gon_dun01,0,0,0,0	monster	Red Plant	1078,5,1,1,0,0,0
+gon_dun01,0,0,0,0	monster	Yellow Plant	1081,10,1,1,0,0,0
+gon_dun01,0,0,0,0	monster	White Plant	1082,10,1,1,0,0,0
+
+//==================================================
+// gon_dun02 - Hermit's Checkers
+//==================================================
+gon_dun02,241,226,15,20	monster	Enchanted Peach Tree	1410,2,53,53,300000,150000,0
+gon_dun02,241,226,15,20	monster	Baby Leopard	1415,4,32,32,600000,300000,0
+gon_dun02,241,226,15,20	monster	Enchanted Peach Tree	1410,3,53,53,120000,60000,0
+gon_dun02,33,115,10,15	monster	Enchanted Peach Tree	1410,1,53,53,300000,150000,0
+gon_dun02,33,115,10,15	monster	Baby Leopard	1415,2,32,32,600000,300000,0
+gon_dun02,0,0,0,0	monster	Taoist Hermit	1412,20,56,56,690000,390000,0
+gon_dun02,0,0,0,0	monster	Bloody Butterfly	1408,20,55,55,0,0,0
+gon_dun02,0,0,0,0	monster	Enchanted Peach Tree	1410,15,53,53,0,0,0
+gon_dun02,0,0,0,0	monster	Yellow Plant	1081,10,1,1,0,0,0
+
+//==================================================
+// gon_dun03 - Arcadia
+//==================================================
+gon_dun03,0,0,0,0	monster	White Plant	1082,10,1,1,0,0,0
+gon_dun03,0,0,0,0	monster	Hermit Plant	1413,20,46,46,600000,300000,0
+gon_dun03,0,0,0,0	monster	Evil Nymph	1416,50,63,63,600000,300000,0
+gon_dun03,0,0,0,0	monster	Taoist Hermit	1412,30,56,56,0,0,0
+gon_dun03,0,0,0,0	monster	Evil Snake Lord	1418,1,73,73,5650000,3650000,0

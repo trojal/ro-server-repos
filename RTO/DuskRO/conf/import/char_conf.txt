@@ -1,0 +1,58 @@
+// Server Communication username and password.
+userid: gemini
+passwd: ragnarok
+
+// Server name, use alternative character such as ASCII 160 for spaces.
+// NOTE: You should not use spaces in the server name, or guild emblems won't work client-side!
+server_name: Emerald
+
+// Wisp name for server: used to send wisp from server to players (between 4 to 23 characters)
+wisp_server_name: Emerald
+
+// Login Server IP
+// The character server connects to the login server using this IP address.
+// NOTE: This is useful when you are running behind a firewall or are on
+// a machine with multiple interfaces.
+login_ip: 127.0.0.1
+
+// The character server listens on the interface with this IP address.
+// NOTE: This allows you to run multiple servers on multiple interfaces
+// while using the same ports for each server.
+//bind_ip: 127.0.0.1
+
+// Login Server Port
+login_port: 6900
+
+// Character Server IP
+// The character server exports this IP address to the entire world.
+// NOTE: You should only need to set this if you are running behind a
+// firewall or are on a machine with multiple interfaces.
+char_ip: 89.46.34.77
+
+// Start point, Map name followed by coordinates (x,y)
+start_point: new_zone04,179,172
+
+// Starting weapon for new characters
+start_weapon: 1201
+
+// Starting armor for new characters
+start_armor: 2301
+
+// Starting zeny for new characters
+start_zeny: 1000
+
+// Manage possible letters/symbol in the name of charater. Control character (0x00-0x1f) are never accepted. Possible values are:
+// NOTE: Applies to character, party and guild names.
+// 0: no restriction (default)
+// 1: only letters/symbols in 'char_name_letters' option.
+// 2: Letters/symbols in 'char_name_letters' option are forbidden. All others are possibles.
+char_name_option: 1
+
+// Set the letters/symbols that you want use with the 'char_name_option' option.
+// Note: Don't add spaces unless you mean to add 'space' to the list.
+char_name_letters: abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890~`!*[]:.,?=+-_{}|^$&()
+
+// Guild earned exp modifier.
+// Adjusts taxed exp before adding it to the guild's exp. For example, if set 
+// to 200, the guild receives double the player's taxed exp.
+guild_exp_rate: 100

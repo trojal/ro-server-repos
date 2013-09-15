@@ -1,0 +1,59 @@
+//===== eAthena Script ======================================= 
+//= Assassin Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.4
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= [Aegis Conversion]
+//= Quests for skills: Venom Knife, Sonic Acceleration
+//===== Additional Comments: ================================= 
+//= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//============================================================
+
+moc_fild16,195,308,3	script	Kiltin	884,{
+	mes "[Kiltin]";
+	if(BaseJob!=Job_Assassin) goto L_nosin;
+	if(getskilllv(1003) && getskilllv(1004)) goto L_alreadyhave;
+
+	mes "I'll teach you all I know, but";
+	mes "you need to steal some things";
+	mes "for me:";
+	mes "3 Sapphires";
+	mes "1 Ruby";
+	next;
+	
+	mes "[Kiltin]";
+	mes "Let me check your items.";
+	next;
+	
+	if(countitem(726)<3 || countitem(723)<1) goto L_noitems;//Items: Sapphire, Ruby,
+	delitem 726, 3;//Items: Sapphire,
+	delitem 723, 1;//Items: Ruby,
+
+	mes "[Kiltin]";
+	mes "I see you have what you need,";
+	mes "so I'll teach you my talent.";
+	skill 1003,1,0;
+	skill 1004,1,0;
+	close;
+	
+L_noitems:
+	mes "[Kiltin]";
+	mes "You don't have enough items.";
+	mes "Come back when you have all";
+	mes "the required items for me.";
+	close;
+		
+L_nosin:
+	mes "Sorry, but I'm on service of Shadowmen.";
+	emotion e_gasp;
+	close;
+
+L_alreadyhave:
+	mes "I've already taught you";
+	mes "everything I know...";
+	close;
+}

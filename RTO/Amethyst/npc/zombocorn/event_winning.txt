@@ -1,0 +1,17 @@
+prontera,150,178,5	script	Event Winnings	113,{
+if (!Eventreward) {
+	mes "[Ursula]";
+	mes "You've won the event! Congratulations!";
+	next;
+	mes "[Ursula]";
+	mes "Here's your reward!";
+	getitem 19024,1;
+	set Zeny,zeny+15000;
+	set Eventreward1,1;
+	}
+	else {
+	mes "[Ursula]";
+	mes "You've already claimed your reward. Come back next event!";
+	}
+close;
+}

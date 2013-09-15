@@ -1,0 +1,80 @@
+// Mordlin Tunnel script
+//
+
+//warps
+turven04,351,341,0	warp	mordwarp01	1,1,mordlin03,104,99
+mordlin03,104,103,0	warp	mordwarp02	1,1,turven04,351,334
+mordlin03,107,169,0	warp	mordwarp03	1,1,mordlin02,181,12
+mordlin02,183,7,0	warp	mordwarp04	1,1,mordlin03,107,163
+mordlin02,32,172,0	warp	mordwarp05	1,1,mordlin01,178,19
+mordlin01,180,15,0	warp	mordwarp06	1,1,mordlin02,32,168
+mordlin01,21,188,0	warp	mordwarp07	1,1,gl_dun02,167,39
+//gl_dun02,168,34,0	warp	mordwarp08	1,1,mordlin01,22,184
+
+//monsters
+//-- Mordlin Tunnel 3
+mordlin03,0,0,0,0	monster	Roller Beetle	2606,27,0,0,0
+mordlin03,0,0,0,0	monster	Feeder	2605,7,0,0,0
+mordlin03,0,0,0,0	monster	Bulwark	2616,9,0,0,0
+mordlin03,0,0,0,0	monster	Cave Boar	2637,20,0,0,0
+mordlin03,0,0,0,0	monster	Bat	1005,25,0,0,0
+mordlin03,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin03,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+//-- Mordlin Tunnel 2
+mordlin02,0,0,0,0	monster	Roller Beetle	2606,20,0,0,0
+mordlin02,0,0,0,0	monster	Feeder	2605,11,0,0,0
+mordlin02,0,0,0,0	monster	Bulwark	2616,12,0,0,0
+mordlin02,0,0,0,0	monster	Cave Boar	2637,10,0,0,0
+mordlin02,0,0,0,0	monster	Drainliar	1111,15,0,0,0
+mordlin02,0,0,0,0	monster	Fungoid	2639,17,0,0,0
+mordlin02,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin02,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin02,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin02,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin02,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin02,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin02,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin02,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin02,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin02,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin02,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin02,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin02,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin02,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+//-- Mordlin Tunnel 1
+mordlin01,0,0,0,0	monster	Fungoid	2639,55,0,0,0
+mordlin01,0,0,0,0	monster	Feeder	2605,15,0,0,0
+mordlin01,0,0,0,0	monster	Roller Beetle	2606,6,0,0,0
+mordlin01,0,0,0,0	monster	Drainliar	1111,17,0,0,0
+mordlin01,0,0,0,0	monster	Bulwark	2616,30,0,0,0
+mordlin01,0,0,0,0	monster	Cave Boar	2637,5,0,0,0
+mordlin01,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin01,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin01,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin01,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin01,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin01,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin01,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin01,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin01,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin01,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0
+mordlin01,0,0,0,0	monster	Green Plant	1080,1,60000,1800000,0
+mordlin01,0,0,0,0	monster	Yellow Plant	1081,1,60000,1800000,0

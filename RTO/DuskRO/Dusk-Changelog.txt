@@ -1,0 +1,16 @@
+Commits start from Revision 605.
+Record ALL changes, big or small to this changelog file and be sure to specify who changed what. Be sure to put the most recent change at the top.
+
+<Date>
+<tab>	- Main change [Name]
+	* Comment or notes of main change
+	! Requires immediate attention
+	
+	
+
+-----
+6/20/2008
+	- Changed adjgmlvl command to 97 so I can work with gm 99 and not have all skills. [Axiom]
+	- Changed Showexp and Showzeny commands so players can use them. [Axiom]
+	- Changed warp locations for ice_dun04 and 03 so they warp properly. Also changed toyfactory warp location. [Axiom]
+	

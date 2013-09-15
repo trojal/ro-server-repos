@@ -1,0 +1,116 @@
+// Luen Burial Cave script
+//
+
+//warps
+oldtun1,4,91,0	warp	luenwarp01	1,1,luenbur02,283,28
+luenbur02,286,28,0	warp	luenwarp02	1,1,oldtun1,8,91
+luenbur02,15,33,0	warp	luenwarp03	1,1,luenbur01,179,33
+luenbur01,184,33,0	warp	luenwarp04	1,1,luenbur02,19,33
+luenbur01,21,186,0	warp	luenwarp05	1,1,nif_fild01,235,227
+//nif_fild01,236,224,0	warp	luenwarp06	1,1,luenbur01,21,182
+
+//monsters
+//-- Old Tunnel 1
+oldtun1,56,25,0,0	monster	Red Mushroom	1085,1,60000,1800000,0
+oldtun1,55,26,0,0	monster	Black Mushroom	1084,1,60000,1800000,0
+oldtun1,56,34,0,0	monster	Black Mushroom	1084,1,60000,1800000,0
+oldtun1,76,52,0,0	monster	Red Mushroom	1085,1,60000,1800000,0
+oldtun1,70,53,0,0	monster	Red Mushroom	1085,1,60000,1800000,0
+oldtun1,37,50,0,0	monster	Black Mushroom	1084,1,60000,1800000,0
+oldtun1,39,40,0,0	monster	Red Mushroom	1085,1,60000,1800000,0
+oldtun1,20,45,0,0	monster	Red Mushroom	1085,1,60000,1800000,0
+oldtun1,27,50,0,0	monster	Black Mushroom	1084,1,60000,1800000,0
+oldtun1,55,70,0,0	monster	Black Mushroom	1084,1,60000,1800000,0
+oldtun1,45,82,0,0	monster	Red Mushroom	1085,1,60000,1800000,0
+oldtun1,53,88,0,0	monster	Red Mushroom	1085,1,60000,1800000,0
+oldtun1,44,88,0,0	monster	Black Mushroom	1084,1,60000,1800000,0
+oldtun1,30,77,0,0	monster	Red Mushroom	1085,1,60000,1800000,0
+oldtun1,31,78,0,0	monster	Black Mushroom	1084,1,60000,1800000,0
+oldtun1,25,93,0,0	monster	Black Mushroom	1084,1,60000,1800000,0
+oldtun1,25,84,0,0	monster	Red Mushroom	1085,1,60000,1800000,0
+oldtun1,11,93,0,0	monster	Black Mushroom	1084,1,60000,1800000,0
+oldtun1,18,26,73,63	monster	Feeder	2605,2,120000,900000,0
+oldtun1,20,70,53,88	monster	Feeder	2605,1,120000,900000,0
+oldtun1,7,91,0,0	monster	Cadaver	2631,1,60000,500000,0
+oldtun1,7,91,0,0	monster	Cadaver	2631,1,60000,500000,0
+
+//-- Luen Burial Cave Floor 1,
+luenbur01,0,0,0,0	monster	Defiler	2630,20,0,0,0
+luenbur01,0,0,0,0	monster	Cadaver	2631,25,0,0,0
+luenbur01,0,0,0,0	monster	Corpsefly	2633,15,0,0,0
+luenbur01,0,0,0,0	monster	Graveman	2634,20,0,0,0
+luenbur01,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur01,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur01,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur01,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur01,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur01,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur01,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur01,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur01,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur01,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur01,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur01,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur01,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur01,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur01,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur01,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur01,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+
+//-- Luen Burial Cave Floor 2
+luenbur02,0,0,0,0	monster	Defiler	2630,40,0,0,0
+luenbur02,0,0,0,0	monster	Cadaver	2631,50,0,0,0
+luenbur02,0,0,0,0	monster	Corpsefly	2633,55,0,0,0
+luenbur02,0,0,0,0	monster	Graveman	2634,10,0,0,0
+luenbur02,0,0,0,0	monster	Jaggler	2635,20,0,0,0
+luenbur02,0,0,0,0	monster	Cynic	2643,15,0,0,0
+luenbur02,231,60,0,0	monster	Curmudgeon	2610,1,0,0,0
+luenbur02,230,55,0,0	monster	Curmudgeon	2610,1,0,0,0
+luenbur02,235,48,0,0	monster	Curmudgeon	2610,1,0,0,0
+luenbur02,244,51,0,0	monster	Curmudgeon	2610,1,0,0,0
+luenbur02,239,60,0,0	monster	Curmudgeon	2610,1,0,0,0
+luenbur02,235,59,0,0	monster	Curmudgeon	2610,1,0,0,0
+luenbur02,230,48,0,0	monster	Curmudgeon	2610,1,0,0,0
+luenbur02,240,48,0,0	monster	Curmudgeon	2610,1,0,0,0
+luenbur02,0,0,0,0	monster	Atropos	2996,1,3000000,5400000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0
+luenbur02,0,0,0,0	monster	Rabid	2629,1,0,30000,0

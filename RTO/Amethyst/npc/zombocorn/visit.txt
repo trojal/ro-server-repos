@@ -1,0 +1,359 @@
+//---------------------------
+prontera	mapflag	loadevent
+aldebaran	mapflag	loadevent
+alberta	mapflag	loadevent
+amatsu	mapflag	loadevent
+comodo	mapflag	loadevent
+geffen	mapflag	loadevent
+gonryun	mapflag	loadevent
+izlude	mapflag	loadevent
+jawaii	mapflag	loadevent
+yuno	mapflag	loadevent
+louyang	mapflag	loadevent
+xmas	mapflag	loadevent
+morocc	mapflag	loadevent
+niflheim	mapflag	loadevent
+payon	mapflag	loadevent
+umbala	mapflag	loadevent
+alb2trea	mapflag	loadevent
+anthell01	mapflag	loadevent
+izlu2dun	mapflag	loadevent
+mjo_dun01	mapflag	loadevent
+in_sphinx1	mapflag	loadevent
+prt_sewb1	mapflag	loadevent
+glast_01	mapflag	loadevent
+lou_dun01	mapflag	loadevent
+mag_dun01	mapflag	loadevent
+gef_fild10	mapflag	loadevent
+pay_dun01	mapflag	loadevent
+moc_pryd01	mapflag	loadevent
+tur_dun01	mapflag	loadevent
+gefenia01	mapflag	loadevent
+prt_maze02	mapflag	loadevent
+lighthalzen	mapflag	loadevent
+einbroch	mapflag	loadevent
+treasure01	mapflag	loadevent
+treasure02	mapflag	loadevent
+anthell02	mapflag	loadevent
+iz_dun00	mapflag	loadevent
+iz_dun01	mapflag	loadevent
+iz_dun02	mapflag	loadevent
+iz_dun03	mapflag	loadevent
+iz_dun04	mapflag	loadevent
+mjo_dun02	mapflag	loadevent
+mjo_dun03	mapflag	loadevent
+prt_sewb2	mapflag	loadevent
+prt_sewb3	mapflag	loadevent
+prt_sewb4	mapflag	loadevent
+gl_cas01	mapflag	loadevent
+gl_cas02	mapflag	loadevent
+gl_church	mapflag	loadevent
+gl_chyard	mapflag	loadevent
+gl_dun01	mapflag	loadevent
+gl_dun02	mapflag	loadevent
+gl_in01	mapflag	loadevent
+gl_knt01	mapflag	loadevent
+gl_knt02	mapflag	loadevent
+gl_prison	mapflag	loadevent
+gl_prison1	mapflag	loadevent
+gl_sew01	mapflag	loadevent
+gl_sew02	mapflag	loadevent
+gl_sew03	mapflag	loadevent
+gl_sew04	mapflag	loadevent
+gl_step	mapflag	loadevent
+lou_dun02	mapflag	loadevent
+lou_dun03	mapflag	loadevent
+gef_fild14	mapflag	loadevent
+pay_dun02	mapflag	loadevent
+pay_dun03	mapflag	loadevent
+pay_dun04	mapflag	loadevent
+moc_pryd02	mapflag	loadevent
+moc_pryd03	mapflag	loadevent
+moc_pryd04	mapflag	loadevent
+moc_pryd05	mapflag	loadevent
+moc_pryd06	mapflag	loadevent
+tur_dun02	mapflag	loadevent
+tur_dun03	mapflag	loadevent
+tur_dun04	mapflag	loadevent
+gefenia02	mapflag	loadevent
+gefenia03	mapflag	loadevent
+gefenia04	mapflag	loadevent
+prt_maze03	mapflag	loadevent
+einbech	mapflag	loadevent
+hugel	mapflag	loadevent
+rachel	mapflag	loadevent
+veins	mapflag	loadevent
+ayothaya	mapflag	loadevent
+moscovia	mapflag	loadevent
+in_sphinx2	mapflag	loadevent
+in_sphinx3	mapflag	loadevent
+in_sphinx4	mapflag	loadevent
+in_sphinx5	mapflag	loadevent
+pay_dun00	mapflag	loadevent
+xmas_dun01	mapflag	loadevent
+xmas_dun02	mapflag	loadevent
+abyss_01	mapflag	loadevent
+abyss_02	mapflag	loadevent
+abyss_03	mapflag	loadevent
+ama_dun01	mapflag	loadevent
+ama_dun02	mapflag	loadevent
+ama_dun03	mapflag	loadevent
+ayo_dun01	mapflag	loadevent
+ayo_dun02	mapflag	loadevent
+beach_dun	mapflag	loadevent
+beach_dun2	mapflag	loadevent
+beach_dun3	mapflag	loadevent
+c_tower1	mapflag	loadevent
+c_tower2	mapflag	loadevent
+c_tower3	mapflag	loadevent
+c_tower4	mapflag	loadevent
+alde_dun01	mapflag	loadevent
+alde_dun02	mapflag	loadevent
+alde_dun03	mapflag	loadevent
+alde_dun04	mapflag	loadevent
+ein_dun01	mapflag	loadevent
+ein_dun02	mapflag	loadevent
+gef_dun00	mapflag	loadevent
+gef_dun01	mapflag	loadevent
+gef_dun02	mapflag	loadevent
+gef_dun03	mapflag	loadevent
+gon_dun01	mapflag	loadevent
+gon_dun02	mapflag	loadevent
+gon_dun03	mapflag	loadevent
+juperos_01	mapflag	loadevent
+juperos_02	mapflag	loadevent
+kh_dun01	mapflag	loadevent
+kh_dun02	mapflag	loadevent
+ice_dun01	mapflag	loadevent
+ice_dun02	mapflag	loadevent
+ice_dun03	mapflag	loadevent
+ra_san01	mapflag	loadevent
+ra_san02	mapflag	loadevent
+ra_san03	mapflag	loadevent
+ra_san04	mapflag	loadevent
+ra_san05	mapflag	loadevent
+um_dun01	mapflag	loadevent
+um_dun02	mapflag	loadevent
+
+prontera,156,191,0	script	visitscript#loadevent	139,{
+	end;
+	
+	OnPCLoginEvent:
+		if(visitTowns < 1) set visitTowns, 2|16|64|2048|8192|16384;
+		end;
+	
+	OnPCLoadMapEvent:
+		set .@place, -1;
+		setarray .@location$[1],"aldebaran",  "alberta",    "amatsu",    "comodo",    "geffen",      "gonryun",
+					"izlude",     "jawaii",     "yuno",      "louyang",   "xmas",        "morocc",
+					"niflheim",   "payon",      "prontera",  "umbala",    "lighthalzen", "einbroch",
+					"alb2trea",   "treasure01", "treasure02","anthell01", "anthell02",   "izlu2dun",
+					"iz_dun00",   "iz_dun01",   "iz_dun02",  "iz_dun03",  "iz_dun04",    "prt_sewb1",
+					"prt_sewb2",  "prt_sewb3",  "prt_sewb4", "pay_dun01", "pay_dun02",   "pay_dun03",
+					"pay_dun04",  "moc_pryd01", "moc_pryd02","moc_pryd03","moc_pryd04",  "moc_pryd05",
+					"moc_pryd06", "prt_maze02", "prt_maze03","in_sphinx1","mag_dun01",   "mjo_dun01",
+					"mjo_dun02",  "mjo_dun03",  "lou_dun01", "lou_dun02", "lou_dun03",   "gef_fild10",
+					"gef_fild14", "tur_dun01",  "tur_dun02", "tur_dun03", "tur_dun04",   "gefenia01",
+					"gefenia02",  "gefenia03",  "gefenia04", "glast_01",  "gl_cas01",    "gl_cas02",
+					"gl_church",  "gl_chyard",  "gl_dun01",  "gl_dun02",  "gl_in01",     "gl_knt01",
+					"gl_knt02",   "gl_prison",  "gl_prison1","gl_sew01",  "gl_sew02",    "gl_sew03",
+					"gl_sew04",   "gl_step",    "einbech",   "hugel",     "rachel",      "veins",
+					"ayothaya",   "moscovia",   "in_sphinx2","in_sphinx3","in_sphinx4",  "in_sphinx5",
+					"pay_dun00",  "xmas_dun01", "xmas_dun02","abyss_01",  "abyss_02",    "abyss_03",
+					"ama_dun01",  "ama_dun02",  "ama_dun03", "ayo_dun01", "ayo_dun02",   "beach_dun",
+					"beach_dun2", "beach_dun3", "c_tower1",  "c_tower2",  "c_tower3",    "c_tower4",
+					"alde_dun01", "alde_dun02", "alde_dun03","alde_dun04","ein_dun01",   "ein_dun02",
+					"gef_dun00",  "gef_dun01",  "gef_dun02", "gef_dun03", "gon_dun01",   "gon_dun02",
+					"gon_dun03",  "juperos_01", "juperos_02","kh_dun01",  "kh_dun02";
+
+		setarray .@location2$[0],"ice_dun01", "ice_dun02", "ice_dun03", "ra_san01", "ra_san02", "ra_san03", "ra_san04", "ra_san05", "um_dun01", "um_dun02";
+		set .@total, getarraysize(.@location$);
+		set .@total2, getarraysize(.@location2$);
+		getmapxy(.@currentmap$, .@currentx, .@currenty, 0);
+		for(set .@i, 1; .@i < .@total; set .@i, .@i + 1) {
+			if( .@currentmap$ == .@location$[.@i] ) {
+				set .@place, .@i;
+				break;
+			}
+		}
+		if(.@place == -1) {
+			for(set .@i, 0; .@i < .@total2; set .@i, .@i + 1) {
+				if( .@currentmap$ == .@location2$[.@i]) {
+					set .@place, .@total + .@i;
+					break;
+				}
+			}
+		}
+		set .@temp, .@total + .@total2;
+		//debugmes "You are at " + .@place + " Map: " + .@currentmap$ + " .@i: " + .@i + " Max: " + .@temp;
+		if(.@place == -1 || .@place >= .@total+.@total2) 	debugmes "Mismatched loadevent in visit.txt. Map: " + .@currentmap$;
+		switch(.@place) {
+			case 1:  set visitTowns,  visitTowns | 1; break; //Aldebaran
+			case 2:  set visitTowns,  visitTowns | 2; break; //Alberta
+			case 3:  set visitTowns,  visitTowns | 4; break; //Amatsu
+			case 4:  set visitTowns,  visitTowns | 8; break; //Comodo
+			case 5:  set visitTowns,  visitTowns | 16; break; //Geffen
+			case 6:  set visitTowns,  visitTowns | 32; break; //Gonryun
+			case 7:  set visitTowns,  visitTowns | 64; break; //Izlude
+			case 8:  set visitTowns,  visitTowns | 128; break; //Jawaii
+			case 9:  set visitTowns,  visitTowns | 256; break; //Juno
+			case 10: set visitTowns, visitTowns | 512; break; //Louyang
+			case 11: set visitTowns, visitTowns | 1024; break; //Lutie
+			case 12: set visitTowns, visitTowns | 2048; break; //Morocc
+			case 13: set visitTowns, visitTowns | 4096; break; //Niflheim
+			case 14: set visitTowns, visitTowns | 8192; break; //Payon
+			case 15: set visitTowns, visitTowns | 16384; break; //Prontera
+			case 16: set visitTowns, visitTowns | 32768; break; //Umbala
+			case 17: set visitTowns, visitTowns | 65536; break; //Lighthalzen
+			case 18: set visitTowns, visitTowns | 131072; break; //Einbroch
+
+			case 19: //Sunken Ship
+			case 20:
+			case 21: set visitDungeons, visitDungeons | 1; break;
+
+			case 22: //Anthell
+			case 23: set visitDungeons, visitDungeons | 2; break;
+
+			case 24: //Byalan Island
+			case 25:
+			case 26:
+			case 27:
+			case 28:
+			case 29: set visitDungeons, visitDungeons | 4; break;
+
+			case 30: //Culvert Sewers
+			case 31:
+			case 32:
+			case 33: set visitDungeons, visitDungeons | 8; break;
+
+			case 91:
+			case 34: //Payon Dungeon
+			case 35:
+			case 36:
+			case 37: set visitDungeons, visitDungeons | 16; break;
+
+			case 38: //Pyramid
+			case 39:
+			case 40:
+			case 41:
+			case 42:
+			case 43: set visitDungeons, visitDungeons | 32; break;
+
+			case 44: //Labyrinth Forest [Hidden Temple]
+			case 45: set visitDungeons, visitDungeons | 64; break;
+
+			case 46: //Sphinx
+			case 87:
+			case 88:
+			case 89:
+			case 90:	set visitDungeons, visitDungeons | 128; break;
+			
+			case 47: set visitDungeons, visitDungeons | 256; break; //Magma Cavern
+
+			case 48: //Coal Mine [mjo_dun]
+			case 49:
+			case 50: set visitDungeons, visitDungeons | 512; break;
+
+			case 51: //Louyang Dungeon
+			case 52:
+			case 53: set visitDungeons, visitDungeons | 1024; break;
+
+			case 54: //Orc Camp [gef_fild10/gef_fild14]
+			case 55: set visitDungeons, visitDungeons | 2048; break; 
+
+			case 56: //Turtle Dungeon
+			case 57:
+			case 58: 
+			case 59: set visitDungeons, visitDungeons | 4096; break;
+
+			case 60: //Geffenia
+			case 61:
+			case 62:
+			case 63: if(countitem(7025)) set visitDungeons, visitDungeons | 8192; break; //32 bits
+
+			case 64: //Glastheim
+			case 65:
+			case 66:
+			case 67:
+			case 68:
+			case 69:
+			case 70:
+			case 71:
+			case 72:
+			case 73:
+			case 74:
+			case 75:
+			case 76:
+			case 77:
+			case 78:
+			case 79:
+			case 80: set visitDungeons, visitDungeons | 16384; break;
+
+			case 81: set visitTowns, visitTowns | 262144; break; //Einbech
+			case 82: set visitTowns, visitTowns | 524288; break; //Hugel
+			case 83: set visitTowns, visitTowns | 1048576; break; //Rachel
+			case 84: set visitTowns, visitTowns | 2097152; break; //Veins
+			case 85: set visitTowns, visitTowns | 4194304; break; //Ayothaya
+			case 86: set visitTowns, visitTowns | 8388608; break; //Moscovia
+			
+			case 92: //Xmas Dungeon(Toy Factory)
+			case 93: set visitDungeons, visitDungeons | 32768; break;
+			
+			case 94: //Abyss
+			case 95:
+			case 96: set visitDungeons, visitDungeons | 65536; break;
+
+			case 97: //Amatsu Dungeon
+			case 98:
+			case 99: set visitDungeons, visitDungeons | 131072; break;
+			
+			case 100: //Ayotha dungeon
+			case 101: set visitDungeons, visitDungeons | 262144; break;
+			
+			case 102: //Beach Dungeon
+			case 103:
+			case 104: set visitDungeons, visitDungeons | 524288; break;
+			
+			case 105: //Clock Tower
+			case 106:
+			case 107:
+			case 108:
+
+			case 109: //Aldebaran Dungeon
+			case 110:
+			case 111:
+			case 112: set visitDungeons, visitDungeons | 1048576; break;
+			
+			case 113: //Einbech Dungeon
+			case 114: set visitDungeons, visitDungeons | 2097152; break;
+			
+			case 115: //Geffen Dungeon
+			case 116:
+			case 117:
+			case 118: set visitDungeons, visitDungeons | 4194304; break;
+			
+			case 119: //Gonryun Dungeon
+			case 120:
+			case 121: set visitDungeons, visitDungeons | 8388608; break;
+			
+			case 122: //Juperos
+			case 123: set visitDungeons, visitDungeons | 16777216; break;
+			
+			case 124: //Kiel Dungeon
+			case 125: set visitDungeons, visitDungeons | 33554432; break;
+			
+			case 126: //Ice Dungeon
+			case 127:
+			case 128: set visitDungeons, visitDungeons | 67108864; break;
+			
+			case 129: //RA
+			case 130:
+			case 131:
+			case 132:
+			case 133: set visitDungeons, visitDungeons | 134217728; break;
+			
+			case 134: //Umbala Dungeon
+			case 135: set visitDungeons, visitDungeons | 268435456; break;
+			
+		}
+}

@@ -1,0 +1,162 @@
+//===== eAthena Script =======================================
+//= Heal Npc
+//===== By: ==================================================
+//= Lotsa People (1.x)
+//===== Current Version: =====================================
+//= 3.0
+//===== Compatible With: =====================================
+//= eAthena 0.1+;
+//===== Description: =========================================
+//= Healer NPC Which Heals For Free
+//===== Additional Comments: =================================
+//= 3.0 By massdriller, Changed and edited the script
+//= added other warp points of maps.
+//= 2.0 By Darkchild, Duplicates And Changed A Bit
+//= you can replace this script file by heal_payment.txt
+//= if you want that players have to pay their healings.
+//============================================================
+
+prontera,150,184,5	script	Healer#h1-1::Healer	936,{
+
+set $@Player$, strcharinfo(0);
+query_sql "SELECT `race`, `rank`, `points` FROM `races` WHERE `name` = '"+escape_sql($@Player$)+"'", @race$, @rank, @points;
+set @races1$, "Aven";
+set @races2$, "Daeva";
+set @races3$, "Onerei";
+set @races4$, "Elverre";
+set @races5$, "Human";
+if (@race$ == @races1$ || @race$ == @races2$ || @race$ == @races3$ || @race$ == @races4$) goto nothing;
+	set @name$, strcharinfo(0);
+	set @race$, "Human";
+	set @char_id, getcharid(0);
+	set @acc_id, getcharid(3);
+	set @rank, 0;
+	set @points, 0;
+	query_sql "REPLACE INTO `races` VALUES ("+@char_id+", "+@acc_id+", '"+escape_sql(@name$)+"', '"+escape_sql(@race$)+"', "+@rank+", "+@points+")";
+	mes "[Healer]";
+		percentheal 100,100;
+	mes "I have amazing healing powers!!";
+	mes "You look like a person who needs them! Have fun!";
+	close;
+nothing:
+	mes "[Healer]";
+		percentheal 100,100;
+	mes "I have amazing healing powers!!";
+	mes "You look like a person who needs them! Have fun!";
+	close;
+}
+
+morocc,159,96,5	duplicate(Healer)	Healer#h1-2	936
+ayothaya,155,111,5	duplicate(Healer)	Healer#h1-3	915
+geffen,121,61,5	duplicate(Healer)	Healer#h1-4	936
+umbala,94,162,5	duplicate(Healer)	Healer#h1-5	915
+payo1,98,121,4	duplicate(Healer)	Healer#h1-6	936
+alberta,119,64,5	duplicate(Healer)	Healer#h1-7	915
+aldebaran,134,123,5	duplicate(Healer)	Healer#h1-8	936
+izlude,125,118,5	duplicate(Healer)	Healer#h1-9	915
+xmas,149,136,5	duplicate(Healer)	Healer#h1-10	936
+comodo,188,162,5	duplicate(Healer)	Healer#h1-11	915
+amatsu,200,80,5	duplicate(Healer)	Healer#h1-12	936
+gonryun,164,130,5	duplicate(Healer)	Healer#h1-13	915
+yuno,152,186,5	duplicate(Healer)	Healer#h1-14	936
+niflheim,188,180,5	duplicate(Healer)	Healer#h1-15	915
+louyang,225,103,5	duplicate(Healer)	Healer#h1-16	936
+prt_monk,229,153,5	duplicate(Healer)	Healer#h1-17	936
+force_1-2,91,34,4	duplicate(Healer)	Healer#h1-18	936
+job_thief1,173,54,4	duplicate(Healer)	Healer#h1-19	936
+payon,176,107,5	duplicate(Healer)	Healer#h1-20	936
+einbech,79,103,5	duplicate(Healer)	Healer#h1-21	936
+einbroch,57,203,5	duplicate(Healer)	Healer#h1-22	936
+hugel,92,152,5	duplicate(Healer)	Healer#h1-23	936
+rachel,130,116,5	duplicate(Healer)	Healer#h1-24	936
+lighthalzen,165,85,5	duplicate(Healer)	Healer#h1-25	936
+
+//===== eAthena Script ======================================= 
+//= Custom Free Breeder aka Universal Renter (not reccomended)
+//===== By: ================================================== 
+//= eAthena Team
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena 1.0 Final +
+//===== Description: ========================================= 
+//= A Free PecoPeco and Falcon Breeder
+//===== Additional Comments: ================================= 
+//FIXED checkriding/cart/falcon funcs [Lupus]
+//Added Rebirth/Advanced Class support [Mass Zero]
+//Simplified the checks of job [Silentdragon]
+//============================================================ 
+
+
+payo1,105,137,5	script	Universal Rental Npc	934,{
+	mes "[Universal Rental Npc]";
+	mes "Hi, here you can rent Carts, Falcons or Pecopecos.";
+	next;
+
+L_Menu:
+	menu "Rent a Cart",L_Cart,"Rent a Falcon",L_Falcon,"Rent a Pecopeco",L_Peco,"Quit",L_Quit;
+	close;
+
+L_Cart:
+	if((BaseClass == Job_Merchant || BaseJob == Job_SuperNovice) && checkcart() == 0) goto L_Cart_Ok;
+	if(getskilllv(39)<1) goto L_Need_Skill;
+
+	mes "[Universal Rental Npc]";
+	mes "Sorry " + strcharinfo(0) + ", but I only rent carts to people with the Merchant job root, who have enough skills to handle a cart.";
+	close;
+
+L_Cart_Ok:
+	setcart;
+	goto L_Quit2;
+
+L_Need_Skill:
+	mes "[Universal Rental Npc]";
+	mes "Sorry you don't have the required skill to rent a cart.";
+	close;
+
+L_Falcon:
+	if(BaseJob != Job_Archer && BaseClass == Job_Archer && checkfalcon() == 0) goto L_Falc;
+	if(getskilllv(127)<1) goto L_Need_Skill2;
+
+	mes "[Universal Rental Npc]";
+	mes "Sorry " + strcharinfo(0) + ", but I only rent falcons to Hunters and Snipers who the ability to handle 'em.";
+	close;
+
+L_Falc:
+	setfalcon;
+	goto L_Quit2;
+
+L_Need_Skill2:
+	mes "[Universal Rental Npc]";
+	mes "Sorry you don't have the required skill to own a Falcon.";
+	close;
+
+L_Peco:
+	if (BaseJob != Job_Swordman && BaseClass == Job_Swordman && checkriding() == 0) goto L_Peco_Ok;
+	if(getskilllv(63)<1) goto L_Need_Skill3;
+
+	mes "[Universal Rental Npc]";
+	mes "Sorry " + strcharinfo(0) + ", but I only rent Pecopecos to Knights and Crusaders who have the ability to handle 'em.";
+	close;
+
+L_Peco_Ok:
+	setriding;
+	goto L_Quit2;
+
+L_Need_Skill3:
+	mes "[Universal Rental Npc]";
+	mes "Sorry you don't have the required skill to ride a Peco Peco.";
+	close;
+
+L_Quit:
+	mes "[Universal Rental Npc]";
+	mes strcharinfo(0) + ", please come back when you are ready to rent something.";
+	close;
+
+L_Quit2:
+	mes "[Universal Rental Npc]";
+	mes strcharinfo(0) + ", please come again when you want another...";
+	close;
+}
+
+                                                       

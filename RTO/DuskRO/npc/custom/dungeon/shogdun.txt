@@ -1,0 +1,47 @@
+// shogdun Ruins script
+//
+
+//warps
+oldtun3,94,19,0	warp	shogwarp01	1,1,shogdun05,225,22
+shogdun05,225,18,0	warp	shogwarp02	1,1,oldtun3,90,19
+shogdun05,133,276,0	warp	shogwarp03	1,1,shogdun04,100,78
+shogdun04,104,78,0	warp	shogwarp04	1,1,shogdun05,133,273
+shogdun04,68,280,0	warp	shogwarp05	1,1,shogdun03,231,193
+shogdun03,231,197,0	warp	shogwarp06	1,1,shogdun04,68,276
+shogdun03,128,292,0	warp	shogwarp07	1,1,shogdun03,104,200
+shogdun03,104,204,0	warp	shogwarp08	1,1,shogdun03,124,292
+shogdun03,24,51,0	warp	shogwarp09	1,1,shogdun03,6,188
+shogdun03,6,184,0	warp	shogwarp10	1,1,shogdun03,21,52
+shogdun03,150,291,0	warp	shogwarp11	1,1,shogdun02,157,289
+shogdun02,157,284,0	warp	shogwarp12	1,1,shogdun03,150,286
+shogdun03,12,148,0	warp	shogwarp13	1,1,shogdun02,13,137
+shogdun02,9,139,0	warp	shogwarp14	1,1,shogdun03,9,151
+shogdun03,287,144,0	warp	shogwarp15	1,1,shogdun02,287,137
+shogdun03,290,139,0	warp	shogwarp16	1,1,shogdun03,290,146
+shogdun03,149,5,0	warp	shogwarp17	1,1,shogdun01,105,189
+shogdun01,105,193,0	warp	shogwarp18	1,1,shogdun03,149,9
+
+//goes outside
+//shogdun01,103,15,0	warp	shogwarp19	1,1,?????,?,?
+//?????,?,?,0	warp	shogwarp20	1,1,shogdun01,103,18
+
+//monsters
+//-- shogdun Ruins 5
+shogdun05,0,0,0,0	monster	Feeder	2605,10,0,0,0
+shogdun05,0,0,0,0	monster	Ankheg	2640,20,0,0,0
+shogdun05,0,0,0,0	monster	Mudwight	2641,70,0,0,0
+
+//-- shogdun Ruins 4
+shogdun04,0,0,0,0	monster	Feeder	2605,30,0,0,0
+
+//-- shogdun Ruins 3
+shogdun03,0,0,0,0	monster	Hollow Blade	2601,40,0,0,0
+shogdun03,0,0,0,0	monster	Hollow Bolt	2602,40,0,0,0
+
+//-- shogdun Ruins 2
+shogdun02,0,0,0,0	monster	Riot	2644,35,0,0,0
+shogdun02,0,0,0,0	monster	Hollow Blade	2601,40,0,0,0
+shogdun02,0,0,0,0	monster	Hollow Bolt	2602,40,0,0,0
+
+//-- shogdun Ruins 1
+shogdun01,0,0,0,0	monster	Riot	2644,40,0,0,0

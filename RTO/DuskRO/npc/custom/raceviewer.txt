@@ -1,0 +1,32 @@
+payo1,75,125,4	script	Race Viewer	904,{
+setarray $races$[0],"Mortal","Seraphim","Descendant of Fenrir","Elverre Leader","Terror of Hell","Cherubim","Black Fury","Honor Guard","Arch Daeva","Throne","Bone Gnawer","Captain","Greater Daeva","Virtue","Wild Fang","Ranger","Soldier Daeva","Power","Child of Gaia","Woodsman","Lesser Daeva";
+if (BaseLevel >= 1) goto L_CHARACTER;
+
+L_CHARACTER:
+mes "This retrieves character and race information.";
+next;
+mes "Would you like to view a character?";
+menu "Yes",-,"No",L_CLOSE;
+mes "Which character would you like to view?";
+input .@name$;
+query_sql "SELECT `char_id`, `account_id`, `char_num`, `class`, `base_level`, `job_level`, `zeny` FROM `char` WHERE `name` = '"+escape_sql(.@name$)+"'",.@char_id,.@account_id,.@char_num,.@class,.@base_level,.@job_level,.@zeny;
+query_sql "SELECT `race`, `rank`, `points` FROM `races` WHERE `char_id` = "+escape_sql(.@char_id),.@race$,.@rank,.@points;
+if(!.@char_id){
+	mes "Character "+.@name$+" does not exist!";
+	next;
+	goto L_CHARACTER;
+	}
+query_sql "SELECT `userid` FROM `login` WHERE `account_id` = "+escape_sql(.@account_id),.@userid$;
+next;
+mes "Class: "+jobname(.@class);
+mes "Base Level: "+.@base_level;
+mes "Job Level: "+.@job_level;
+mes "Race: "+.@race$;
+mes "Rank: "+$races$[.@rank];
+mes "Points: "+.@points;
+mes "Zeny: "+.@zeny;
+menu "View another character",L_CHARACTER,"Cancel",-;
+
+L_CLOSE:
+	close;
+}

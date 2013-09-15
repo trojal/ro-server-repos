@@ -1,0 +1,157 @@
+================================================================================================================================================
+== Current Skill Formulas ======================================================================================================================
+================================================================================================================================================
+
+---- Mage --------------------------------------------------------------------------------------------------------------------------------------
+
+	Napalm Beat			skillratio += 5*skill_lv+50;
+
+	Soul Strike			skillratio += 5*skill_lv; --> if undead, skillratio += 100;
+
+	Cold/Fire/Lightning Bolt	skillratio -= 5*skill_lv;
+
+	Fireball			skillratio += 40*skill_lv;
+
+	Frost Diver			skillratio += 25*skill_lv+50;
+
+	Inferno				skillratio += 5*skill_lv;
+					xxsp & -15% max sp; Minimum Max SP to Cast = 
+					a flame will go out after giving 6...15 hits
+
+	Thunderstrike			skillratio += 30*skill_lv;
+	
+---- Wizard ------------------------------------------------------------------------------------------------------------------------------------
+
+	Fireblast			skillratio += 25*skill_lv;
+					80sp & -10% max sp; Minimum Max SP to Cast = 
+
+	Frost Nova			skillratio += 20*skill_lv+100;
+					80sp & -10% max sp; Minimum Max SP to Cast = 
+
+	Jupitel				skillratio += 10*skill_lv;
+					10...100sp & -5% max sp; Minimum Max SP to Cast = 
+					
+	Fire Pillar			skillratio -= 80-skill_lv;
+					44...80sp; Minimum Max SP to Cast = 80
+
+	Fire Ivy(Shield)		skillratio += 15*skill_lv;
+					xxsp & -15% max sp; Minimum Max SP to Cast = 
+					a flame will go out after giving 1...6 hits
+
+	Waterball			skillratio += 5*skill_lv-50;
+					80sp & -5% max sp; Minimum Max SP to Cast = 
+					1...5 balls of water are hurled at the target.  If standing in water, an extra ball of water is hurled for each water-filled cell adjacent to you.
+
+	Meteor				skillratio += 50*skill_lv;
+					200sp & -80% max sp; Minimum Max SP to Cast = 
+					Summon 7 meteors from above to rain over the target area in sequence.
+
+	Vermilion			skillratio += 10*skill_lv+50;
+
+	Stormgust			skillratio += 15*skill_lv+50;
+WZ_VERMILION#
+    10 Levels 
+  ^007700 15...6s^000000 Cast
+  ^007700 1/2...5s^000000 Delay
+  ^007700 1s^000000 Immobile
+  ^007700 4s^000000 Duration
+  ^000077 100sp^000000 &^0000FF 90% MAX SP^000000
+  ^000077 x1 Yellow Gemstone^000000
+      Command the heavens and part the air with a mighty torrent of thunderbolts to decimate your foes.
+      Smuther your enemies with the wrath of a blizzard, detouring movement and freezing some enemies in solid ice.  Every 1/3s an enemy is electrocuted for^FF0000 110...200% MATK^000000 lightning damage amd blinded.
+#
+WZ_STORMGUST#
+   10 Levels 
+  ^007700 9...6s^000000 Cast
+  ^007700 1...3s^000000 Delay
+  ^007700 No^000000 Immobile
+  ^007700 4s^000000 Duration
+  ^000077 120sp^000000 &^0000FF 70% MAX SP^000000
+  ^000077 x1 Blue Gemstone^000000
+      Smuther your enemies with the wrath of a blizzard, detouring movement and freezing some enemies in solid ice.  Every 1/3s while in the blizzard, an enemy is struck for^FF0000 165...300% MATK^000000 water damage.
+#
+WZ_ICEWALL#
+   10 Levels 
+  ^007700 Instant^000000 Cast
+  ^007700 No^000000 Delay
+  ^007700 No^000000 Immobile
+  ^007700 5...50s^000000 Duration
+  ^000077 80sp^000000
+      Summon a wall of thick icicles to create a cage on target area, trapping any unfortunate victim inside until the walls melt or the victim breaks free.  Each Icicle has^FF0000 500...5000 HP^000000, and will lose health over time on account of melting.
+#
+WZ_EARTHSPIKE#
+   5 Levels 
+  ^007700 1s^000000 Cast
+  ^007700 1/4...3/4s^000000 Delay
+  ^007700 1/2s^000000 Immobile
+  ^007700 Instant^000000 Duration
+  ^000077 60sp^000000 &^0000FF 5% MAX SP^000000
+      Summon forth blade-like rocks that rise into the target enemy, hitting^FF0000 5...9^000000 times for^FF0000 110...150% MATK^000000 earth damage per hit.
+#
+WZ_HEAVENDRIVE#
+   5 Levels 
+  ^007700 1s^000000 Cast
+  ^007700 1...1/2s^000000 Delay
+  ^007700 1/2s^000000 Immobile
+  ^007700 1/2s^000000 Duration
+  ^000077 80sp^000000 &^0000FF 5% MAX SP^000000
+      Conjure forth a field of jagged stone spikes that rise and crush into the target^FF0000 5x5^000000 area, striking any enemy there^FF0000 3...6^000000 for^FF0000 110...150% MATK^000000 earth damage per hit.
+#
+
+---- High Wizard -------------------------------------------------------------------------------------------------------------------------------
+
+	Napalm Vulcan			skillratio += 20*skill_lv;
+	Gravitation	!maxlv10!	damage = ( (Your Level + 1)*3 - (Target's Level + 1) ) * skill_lv;
+					deals 100...4000 damage per impact.
+					level 1 covers a large area but is weak.
+					level 10 covers a very small area, but is strong.
+
+---- Archer ------------------------------------------------------------------------------------------------------------------------------------
+
+	Barrage				atkratio += (skill_lv+1)/2 * 4; (-4% per arrow fired, -20% at max for 5 arrows fired)
+	Arrow Shower			atkratio += 5*skill_lv; (hits twice per target)
+	Chargeshot			atkratio += 3*STR
+
+---- Hunter ------------------------------------------------------------------------------------------------------------------------------------
+
+	Landmine			damage = skill_lv * INT * [random number from 5 to 10];, rogues also have this skill
+	Blastmine			damage = skill_lv * INT * [random number from 5 to 15];, rogues also have this skill
+	Claymore			damage = skill_lv * INT * [random number from 10 to 25];
+	Freezing			atkratio += skill_lv * INT;
+
+---- Ninja -------------------------------------------------------------------------------------------------------------------------------------
+
+
+---- Gunslinger --------------------------------------------------------------------------------------------------------------------------------
+
+
+---- Thief -------------------------------------------------------------------------------------------------------------------------------------
+
+	Envenom				damage += skill_lv*15 + (if(affected by EDP) skill_lv_EDP*80 );
+	Sand Throw			atkratio -= 75;
+
+---- Rogue -------------------------------------------------------------------------------------------------------------------------------------
+
+	Backstab			atkratio += 100*skill_lv + (Your Level - Target's Level) * 10; [ignores defense]
+	Raid				atkratio += 80*skill_lv + 100; [ignores flee]
+
+---- Assassin ----------------------------------------------------------------------------------------------------------------------------------
+
+	Venom Splasher			atkratio += 400+50*skill_lv + (if(affected by EDP) skill_lv_EDP*150 );
+	Grimtooth	!maxlv 10!	damage = skill_lv * INT + 500;
+	Poison React			skillratio += 30*skill_lv + (if(affected by EDP) skill_lv_EDP*200 );
+
+---- Slayer ------------------------------------------------------------------------------------------------------------------------------------
+
+	Meteor Assault			atkratio += 30*skill_lv;
+	Enchant Deadly Poison		atkratio += +15%...75% dmg, poison chance = 6%...15%
+		+150% damage to soul breaker while EDP'd
+		+200% damage to meteor assualt while EDP'd
+		+100% damage to venom splasher while EDP'd
+		+50% damage to sonic blow while EDP'd
+		+500 points of damage to venom knife while EDP'd
+		+700% damage to envenom while EDP'd
+
+---- Monk --------------------------------------------------------------------------------------------------------------------------------------
+
+	Extremity Fist			atkratio += (Your SP / 10 + 8) * 100 / (Target's Level) * (Your Level);

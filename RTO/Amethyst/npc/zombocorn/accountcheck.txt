@@ -1,0 +1,15 @@
+-	script	OnPCLoginEvent	-1,{
+	if (!#ACX) set #ACX,gettime(5)+1;
+	if (#ACX==$ACX) end;
+	set #ACX,$ACX;
+	set $ACZ,$ACZ+1;
+	end;
+OnClock0000:
+	logmes "Server Traffic : "+$ACZ+" Users, "+gettimestr("%Y-%m/%d",8);
+	set $ACX,gettime(4)+1;
+	set $ACZ,0;
+	end;
+OnInit:
+	if ($ACX==gettime(5)+1) end;
+	goto OnClock0000;
+}

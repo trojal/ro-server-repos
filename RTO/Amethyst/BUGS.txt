@@ -1,0 +1,82 @@
+This will be the start of our bugs log. All bugs need to be filed in here even if you can fix it right away.
+All bug reports will be filed in this format:
+
+==[Revision:Severity]==
+[Your Name]
+Name of bug:
+Description:
+Possible fix:
+Filed on: <date>
+Assigned to: 
+
+--------------
+
+Please include the ------------ at the end to separate one bug report from another.
+
+==[Revision:Severity]==: "Revision" is the revision number of OUR SVN that you found the bug on. (Should be the most current revision, just include it incase we update and forget to fix it or something)
+Replace the word "Severity" with either "Low", "Medium", "High", or "Needs Attention Now".
+**When the bug has been fixed, replace this field with ==[Revision:--FIXED--]== so we know it has been fixed.**
+
+Name of Bug: Just make up a name suitable for the bug like "Poringsmash timer bug".
+
+Description: Explain step by step how to reproduce the bug. If you can't, simple explain what happens when the bug is produced.
+
+Possible fix: Think of an approach we can use to fix the bug. If you can't, just leave it blank.
+
+Filed on: Provide the date in which you found the bug. mm/dd/yyyy
+
+Assigned to: When you're submitting the bug put "N/A" unless you plan on fixing the bug, then you put your name. **Whoever plans on fixing the submitted bug then put your name so we know who fixed it.** 
+
+The person who fixed the bug may add "Notes: " if they wish to add a note to the bug on why it was acting that way. Add it under the "Assigned to: " field.
+------------------------------------------------------------
+
+==[r155:Low:--Possibly Fixed--]==
+[Axiom]
+Name of bug: PVP ladder bug
+Description: PVP ladder length in days goes into the negative "There are -7 days before ladder 2 is over"
+Possible fix:
+Filed on: 12/13/2007
+Assigned to: Silent
+Notes: Could be fixed. Needs testing. I added a check for over 50 and lower than 1.
+
+==[r129:--Fixed--]==
+[Axiom]
+Name of bug: Overall Minigame Bug
+Description: 
+- All the timers are messed up on all the NPCs.
+- Some of the minigame scripts don't warp you back to the station
+- Lightsout minigame is backwards making you turn all the lights ON instead of being OFF >_>
+- Possibly more bugs. Need to fix these ones before further testing.
+Possible fix: Look at how the timers work on other scripts and just use the same idea. (or copy?)
+Filed on: 12/11/2007
+Assigned to: Silent
+Notes: Needs bug testing for further bugs. For now, everything works fine.
+
+==[r129:Low]==
+[Axiom]
+Name of bug: Bug Package!
+Description:
+- Item 1601 (Rod[3]) needs to be removed from the novice training guy since it has been modified.
+- Double warp portal at @monk_test (somewhere around (261,117)
+- Incubus is supposed to drop white pot and white herb, not two white herbs
+Possible fix: Rod[3] can be changed to mage test prize, double warp can be removed easily, and items can be modified from incubus.
+Filed on: 12/11/2007
+Assigned to: N/A
+
+==[r129:--FIXED]==
+[Axiom]
+Name of bug: MVPs Don't Spawn
+Description: No MVP spawns anywhere. I checked.
+Possible fix: 
+Filed on: 12/11/2007
+Assigned to: Axiom
+Notes: lawl. All of them were commented out in the spawn files. Nice job whoever did that. :)
+
+==[r129:--FIXED]==
+[Axiom]
+Name of bug: Dynamic Mob Glitch
+Description: Mobs tend to get a negative value for def when they get buffed of buff themselves.
+Possible fix:
+Filed on: 12/11/2007
+Assigned to: Silent
+Notes: I made a typo :<

@@ -1,0 +1,299 @@
+// Arrow Crafting Database
+//
+// Structure of Database:
+// SourceID,MakeID1,MakeAmount1,...,MakeID5,MakeAmount5
+
+
+//Piece of Egg Shell --> 30 Sharp Arrows
+7032,1764,30
+//Skel Bone --> 10 Rusty Arrows
+932,1762,10
+//Moth Dust --> 10 Sleep Arrows
+1057,1768,10
+//Stone Heart --> 100 Stone Arrows
+954,1756,100
+//Brigan --> 50 Steel Arrows
+7054,1753,50
+//Cyfar --> 20 Steel Arrows
+7053,1753,20
+//Mane --> 10 Fire Arrows
+1028,1752,10
+//Orcish Voucher --> 10 Silver Arrows
+931,1751,10
+//Witherless Rose --> 2000 Sleep Arrows, 2000 Mute Arrows, 500 Stun Arrows
+748,1768,2000,1769,2000,1758,500
+//Frozen Rose --> 3000 Frozen Arrows
+749,1759,3000
+// Old Blue Box --> 500 Sharp Arrows, 500 Sleep Arrows
+603,1764,500,1768,500
+// Dead Branch --> 40 Mute Arrows
+604,1769,40
+// Amulet --> 40 Curse Arrows
+609,1761,40
+// Emperium --> 600 Immaterial Arrows, 600 Mute Arrows, 600 Oridecon Arrows
+714,1757,600,1769,600,1765,600
+// Yellow Gemstone --> 30 Stone Arrows
+715,1756,30
+// Red Gemstone --> 30 Fire Arrows
+716,1762,30
+// Blue Gemstone --> 30 Crystal Arrows
+717,1754,30
+// Cursed Ruby --> 300 Curse Arrows
+724,1761,300
+// Cracked Diamond --> 150 Sharp Arrows
+733,1764,150
+// Rough Oridecon --> 50 Oridecon Arrows
+756,1765,50
+// Rough Elunium --> 25 Oridecon Arrows
+757,1765,25
+// Tree Root --> 10 Arrows
+902,1750,10
+// Scorpion Tail --> 30 Poison Arrows
+904,1763,30
+// Jellopy --> 5 Arrows
+909,1750,5
+// Garlet --> 20 Iron Arrows
+910,1770,20
+// Scell --> 10 Steel Arrows
+911,1753,10
+// Zargon --> 50 Silver Arrows
+912,1751,50
+// Tooth of Bat --> 10 Arrow of Shadow
+913,1767,10
+// Wolf Claw --> 15 Iron Arrows
+920,1770,15
+// Orc's Fang --> 40 Iron Arrows
+922,1770,40
+// Evil Horn --> 100 Arrows of Shadow, 10 Flash Arrows, 5 Stun Arrows
+923,1767,100,1760,10,1758,5
+// Venom Canine --> 50 Poison Arrow
+937,1763,50
+// Bee Sting --> 20 Rusty Arrow
+939,1762,20
+// Horn --> 35 Steel Arrows
+947,1770,35
+// Cactus Needle --> 50 Arrows
+952,1750,50
+// Gill --> 80 Iron Arrows, 50 Crystal Arrows
+956,1770,80,1754,50
+// Decayed Nail --> 10 Rusty Arrows, 10 Arrow of Shadow
+957,1762,10,1767,10
+// Horrendous Mouth --> 50 Arrows of Shadow
+958,1767,50
+// Stinky Scale --> 30 Poison Arrows
+959,1763,30
+// Heroic Emblem --> 10 Oridecon Arrows, 50 Stun Arrows
+968,1765,10,1758,50
+// Gold --> 500 Flash Arrows, 500 Oridecon Arrows
+969,1760,500,1765,500
+// Oridecon --> 1000 Oridecon Arrows
+984,1765,1000
+// Elunium --> 1000 Steel Arrows, 500 Stun Arrows
+985,1753,1000,1758,500
+// Red Blood --> 500 Fire Arrows
+990,1752,500
+// Crystal Blue --> 500 Crystal Arrows
+991,1754,500
+// Wind of Verdure --> 500 Arrows of Wind
+992,1755,500
+// Green Live --> 500 Stone Arrows
+993,1756,500
+// Flame Heart --> 3000 Fire Arrows, 500 Stun Arrows
+994,1752,3000,1758,500
+// Mystic Frozen --> 3000 Crystal Arrows, 500 Frozen Arrows
+995,1754,3000,1759,500
+// Rough Wind --> 1500 Arrows of Wind, 500 Sleep Arrows
+996,1755,3000,1768,500
+// Great Nature --> 1500 Stone Arrows, 500 Flash Arrows
+997,1756,3000,1760,500
+// Iron --> 500 Iron Arrows
+998,1770,500
+// Steel --> 500 Steel Arrows
+999,1753,500
+// Star Crumb --> 60 Flash Arrows
+1000,1760,60
+// Star Dust --> 30 Flash Arrows
+1001,1760,30
+// Iron Ore --> 100 Iron Arrows
+1002,1770,100
+// Coal --> 50 Arrows of Shadow
+1003,1767,50
+// Phracon --> 50 Iron Arrows
+1010,1770,50
+// Emveretarcon --> 200 Iron Arrows, 200 Silver Arrows
+1011,1770,200,1751,200
+// Mole Claw --> 50 Iron Arrows, 60 Stone Arrows
+1018,1770,50,1756,60
+// Trunk --> 40 Arrows
+1019,1750,40
+// Dokebi Horn --> 40 Iron Arrows, 100 Arrows of Shadow
+1021,1770,40,1767,100
+// Porcupine Quill --> 70 Arrows, 30 Stone Arrows
+1027,1750,70,1756,30
+// Mantis Scythe --> 100 Sharp Arrows
+1031,1764,100
+// Dragon Canine --> 10 Oridecon Arrows, 50 Iron Arrows
+1035,1765,10,1770,50
+// Little Evil Horn --> 20 Curse Arrows, 50 Iron Arrows
+1038,1761,20,1770,50
+// Lantern --> 80 Iron Arrows
+1041,1770,80
+// Orc Claw --> 30 Steel Arrows
+1043,1753,30
+// Zenorc's Fang --> 50 Rusty Arrows
+1044,1762,50
+// Ancient Tooth --> 20 Steel Arrows, 300 Crystal Arrows
+1053,1753,20,1754,300
+// Fang --> 20 Sharp Arrows, 40 Silver Arrows
+1063,1764,20,1751,40
+// Reins --> 100 Iron Arrows, 50 Steel Arrows
+1064,1770,100,1753,50
+// Fine-grained Trunk --> 20 Arrows
+1066,1750,20
+// Solid Trunk --> 20 Arrows
+1067,1750,20
+// Barren Trunk --> 20 Arrows
+1068,1750,20
+// Clock Hand --> 50 Sleep Arrows, 100 Arrows
+1095,1768,50,1750,100
+// Manacles --> 50 Steel Arrows
+1098,1753,50
+// Unicorn Horn --> 10000 Silver Arrows
+2257,1751,10000
+// Opera Masque --> 2000 Steel Arrows, 400 Mute Arrows
+2281,1753,2000,1769,400
+// Mr. Scream --> 2000 Sharp Arrows, 3000 Steel Arrows
+2288,1764,2000,1753,3000
+// Welding Mask --> 2000 Steel Arrows, 400 Stun Arrows
+2292,1753,2000,1758,400
+// Glittering Jacket --> 4000 Flash Arrows
+2319,1760,4000
+// Wooden Mail --> 5000 Arrows, 1000 Iron Arrows
+2328,1750,5000,1770,1000
+// Wooden Mail (Slotted) --> 1000 Arrows, 700 Iron Arrows
+2329,1750,1000,1770,700
+// Silver robe --> 7000 Silver Arrows
+2332,1751,7000
+// Silver Robe (Slotted) --> 7000 Silver Arrows, 1000 Immaterial Arrows
+2333,1751,7000,1757,1000
+// Shackles --> 700 Iron Arrows, 50 Steel Arrows
+2408,1770,700,1753,50
+// Matyr's Leash --> 150 Arrows of Wind, 100 Steel Arrows, 10 Sharp Arrows
+2618,1755,150,1753,100,1764,10
+// Fin Helm --> 6000 Crystal Arrows, 2000 Steel Arrows
+5014,1754,6000,1753,2000
+// Ogre Tooth --> 30 Steel Arrows, 10 Rusty Arrows
+7002,1753,30,1762,10
+// Stiff Horn --> 20 Stun Arrows
+7008,1758,20
+// Tail of Steel Scorpion --> 800 Steel Arrows, 400 Poison Arrow
+7010,1753,800,1763,400
+// Young Twig --> 10000 Mute Arrows
+7018,1769,10000
+// Loki's Whispers --> 10000 Arrows of Shadow
+7019,1767,10000
+// Mother's Nightmare --> 10000 Curse Arrows
+7020,1761,10000
+// Foolishness of the Blind --> 10000 Flash Arrows
+7021,1760,10000
+// Old Hilt --> 1000 Oridecon Arrows
+7022,1765,1000
+// Blade of Darkness --> 1000 Sharp Arrows, 2000 Arrows of Shadow
+7023,1764,1000,1767,2000
+// Bloody Edge --> 2000 Sharp Arrows, 2000 Curse Arrows
+7024,1764,2000,1761,2000
+// Lucifer's Lament --> 1000 Stun Arrows, 1000 Mute Arrows, 1000 Sleep Arrows
+7025,1758,1000,1769,1000,1768,1000
+// Key of the Clock Tower --> 500 Oridecon Arrows
+7026,1765,500
+// Key of the Underground --> 1000 Arrows of Shadow
+7027,1767,1000
+// Matchstick --> 3000 Fire Arrows
+7035,1752,3000
+// Fang of Garm --> 300 Crystal Arrows
+7036,1754,300
+
+//New Ingredients
+
+//Ice Cubic --> 100 Crystal Arrows
+7066,1754,100
+//Stone Fragment --> 150 Stone Arrows
+7067,1756,150
+//Burnt Tree --> 250 Fire Arrows
+7068,1752,250
+//Destroyed Armor --> 150 Steel Arrows
+7069,1753,150
+//Burning Heart --> 150 Fire Arrows
+7097,1752,150
+//Live Coal --> 100 Fire Arrows
+7098,1752,100
+//Sharp Leaf --> 30 Sharp Arrows
+7100,1764,30
+//Piece of Shield --> 100 Steel Arrows, 100 Oridecon Arrows, 300 Immaterial Arrows
+7108,1753,100,1765,100,1757,300
+//Shining Spear Blade --> 100 Oridecon Arrows
+7109,1765,100
+//Burning Horseshoe --> 100 Steel Arrows
+7120,1753,100
+//Dragon Skin --> 100 Steel Arrows, 50 Cursed Arrows, 50 Mute Arrows
+7123,1753,100,1761,50,1769,50
+//Piece of Bamboo --> 100 Arrows
+7150,1750,100
+//Poisonous Toad Skin --> 20 Poison Arrows
+7155,1763,20
+//Hard Feeler --> 20 Sharp Arrows
+7163,1764,20
+//Solid Peach --> 30 Stun Arrows
+7164,1758,30
+//Leopard Claw --> 10 Sharp Arrows
+7172,1764,10
+//Armor Piece of Dullahan --> 150 Arrows of Shadow
+7210,1767,150
+//Tangled Chain --> 50 Steel Arrows, 50 Arrows of Shadow
+7221,1753,50,1767,50
+//Cat's Eye Stone --> 200 Arrows of Wind
+7263,1755,200
+//Dark Crystal Fragment --> 30 Cursed Arrows, 50 Arrows of Shadow
+7315,1761,30,1767,50
+//Insect Leg --> 10 Sharp Arrows, 50 Poison Arrows
+7316,1764,10,1763,50
+//Old Pick --> 100 Rusty Arrows, 50 Steel Arrows
+7318,1762,100,1753,50
+//Used Iron Plate --> 100 Steel Arrows, 100 Rusty Arrows
+7319,1753,100,1762,100
+//Crystal Fragment --> 10 Flash Arrows, 30 Sleep Arrows
+7321,1760,10,1768,30
+//Battered Kettle --> 50 Steel Arrows
+7323,1753,50
+//Will of the Darkness --> 30 Cursed Arrows, 30 Poison Arrows, 50 Arrows of Shadow
+7340,1761,30,1763,30,1767,50
+//Golden Ornament --> 200 Silver Arrows, 300 Holy Arrows
+7435,1751,200,1772,300
+//Cursed Seal --> 50 Cursed Arrows, 50 Mute Arrows
+7442,1761,50,1769,50
+//Green Bijou --> 100 Stone Arrows, 80 Poison Arrows
+7445,1756,100,1763,80
+//Blue Bijou --> 50 Arrows of Wind, 50 Crystal Arrows, 80 Frozen Arrows
+7446,1755,50,1754,50,1759,80
+//Red Bijou --> 100 Fire Arrows, 80 Flash Arrows
+7447,1752,100,1760,80
+//Yellow Bijou --> 50 Silver Arrows, 50 Immaterial Arrows, 80 Sleep Arrows
+7448,1751,50,1757,50,1768,80
+//Skeletal Armor Piece --> 500 Immaterial Arrows, 200 Arrows of Shadow, 100 Oridecon Arrows
+7450,1757,500,1767,200,1765,100
+//Fire Dragon Scale --> 300 Fire Arrows, 300 Stun Arrows
+7451,1752,300,1758,300
+//Valhalla's Flower --> 600 Immaterial Arrows, 600 Holy Arrows, 600 Sharp Arrows
+7510,1757,600,1772,600,1764,600
+//Rune of Darkness --> 300 Arrows of Shadow, 150 Flash Arrows
+7511,1767,300,1760,150
+//Ice Heart --> 50 Crystal Arrows, 50 Frozen Arrows
+7561,1754,50,1759,50
+//Ice Scale --> 150 Crystal Arrows, 400 Frozen Arrows, 200 Mute Arrows
+7562,1754,150,1759,400,1769,200
+//Will of the Red Darkness --> 200 Cursed Arrows, 200 Poison Arrows, 100 Arrows of Shadow
+7566,1761,200,1763,200,1767,100
+//Crackling Skull --> 50 Arrows of Shadow, 50 Cursed Arrows
+7752,1767,50,1761,50
+//Broken Farm Tool --> 50 Rusty Arrows, 10 Iron Arrows, 20 Cursed Arrows
+7753,1762,50,1770,10,1761,20

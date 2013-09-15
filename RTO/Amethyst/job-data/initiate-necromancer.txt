@@ -1,0 +1,303 @@
+						NECROMANCER	[nothing further]
+Novice ----------> 	Initiate ---------------|
+						Shaman		[northing further]
+
+skill name - usage - max level - required skills (if)
+type	skill description, includes calculations
+of
+skill
+--------------------------------------------------------------------------------------------------------
+Necromancer 				Max Job Lv 100				26 / 26 skills	
+
+Necromancy - Passive - 10 Lv's
+n/a	Increases the base level of animated minions by 2 levels per Skill Lv.  Minions cannot possess a 
+	level higher than your own.  You also gain [ Skill Lv * 5 ]% resistance to Undead Property 
+	damage, skills, and spells.
+
+Leadership - Passive - 10 Lv's
+n/a	Increases the number of animated minions you can control at one time by [ Skill Lv ].  At Skill Lv 
+	10 for example, you can summon up to 10 minions.
+
+Dark Mastery - Passive - 10 Lv's - Requires: Necromancy Lv 10, Torment Lv 5, Graverobber Lv 1
+n/a	Through repeated blood rituals and exposure to dark and undead magics, you've gained a greater 
+	and infact personal understanding of the dark arts - but at the cost of your mortality.
+	Skill Lv 1 .....................	-4% Max HP/SP, Become Undead Race & Shadow Lv 1 Property
+	Skill Lv 2 .....................	-8% Max HP/SP, +1% Speed
+	Skill Lv 3 .....................	-12% Max HP/SP, +1% Speed
+	Skill Lv 4 .....................	-16% Max HP/SP, +2% Speed
+	Skill Lv 5 .....................	-20% Max HP/SP, +2% Speed, Upgrade to Shadow Lv 2 Property
+	Skill Lv 6 .....................	-24% Max HP/SP, +3% Speed
+	Skill Lv 7 .....................	-28% Max HP/SP, +3% Speed
+	Skill Lv 8 .....................	-32% Max HP/SP, +4% Speed
+	Skill Lv 9 .....................	-36% Max HP/SP, +4% Speed, Upgrade to Shadow Lv 3 Property
+	Skill Lv 10 ....................	-40% Max HP/SP, +5% Speed, Body becomes Ethereal [cosmetic]
+
+Shadow Blast - Global - 5 Lv's - Requires : Dark Mastery Lv 1
+spell	SP : 40		Cast : 0.8 s.	Recharge : 0.8 s.
+	Catalyst : 1x Soul Shard
+	Sacrifice 10% of maximum health.  All creatures, friend or foe - including yourself, with a [ Skill Lv 
+	- 1 ] cell radius of your position is blasted with a Shadow Property wave of dark energy.  Damage 
+	dealt is [ Skill Lv * Vit / 2 + 100 ]% of your Matk.  At Skill Lv 1 this spell will only target yourself.  
+	( The damage from this spell is also useful for healing your undead minions )
+		note: 
+		ideally, a black-tinted shockwave visual would be best.  but i do not know if there is one.
+
+Shadow Flare - Global - 5 Lv's - Requires : Dark Mastery Lv 10, Shadowblast Lv 5
+spell	SP : 30		Cast : 3 s.	Recharge : 0.8 s.
+	Catalst : 1x Soul Shard
+	Sacrifice 5% of maximum health.  Unleash a shadowy, swirling ball of energy that slams into 
+	target enemy, dealing [ Skill Lv * Vit + 50 ]% of your Matk as shadow property damage to them 
+	and anything adjacent to them (3x3).  ( This skill is extremely useful to damage a single target 
+	that's being mobbed by your own minions! )
+		note:
+		there should be a darkness-based soul strike that a couple of bosses use in there somewhere.
+		it's like normal soul strike, but black.  use that visual.
+
+Dark Wall - Global - 5 Lv's - Requires : Dark Mastery Lv 5
+spell	SP : 60		Cast : 1.5 s.	Recharge : 2 s.		Duration : 8 s.
+	Catalyst : 2x Soul Shards
+	Sacrifice 15% of maximum health.  Create a 1 cell thick, [ Skill Lv * 2 ] cell wide wall of lingering 
+	dark energy at target location.  Any creature, friend or foe - including yourself, that passes through 
+	or stays inside the wall recieves [ Skill Lv * Vit / 3 + 50 ]% of your Matk as shadow property 
+	damage.  ( Just like Firewall. Use this to create a barrier between your opponents and your 
+	minions. )
+		note:
+		i do not think there is a visual in the game that could be used for this, therefore it would
+		be good to extract the firewall visuals and grayscale them, then darken them.
+
+Dark Void - Global - 5 Lv's - Requires : Dark Mastery Lv 10, Dark Wall Lv 5
+spell	SP : 120	Cast : 2 s.	Recharge : n/a		Duration : 12 s.
+	Catalyst : 3x Soul Shards
+	Sacrifice 20% of maximum health.  Create a 7x7 area of lingering dark energy.  All creatures, 
+	friend or foe - including yourself, will recieve [ x ] shadow property damage each time a skill or 
+	spell is used while inside the void.  This is considered a ground spell, and can be countered with 
+	other ground-based spells.
+		note:
+		use the above "blackened" firewall visual for each cell.
+
+Graverobber - Passive - 10 Lv's - Requires : Necromancy Lv 1, Leadership Lv 1
+n/a	Whenever you slay a fleshy creature, there is a [ Skill Lv ]% chance that you will recieve one of 
+	several different catalyst components.  Only one component can be gained from any death.  
+	These items can be dropped and given to other players, but cannot be sold to stores.  The
+	recoverable components and their chances are as follows : 
+	Various Bones .................	[ Skill Lv + Luk / 5 ]% chance
+	Cracked Skull .................	[ Skill Lv + Luk / 10 ]% chance
+	Undead Flesh .................	[ Skill Lv + Luk / 10 ]% chance
+	Beating Heart .................	[ Skill Lv / 2 + Luk / 15 ]% chance
+	Cursed Bones ..................	[ Skill Lv / 2 + Luk / 15 ]% chance
+	Soul Shard ....................	[ Skill Lv / 5 + Luk / 25 ]% chance
+		note:
+		these are all new items.
+
+	MINION NOTE: If possible, allow the server to remember what minions a necromancer player has spawned,
+	and respawn them when the player logs back on.
+Animate: Bone - Defensive - 3 Lv's - Requires : Necromancy Lv 1, Leadership Lv 1
+spell	SP : 0		Cast : 5 s.	Recharge : n/a		Duration : <><>
+	Sacrifice 25% of maximum health to summon an undead soldier of your choosing.  This servant 
+	will follow and protect you faithfully until it is destroyed or dispatched.  The minion summoned 
+	depends on the selected Skill Lv, and will have a base level equal to [ Job Level / 3 + Int / 6 ].
+	Their level cannot be higher than [ Base level ].
+	( These minions are forced undead race, and undead property level 2, even if they were not originally )
+	Skill Lv 1 .....................	Skeleton		3x Various Bones, 1x Cracked Skull
+	Skill Lv 2 .....................	Skeleton Archer		5x Various Bones, 1x Cracked Skull
+	Skill Lv 3 .....................	Soldier Skeleton	8x Various Bones, 1x Cracked Skull
+	[ Lv ~90 max ]
+		note:
+		use the original monsters in the mobdb file, but just level them to what the skill specifies, using
+		the dynamic mob level formulas.
+		specify the required catalyst items in the skill require db file, not the src
+
+Animate: Flesh - Defensive - 3 Lv's - Requries : Necromancy Lv 2, Leadership Lv 2
+spell	SP : 0		Cast : 5 s.	Recharge : n/a		Duration : <><>
+	Sacrifice 25% of maximum health to summon an undead zombie of your choosing. This servant 
+	will follow and protect you faithfully until it is destroyed or dispatched.  The minion summoned 
+	depends on the selected Skill Lv, and will have a base level equal to [ Job Level / 3 + Int / 5 ].
+	Their level cannot be higher than [ Base level ].
+	( These minions are forced undead race, and undead property level 2, even if they were not originally )
+	Skill Lv 1 .........	Zombie			5x Various Bones, 10x Undead Flesh
+	Skill Lv 2 .........	Ghoul			5x Various Bones, 10x Undead Flesh, 1x Beating Heart
+	Skill Lv 3 .........	Mummy			10x Various Bones, 5x Cursed Bones, 15x Undead Flesh, 1x Beating Heart
+	[ Lv ~100 max ]
+		note:
+		use the original monsters in the mobdb file, but just level them to what the skill specifies, using
+		the dynamic mob level formulas.
+		specify the required catalyst items in the skill require db file, not the src
+
+Animate: Warlock - Defensive - 3 Lv's - Requires : Necromancyer Lv 4, Leadership Lv 4
+spell	SP : 0		Cast : 6 s.	Recharge : n/a		Duration : <><>
+	Sacrifice 25% of maximum health to summon an undead wraith of your choosing. This servant 
+	will follow and protect you faithfully until it is destroyed or dispatched.  The minion summoned 
+	depends on the selected Skill Lv, and will have a base level equal to [ Job Level / 2 + Int / 4 ].
+	Their level cannot be higher than [ Base level - 5 ].
+	( These minions are forced undead race, and ghost property level 2, even if they were not originally )
+	Skill Lv 1 .........	wind ghost		10x Cursed Bones
+	Skill Lv 2 .........	evil druid		15x Cursed Bones, 10x Undead Flesh, 1x Cracked Skull, 1x Beating Heart
+	Skill Lv 3 .........	evil priest		10x Cursed Bones, 10x Undead Flesh, 1x Cracked Skull, 1x Beating Heart, 1x Soul Shard
+	[ Lv ~125 max ]
+		note:
+		use the original monsters in the mobdb file, but just level them to what the skill specifies, using
+		the dynamic mob level formulas.
+		specify the required catalyst items in the skill require db file, not the src
+
+Animate: Thrall - Offensive - 3 Lv's - Requires : Necromancy Lv 5, Leadership Lv 5
+spell	SP : 0		Cast : 6 s.	Recharge : n/a		Duration : <><>
+	Sacrifice 25% of maximum health to summon an undead wraith of your choosing. This servant 
+	will follow and protect you faithfully until it is destroyed or dispatched.  The minion summoned 
+	depends on the selected Skill Lv, and will have a base level equal to [ Job Level / 2 + Int / 4 ].
+	Their level cannot be higher than [ Base level - 5 ].
+	( These minions are forced undead race, and neutral property level 2, even if they were not originally )
+	Skill Lv 1 .........	miyabi ningyo		5x Cursed Bones, 1x Beating Heart, 10x Undead Flesh
+	Skill Lv 2 .........	injustice		10x Various Bones, 10x Cursed Bones, 10x Undead Flesh, 1x Cracked Skull, 1x Beating Heart
+	Skill Lv 3 .........	hyegun			5x Various Bones, 10x Cursed Bones, 5x Undead Flesh, 1x Beating Heart, 1x Cracked Skull
+	[ Lv ~125 max ]
+		note:
+		use the original monsters in the mobdb file, but just level them to what the skill specifies, using
+		the dynamic mob level formulas.
+		specify the required catalyst items in the skill require db file, not the src
+
+Animate: Fiend - Offensive - 3 Lv's - Requires : Necromancy Lv 7, Leadership Lv 7
+spell	SP : 0		cast 6 s.	Recharge : n/a		Duration : <><>
+	Sacrifice 25% of maximum health to summon a demonic creature and bind it to your service. This 
+	servant will follow and protect you faithfully until it is destroyed or dispatched.  The minion
+	summoned depends on the selected Skill Lv, and will have a base level equal to [ Job Level / 2 + Int / 3 ].
+	Their level cannot be higher than [ Base level - 10 ].  Unlike your other minions, these are -not-
+	treated as undead.
+	( These minions use their default race and property settings )
+	Skill Lv 1 .........	Deviruchi		3x Cursed Bones, 1x Beating Heart, 1x Cracked Skull
+	Skill Lv 2 .........	Diabolic		3x Cursed Bones, 3x Beating Heart, 3x Cracked Skull
+	Skill Lv 3 .........	Mini Demon		3x Cursed Bones, 7x Beating Heart, 7x Cracked Skull
+		note:
+		use the original monsters in the mobdb file, but just level them to what the skill specifies, using
+		the dynamic mob level formulas.
+		specify the required catalyst items in the skill require db file, not the src
+
+Animate: Horror - Offensive - 3 Lv's - Requires : Necromancy Lv 9, Leadership Lv 9
+spell	SP : 0		Cast : 9 s.	Recharge : n/a		Duration : <><>
+	Sacrifice 25% of maximum health to summon an undead monster of your choosing. This servant 
+	will follow and protect you faithfully until it is destroyed or dispatched.  The minion summoned 
+	depends on the selected Skill Lv, and will have a base level equal to [ Job Level / 2 + Int / 2 ].
+	Their level cannot be higher than [ Base level - 10 ].
+	( These minions are forced undead race, and undead property level 4, even if they were not originally )
+	Skill Lv 1 .........	Khalitzburg		20x Cursed Bones, 10x Cracked Skull, 1x Soul Shard
+	Skill Lv 2 .........	Ragged Zombie		5x Various Bones, 20x Undead Flesh, 10x Beating Heart, 1x Soul Shard
+	Skill Lv 3 .........	Anubis			40x Various Bones, 20x Cursed Bones, 5x Cracked Skull, 5x Beating Heart, 1x Soul Shard
+		note:
+		use the original monsters in the mobdb file, but just level them to what the skill specifies, using
+		the dynamic mob level formulas.
+		specify the required catalyst items in the skill require db file, not the src
+
+Reanimate - Offensive - 10 Lv's - Requires : Necromancy Lv 10, Leadership Lv 10
+spell	SP : 0		Cast : 2 s.	Recharge : n/a		Duration : <><>
+	Sacrifice 5% of maximum health and cast this spell on target enemy creature.  If the next hit that 
+	creature sustains is fatal, the creature is re-animated and becomes your loyal and faithful servant
+	until it decays away.  The re-animated corpse suffers from incurable health loss over time, and will
+	turn to dust if not healed with shadow property damage frequently.  The re-animated creature retains all
+	of its previous abilities, and has a level equal to [ Int / 10 * Skill Lv ] that cannot be higher 
+	than [ Base level ].  Ghost-race and MVP-Bosses cannot be re-animated. Re-animated creatures cannot 
+	spawn their own minions if they were originally able to.
+	( These minions are forced undead race, and undead property level 4, even if they were not originally. )
+		note:
+		re-animated creatures suffer from an incurable bleeding effect, and will die if not healed 
+		with shadow damage spells regularly.
+
+Simulacrum - Defensive - 1 Lv - Requires : Animate: Horror Lv 3, Animate: Thrall Lv 3, Reanimate Lv 10
+spell	SP : 0		Cast : 12 s.	Recharge : n/a		Duration : <><>
+	Catalyst : 1x Soul Mirror
+	Sacrifice 75% of maximum health, and a create an ethereal copy of target ally.  The summoned 
+	Simulacrum (duplicate) will know all the skills and abilities of the original, and possess the 
+	same equipment - however the duplicate will only be 75% as strong.  The simulacrum will follow 
+	its master loyally and faithfully.  Only a single Simulacrum can exist under one master at a time. 
+	The Necromancer cannot duplicate himself, another Necromancer, or any non-allied characters.  
+	The duplicate is forced to be of Undead Race & Shadow property Level 2, even if equipment says 
+	otherwise.
+	( Soul Mirrors are made by a necro NPC.  Each mirror requires 10 soul shards to make. )
+
+Corpse Rot - Offensive - 10 Lv's - Requires : Bleeding Aura Lv 4
+spell	SP : 0		Cast : 2 s.	Recharge : n/a
+	Catalyst : 1x Cracked Skull, 3x Undead Flesh
+	Sacrifice 3% of maximum health.  Target summoned minion under your control will begin rotting, 
+	and will explode violently into a putrid cloud 7x7 cells large in 15 seconds.  Any enemies caught 
+	in the explosion are poisoned, blinded, and recieve [ Skill Lv * 10 ]% of the sacrificed minion's 
+	health in dark damage.
+		note:
+		use meteorassault visual on death
+
+Disease - Offensive - 5 Lv's - Requires : Corpse Rot Lv 5
+spell	SP : 0		Cast : 1.6 s.	Recharge : n/a		Duration : <><>
+	Catalyst : 5x Undead Flesh, 2x Beating Heart
+	Sacrifice 15% of maximum health.  [ Skill Lv * 10 ]% chance that target enemy becomes afflicted 
+	with disease until it is cured, or dies.  While afflicted with disease, the victim suffers from 
+	reoccuring bleeding and poison ailments.  In addition, once a second, any creature adjacent 
+	(3x3) to the victim who is of the same race will become afflicted with bleeding and poison 
+	ailments that last for [ Skill Lv * 2 ] seconds.  While these second-hand victims can resist these 
+	status effects, the diseased victim cannot.  Disease has no effect on ghost or undead targets.
+		note:
+		use poison visual
+
+Command: Follow! - Defensive - 1 Lv - Requires : Leadership Lv 1
+skill	SP : 5		Cast : Instant	Recharge : 3 s.		Duration : 10 s.
+	Order all minions under your control to not attack anything, and follow you closely.  Once the 
+	duration has ended, the minions will attack the nearest visible enemy.
+
+Command: Help! - Defensive - 1 Lv - Requires : Leadership Lv 1
+skill	SP : 5		Cast : Instant	Recharge : 3 s.		Duration : 10 s.
+	Order all minions under your control to immediately stop their current action, and collectively 
+	attack whatever is currently attacking you.  If there is nothing currently attacking you, then this 
+	skill will fail.  Once the duration has ended, the minions will attack the nearest visible enemy.
+
+Command: Attack! - Offensive - 1 Lv - Requires : Leadership Lv 1
+skill	SP : 15		Cast : Instant	Recharge : 3 s.		Duration : 10 s.
+	Order all minions under your control to engage and attack the selected target as a group, ignoring
+	all other threats in the meantime.  Once the duration has ended, the minions will attack the 
+	nearest visible enemy.
+
+Skeletal Armor - Defensive - 5 Lv's - Requires : Necromancy Lv 3
+spell	SP : 80		Cast : 8 s.	Recharge : n/a		Duration : <><>
+	Catalyst : 5x Cracked Skulls (or) 5x Various Bones
+	Animate a sheath of chitinous armor to protect yourself from harm.  This magical armor will 
+	provide a bonus of [ Skill Lv * 5 ] Def and 10 MDef.  The armor will break after having dampened 
+	30 blows.
+		note:
+		if possible, use a visual that masks the player, tinting them white.  I kind of doubt
+		one like this already exists.
+
+Bonetrap - Offensive - 10 Lv's - Requires : Skeletal Armor Lv 1
+spell	SP : 40		Cast : 3 s.	Recharge : 4 s.		Duration : 7 s.
+	Catalyst : 2x Cracked Skulls, 4x Various Bones
+	Animate a barbed mouth of teeth around target enemy, holding the target and any enemies 
+	adjacent to them in place for 7 seconds.  When the bonetrap ends, all victims suffer 
+	[ Skill Lv * ( Vit + 180 ) ] neutral property damage that ignores Def - but not Vit Def.
+	[ this only stops movement, not skills.  many classes can still skill-out of a bonetrap ]
+		note:
+		use the grimtooth (stationary) visual on each cell.
+
+Bonespear - Offensive - 10 Lv's - Requires : Skeletal Armor Lv 3
+spell	SP : 90		Cast : 7 s.	Recharge : 0.8 s.
+	Catalyst : 1x Cursed Bone (or) 3x Cracked Skulls
+	Animate and hurl a long pointed bone at any target enemy within visible distance*.  This spear 
+	has a 20% chance of missing, and does [ Skill Lv * ( Vit + 330 ) * 2 ] neutral property damage 
+	that ignores Def - but not Vit Def.
+	[ * if the target is visible and in the line of sight, they can be targeted and cast at ]
+		note:
+		Ragged Zombies throw bones, use that animation for now until we get a better one.
+
+Bonecrack - Offensive - 10 Lv's - Requires : Skeletal Armor Lv 5
+spell	SP : 15		Cast : 1.8 s.	Recharge : 0.2 s.
+	Catalyst : 2x Cursed Bones (or) 6x Various Bones
+	Smash target enemy with an implosion of sharp pieces of animated bone.  This attack will do 
+	[ Skill Lv * ( Vit + 100 ) * 2 ] neutral property damage that ignores Def - but not Vit Def.
+		note:
+		use the full grimtooth animation, plus a nice "smack" visual when it hits.
+
+Consume - Defensive - 1 Lv - Requires : Summon Grunt Lv 1 - <QUEST SKILL>
+spell	SP : 60		Cast : 1 s.	Recharge : n/a
+	Target minion under your control is destroyed, and you are healed half of its maximum health.
+	Once used, this spell cannot be used again for another 60 seconds.
+		note:
+		use hp drain visual that starts on the target minion, and moves to the caster. minion
+		dies without any special effect, and use the healing effect on the caster when they're
+		healed with this.
+
+
+
+

@@ -1,0 +1,1714 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////\
+//  Minesweeper! // v0.93 ////////////////////////////////////////////////////////////////////////\
+///////////////////////////////////////////////////////////////////////////////////////////////////\
+//=========== Written by =========================================================================//
+// Dubby                                                                                          //
+//=========== Compatible with ====================================================================//
+// Tested with SVN 2555 Version                                                                   //
+//                                                                                                //
+//=========== Description ========================================================================//
+// This is a 9x9 poring version of the infamous pc game, Minesweeper.                             //
+//                                                                                                //
+//=========== Map Info ===========================================================================//
+// ["minesweep3" is "job_knt"]                                                            //
+//                                                                                                //
+//=========== Version History ====================================================================//
+// v0.93 - [Dubby] - Debugging completed, script is fully functional, albeit a few kinks          //
+//                                                                                                //
+//=========== Known Problems =====================================================================//
+// 1. [Dubby] Bizarre "shrinking" problem rarely affects tiles 72 - 81 (Does not affect the       //
+//            gameplay in the least bit)                                                          //
+// 2. [Dubby] Occassional "mismatched" victory points cause an early victory.  Only occurs when   //
+//            there are only a few porings left to click on, such as 2 or 3.                      //
+//                                                                                                //
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//---Mapflags----------------------------------------------------------------------------------
+minesweep3	mapflag	nosave	SavePoint
+minesweep3	mapflag	noreturn
+minesweep3	mapflag	pvp	off
+minesweep3	mapflag	nopenalty
+minesweep3	mapflag	nozenypenalty
+minesweep3	mapflag	nomemo
+minesweep3	mapflag	nobranch
+minesweep3	mapflag	noteleport
+minesweep3	mapflag	nowarp
+minesweep3	mapflag	nowarpto
+
+//---Main NPC----------------------------------------------------------------------------------
+minesweep3,124,75,5	script	Mine3Control	770,{
+		if ($@MS3Ready == 1) goto M_NotReady;
+	M_Menu:
+		if ($@MS3On == 1) goto M_Menu2;
+		mes "[Room Controller]";
+		mes "Hello "+strcharinfo(0)+", welcome to Minesweeper!  This is room 1.";
+		next;
+		if (getgmlevel() == 0) menu "Information",M_Info,"Start Game",-,"Leave Room",M_Exit;
+		if (getgmlevel() > 79) menu "Information",M_Info,"Start Game",-,"Control Panel",M_Control,"Leave Room",M_Exit;
+	M_Start:
+		mes "[Room Controller]";
+		mes "The board is 9x9, with 81 tiles.  You may set the mine count to a minimum of "+$MS3Minimum+", and a maximum of "+$MS3Maximum+".";
+		next;
+		mes "[Room Controller]";
+		mes "Please input the amount of mines to be planted on the field.";
+	M_RepeatInput:
+		next;
+		input $@MS3Amount;
+		next;
+		if ($@MS3Amount < $MS3Minimum || $@MS3Amount > $MS3Maximum) message strcharinfo(0),"The number cannot be below "+$MS3Minimum+", and cannot be above "+$MS3Maximum+"!";
+		if ($@MS3Amount < $MS3Minimum || $@MS3Amount > $MS3Maximum) goto M_RepeatInput;
+		mes "[Room Controller]";
+		mes "Alright, you have set "+$@MS3Amount+" mines!  The room will activate shortly!";
+		close2;
+		set $@MS3On,1;
+		goto L_Timer;
+	M_Menu2:
+		if ($@MS3CD == 1) end;
+		mes "[Room Controller]";
+		mes "The game is in progress.  What would you like to do?";
+		mes " ";
+		mes " ";
+		set $@MS3MNTM,(((getnpctimer(0,"Mine3Control") / 2000) / 60) %60);
+		set $@MS3SETM,((getnpctimer(0,"Mine3Control") / 2000) % 60);
+		if ($@MS3SETM == 0 ) goto M_NewMin1;
+		if ($@MS3SETM >= 51 ) goto M_Addzero1;
+		mes "[Time remaining: " + (4-$@MS3MNTM) + ":" + (60-$@MS3SETM) + "]";
+		goto M_Menu2a;
+	M_NewMin1:
+		mes "[Time remaining: " + (5-$@MS3MNTM) + ":00]";
+		goto M_Menu2a;
+	M_Addzero1:
+		mes "[Time remaining: " + (4-$@MS3MNTM) + ":0" + (60-$@MS3SETM) + "]";
+		goto M_Menu2a;
+	M_Menu2a:
+		next;
+		if (getgmlevel() == 0) menu "Cancel",-,"Information and Rules",M_Info,"Leave Room",M_Warpout;
+		if (getgmlevel() > 79) menu "Cancel",-,"Information and Rules",M_Info,"Control Panel",M_Control,"Leave Room",M_Warpout;
+		close;
+	M_Info:
+		mes "[Room Controller]";
+		mes "Firstly, the game is a 9x9 grid of tiles (porings).  That's 81 tiles.  There are a certain number of hidden mines on the field.";
+		next;
+		mes "[Room Controller]";
+		mes "The goal of the game is to 'Flag' all the mines.  If you click on a tile and there is a mine there, game over!";
+		next;
+		mes "[Room Controller]";
+		mes "When you click on a tile, the tile will be flagged, and turn blue.  If you click on a flagged tile, it will open up.  If there's nothing there, a chain reaction will start.  If there's a number there, it'll show the number.  If there's a mine there, game over!";
+		next;
+		mes "[Room Controller]";
+		mes "Be careful!  You only have ONE chance to flag a tile!  No flagging and unflagging here.";
+		next;
+		mes "[Room Controller]";
+		if ($MS3Window == 0) mes "Now about the tiles.  Yellow means the tile has not been clicked on yet.  Blue means the tile is flagged.  And if red, it will have a waiting room window with a number inside.  Say, if there is a red tile with a '5' in the waiting room, then that means there are 5 mines within a 3x3 box centered on that tile.";
+		if ($MS3Window == 1) mes "Now about the tiles.  Yellow means the tile has not been clicked on yet.  Blue means the tile is flagged.  And if red, the npc's name will be the number of that tile.  Say, if there is a red tile with a '5' in the waiting room, then that means there are 5 mines within a 3x3 box centered on that tile.";
+		if ($MS3Window == 2) mes "Now about the tiles.  Yellow means the tile has not been clicked on yet.  Blue means the tile is flagged.  And if red, it will have a waiting room window with a number inside and a waiting room with the number in there too.  Say, if there is a red tile with a '5' in the waiting room, then that means there are 5 mines within a 3x3 box centered on that tile.";
+		next;
+		mes "[Room Controller]";
+		mes "You get points for clicking on a tile that has a number on it.  You have to finish the game to get any kind of reward though!";
+		next;
+		mes "[Room Controller]";
+		mes "Reward is based on the amount of points you accumulate from opening numbered tiles, and how many mines there are on the field.";
+		next;
+		mes "[Room Controller]";
+		mes "This is also a minigame you can play by yourself.  And that's about it!";
+		next;
+		goto M_Menu;
+	M_Wait:
+		mes "[Room Controller]";
+		mes "Alright.";
+		close;
+	M_Warpout:
+		mes "[Room Controller]";
+		mes "The game is in progress, are you sure you want to leave?";
+		next;
+		menu "No, I'll stay",M_Wait,"Yes.",M_Exit;
+	M_Exit:
+		mes "[Room Controller]";
+		mes "Please enjoy your stay in the Arena!";
+		if (@MSpt > 0) set @MSpt,0;
+		close2;
+	warp "pvp_m_room", 51, 38;
+		end;
+	M_NotReady:
+		mes "[Room Controller]";
+		mes "Hello "+strcharinfo(0)+", this room has ended and is in a cooldown phase.  The room will be open again in a short while.";
+		mes " ";
+		set $@MS3MNTM,(((getnpctimer(0,"Mine3Control") / 2000) / 60) %60);
+		set $@MS3SETM,((getnpctimer(0,"Mine3Control") / 2000) % 60);
+		if ($@MS3SETM == 0 ) goto M_NewMin2;
+		if ($@MS3SETM >= 51 ) goto M_Addzero2;
+		mes "[Time remaining: " + ($@MS3MNTM) + ":" + (60-$@MS3SETM) + "]"; // Counts down, this is the base timer
+		goto M_NotReady2;
+	M_NewMin2:
+		mes "[Time remaining: " + (1-$@MS3MNTM) + ":00]"; // Keeps the second from starting at 60
+		goto M_NotReady2;
+	M_Addzero2:
+		mes "[Time remaining: " + ($@MS3MNTM) + ":0" + (60-$@MS3SETM) + "]"; // Adds a 0 infront of 1-9
+		goto M_NotReady2;
+	M_NotReady2:
+		next;
+		if ($@MS3Lose == 1) goto M_NotReady4;
+		if (@MSpt > 0) goto M_NotReady3;
+	M_NotReady4:
+		if (getgmlevel() > 79) menu "Wait in room.",M_Wait,"Control Panel",M_Control,"Leave Room",M_Exit;
+		if (getgmlevel() < 80) menu "Wait in room.",M_Wait,"Leave Room",M_Exit;
+	M_NotReady3:
+		if (getgmlevel() > 79) menu "Wait in room.",M_Wait,"Control Panel",M_Control,"Cash in",M_Cashin;
+		if (getgmlevel() < 80) menu "Wait in room.",M_Wait,"Cash in",M_Cashin;
+	M_Cashin:
+		mes "[Room Controller]";
+		mes "Alright.... lets see how you did.";
+		mes " ";
+		mes " ";
+		mes " ";
+		mes "Total Points : "+@MSpt;
+		if ($MS3RewType == 0) mes "Kafra Points Earned : "+(((@MSpt*3)+($@MS3Amount*$@MS3Amount))/$MS3Reward)+" KP";
+		if ($MS3RewType == 1) mes "Zeny Earned : "+(((@MSpt*3)+($@MS3Amount*$@MS3Amount)*50)/10/$MS3Reward)+"z";
+		next;
+		mes "[Room Controller]";
+		mes "Thank you for playing.";
+		if ($MS3RewType == 0) set RESRVPTS,RESRVPTS + (((@MSpt*3)+($@MS3Amount*$@MS3Amount))/$MS3Reward);
+		if ($MS3RewType == 1) set Zeny,Zeny + (((@MSpt*3)+($@MS3Amount*$@MS3Amount)*50)/10/$MS3Reward);
+		if ($MS3RewType == 0) dispbottom "[You have "+RESRVPTS+" Kafra Reserve Points]";
+		set @MSpt,0;
+		next;
+		mes "[Room Controller]";
+		mes "Do you wish to stay here and wait for the room to become available, or return to the station?";
+		next;
+		menu "Wait in room.",M_Wait,"Leave Room",M_Exit;
+	L_Timer:
+		set $@MS3CD,1;
+		setnpctimer 0; //safeguard
+		StartNPCTimer "Mine3Control";
+		set $@MS3On,1;
+		set $@MS3Title$,"- Game in Progress";
+		mapannounce "minesweep3",$@MS3Amount+" mines have been planted! You have a 5 minute time limit!",1;
+		set $@MS3Count,1;
+		cleararray $@MS3State[0],0,82;
+		cleararray $@MS3Mines[0],0,82;
+		cleararray $@MS3Field[0],0,82;
+		goto L_Start;
+	OnTimer1000:
+		if ($@MS3Count == 0) end;
+		mapannounce "minesweep3","[10]",1;
+		end;
+	OnTimer2000:
+		if ($@MS3Count == 0) end;
+		mapannounce "minesweep3","[9]",1;
+		end;
+	OnTimer3000:
+		if ($@MS3Count == 0) end;
+		mapannounce "minesweep3","[8]",1;
+		end;
+	OnTimer4000:
+		if ($@MS3Count == 0) end;
+		mapannounce "minesweep3","[7]",1;
+		end;
+	OnTimer5000:
+		if ($@MS3Ready == 1 && $@MS3Lose == 0) mapannounce "minesweep3","The game is over, please redeem your earned points by talking to the Room Controller.",1;
+		if ($@MS3Count == 0) end;
+		mapannounce "minesweep3","[6]",1;
+		end;
+	OnTimer6000:
+		if ($@MS3Count == 0) end;
+		mapannounce "minesweep3","[5]",1;
+		end;
+	OnTimer7000:
+		if ($@MS3Count == 0) end;
+		mapannounce "minesweep3","[4]",1;
+		end;
+	OnTimer8000:
+		if ($@MS3Count == 0) end;
+		mapannounce "minesweep3","[3]",1;
+		end;
+	OnTimer9000:
+		if ($@MS3Count == 0) end;
+		mapannounce "minesweep3","[2]",1;
+		end;
+	OnTimer10000:
+		if ($@MS3Count == 0) end;
+		mapannounce "minesweep3","[1]",1;
+		areawarp "minesweep3",1,1,400,400,"minesweep3",144,56;
+		end;
+	OnTimer11000:
+		if ($@MS3Count == 0) end;
+		emotion 27;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		mapannounce "minesweep3","[GO!]",1;
+		set $@MS3CD,0;
+		set $@MS3Count,0;
+		set $@MS3CYCLE,0;
+		set $@MS3Total,0;
+		setnpctimer 0;
+		goto L_TurnOn;
+	OnTimer30000:
+		if ($@MS3Ready == 1 && $@MS3Lose == 0) mapannounce "minesweep3","Please redeem your points with the Room Controller, you will be returned to the station automatically in one minute.",1;
+		if ($@MS3Lose == 1) mapannounce "minesweep3","The game is over, you will be returned to the station automatically in thirty seconds.",1;
+		end;
+	OnTimer40000:
+		if ($@MS3Ready == 1 && $@MS3Lose == 0) mapannounce "minesweep3","Please redeem your points with the Room Controller, you will be returned to the station automatically in twenty seconds.",1;
+		if ($@MS3Lose == 1) mapannounce "minesweep3","You will be returned to the station automatically in twenty seconds.",1;
+		end;
+	OnTimer50000:
+		if ($@MS3Ready == 1 && $@MS3Lose == 0) mapannounce "minesweep3","Please redeem your points with the Room Controller, you will be returned to the station automatically in ten seconds.",1;
+		if ($@MS3Lose == 1) mapannounce "minesweep3","You will be returned to the station automatically in ten seconds.",1;
+		end;
+	OnTimer55000:
+		if ($@MS3Ready == 1 && $@MS3Lose == 0) mapannounce "minesweep3","Please redeem your points with the Room Controller, you will be returned to the station automatically in five seconds.",1;
+		if ($@MS3Lose == 1) mapannounce "minesweep3","You will be returned to the station automatically in five seconds.",1;
+		end;
+	OnTimer56000:
+		if ($@MS3Ready == 1) mapannounce "minesweep3","Four!",1;
+		end;
+	OnTimer57000:
+		if ($@MS3Ready == 1) mapannounce "minesweep3","Three!",1;
+		end;
+	OnTimer58000:
+		if ($@MS3Ready == 1) mapannounce "minesweep3","Two!",1;
+		end;
+	OnTimer59000:
+		if ($@MS3Ready == 1) mapannounce "minesweep3","One!!",1;
+		end;
+	OnTimer60000:
+		if ($MS3AutoRst == 0 && getmapusers("minesweep3") == 0) goto L_GMReset;
+		if ($@MS3Ready == 0) mapannounce "minesweep3","Four minutes remaining.",1;
+		if ($@MS3Ready == 1) goto L_GMReset;
+		//if ($@MS3Ready == 1) goto L_ResetPC;
+		end;
+	OnTimer90000:
+		mapannounce "minesweep3","Three minutes remaining.",1;
+		end;
+	OnTimer120000:
+		if ($MS3AutoRst == 0 && getmapusers("minesweep3") == 0) goto L_GMReset;
+		mapannounce "minesweep3","Two minutes remaining.",1;
+		end;
+	OnTimer180000:
+		if ($MS3AutoRst == 0 && getmapusers("minesweep3") == 0) goto L_GMReset;
+		if ($@MS3Ready == 0) mapannounce "minesweep3","One minute remaining.",1;
+		end;
+	OnTimer210000:
+		mapannounce "minesweep3","Thirty seconds remaining.",1;
+		end;
+	OnTimer220000:
+		mapannounce "minesweep3","Twenty seconds remaining.",1;
+		end;
+	OnTimer230000:
+		mapannounce "minesweep3","Ten seconds remaining.",1;
+		end;
+	OnTimer235000:
+		mapannounce "minesweep3","Five!",1;
+		end;
+	OnTimer236000:
+		mapannounce "minesweep3","Four!",1;
+		end;
+	OnTimer237000:
+		mapannounce "minesweep3","Three!!",1;
+		end;
+	OnTimer238000:
+		mapannounce "minesweep3","Two!!",1;
+		end;
+	OnTimer239000:
+		mapannounce "minesweep3","One!!!",1;
+		end;
+	OnTimer240000:
+		if ($MS3AutoRst == 0 && getmapusers("minesweep3") == 0) goto L_GMReset;
+		mapannounce "minesweep3","You have FAILED!!  Five minutes have elapsed and the game is over, the room will be able to start another game in 3 minutes.  You will be returned to the station automatically in one minute.",1;
+		set $@MS3Ready,1;
+		set $@MS3Lose,1;
+		set $@MS3CYCLE,0;
+		set $@MS3Sequence,0;
+		setnpctimer 0;
+		goto L_TurnOff;
+	L_ResetPC:
+		set $@MS3On,0;
+		set $@MS3Lose,0;
+		set $@MS3Title$,"- Room in Cooldown";
+		mapannounce "minesweep3","Thank you for playing.",1;
+		areawarp "minesweep3",1,1,400,400,"pvp_m_room",51,38;
+		end;
+	L_Reset:
+		set $@MS3Ready,0;
+		set $@MS3Title$,"";
+		StopNPCTimer "Mine3Control";
+		setnpctimer 0;
+		mapannounce "minesweep3","This room is now ready to start a game.",1;
+		end;
+	L_GMReset:
+		set $@MS3On,0;
+		set $@MS3Lose,0;
+		set $@MS3Ready,0;
+		set $@MS3Title$,"";
+		cleararray $@MS3Mines[0],0,82;
+		cleararray $@MS3Field[0],0,82;
+		cleararray $@MS3State[0],0,82;
+		StopNPCTimer "Mine3Control";
+		setnpctimer 0;
+		areawarp "minesweep3",1,1,400,400,"pvp_m_room",51,38;
+		goto L_TurnOff;
+	L_TurnOn:
+		if ($@MS3CYCLE == 81 && $@MS3Debug == 1) debugmes "81 Tiles loaded into grid";
+		if ($@MS3CYCLE == 81) goto L_StopCycle;
+		set $@MS3CYCLE,$@MS3CYCLE + 1;
+		enablenpc "Tile3_"+$@MS3CYCLE+"";
+		setnpcdisplay "Tile3_"+$@MS3CYCLE," ",1113;
+		donpcevent "Tile3_"+$@MS3CYCLE+"::OnFlip";
+		goto L_TurnOn;
+	L_TurnOff:
+		if ($@MS3CYCLE == 81 && $@MS3Debug == 1) debugmes "81 Tiles removed from grid";
+		if ($@MS3CYCLE == 81) goto L_StopCycle;
+		set $@MS3CYCLE,$@MS3CYCLE + 1;
+		donpcevent "Tile3_"+$@MS3CYCLE+"::OnFlip";
+		disablenpc "Tile3_"+$@MS3CYCLE+"";
+		goto L_TurnOff;
+	L_StopCycle:
+		cleararray $@MS3Mines[0],0,82;
+		cleararray $@MS3State[0],0,82;
+		set $@MS3CYCLE,0;
+		end;
+//---GM Control Panel----------------------------------------------------------------------------------
+	M_Control:
+		next;
+		mes "[Room Controller]";
+		mes "What would you like to do?";
+		next;
+		if (getgmlevel() < 99 && @MS3On == 1) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu;
+		if (getgmlevel() < 99 && @MS3Lose == 1 || $@MS3Ready == 1) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu;
+		if (getgmlevel() < 99) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu;
+		if (getgmlevel() == 99 && @MS3On == 1) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu,"Console Debug",M_Debug;
+		if (getgmlevel() == 99 && @MS3Lose == 1 || $@MS3Ready == 1) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu,"Console Debug",M_Debug;
+		if (getgmlevel() == 99) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu,"Console Debug",M_Debug;
+	M_Settings:
+		mes "[Room Controller]";
+		mes "Please select a setting to alter.";
+		next;
+		menu "Number Display",-,"Change Boom",M_Boom,"Set Min/Max Mines",M_MinMax,"Set Pain",M_Pain,"Change Sequence Cap",M_Sequence,"Reset Room",M_RmReset,"Return",M_Control;
+		mes "[Room Controller]";
+		mes "This changes the number display.";
+		mes "0 = Display Waiting Room, NPC has no name";
+		mes "1 = NPC name displays number, no waiting room";
+		mes "2 = Display Waiting Room, NPC's name displays the number";
+		next;
+	L_Input:
+		input $MS3Window;
+		next;
+		if ($MS3Window < 0 || $MS3Window > 2) message strcharinfo(0),"Number must be 0, 1, or 2.";
+		if ($MS3Window < 0 || $MS3Window > 2) goto L_Input;
+		mes "[Room Controller]";
+		mes "Setting changed to "+$MS3Window+".";
+		next;
+		goto M_Control;
+	M_Sequence:
+		mes "[Room Controller]";
+		mes "This controls how much the reaction will fission, or how many chain reactions can fire one after another.  The higher the reaction number is, the more points players will be able to gain from empty tiles.  This feature is pointless on minefields with a high number of mines, as there are no empty tiles.";
+		next;
+		mes "[Room Controller]";
+		mes "The setting cannot be higher then 15, or lower then 2.";
+		mes " ";
+		mes " ";
+		mes "Current setting : "+$MS3Fission+".";
+		next;
+	L_Sequence:
+		input $MS3Fission;
+		next;
+		if ($MS3Fission < 2 || $MS3Fission > 15) message strcharinfo(0),"Number must be between 2 and 15!";
+		if ($MS3Fission < 2 || $MS3Fission > 15) goto L_Sequence;
+		mes "[Room Controller]";
+		mes "Thank you, the setting has been changed to "+$MS3Fission+".";
+		next;
+		goto M_Control;
+	M_Boom:
+		mes "[Room Controller]";
+		if ($MS3Boom == 0) mes "The chain explosion on a game over is currently on.  Turn off?";
+		if (($MS3Boom == 0) && select("Yes","No") == 1) set $MS3Boom,1;
+		if ($MS3Boom == 1) mes "The chain explosion on a game over is currently off.  Turn on?";
+		if (($MS3Boom == 1) && select("Yes","No") == 1) set $MS3Boom,0;
+		next;
+		goto M_Control;
+	M_MinMax:
+		mes "[Room Controller]";
+		mes "Here you may set the minimum, and maximum, limitations of the mines players can designate per game.  Suggested range is 8-25 mines.";
+		next;
+		mes "[Room Controller]";
+		mes "The minimum cannot be lower then 5, or higher then 60.";
+		mes " ";
+		mes "Please input the Minimum limit.";
+		next;
+	L_Minimum:
+		input $MS3Minimum;
+		next;
+		if ($MS3Minimum < 5 || $MS3Minimum > 60) message strcharinfo(0),"Number must be between 5 and 60!";
+		if ($MS3Minimum < 5 || $MS3Minimum > 60) goto L_Minimum;
+		mes "[Room Controller]";
+		mes "The maximum cannot be lower then 15, or higher then 75.";
+		mes " ";
+		mes "Please input the Maximum limit.";
+		next;
+	L_Maximum:
+		input $MS3Maximum;
+		next;
+		if ($MS3Maximum < 15 || $MS3Maximum > 75) message strcharinfo(0),"Number must be between 15 and 75!";
+		if ($MS3Maximum < 15 || $MS3Maximum > 75) goto L_Maximum;
+		mes "[Room Controller]";
+		mes "The mine range is now "+$MS3Minimum+" to "+$MS3Maximum+" mines.";
+		next;
+		goto M_Control;
+	M_Pain:
+		mes "[Room Controller]";
+		mes "This controls whether or not to damage the player who clicks the losing mine, and how much.";
+		next;
+		if ($MS3Hurts == 2) menu "Turn Off",M_PainOff,"Change to Percent",M_PainPercent,"Change damage",-;
+		if ($MS3Hurts == 1) menu "Turn Off",M_PainOff,"Change to Digits",M_PainDigit,"Change damage",-;
+		if ($MS3Hurts == 0) menu "Turn On",M_PainOn;
+	M_PainPercent:
+		mes "[Room Controller]";
+		mes "This damage is percentile based.  Set the number of hp damage between -1% and -100%.  (Input the number, not the - sign)";
+		mes " ";
+		if ($MS3Hurts == 1) mes "Current setting is "+$MS3Ow+"%.";
+		next;
+	L_Pain1Input:
+		input $MS3Ow;
+		next;
+		if ($MS3Ow < 1 || $MS3Ow > 100) message strcharinfo(0),"Number must be between 1 and 100!";
+		if ($MS3Ow < 1 || $MS3Ow > 100) goto L_Pain1Input;
+		set $MS3Ow,($MS3Ow*-1);
+		set $MS3Hurts,1;
+		goto M_Control;
+	M_PainDigit:
+		mes "[Room Controller]";
+		mes "This damage is number based.  Set the number of hp damage between -1 and -999999.  (Input the number, not the - sign)";
+		mes " ";
+		if ($MS3Hurts == 2) mes "Current setting is "+$MS3Ow+".";
+		next;
+	L_Pain2Input:
+		input $MS3Ow;
+		next;
+		if ($MS3Ow < 1 || $MS3Ow > 999999) message strcharinfo(0),"Number must be between 1 and 999999!";
+		if ($MS3Ow < 1 || $MS3Ow > 999999) goto L_Pain2Input;
+		set $MS3Hurts,2;
+		set $MS3Ow,($MS3Ow*-1);
+		goto M_Control;
+	M_PainOn:
+		set $MS3Hurts,1;
+		set $MS3Ow,-75;
+		mes "[Room Controller]";
+		mes "Players will now be damaged if they click on a mine.  Damage type is defaulted to Percent and Damage is set to -75%.";
+		goto M_Control;
+	M_PainOff:
+		set $MS3Hurts,0;
+		set $MS3Ow,1;
+		mes "[Room Controller]";
+		mes "Players will no longer be harmed if they click on a mine, and damage is set to 1.";
+		goto M_Control;
+	M_Debug:
+		mes "[Room Controller]";
+		mes "Beep!";
+		next;
+		mes "While on, this will cause the minigame to return feedback to the map-server.exe console window.  Use this to check for minefield abnormalities, excessive cycles, or other odd behavior.";
+		next;
+		mes "^FF0000ONLY USE THIS IF YOU KNOW EXACTLY WHAT YOU ARE DOING.!!!!!!!!!!!!!!!!!!!!!!!!!!^000000";
+		mes "^FF0000ONLY USE THIS IF YOU KNOW EXACTLY WHAT YOU ARE DOING.!!!!!!!!!!!!!!!!!!!!!!!!!!^000000";
+		mes "^FF0000ONLY USE THIS IF YOU KNOW EXACTLY WHAT YOU ARE DOING.!!!!!!!!!!!!!!!!!!!!!!!!!!^000000";
+		mes "^FF0000ONLY USE THIS IF YOU KNOW EXACTLY WHAT YOU ARE DOING.!!!!!!!!!!!!!!!!!!!!!!!!!!^000000";
+		next;
+		mes "This is a temporary server variable, and will reset to OFF if the server is reset!  Please ONLY use this if you suspect a problem with the script and wish to observe the script move to uncover the suspected problem.";
+		next;
+		if ($@MS3Debug == 0) menu "TURN ON DEBUG",L_DebugOn,"Cancel",-;
+		if ($@MS3Debug == 1) menu "TURN OFF DEBUG",L_DebugOff,"Cancel",-;
+		goto M_Control;
+	L_DebugOn:
+		set $@MS3Debug,1;
+		message strcharinfo(0),"DEBUG IS NOW -ON-";
+		debugmes "MINESWEEPER DEBUG HAS BEEN TURNED ON.";
+		next;
+		goto M_Control;
+	L_DebugOff:
+		set $@MS3Debug,0;
+		message strcharinfo(0),"DEBUG IS NOW -OFF-";
+		debugmes "MINESWEEPER DEBUG HAS BEEN TURNED OFF.";
+		next;
+		goto M_Control;
+	M_AutoReset:
+		mes "[Room Controller]";
+		if ($MS3AutoRst == 0) mes "The room is set to automatically reset if the room is empty.  The room checks this once every minute while the timer is active.  Do you wish to turn this feature off?";
+		if ($MS3AutoRst == 1) mes "The room is set to wait the full 20 minutes before reseting, even if the room is empty.  Do you wish to turn the automatic reset feature on?";
+		next;
+		if ($MS3AutoRst == 0) menu "Yes",M_AutOff,"No",M_Control;
+		if ($MS3AutoRst == 1) menu "Yes",-,"No",M_Control;
+		set $MS3AutoRst,0;
+		goto M_Control;
+	M_AutOff:
+		set $MS3AutoRst,1;
+		goto M_Control;
+	M_Reward:
+		mes "[Room Controller]";
+		mes "How would you like to setup the reward?";
+		next;
+		menu "Change Modifier",-,"Change Type",M_RewType,"Return",M_Control;
+		mes "[Room Controller]";
+		mes "This modifier controls how the player's points are divided when they complete the game.";
+		next;
+		mes "[Room Controller]";
+		mes "The player's points is divided by this modifier.  If the reward type is set to zeny, then a multiplier is added to the equation to give reasonable amounts of zeny.";
+		next;
+		mes "[Room Controller]";
+		mes "The variable cannot be 0, and cannot be more then 10.";
+		mes "Current Setting is ["+$MS3Reward+"]";
+		next;
+		input $MS3Reward;
+		next;
+		if ($MS3Reward == 0 || $MS3Reward > 10) goto M_RewInError;
+		mes "[Room Controller]";
+		mes "The reward modifier has been set to "+$MS3Reward+".";
+		next;
+		goto M_Control;
+	M_RewType:
+		mes "[Room Controller]";	
+		mes "Do you want the players do receive a KP (Kafra Point) reward, or a Zeny reward?";
+		if ($MS3RewType == 1) mes "[Reward currently set to Zeny]";
+		if ($MS3RewType == 0) mes "[Reward currently set to Kafra Points]";
+		next;
+		menu "Zeny",-,"Kafra Point",M_RewKP;
+		set $MS3RewType,1;
+	M_RewInf:
+		mes "[Room Controller]";
+		if ($MS3RewType == 1) mes "Thank you, the reward is now set to Zeny.";
+		if ($MS3RewType == 0) mes "Thank you, the reward is now set to Kafra Points.";
+		goto M_Control;
+	M_RewKP:
+		set $MS3RewType,0;
+		goto M_RewInf;
+	M_RmReset:
+		mes "[Room Controller]";
+		mes "Resetting room...";
+		goto L_GMReset;
+//---Events----------------------------------------------------------------------------------
+	OnWin:
+		set $@MS3Ready,1;
+		mapannounce "minesweep3","Victory!  Congratulations!",1;
+		setnpctimer 0;
+		goto L_TurnOff;
+	OnBoom:
+		setnpctimer 0;
+		end;
+	OnInit:
+		if ($MS3Fission == 0) set $MS3Fission,8;
+		if ($MS3Ow == 0) set $MS3Ow,-75;
+		if ($MS3Minimum == 0 && $MS3Hurts == 0) set $MS3Hurts,1;
+		if ($MS3Minimum == 0) set $MS3Window,1;
+		if ($MS3Minimum == 0) set $MS3Minimum,8;
+		if ($MS3Maximum == 0) set $MS3Maximum,25;
+		if ($MS3Reward == 0) set $MS3Reward,2;
+		setnpcdisplay "Mine3Control","Room Controller",770;
+		L_Disable:
+			disablenpc "Tile3_"+$@MS3CYCLE+"";
+			if ($@MS3CYCLE == 81) goto L_DisEnd;
+			set $@MS3CYCLE,$@MS3CYCLE + 1;
+			goto L_Disable;
+		L_DisEnd:
+			set $@MS3CYCLE,0;
+			end;
+//---Mine Generator----------------------------------------------------------------------------------
+L_Start:
+	set $@MS3Minetick,0;
+	set $@MS3CYCLE,0;
+	set $@MS3Tile,0;
+L_MTrigger:
+	if ($@MS3Minetick >= $@MS3Amount) goto L_MStop;
+	set $@MS3CYCLE,$@MS3CYCLE + 1;
+	set $@MS3Tile,rand(1,81);
+//	if ($@MS3Debug == 1) debugmes "[Mine Generation Tick: "+$@MS3CYCLE+"]";
+	if ($@MS3Mines[$@MS3Tile] == 0) goto L_MTick;
+	goto L_MTrigger;
+L_MTick:
+	set $@MS3Mines[$@MS3Tile],1;
+	set $@MS3Minetick,$@MS3Minetick + 1;
+	goto L_MTrigger;
+L_MStop:
+	//Some of these are always on to detect if there are abnormalities in the mine generation revolver
+	if ($@MS3Debug == 0 && $@MS3CYCLE >= 1900) debugmes "[!WARNING! DANGEROUS MINEFIELD ANOMOLY DETECTED!! - "+$@MS3CYCLE+" cycles processed!]";
+	if ($@MS3Debug == 0 && $@MS3CYCLE >= 1900) debugmes "[!WARNING! DANGEROUS MINEFIELD ANOMOLY DETECTED!! - "+$@MS3CYCLE+" cycles processed!]";
+	if ($@MS3Debug == 0 && $@MS3CYCLE >= 1900) debugmes "[!WARNING! DANGEROUS MINEFIELD ANOMOLY DETECTED!! - "+$@MS3CYCLE+" cycles processed!]";
+	if ($@MS3Debug == 0 && $@MS3CYCLE >= 1400 && $@MS3CYCLE < 1900) debugmes "[!WARNING! ABNORMAL MINEFIELD CYCLE! - "+$@MS3CYCLE+" cycles processed!]";
+	if ($@MS3Debug == 0 && $@MS3CYCLE >= 1400 && $@MS3CYCLE < 1900) debugmes "[!WARNING! ABNORMAL MINEFIELD CYCLE! - "+$@MS3CYCLE+" cycles processed!]";
+	if ($@MS3Debug == 0 && $@MS3CYCLE >= 700 && $@MS3CYCLE < 1400) debugmes "[!WARNING! LARGE MINEFIELD CYCLE! - "+$@MS3CYCLE+" cycles processed!]";
+	if ($@MS3Debug == 0 && $@MS3CYCLE >= 250 && $@MS3CYCLE < 700) debugmes "[!WARNING! BIG MINEFIELD CYCLE! - "+$@MS3CYCLE+" cycles processed!]";
+	if ($@MS3Debug == 1) debugmes ".===============================.";
+	if ($@MS3Debug == 1) debugmes "|  Minesweeper Room 1 Readout   |";
+	if ($@MS3Debug == 1) debugmes "|       [mine locations]        |";
+	if ($@MS3Debug == 1) debugmes "|===============================|";
+	if ($@MS3Debug == 1 && $@MS3CYCLE > 1499) debugmes "| !WARNING! DANGEROUSLY HIGH    |";
+	if ($@MS3Debug == 1 && $@MS3CYCLE > 1499) debugmes "|    CYCLE TICK!! "+$@MS3CYCLE+"!!       |";
+	if ($@MS3Debug == 1 && $@MS3CYCLE < 10) debugmes "| Field generated in 00"+$@MS3CYCLE+" cycles.|";
+	if ($@MS3Debug == 1 && $@MS3CYCLE < 100 && $@MS3CYCLE > 99) debugmes "| Field generated in 0"+$@MS3CYCLE+" cycles.|";
+	if ($@MS3Debug == 1 && $@MS3CYCLE > 99 && $@MS3CYCLE < 1000) debugmes "| Field generated in "+$@MS3CYCLE+" cycles.|";
+	if ($@MS3Debug == 1 && $@MS3CYCLE > 999 && $@MS3CYCLE < 1500) debugmes "| Field generated in "+$@MS3CYCLE+" cycles|";
+	if ($@MS3Debug == 1 && $@MS3Minetick < 10) debugmes "| Field should contain 0"+$@MS3Minetick+" mines.|";
+	if ($@MS3Debug == 1 && $@MS3Minetick > 9) debugmes "| Field should contain "+$@MS3Minetick+" mines.|";
+	if ($@MS3Debug == 1) debugmes "|-------------------------------|";
+	if ($@MS3Debug == 1) debugmes "| 9 ["+$@MS3Mines[73]+"]["+$@MS3Mines[74]+"]["+$@MS3Mines[75]+"]["+$@MS3Mines[76]+"]["+$@MS3Mines[77]+"]["+$@MS3Mines[78]+"]["+$@MS3Mines[79]+"]["+$@MS3Mines[80]+"]["+$@MS3Mines[81]+"] |";
+	if ($@MS3Debug == 1) debugmes "| 8 ["+$@MS3Mines[64]+"]["+$@MS3Mines[65]+"]["+$@MS3Mines[66]+"]["+$@MS3Mines[67]+"]["+$@MS3Mines[68]+"]["+$@MS3Mines[69]+"]["+$@MS3Mines[70]+"]["+$@MS3Mines[71]+"]["+$@MS3Mines[72]+"] |";
+	if ($@MS3Debug == 1) debugmes "| 7 ["+$@MS3Mines[55]+"]["+$@MS3Mines[56]+"]["+$@MS3Mines[57]+"]["+$@MS3Mines[58]+"]["+$@MS3Mines[59]+"]["+$@MS3Mines[60]+"]["+$@MS3Mines[61]+"]["+$@MS3Mines[62]+"]["+$@MS3Mines[63]+"] |";
+	if ($@MS3Debug == 1) debugmes "| 6 ["+$@MS3Mines[46]+"]["+$@MS3Mines[47]+"]["+$@MS3Mines[48]+"]["+$@MS3Mines[49]+"]["+$@MS3Mines[50]+"]["+$@MS3Mines[51]+"]["+$@MS3Mines[52]+"]["+$@MS3Mines[53]+"]["+$@MS3Mines[54]+"] |";
+	if ($@MS3Debug == 1) debugmes "| 5 ["+$@MS3Mines[37]+"]["+$@MS3Mines[38]+"]["+$@MS3Mines[39]+"]["+$@MS3Mines[40]+"]["+$@MS3Mines[41]+"]["+$@MS3Mines[42]+"]["+$@MS3Mines[43]+"]["+$@MS3Mines[44]+"]["+$@MS3Mines[45]+"] |";
+	if ($@MS3Debug == 1) debugmes "| 4 ["+$@MS3Mines[28]+"]["+$@MS3Mines[29]+"]["+$@MS3Mines[30]+"]["+$@MS3Mines[31]+"]["+$@MS3Mines[32]+"]["+$@MS3Mines[33]+"]["+$@MS3Mines[34]+"]["+$@MS3Mines[35]+"]["+$@MS3Mines[36]+"] |";
+	if ($@MS3Debug == 1) debugmes "| 3 ["+$@MS3Mines[19]+"]["+$@MS3Mines[20]+"]["+$@MS3Mines[21]+"]["+$@MS3Mines[22]+"]["+$@MS3Mines[23]+"]["+$@MS3Mines[24]+"]["+$@MS3Mines[25]+"]["+$@MS3Mines[26]+"]["+$@MS3Mines[27]+"] |";
+	if ($@MS3Debug == 1) debugmes "| 2 ["+$@MS3Mines[10]+"]["+$@MS3Mines[11]+"]["+$@MS3Mines[12]+"]["+$@MS3Mines[13]+"]["+$@MS3Mines[14]+"]["+$@MS3Mines[15]+"]["+$@MS3Mines[16]+"]["+$@MS3Mines[17]+"]["+$@MS3Mines[18]+"] |";
+	if ($@MS3Debug == 1) debugmes "| 1 ["+$@MS3Mines[1]+"]["+$@MS3Mines[2]+"]["+$@MS3Mines[3]+"]["+$@MS3Mines[4]+"]["+$@MS3Mines[5]+"]["+$@MS3Mines[6]+"]["+$@MS3Mines[7]+"]["+$@MS3Mines[8]+"]["+$@MS3Mines[9]+"] |";
+	if ($@MS3Debug == 1) debugmes "|    1  2  3  4  5  6  7  8  9  |";
+	if ($@MS3Debug == 1) debugmes "|===============================|";
+	if ($@MS3Debug == 1) debugmes "|  1 = Mine        0 = Nothing  |";
+	if ($@MS3Debug == 1) debugmes "`==============================='";
+	set $@MS3Minetick,0;
+	set $@MS3CYCLE,0;
+	set $@MS3Tile,0;
+	cleararray $@MS3Field[0],0,82;
+	set $@MS3C,1;
+	set $@MS3NW,0;
+	set $@MS3W,0;
+	set $@MS3SW,0;
+	set $@MS3S,0;
+	set $@MS3SE,0;
+	set $@MS3E,0;
+	set $@MS3N,0;
+	set $@MS3NW,0;
+	set $@MS3N,0;
+L_FTrigger:
+	if ($@MS3CYCLE == 81) goto L_FStop;
+	set $@MS3CYCLE,$@MS3CYCLE + 1;
+	set $@MS3C,$@MS3CYCLE;
+//	if ($@MS3Debug == 1) debugmes "[Field Generation Tick: "+$@MS3CYCLE+"]";
+	if ($@MS3Mines[$@MS3CYCLE] == 1) goto L_FSetup;
+	goto L_FTrigger;
+L_FSetup:
+	set $@MS3NW,0;
+	set $@MS3W,0;
+	set $@MS3SW,0;
+	set $@MS3S,0;
+	set $@MS3SE,0;
+	set $@MS3E,0;
+	set $@MS3N,0;
+	set $@MS3NW,0;
+	set $@MS3N,0;
+	set $@MS3NW,$@MS3C + 8;
+	set $@MS3W,$@MS3C - 1;
+	set $@MS3SW,$@MS3C - 10;
+	set $@MS3S,$@MS3C - 9;
+	set $@MS3SE,$@MS3C - 8;
+	set $@MS3E,$@MS3C + 1;
+	set $@MS3NE,$@MS3C + 10;
+	set $@MS3N,$@MS3C + 9;
+	if ($@MS3C == 1 || $@MS3C == 10 || $@MS3C == 19 || $@MS3C == 28 || $@MS3C == 37 || $@MS3C == 46 || $@MS3C == 55 || $@MS3C == 64 || $@MS3C > 72) set $@MS3NW,0;
+	if ($@MS3C == 1 || $@MS3C == 10 || $@MS3C == 19 || $@MS3C == 28 || $@MS3C == 37 || $@MS3C == 46 || $@MS3C == 55 || $@MS3C == 64 || $@MS3C == 73) set $@MS3W,0;
+	if ($@MS3C < 11 || $@MS3C == 19 || $@MS3C == 28 || $@MS3C == 37 || $@MS3C == 46 || $@MS3C == 55 || $@MS3C == 64 || $@MS3C == 73) set $@MS3SW,0;
+	if ($@MS3C < 10) set $@MS3S,0;
+	if ($@MS3C < 10 || $@MS3C == 18 || $@MS3C == 27 || $@MS3C == 36 || $@MS3C == 45 || $@MS3C == 54 || $@MS3C == 63 || $@MS3C == 72 || $@MS3C == 81) set $@MS3SE,0;
+	if ($@MS3C == 9 || $@MS3C == 18 || $@MS3C == 27 || $@MS3C == 36 || $@MS3C == 45 || $@MS3C == 54 || $@MS3C == 63 || $@MS3C == 72 || $@MS3C == 81) set $@MS3E,0;
+	if ($@MS3C == 9 || $@MS3C == 18 || $@MS3C == 27 || $@MS3C == 36 || $@MS3C == 45 || $@MS3C == 54 || $@MS3C == 63 || $@MS3C > 71) set $@MS3NE,0;
+	if ($@MS3C > 72) set $@MS3N,0;
+	set $@MS3Field[$@MS3C],9;
+	if ($@MS3NW != 0) set $@MS3Field[$@MS3NW],$@MS3Field[$@MS3NW] + 1;
+	if ($@MS3W != 0) set $@MS3Field[$@MS3W],$@MS3Field[$@MS3W] + 1;
+	if ($@MS3SW != 0) set $@MS3Field[$@MS3SW],$@MS3Field[$@MS3SW] + 1;
+	if ($@MS3S != 0) set $@MS3Field[$@MS3S],$@MS3Field[$@MS3S] + 1;
+	if ($@MS3SE != 0) set $@MS3Field[$@MS3SE],$@MS3Field[$@MS3SE] + 1;
+	if ($@MS3E != 0) set $@MS3Field[$@MS3E],$@MS3Field[$@MS3E] + 1;
+	if ($@MS3NE != 0) set $@MS3Field[$@MS3NE],$@MS3Field[$@MS3NE] + 1;
+	if ($@MS3N != 0) set $@MS3Field[$@MS3N],$@MS3Field[$@MS3N] + 1;
+	if ($@MS3Field[$@MS3NW] > 9) set $@MS3Field[$@MS3NW],9;
+	if ($@MS3Field[$@MS3W] > 9) set $@MS3Field[$@MS3W],9;
+	if ($@MS3Field[$@MS3SW] > 9) set $@MS3Field[$@MS3SW],9;
+	if ($@MS3Field[$@MS3S] > 9) set $@MS3Field[$@MS3S],9;
+	if ($@MS3Field[$@MS3SE] > 9) set $@MS3Field[$@MS3SE],9;
+	if ($@MS3Field[$@MS3E] > 9) set $@MS3Field[$@MS3E],9;
+	if ($@MS3Field[$@MS3NE] > 9) set $@MS3Field[$@MS3NE],9;
+	if ($@MS3Field[$@MS3N] > 9) set $@MS3Field[$@MS3N],9;
+	set $@MS3C,0;
+	goto L_FTrigger;
+L_FCheck:
+	if ($@MS3CYCLE == 81) goto L_FResume;
+	set $@MS3CYCLE,$@MS3CYCLE + 1;
+	if ($@MS3Field[$@MS3CYCLE] < 9 && $@MS3Field[$@MS3CYCLE] > 0) set $@MS3FCheck,$@MS3FCheck + $@MS3Field[$@MS3CYCLE];
+	goto L_FCheck;
+L_FStop:
+	set $@MS3CYCLE,0;
+	set $@MS3FCheck,0;
+	if ($@MS3Debug == 1) goto L_FCheck;
+L_FResume:
+	set $@MS3C,0;
+	set $@MS3NW,0;
+	set $@MS3W,0;
+	set $@MS3SW,0;
+	set $@MS3S,0;
+	set $@MS3SE,0;
+	set $@MS3E,0;
+	set $@MS3NE,0;
+	set $@MS3N,0;
+	cleararray $@MS3Mines[0],0,82;
+	if ($@MS3Debug == 1) debugmes ".===============================.";
+	if ($@MS3Debug == 1) debugmes "|  Minesweeper Room 1 Readout   |";
+	if ($@MS3Debug == 1) debugmes "|      [point value map]        |";
+	if ($@MS3Debug == 1) debugmes "|===============================|";
+	if ($@MS3Debug == 1 && $@MS3FCheck < 10) debugmes "| Total Point Value : "+$@MS3FCheck+" pts     |";
+	if ($@MS3Debug == 1 && $@MS3FCheck < 100 && $@MS3FCheck > 9) debugmes "| Total Point Value : "+$@MS3FCheck+" pts    |";
+	if ($@MS3Debug == 1 && $@MS3FCheck < 1000 && $@MS3FCheck > 99) debugmes "| Total Point Value : "+$@MS3FCheck+" pts   |";
+	if ($@MS3Debug == 1 && $@MS3FCheck < 10000 && $@MS3FCheck > 999) debugmes "| Total Point Value : "+$@MS3FCheck+" pts  |";
+	if ($@MS3Debug == 1 && $@MS3Amount < 10) debugmes "| Field should contain 0"+$@MS3Amount+" mines.|";
+	if ($@MS3Debug == 1 && $@MS3Amount > 9) debugmes "| Field should contain "+$@MS3Amount+" mines.|";
+	if ($@MS3Debug == 1) debugmes "|-------------------------------|";
+	if ($@MS3Debug == 1) debugmes "| 9 ["+$@MS3Field[73]+"]["+$@MS3Field[74]+"]["+$@MS3Field[75]+"]["+$@MS3Field[76]+"]["+$@MS3Field[77]+"]["+$@MS3Field[78]+"]["+$@MS3Field[79]+"]["+$@MS3Field[80]+"]["+$@MS3Field[81]+"] |";
+	if ($@MS3Debug == 1) debugmes "| 8 ["+$@MS3Field[64]+"]["+$@MS3Field[65]+"]["+$@MS3Field[66]+"]["+$@MS3Field[67]+"]["+$@MS3Field[68]+"]["+$@MS3Field[69]+"]["+$@MS3Field[70]+"]["+$@MS3Field[71]+"]["+$@MS3Field[72]+"] |";
+	if ($@MS3Debug == 1) debugmes "| 7 ["+$@MS3Field[55]+"]["+$@MS3Field[56]+"]["+$@MS3Field[57]+"]["+$@MS3Field[58]+"]["+$@MS3Field[59]+"]["+$@MS3Field[60]+"]["+$@MS3Field[61]+"]["+$@MS3Field[62]+"]["+$@MS3Field[63]+"] |";
+	if ($@MS3Debug == 1) debugmes "| 6 ["+$@MS3Field[46]+"]["+$@MS3Field[47]+"]["+$@MS3Field[48]+"]["+$@MS3Field[49]+"]["+$@MS3Field[50]+"]["+$@MS3Field[51]+"]["+$@MS3Field[52]+"]["+$@MS3Field[53]+"]["+$@MS3Field[54]+"] |";
+	if ($@MS3Debug == 1) debugmes "| 5 ["+$@MS3Field[37]+"]["+$@MS3Field[38]+"]["+$@MS3Field[39]+"]["+$@MS3Field[40]+"]["+$@MS3Field[41]+"]["+$@MS3Field[42]+"]["+$@MS3Field[43]+"]["+$@MS3Field[44]+"]["+$@MS3Field[45]+"] |";
+	if ($@MS3Debug == 1) debugmes "| 4 ["+$@MS3Field[28]+"]["+$@MS3Field[29]+"]["+$@MS3Field[30]+"]["+$@MS3Field[31]+"]["+$@MS3Field[32]+"]["+$@MS3Field[33]+"]["+$@MS3Field[34]+"]["+$@MS3Field[35]+"]["+$@MS3Field[36]+"] |";
+	if ($@MS3Debug == 1) debugmes "| 3 ["+$@MS3Field[19]+"]["+$@MS3Field[20]+"]["+$@MS3Field[21]+"]["+$@MS3Field[22]+"]["+$@MS3Field[23]+"]["+$@MS3Field[24]+"]["+$@MS3Field[25]+"]["+$@MS3Field[26]+"]["+$@MS3Field[27]+"] |";
+	if ($@MS3Debug == 1) debugmes "| 2 ["+$@MS3Field[10]+"]["+$@MS3Field[11]+"]["+$@MS3Field[12]+"]["+$@MS3Field[13]+"]["+$@MS3Field[14]+"]["+$@MS3Field[15]+"]["+$@MS3Field[16]+"]["+$@MS3Field[17]+"]["+$@MS3Field[18]+"] |";
+	if ($@MS3Debug == 1) debugmes "| 1 ["+$@MS3Field[1]+"]["+$@MS3Field[2]+"]["+$@MS3Field[3]+"]["+$@MS3Field[4]+"]["+$@MS3Field[5]+"]["+$@MS3Field[6]+"]["+$@MS3Field[7]+"]["+$@MS3Field[8]+"]["+$@MS3Field[9]+"] |";
+	if ($@MS3Debug == 1) debugmes "|    1  2  3  4  5  6  7  8  9  |";
+	if ($@MS3Debug == 1) debugmes "|===============================|";
+	if ($@MS3Debug == 1) debugmes "|  9 = Mine        0 = Nothing  |";
+	if ($@MS3Debug == 1) debugmes "`==============================='";
+	end;
+}
+
+//---Chain Reaction Function----------------------------------------------------------------------------------
+function	script	F_M3Fission	{
+	if ($@MS3Sequence == $MS3Fission) end;
+	set $@MS3Total,$@MS3Total + 2;
+	if ($@MS3Debug == 1) debugmes "Victory Total "+$@MS3Total+"/"+(162-$@MS3Amount)+", tile : "+getarg(0);
+	set $@MS3Sequence,$@MS3Sequence + 1;
+	set $@MS3State[getarg(0)],2;
+	set $@MS3Mines[getarg(0)],3;
+	set $@MS3NW,0;
+	set $@MS3W,0;
+	set $@MS3SW,0;
+	set $@MS3S,0;
+	set $@MS3SE,0;
+	set $@MS3E,0;
+	set $@MS3N,0;
+	set $@MS3NW,0;
+	set $@MS3N,0;
+	set $@MS3NW,getarg(0) + 8;
+	set $@MS3W,getarg(0) - 1;
+	set $@MS3SW,getarg(0) - 10;
+	set $@MS3S,getarg(0) - 9;
+	set $@MS3SE,getarg(0) - 8;
+	set $@MS3E,getarg(0) + 1;
+	set $@MS3NE,getarg(0) + 10;
+	set $@MS3N,getarg(0) + 9;
+	if (getarg(0) == 1 || getarg(0) == 10 || getarg(0) == 19 || getarg(0) == 28 || getarg(0) == 37 || getarg(0) == 46 || getarg(0) == 55 || getarg(0) == 64 || getarg(0) > 72) set $@MS3NW,0;
+	if (getarg(0) == 1 || getarg(0) == 10 || getarg(0) == 19 || getarg(0) == 28 || getarg(0) == 37 || getarg(0) == 46 || getarg(0) == 55 || getarg(0) == 64 || getarg(0) == 73) set $@MS3W,0;
+	if (getarg(0) < 11 || getarg(0) == 19 || getarg(0) == 28 || getarg(0) == 37 || getarg(0) == 46 || getarg(0) == 55 || getarg(0) == 64 || getarg(0) == 73) set $@MS3SW,0;
+	if (getarg(0) < 10) set $@MS3S,0;
+	if (getarg(0) < 10 || getarg(0) == 18 || getarg(0) == 27 || getarg(0) == 36 || getarg(0) == 45 || getarg(0) == 54 || getarg(0) == 63 || getarg(0) == 72 || getarg(0) == 81) set $@MS3SE,0;
+	if (getarg(0) == 9 || getarg(0) == 18 || getarg(0) == 27 || getarg(0) == 36 || getarg(0) == 45 || getarg(0) == 54 || getarg(0) == 63 || getarg(0) == 72 || getarg(0) == 81) set $@MS3E,0;
+	if (getarg(0) == 9 || getarg(0) == 18 || getarg(0) == 27 || getarg(0) == 36 || getarg(0) == 45 || getarg(0) == 54 || getarg(0) == 63 || getarg(0) > 71) set $@MS3NE,0;
+	if (getarg(0) > 72) set $@MS3N,0;
+	if ($@MS3NW != 0 && $@MS3State[$@MS3NW] == 1) set $@MS3Mines[$@MS3NW],3;
+	if ($@MS3W != 0 && $@MS3State[$@MS3W] == 1) set $@MS3Mines[$@MS3W],3;
+	if ($@MS3SW != 0 && $@MS3State[$@MS3SW] == 1) set $@MS3Mines[$@MS3SW],3;
+	if ($@MS3S != 0 && $@MS3State[$@MS3S] == 1) set $@MS3Mines[$@MS3S],3;
+	if ($@MS3SE != 0 && $@MS3State[$@MS3SE] == 1) set $@MS3Mines[$@MS3SE],3;
+	if ($@MS3E != 0 && $@MS3State[$@MS3E] == 1) set $@MS3Mines[$@MS3E],3;
+	if ($@MS3NE != 0 && $@MS3State[$@MS3NE] == 1) set $@MS3Mines[$@MS3NE],3;
+	if ($@MS3N != 0 && $@MS3State[$@MS3N] == 1) set $@MS3Mines[$@MS3N],3;
+	if ($@MS3NW != 0 && $@MS3Field[$@MS3NW] == 0 && $@MS3Mines[$@MS3NW] == 0) set $@MS3Mines[$@MS3NW],1;
+	if ($@MS3W != 0 && $@MS3Field[$@MS3W] == 0 && $@MS3Mines[$@MS3W] == 0) set $@MS3Mines[$@MS3W],1;
+	if ($@MS3SW != 0 && $@MS3Field[$@MS3SW] == 0 && $@MS3Mines[$@MS3SW] == 0) set $@MS3Mines[$@MS3SW],1;
+	if ($@MS3S != 0 && $@MS3Field[$@MS3S] == 0 && $@MS3Mines[$@MS3S] == 0) set $@MS3Mines[$@MS3S],1;
+	if ($@MS3SE != 0 && $@MS3Field[$@MS3SE] == 0 && $@MS3Mines[$@MS3SE] == 0) set $@MS3Mines[$@MS3SE],1;
+	if ($@MS3E != 0 && $@MS3Field[$@MS3E] == 0 && $@MS3Mines[$@MS3E] == 0) set $@MS3Mines[$@MS3E],1;
+	if ($@MS3NE != 0 && $@MS3Field[$@MS3NE] == 0 && $@MS3Mines[$@MS3NE] == 0) set $@MS3Mines[$@MS3NE],1;
+	if ($@MS3N != 0 && $@MS3Field[$@MS3N] == 0 && $@MS3Mines[$@MS3N] == 0) set $@MS3Mines[$@MS3N],1;
+	if ($@MS3NW != 0 && $@MS3Field[$@MS3NW] > 0 && $@MS3Field[$@MS3NW] < 9 && $@MS3Mines[$@MS3NW] == 0) set $@MS3Mines[$@MS3NW],2;
+	if ($@MS3W != 0 && $@MS3Field[$@MS3W] > 0 && $@MS3Field[$@MS3W] < 9 && $@MS3Mines[$@MS3W] == 0) set $@MS3Mines[$@MS3W],2;
+	if ($@MS3SW != 0 && $@MS3Field[$@MS3SW] > 0 && $@MS3Field[$@MS3SW] < 9 && $@MS3Mines[$@MS3SW] == 0) set $@MS3Mines[$@MS3SW],2;
+	if ($@MS3S != 0 && $@MS3Field[$@MS3S] > 0 && $@MS3Field[$@MS3S] < 9 && $@MS3Mines[$@MS3S] == 0) set $@MS3Mines[$@MS3S],2;
+	if ($@MS3SE != 0 && $@MS3Field[$@MS3SE] > 0 && $@MS3Field[$@MS3SE] < 9 && $@MS3Mines[$@MS3SE] == 0) set $@MS3Mines[$@MS3SE],2;
+	if ($@MS3E != 0 && $@MS3Field[$@MS3E] > 0 && $@MS3Field[$@MS3E] < 9 && $@MS3Mines[$@MS3E] == 0) set $@MS3Mines[$@MS3E],2;
+	if ($@MS3NE != 0 && $@MS3Field[$@MS3NE] > 0 && $@MS3Field[$@MS3NE] < 9 && $@MS3Mines[$@MS3NE] == 0) set $@MS3Mines[$@MS3NE],2;
+	if ($@MS3N != 0 && $@MS3Field[$@MS3N] > 0 && $@MS3Field[$@MS3N] < 9 && $@MS3Mines[$@MS3N] == 0) set $@MS3Mines[$@MS3N],2;
+	if ($@MS3NW != 0 && $@MS3Field[$@MS3NW] == 9 && $@MS3Mines[$@MS3NW] == 0) set $@MS3Mines[$@MS3NW],3;
+	if ($@MS3W != 0 && $@MS3Field[$@MS3W] == 9 && $@MS3Mines[$@MS3W] == 0) set $@MS3Mines[$@MS3W],3;
+	if ($@MS3SW != 0 && $@MS3Field[$@MS3SW] == 9 && $@MS3Mines[$@MS3SW] == 0) set $@MS3Mines[$@MS3SW],3;
+	if ($@MS3S != 0 && $@MS3Field[$@MS3S] == 9 && $@MS3Mines[$@MS3S] == 0) set $@MS3Mines[$@MS3S],3;
+	if ($@MS3SE != 0 && $@MS3Field[$@MS3SE] == 9 && $@MS3Mines[$@MS3SE] == 0) set $@MS3Mines[$@MS3SE],3;
+	if ($@MS3E != 0 && $@MS3Field[$@MS3E] == 9 && $@MS3Mines[$@MS3E] == 0) set $@MS3Mines[$@MS3E],3;
+	if ($@MS3NE != 0 && $@MS3Field[$@MS3NE] == 9 && $@MS3Mines[$@MS3NE] == 0) set $@MS3Mines[$@MS3NE],3;
+	if ($@MS3N != 0 && $@MS3Field[$@MS3N] == 9 && $@MS3Mines[$@MS3N] == 0) set $@MS3Mines[$@MS3N],3;
+	if ($@MS3NW != 0 && $@MS3Mines[$@MS3NW] == 2) donpcevent "Tile3_"+$@MS3NW+"::OnDisplay";
+	if ($@MS3W != 0 && $@MS3Mines[$@MS3W] == 2) donpcevent "Tile3_"+$@MS3W+"::OnDisplay";
+	if ($@MS3SW != 0 && $@MS3Mines[$@MS3SW] == 2) donpcevent "Tile3_"+$@MS3SW+"::OnDisplay";
+	if ($@MS3S != 0 && $@MS3Mines[$@MS3S] == 2) donpcevent "Tile3_"+$@MS3S+"::OnDisplay";
+	if ($@MS3SE != 0 && $@MS3Mines[$@MS3SE] == 2) donpcevent "Tile3_"+$@MS3SE+"::OnDisplay";
+	if ($@MS3E != 0 && $@MS3Mines[$@MS3E] == 2) donpcevent "Tile3_"+$@MS3E+"::OnDisplay";
+	if ($@MS3NE != 0 && $@MS3Mines[$@MS3NE] == 2) donpcevent "Tile3_"+$@MS3NE+"::OnDisplay";
+	if ($@MS3N != 0 && $@MS3Mines[$@MS3N] == 2) donpcevent "Tile3_"+$@MS3N+"::OnDisplay";
+	attachrid(getcharid(3,$@MS3NAME$));
+	if ($@MS3NW != 0 && $@MS3Mines[$@MS3NW] == 2) set @MSpt,@MSpt + $@MS3Field[$@MS3NW];
+	if ($@MS3W != 0 && $@MS3Mines[$@MS3W] == 2) set @MSpt,@MSpt + $@MS3Field[$@MS3W];
+	if ($@MS3SW != 0 && $@MS3Mines[$@MS3SW] == 2) set @MSpt,@MSpt + $@MS3Field[$@MS3SW];
+	if ($@MS3S != 0 && $@MS3Mines[$@MS3S] == 2) set @MSpt,@MSpt + $@MS3Field[$@MS3S];
+	if ($@MS3SE != 0 && $@MS3Mines[$@MS3SE] == 2) set @MSpt,@MSpt + $@MS3Field[$@MS3SE];
+	if ($@MS3E != 0 && $@MS3Mines[$@MS3E] == 2) set @MSpt,@MSpt + $@MS3Field[$@MS3E];
+	if ($@MS3NE != 0 && $@MS3Mines[$@MS3NE] == 2) set @MSpt,@MSpt + $@MS3Field[$@MS3NE];
+	if ($@MS3N != 0 && $@MS3Mines[$@MS3N] == 2) set @MSpt,@MSpt + $@MS3Field[$@MS3N];
+	if ($@MS3Mines[$@MS3NW] == 2 || $@MS3Mines[$@MS3W] == 2 || $@MS3Mines[$@MS3SW] == 2 || $@MS3Mines[$@MS3S] == 2 || $@MS3Mines[$@MS3SE] == 2 || $@MS3Mines[$@MS3E] == 2 || $@MS3Mines[$@MS3NE] == 2 || $@MS3Mines[$@MS3N] == 2) dispbottom "[Points : "+@MSpt+"]";
+	detachrid;
+	if ($@MS3NW != 0 && $@MS3Mines[$@MS3NW] == 2) set $@MS3Total,$@MS3Total + 2;
+	if ($@MS3W != 0 && $@MS3Mines[$@MS3W] == 2) set $@MS3Total,$@MS3Total + 2;
+	if ($@MS3SW != 0 && $@MS3Mines[$@MS3SW] == 2) set $@MS3Total,$@MS3Total + 2;
+	if ($@MS3S != 0 && $@MS3Mines[$@MS3S] == 2) set $@MS3Total,$@MS3Total + 2;
+	if ($@MS3SE != 0 && $@MS3Mines[$@MS3SE] == 2) set $@MS3Total,$@MS3Total + 2;
+	if ($@MS3E != 0 && $@MS3Mines[$@MS3E] == 2) set $@MS3Total,$@MS3Total + 2;
+	if ($@MS3NE != 0 && $@MS3Mines[$@MS3NE] == 2) set $@MS3Total,$@MS3Total + 2;
+	if ($@MS3N != 0 && $@MS3Mines[$@MS3N] == 2) set $@MS3Total,$@MS3Total + 2;
+	if ($@MS3Debug == 1 && $@MS3NW != 0 && $@MS3Mines[$@MS3NW] == 2) debugmes "Victory Total "+$@MS3Total+"/"+(162-$@MS3Amount)+", tile : "+$@MS3NW;
+	if ($@MS3Debug == 1 && $@MS3W != 0 && $@MS3Mines[$@MS3W] == 2) debugmes "Victory Total "+$@MS3Total+"/"+(162-$@MS3Amount)+", tile : "+$@MS3W;
+	if ($@MS3Debug == 1 && $@MS3SW != 0 && $@MS3Mines[$@MS3SW] == 2) debugmes "Victory Total "+$@MS3Total+"/"+(162-$@MS3Amount)+", tile : "+$@MS3SW;
+	if ($@MS3Debug == 1 && $@MS3S != 0 && $@MS3Mines[$@MS3S] == 2) debugmes "Victory Total "+$@MS3Total+"/"+(162-$@MS3Amount)+", tile : "+$@MS3S;
+	if ($@MS3Debug == 1 && $@MS3SE != 0 && $@MS3Mines[$@MS3SE] == 2) debugmes "Victory Total "+$@MS3Total+"/"+(162-$@MS3Amount)+", tile : "+$@MS3SE;
+	if ($@MS3Debug == 1 && $@MS3E != 0 && $@MS3Mines[$@MS3E] == 2) debugmes "Victory Total "+$@MS3Total+"/"+(162-$@MS3Amount)+", tile : "+$@MS3E;
+	if ($@MS3Debug == 1 && $@MS3NE != 0 && $@MS3Mines[$@MS3NE] == 2) debugmes "Victory Total "+$@MS3Total+"/"+(162-$@MS3Amount)+", tile : "+$@MS3NE;
+	if ($@MS3Debug == 1 && $@MS3N != 0 && $@MS3Mines[$@MS3N] == 2) debugmes "Victory Total "+$@MS3Total+"/"+(162-$@MS3Amount)+", tile : "+$@MS3N;
+	if ($@MS3NW != 0 && $@MS3Mines[$@MS3NW] == 2) set $@MS3Mines[$@MS3NW],3;
+	if ($@MS3W != 0 && $@MS3Mines[$@MS3W] == 2) set $@MS3Mines[$@MS3W],3;
+	if ($@MS3SW != 0 && $@MS3Mines[$@MS3SW] == 2) set $@MS3Mines[$@MS3SW],3;
+	if ($@MS3S != 0 && $@MS3Mines[$@MS3S] == 2) set $@MS3Mines[$@MS3S],3;
+	if ($@MS3SE != 0 && $@MS3Mines[$@MS3SE] == 2) set $@MS3Mines[$@MS3SE],3;
+	if ($@MS3E != 0 && $@MS3Mines[$@MS3E] == 2) set $@MS3Mines[$@MS3E],3;
+	if ($@MS3NE != 0 && $@MS3Mines[$@MS3NE] == 2) set $@MS3Mines[$@MS3NE],3;
+	if ($@MS3N != 0 && $@MS3Mines[$@MS3N] == 2) set $@MS3Mines[$@MS3N],3;
+	if ($@MS3NW != 0 && $@MS3Mines[$@MS3NW] == 1) donpcevent "Tile3_"+$@MS3NW+"::OnReaction";
+	if ($@MS3W != 0 && $@MS3Mines[$@MS3W] == 1) donpcevent "Tile3_"+$@MS3W+"::OnReaction";
+	if ($@MS3SW != 0 && $@MS3Mines[$@MS3SW] == 1) donpcevent "Tile3_"+$@MS3SW+"::OnReaction";
+	if ($@MS3S != 0 && $@MS3Mines[$@MS3S] == 1) donpcevent "Tile3_"+$@MS3S+"::OnReaction";
+	if ($@MS3SE != 0 && $@MS3Mines[$@MS3SE] == 1) donpcevent "Tile3_"+$@MS3SE+"::OnReaction";
+	if ($@MS3E != 0 && $@MS3Mines[$@MS3E] == 1) donpcevent "Tile3_"+$@MS3E+"::OnReaction";
+	if ($@MS3NE != 0 && $@MS3Mines[$@MS3NE] == 1) donpcevent "Tile3_"+$@MS3NE+"::OnReaction";
+	if ($@MS3N != 0 && $@MS3Mines[$@MS3N] == 1) donpcevent "Tile3_"+$@MS3N+"::OnReaction";
+	if ($@MS3Debug == 1) debugmes "Fission cycle completed by tile "+getarg(0)+".";	
+	disablenpc "Tile3_"+getarg(0);
+	end;
+}
+
+//---Chain Reaction Display Maker----------------------------------------------------------------------------------
+function	script	F_M3Subchain	{
+	if ($@MS3Debug == 1) debugmes "Tile "+getarg(0)+" / Point Value "+$@MS3Field[getarg(0)];
+	if ($MS3Window == 0) setnpcdisplay "Tile3_"+getarg(0)," ",1002;
+	if ($MS3Window == 1) setnpcdisplay "Tile3_"+getarg(0),""+$@MS3Field[getarg(0)]+"",1002;
+	if ($MS3Window == 0) waitingroom "----- "+$@MS3Field[getarg(0)]+" -----",0;
+	if ($MS3Window == 2) setnpcdisplay "Tile3_"+getarg(0),""+$@MS3Field[getarg(0)]+"",1002;
+	if ($MS3Window == 2) waitingroom "----- "+$@MS3Field[getarg(0)]+" -----",0;
+	if ($MS3State[getarg(0)] == 0) set $@MS3State[getarg(0)],2;
+	donpcevent "Tile3_"+getarg(0)+"::OnFlip";
+	end;
+}
+
+//---Tile Dialogue----------------------------------------------------------------------------------
+function	script	F_M3Tile	{
+	set $@MS3NAME$,strcharinfo(0);
+	if ($@MS3State[getarg(0)] == 2) end;
+	if ($@MS3State[getarg(0)] == 0) goto L_Flag;
+	if ($@MS3State[getarg(0)] < 2) set $@MS3State[getarg(0)],2;
+	if ($@MS3Field[getarg(0)] == 0) goto L_Chain;
+	if ($@MS3Field[getarg(0)] == 9) goto L_Lose;
+	if ($@MS3Debug == 1) debugmes "Tile "+getarg(0)+" / Point Value "+$@MS3Field[getarg(0)];
+	if ($MS3Window == 0) setnpcdisplay "Tile3_"+getarg(0)," ",1002;
+	if ($MS3Window == 1) setnpcdisplay "Tile3_"+getarg(0),""+$@MS3Field[getarg(0)]+"",1002;
+	if ($MS3Window == 0) waitingroom "----- "+$@MS3Field[getarg(0)]+" -----",0;
+	if ($MS3Window == 2) setnpcdisplay "Tile3_"+getarg(0),""+$@MS3Field[getarg(0)]+"",1002;
+	if ($MS3Window == 2) waitingroom "----- "+$@MS3Field[getarg(0)]+" -----",0;
+	if ($MS3State[getarg(0)] == 0) set $@MS3State[getarg(0)],2;
+	set $@MS3Total,$@MS3Total + 1;
+	if ($@MS3Debug == 1) debugmes "Victory Total "+$@MS3Total+"/"+(162-$@MS3Amount)+", tile : "+getarg(0);
+	donpcevent "Tile3_"+getarg(0)+"::OnFlip";
+	set @MSpt,@MSpt + $@MS3Field[getarg(0)];
+	dispbottom "[Points : "+@MSpt+"]";
+	if ($@MS3Total == (162 - $@MS3Amount)) donpcevent "Mine3Control::OnWin";
+	end;
+L_Flag:
+	set $@MS3Total,$@MS3Total + 1;
+	if ($@MS3Debug == 1) debugmes "Victory Total "+$@MS3Total+"/"+(162-$@MS3Amount)+", tile : "+getarg(0);
+	set $@MS3State[getarg(0)],1;
+	setnpcdisplay "Tile3_"+getarg(0),"?",1242;
+	donpcevent "Tile3_"+getarg(0)+"::OnFlip";
+	if ($@MS3Total == (162 - $@MS3Amount)) donpcevent "Mine3Control::OnWin";
+	end;
+L_Lose:
+	if ($@MS3Debug == 1) debugmes strcharinfo(0)+" triggered mine "+getarg(0);
+	mapannounce "minesweep3","You have hit a mine!! Game over!  You will be returned to the station automatically in one minute.",1;
+	set $@MS3Ready,1;
+	set $@MS3Total,0;
+	set $@MS3Lose,1;
+	set @MSpt,0;
+	specialeffect 183;
+	specialeffect 107;
+	specialeffect 17;
+	specialeffect 8;
+	specialeffect 8;
+	if ($MS3Hurts == 1) percentheal $MS3Ow,0;
+	if ($MS3Hurts == 2) heal $MS3Ow,0;
+	donpcevent "Mine3Control::OnBoom";
+	donpcevent "Tile3_"+getarg(0)+"::OnFlip";
+	if ($@MS3Debug == 1) debugmes "Tile "+getarg(0)+" exploded!";
+	set $@MS3CYCLE,0;
+L_BoomCycle:
+	if ($@MS3CYCLE == 81) goto L_BoomStop;
+	set $@MS3CYCLE,$@MS3CYCLE + 1;
+	donpcevent "Tile3_"+$@MS3CYCLE+"::OnFlip";
+	disablenpc "Tile3_"+$@MS3CYCLE;
+	goto L_BoomCycle;
+L_BoomStop:
+	set $@MS3CYCLE,0;
+	end;
+L_Chain:
+	set $@MS3Total,$@MS3Total - 1;
+	if ($@MS3Debug == 1) debugmes "Victory Total "+$@MS3Total+"/"+(162-$@MS3Amount)+", tile : "+getarg(0);
+	set $@MS3Sequence,0;
+	donpcevent "Tile3_"+getarg(0)+"::OnReaction";
+	end;
+}
+
+//---Tile Animation----------------------------------------------------------------------------------
+function	script	F_M3Flip	{
+	if ($@MS3Lose == 1) specialeffect 150;
+	if ($@MS3Lose == 0 && $@Ready == 1) specialeffect 70;
+	if ($@MS3Lose == 0 && $@Ready == 0) specialeffect 423;
+	end;
+}
+
+//---Tile NPC List----------------------------------------------------------------------------------
+minesweep3,132,44,5	script	Tile3_1	139,{
+	callfunc "F_M3Tile",1;
+OnReaction:
+	callfunc "F_M3Fission",1;
+OnDisplay:
+	callfunc "F_M3Subchain",1;
+OnFlip:
+	callfunc "F_M3Flip",1;
+}
+minesweep3,135,44,5	script	Tile3_2	139,{
+	callfunc "F_M3Tile",2;
+OnReaction:
+	callfunc "F_M3Fission",2;
+OnDisplay:
+	callfunc "F_M3Subchain",2;
+OnFlip:
+	callfunc "F_M3Flip",2;
+}
+minesweep3,138,44,5	script	Tile3_3	139,{
+	callfunc "F_M3Tile",3;
+OnReaction:
+	callfunc "F_M3Fission",3;
+OnDisplay:
+	callfunc "F_M3Subchain",3;
+OnFlip:
+	callfunc "F_M3Flip",3;
+}
+minesweep3,141,44,5	script	Tile3_4	139,{
+	callfunc "F_M3Tile",4;
+OnReaction:
+	callfunc "F_M3Fission",4;
+OnDisplay:
+	callfunc "F_M3Subchain",4;
+OnFlip:
+	callfunc "F_M3Flip",4;
+}
+minesweep3,144,44,5	script	Tile3_5	139,{
+	callfunc "F_M3Tile",5;
+OnReaction:
+	callfunc "F_M3Fission",5;
+OnDisplay:
+	callfunc "F_M3Subchain",5;
+OnFlip:
+	callfunc "F_M3Flip",5;
+}
+minesweep3,147,44,5	script	Tile3_6	139,{
+	callfunc "F_M3Tile",6;
+OnReaction:
+	callfunc "F_M3Fission",6;
+OnDisplay:
+	callfunc "F_M3Subchain",6;
+OnFlip:
+	callfunc "F_M3Flip",6;
+}
+minesweep3,150,44,5	script	Tile3_7	139,{
+	callfunc "F_M3Tile",7;
+OnReaction:
+	callfunc "F_M3Fission",7;
+OnDisplay:
+	callfunc "F_M3Subchain",7;
+OnFlip:
+	callfunc "F_M3Flip",7;
+}
+minesweep3,153,44,5	script	Tile3_8	139,{
+	callfunc "F_M3Tile",8;
+OnReaction:
+	callfunc "F_M3Fission",8;
+OnDisplay:
+	callfunc "F_M3Subchain",8;
+OnFlip:
+	callfunc "F_M3Flip",8;
+}
+minesweep3,156,44,5	script	Tile3_9	139,{
+	callfunc "F_M3Tile",9;
+OnReaction:
+	callfunc "F_M3Fission",9;
+OnDisplay:
+	callfunc "F_M3Subchain",9;
+OnFlip:
+	callfunc "F_M3Flip",9;
+}
+minesweep3,132,47,5	script	Tile3_10	139,{
+	callfunc "F_M3Tile",10;
+OnReaction:
+	callfunc "F_M3Fission",10;
+OnDisplay:
+	callfunc "F_M3Subchain",10;
+OnFlip:
+	callfunc "F_M3Flip",10;
+}
+minesweep3,135,47,5	script	Tile3_11	139,{
+	callfunc "F_M3Tile",11;
+OnReaction:
+	callfunc "F_M3Fission",11;
+OnDisplay:
+	callfunc "F_M3Subchain",11;
+OnFlip:
+	callfunc "F_M3Flip",11;
+}
+minesweep3,138,47,5	script	Tile3_12	139,{
+	callfunc "F_M3Tile",12;
+OnReaction:
+	callfunc "F_M3Fission",12;
+OnDisplay:
+	callfunc "F_M3Subchain",12;
+OnFlip:
+	callfunc "F_M3Flip",12;
+}
+minesweep3,141,47,5	script	Tile3_13	139,{
+	callfunc "F_M3Tile",13;
+OnReaction:
+	callfunc "F_M3Fission",13;
+OnDisplay:
+	callfunc "F_M3Subchain",13;
+OnFlip:
+	callfunc "F_M3Flip",13;
+}
+minesweep3,144,47,5	script	Tile3_14	139,{
+	callfunc "F_M3Tile",14;
+OnReaction:
+	callfunc "F_M3Fission",14;
+OnDisplay:
+	callfunc "F_M3Subchain",14;
+OnFlip:
+	callfunc "F_M3Flip",14;
+}
+minesweep3,147,47,5	script	Tile3_15	139,{
+	callfunc "F_M3Tile",15;
+OnReaction:
+	callfunc "F_M3Fission",15;
+OnDisplay:
+	callfunc "F_M3Subchain",15;
+OnFlip:
+	callfunc "F_M3Flip",15;
+}
+minesweep3,150,47,5	script	Tile3_16	139,{
+	callfunc "F_M3Tile",16;
+OnReaction:
+	callfunc "F_M3Fission",16;
+OnDisplay:
+	callfunc "F_M3Subchain",16;
+OnFlip:
+	callfunc "F_M3Flip",16;
+}
+minesweep3,153,47,5	script	Tile3_17	139,{
+	callfunc "F_M3Tile",17;
+OnReaction:
+	callfunc "F_M3Fission",17;
+OnDisplay:
+	callfunc "F_M3Subchain",17;
+OnFlip:
+	callfunc "F_M3Flip",17;
+}
+minesweep3,156,47,5	script	Tile3_18	139,{
+	callfunc "F_M3Tile",18;
+OnReaction:
+	callfunc "F_M3Fission",18;
+OnDisplay:
+	callfunc "F_M3Subchain",18;
+OnFlip:
+	callfunc "F_M3Flip",18;
+}
+minesweep3,132,50,5	script	Tile3_19	139,{
+	callfunc "F_M3Tile",19;
+OnReaction:
+	callfunc "F_M3Fission",19;
+OnDisplay:
+	callfunc "F_M3Subchain",19;
+OnFlip:
+	callfunc "F_M3Flip",19;
+}
+minesweep3,135,50,5	script	Tile3_20	139,{
+	callfunc "F_M3Tile",20;
+OnReaction:
+	callfunc "F_M3Fission",20;
+OnDisplay:
+	callfunc "F_M3Subchain",20;
+OnFlip:
+	callfunc "F_M3Flip",20;
+}
+minesweep3,138,50,5	script	Tile3_21	139,{
+	callfunc "F_M3Tile",21;
+OnReaction:
+	callfunc "F_M3Fission",21;
+OnDisplay:
+	callfunc "F_M3Subchain",21;
+OnFlip:
+	callfunc "F_M3Flip",21;
+}
+minesweep3,141,50,5	script	Tile3_22	139,{
+	callfunc "F_M3Tile",22;
+OnReaction:
+	callfunc "F_M3Fission",22;
+OnDisplay:
+	callfunc "F_M3Subchain",22;
+OnFlip:
+	callfunc "F_M3Flip",22;
+}
+minesweep3,144,50,5	script	Tile3_23	139,{
+	callfunc "F_M3Tile",23;
+OnReaction:
+	callfunc "F_M3Fission",23;
+OnDisplay:
+	callfunc "F_M3Subchain",23;
+OnFlip:
+	callfunc "F_M3Flip",23;
+}
+minesweep3,147,50,5	script	Tile3_24	139,{
+	callfunc "F_M3Tile",24;
+OnReaction:
+	callfunc "F_M3Fission",24;
+OnDisplay:
+	callfunc "F_M3Subchain",24;
+OnFlip:
+	callfunc "F_M3Flip",24;
+}
+minesweep3,150,50,5	script	Tile3_25	139,{
+	callfunc "F_M3Tile",25;
+OnReaction:
+	callfunc "F_M3Fission",25;
+OnDisplay:
+	callfunc "F_M3Subchain",25;
+OnFlip:
+	callfunc "F_M3Flip",25;
+}
+minesweep3,153,50,5	script	Tile3_26	139,{
+	callfunc "F_M3Tile",26;
+OnReaction:
+	callfunc "F_M3Fission",26;
+OnDisplay:
+	callfunc "F_M3Subchain",26;
+OnFlip:
+	callfunc "F_M3Flip",26;
+}
+minesweep3,156,50,5	script	Tile3_27	139,{
+	callfunc "F_M3Tile",27;
+OnReaction:
+	callfunc "F_M3Fission",27;
+OnDisplay:
+	callfunc "F_M3Subchain",27;
+OnFlip:
+	callfunc "F_M3Flip",27;
+}
+minesweep3,132,53,5	script	Tile3_28	139,{
+	callfunc "F_M3Tile",28;
+OnReaction:
+	callfunc "F_M3Fission",28;
+OnDisplay:
+	callfunc "F_M3Subchain",28;
+OnFlip:
+	callfunc "F_M3Flip",28;
+}
+minesweep3,135,53,5	script	Tile3_29	139,{
+	callfunc "F_M3Tile",29;
+OnReaction:
+	callfunc "F_M3Fission",29;
+OnDisplay:
+	callfunc "F_M3Subchain",29;
+OnFlip:
+	callfunc "F_M3Flip",29;
+}
+minesweep3,138,53,5	script	Tile3_30	139,{
+	callfunc "F_M3Tile",30;
+OnReaction:
+	callfunc "F_M3Fission",30;
+OnDisplay:
+	callfunc "F_M3Subchain",30;
+OnFlip:
+	callfunc "F_M3Flip",30;
+}
+minesweep3,141,53,5	script	Tile3_31	139,{
+	callfunc "F_M3Tile",31;
+OnReaction:
+	callfunc "F_M3Fission",31;
+OnDisplay:
+	callfunc "F_M3Subchain",31;
+OnFlip:
+	callfunc "F_M3Flip",31;
+}
+minesweep3,144,53,5	script	Tile3_32	139,{
+	callfunc "F_M3Tile",32;
+OnReaction:
+	callfunc "F_M3Fission",32;
+OnDisplay:
+	callfunc "F_M3Subchain",32;
+OnFlip:
+	callfunc "F_M3Flip",32;
+}
+minesweep3,147,53,5	script	Tile3_33	139,{
+	callfunc "F_M3Tile",33;
+OnReaction:
+	callfunc "F_M3Fission",33;
+OnDisplay:
+	callfunc "F_M3Subchain",33;
+OnFlip:
+	callfunc "F_M3Flip",33;
+}
+minesweep3,150,53,5	script	Tile3_34	139,{
+	callfunc "F_M3Tile",34;
+OnReaction:
+	callfunc "F_M3Fission",34;
+OnDisplay:
+	callfunc "F_M3Subchain",34;
+OnFlip:
+	callfunc "F_M3Flip",34;
+}
+minesweep3,153,53,5	script	Tile3_35	139,{
+	callfunc "F_M3Tile",35;
+OnReaction:
+	callfunc "F_M3Fission",35;
+OnDisplay:
+	callfunc "F_M3Subchain",35;
+OnFlip:
+	callfunc "F_M3Flip",35;
+}
+minesweep3,156,53,5	script	Tile3_36	139,{
+	callfunc "F_M3Tile",36;
+OnReaction:
+	callfunc "F_M3Fission",36;
+OnDisplay:
+	callfunc "F_M3Subchain",36;
+OnFlip:
+	callfunc "F_M3Flip",36;
+}
+minesweep3,132,56,5	script	Tile3_37	139,{
+	callfunc "F_M3Tile",37;
+OnReaction:
+	callfunc "F_M3Fission",37;
+OnDisplay:
+	callfunc "F_M3Subchain",37;
+OnFlip:
+	callfunc "F_M3Flip",37;
+}
+minesweep3,135,56,5	script	Tile3_38	139,{
+	callfunc "F_M3Tile",38;
+OnReaction:
+	callfunc "F_M3Fission",38;
+OnDisplay:
+	callfunc "F_M3Subchain",38;
+OnFlip:
+	callfunc "F_M3Flip",38;
+}
+minesweep3,138,56,5	script	Tile3_39	139,{
+	callfunc "F_M3Tile",39;
+OnReaction:
+	callfunc "F_M3Fission",39;
+OnDisplay:
+	callfunc "F_M3Subchain",39;
+OnFlip:
+	callfunc "F_M3Flip",39;
+}
+minesweep3,141,56,5	script	Tile3_40	139,{
+	callfunc "F_M3Tile",40;
+OnReaction:
+	callfunc "F_M3Fission",40;
+OnDisplay:
+	callfunc "F_M3Subchain",40;
+OnFlip:
+	callfunc "F_M3Flip",40;
+}
+minesweep3,144,56,5	script	Tile3_41	139,{
+	callfunc "F_M3Tile",41;
+OnReaction:
+	callfunc "F_M3Fission",41;
+OnDisplay:
+	callfunc "F_M3Subchain",41;
+OnFlip:
+	callfunc "F_M3Flip",41;
+}
+minesweep3,147,56,5	script	Tile3_42	139,{
+	callfunc "F_M3Tile",42;
+OnReaction:
+	callfunc "F_M3Fission",42;
+OnDisplay:
+	callfunc "F_M3Subchain",42;
+OnFlip:
+	callfunc "F_M3Flip",42;
+}
+minesweep3,150,56,5	script	Tile3_43	139,{
+	callfunc "F_M3Tile",43;
+OnReaction:
+	callfunc "F_M3Fission",43;
+OnDisplay:
+	callfunc "F_M3Subchain",43;
+OnFlip:
+	callfunc "F_M3Flip",43;
+}
+minesweep3,153,56,5	script	Tile3_44	139,{
+	callfunc "F_M3Tile",44;
+OnReaction:
+	callfunc "F_M3Fission",44;
+OnDisplay:
+	callfunc "F_M3Subchain",44;
+OnFlip:
+	callfunc "F_M3Flip",44;
+}
+minesweep3,156,56,5	script	Tile3_45	139,{
+	callfunc "F_M3Tile",45;
+OnReaction:
+	callfunc "F_M3Fission",45;
+OnDisplay:
+	callfunc "F_M3Subchain",45;
+OnFlip:
+	callfunc "F_M3Flip",45;
+}
+minesweep3,132,59,5	script	Tile3_46	139,{
+	callfunc "F_M3Tile",46;
+OnReaction:
+	callfunc "F_M3Fission",46;
+OnDisplay:
+	callfunc "F_M3Subchain",46;
+OnFlip:
+	callfunc "F_M3Flip",46;
+}
+minesweep3,135,59,5	script	Tile3_47	139,{
+	callfunc "F_M3Tile",47;
+OnReaction:
+	callfunc "F_M3Fission",47;
+OnDisplay:
+	callfunc "F_M3Subchain",47;
+OnFlip:
+	callfunc "F_M3Flip",47;
+}
+minesweep3,138,59,5	script	Tile3_48	139,{
+	callfunc "F_M3Tile",48;
+OnReaction:
+	callfunc "F_M3Fission",48;
+OnDisplay:
+	callfunc "F_M3Subchain",48;
+OnFlip:
+	callfunc "F_M3Flip",48;
+}
+minesweep3,141,59,5	script	Tile3_49	139,{
+	callfunc "F_M3Tile",49;
+OnReaction:
+	callfunc "F_M3Fission",49;
+OnDisplay:
+	callfunc "F_M3Subchain",49;
+OnFlip:
+	callfunc "F_M3Flip",49;
+}
+minesweep3,144,59,5	script	Tile3_50	139,{
+	callfunc "F_M3Tile",50;
+OnReaction:
+	callfunc "F_M3Fission",50;
+OnDisplay:
+	callfunc "F_M3Subchain",50;
+OnFlip:
+	callfunc "F_M3Flip",50;
+}
+minesweep3,147,59,5	script	Tile3_51	139,{
+	callfunc "F_M3Tile",51;
+OnReaction:
+	callfunc "F_M3Fission",51;
+OnDisplay:
+	callfunc "F_M3Subchain",51;
+OnFlip:
+	callfunc "F_M3Flip",51;
+}
+minesweep3,150,59,5	script	Tile3_52	139,{
+	callfunc "F_M3Tile",52;
+OnReaction:
+	callfunc "F_M3Fission",52;
+OnDisplay:
+	callfunc "F_M3Subchain",52;
+OnFlip:
+	callfunc "F_M3Flip",52;
+}
+minesweep3,153,59,5	script	Tile3_53	139,{
+	callfunc "F_M3Tile",53;
+OnReaction:
+	callfunc "F_M3Fission",53;
+OnDisplay:
+	callfunc "F_M3Subchain",53;
+OnFlip:
+	callfunc "F_M3Flip",53;
+}
+minesweep3,156,59,5	script	Tile3_54	139,{
+	callfunc "F_M3Tile",54;
+OnReaction:
+	callfunc "F_M3Fission",54;
+OnDisplay:
+	callfunc "F_M3Subchain",54;
+OnFlip:
+	callfunc "F_M3Flip",54;
+}
+minesweep3,132,62,5	script	Tile3_55	139,{
+	callfunc "F_M3Tile",55;
+OnReaction:
+	callfunc "F_M3Fission",55;
+OnDisplay:
+	callfunc "F_M3Subchain",55;
+OnFlip:
+	callfunc "F_M3Flip",55;
+}
+minesweep3,135,62,5	script	Tile3_56	139,{
+	callfunc "F_M3Tile",56;
+OnReaction:
+	callfunc "F_M3Fission",56;
+OnDisplay:
+	callfunc "F_M3Subchain",56;
+OnFlip:
+	callfunc "F_M3Flip",56;
+}
+minesweep3,138,62,5	script	Tile3_57	139,{
+	callfunc "F_M3Tile",57;
+OnReaction:
+	callfunc "F_M3Fission",57;
+OnDisplay:
+	callfunc "F_M3Subchain",57;
+OnFlip:
+	callfunc "F_M3Flip",57;
+}
+minesweep3,141,62,5	script	Tile3_58	139,{
+	callfunc "F_M3Tile",58;
+OnReaction:
+	callfunc "F_M3Fission",58;
+OnDisplay:
+	callfunc "F_M3Subchain",58;
+OnFlip:
+	callfunc "F_M3Flip",58;
+}
+minesweep3,144,62,5	script	Tile3_59	139,{
+	callfunc "F_M3Tile",59;
+OnReaction:
+	callfunc "F_M3Fission",59;
+OnDisplay:
+	callfunc "F_M3Subchain",59;
+OnFlip:
+	callfunc "F_M3Flip",59;
+}
+minesweep3,147,62,5	script	Tile3_60	139,{
+	callfunc "F_M3Tile",60;
+OnReaction:
+	callfunc "F_M3Fission",60;
+OnDisplay:
+	callfunc "F_M3Subchain",60;
+OnFlip:
+	callfunc "F_M3Flip",60;
+}
+minesweep3,150,62,5	script	Tile3_61	139,{
+	callfunc "F_M3Tile",61;
+OnReaction:
+	callfunc "F_M3Fission",61;
+OnDisplay:
+	callfunc "F_M3Subchain",61;
+OnFlip:
+	callfunc "F_M3Flip",61;
+}
+minesweep3,153,62,5	script	Tile3_62	139,{
+	callfunc "F_M3Tile",62;
+OnReaction:
+	callfunc "F_M3Fission",62;
+OnDisplay:
+	callfunc "F_M3Subchain",62;
+OnFlip:
+	callfunc "F_M3Flip",62;
+}
+minesweep3,156,62,5	script	Tile3_63	139,{
+	callfunc "F_M3Tile",63;
+OnReaction:
+	callfunc "F_M3Fission",63;
+OnDisplay:
+	callfunc "F_M3Subchain",63;
+OnFlip:
+	callfunc "F_M3Flip",63;
+}
+minesweep3,132,65,5	script	Tile3_64	139,{
+	callfunc "F_M3Tile",64;
+OnReaction:
+	callfunc "F_M3Fission",64;
+OnDisplay:
+	callfunc "F_M3Subchain",64;
+OnFlip:
+	callfunc "F_M3Flip",64;
+}
+minesweep3,135,65,5	script	Tile3_65	139,{
+	callfunc "F_M3Tile",65;
+OnReaction:
+	callfunc "F_M3Fission",65;
+OnDisplay:
+	callfunc "F_M3Subchain",65;
+OnFlip:
+	callfunc "F_M3Flip",65;
+}
+minesweep3,138,65,5	script	Tile3_66	139,{
+	callfunc "F_M3Tile",66;
+OnReaction:
+	callfunc "F_M3Fission",66;
+OnDisplay:
+	callfunc "F_M3Subchain",66;
+OnFlip:
+	callfunc "F_M3Flip",66;
+}
+minesweep3,141,65,5	script	Tile3_67	139,{
+	callfunc "F_M3Tile",67;
+OnReaction:
+	callfunc "F_M3Fission",67;
+OnDisplay:
+	callfunc "F_M3Subchain",67;
+OnFlip:
+	callfunc "F_M3Flip",67;
+}
+minesweep3,144,65,5	script	Tile3_68	139,{
+	callfunc "F_M3Tile",68;
+OnReaction:
+	callfunc "F_M3Fission",68;
+OnDisplay:
+	callfunc "F_M3Subchain",68;
+OnFlip:
+	callfunc "F_M3Flip",68;
+}
+minesweep3,147,65,5	script	Tile3_69	139,{
+	callfunc "F_M3Tile",69;
+OnReaction:
+	callfunc "F_M3Fission",69;
+OnDisplay:
+	callfunc "F_M3Subchain",69;
+OnFlip:
+	callfunc "F_M3Flip",69;
+}
+minesweep3,150,65,5	script	Tile3_70	139,{
+	callfunc "F_M3Tile",70;
+OnReaction:
+	callfunc "F_M3Fission",70;
+OnDisplay:
+	callfunc "F_M3Subchain",70;
+OnFlip:
+	callfunc "F_M3Flip",70;
+}
+minesweep3,153,65,5	script	Tile3_71	139,{
+	callfunc "F_M3Tile",71;
+OnReaction:
+	callfunc "F_M3Fission",71;
+OnDisplay:
+	callfunc "F_M3Subchain",71;
+OnFlip:
+	callfunc "F_M3Flip",71;
+}
+minesweep3,156,65,5	script	Tile3_72	139,{
+	callfunc "F_M3Tile",72;
+OnReaction:
+	callfunc "F_M3Fission",72;
+OnDisplay:
+	callfunc "F_M3Subchain",72;
+OnFlip:
+	callfunc "F_M3Flip",72;
+}
+minesweep3,132,68,5	script	Tile3_73	139,{
+	callfunc "F_M3Tile",73;
+OnReaction:
+	callfunc "F_M3Fission",73;
+OnDisplay:
+	callfunc "F_M3Subchain",73;
+OnFlip:
+	callfunc "F_M3Flip",73;
+}
+minesweep3,135,68,5	script	Tile3_74	139,{
+	callfunc "F_M3Tile",74;
+OnReaction:
+	callfunc "F_M3Fission",74;
+OnDisplay:
+	callfunc "F_M3Subchain",74;
+OnFlip:
+	callfunc "F_M3Flip",74;
+}
+minesweep3,138,68,5	script	Tile3_75	139,{
+	callfunc "F_M3Tile",75;
+OnReaction:
+	callfunc "F_M3Fission",75;
+OnDisplay:
+	callfunc "F_M3Subchain",75;
+OnFlip:
+	callfunc "F_M3Flip",75;
+}
+minesweep3,141,68,5	script	Tile3_76	139,{
+	callfunc "F_M3Tile",76;
+OnReaction:
+	callfunc "F_M3Fission",76;
+OnDisplay:
+	callfunc "F_M3Subchain",76;
+OnFlip:
+	callfunc "F_M3Flip",76;
+}
+minesweep3,144,68,5	script	Tile3_77	139,{
+	callfunc "F_M3Tile",77;
+OnReaction:
+	callfunc "F_M3Fission",77;
+OnDisplay:
+	callfunc "F_M3Subchain",77;
+OnFlip:
+	callfunc "F_M3Flip",77;
+}
+minesweep3,147,68,5	script	Tile3_78	139,{
+	callfunc "F_M3Tile",78;
+OnReaction:
+	callfunc "F_M3Fission",78;
+OnDisplay:
+	callfunc "F_M3Subchain",78;
+OnFlip:
+	callfunc "F_M3Flip",78;
+}
+minesweep3,150,68,5	script	Tile3_79	139,{
+	callfunc "F_M3Tile",79;
+OnReaction:
+	callfunc "F_M3Fission",79;
+OnDisplay:
+	callfunc "F_M3Subchain",79;
+OnFlip:
+	callfunc "F_M3Flip",79;
+}
+minesweep3,153,68,5	script	Tile3_80	139,{
+	callfunc "F_M3Tile",80;
+OnReaction:
+	callfunc "F_M3Fission",80;
+OnDisplay:
+	callfunc "F_M3Subchain",80;
+OnFlip:
+	callfunc "F_M3Flip",80;
+}
+minesweep3,156,68,5	script	Tile3_81	139,{
+	callfunc "F_M3Tile",81;
+OnReaction:
+	callfunc "F_M3Fission",81;
+OnDisplay:
+	callfunc "F_M3Subchain",81;
+OnFlip:
+	callfunc "F_M3Flip",81;
+}

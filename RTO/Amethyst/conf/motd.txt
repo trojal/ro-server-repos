@@ -1,0 +1,9 @@
+Welcome to DuskRO Amethyst!
+Website: http://duskro.net
+Forum: http://duskro.net/forum
+Your GMs are [GM] Axiom, [GM] Silent
+If you require assistance, type @request <YourProblemHere>
+Latest News: There was a wipe of all characters! The rates have been modified to 8/8/6.
+The main area is now the Izlude arena, please drop by.
+
+Try @commands

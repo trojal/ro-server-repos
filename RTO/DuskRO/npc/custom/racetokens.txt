@@ -1,0 +1,71 @@
+//Custom NPC by Paradox924X. All Rights Reserved. This line must not be removed.
+payo1,115,118,5	script	Token Trader	908,{
+	mes "[Token Trader]";
+	mes "Hey there, I'm a Token Trader!";
+	mes "You can trade in special Race Tokens for Race Points!";
+	next;
+	mes "[Token Trader]";
+	mes "All Tokens except those of your race help you gain race points.";
+	mes "Those of your race cause you to lose race points!";
+	next;
+	mes "[Token Trader]";
+	mes "Say, do you happen to have any?";
+	next;
+	switch(select("Nope, sorry:As a matter of fact, I do!")) {
+		case 1:
+			mes "[Token Trader]";
+			mes "Ah, thats okay. Come back some other time.";
+			close;
+		case 2:
+			break;
+	}
+	mes "[Token Trader]";
+	if (countitem(16045) == 0 && countitem(16046) == 0 && countitem(16047) == 0 && countitem(16048) == 0) {
+		mes "Wait a sec... you don't have any tokens!";
+		mes "Go collect some tokens, and then come back.";
+		close;
+	}
+	query_sql "SELECT `race`,`points` FROM `races` WHERE `char_id` = "+escape_sql(getcharid(0)),.@race$,.@points;
+	set .@aven_tokens,countitem(16045);
+	set .@daeva_tokens,countitem(16046);
+	set .@elverre_tokens,countitem(16047);
+	set .@onerei_tokens,countitem(16048);
+	if (.@race$ == "Human")	{
+		mes "Oh.. you're a HUMAN...";
+		close;
+	}
+	if (.@race$ == "Aven")
+		set .@points_bonus,.@daeva_tokens+.@elverre_tokens+.@onerei_tokens-.@aven_tokens;
+	if (.@race$ == "Daeva")
+		set .@points_bonus,.@aven_tokens+.@elverre_tokens+.@onerei_tokens-.@daeva_tokens;
+	if (.@race$ == "Elverre")
+		set .@points_bonus,.@aven_tokens+.@daeva_tokens+.@onerei_tokens-.@elverre_tokens;
+	if (.@race$ == "Onerei")
+		set .@points_bonus,.@aven_tokens+.@daeva_tokens+.@elverre_tokens-.@onerei_tokens;
+	mes "Lets see.. you have:";
+	mes .@aven_tokens+" Aven Tokens.";
+	mes .@daeva_tokens+" Daeva Tokens.";
+	mes .@elverre_tokens+" Elverre Tokens.";
+	mes .@onerei_tokens+" Onerei Tokens.";
+	next;
+	mes "[Token Trader]";
+	if (.@points_bonus > 0)
+		mes "Because you're a "+.@race$+", you will GAIN "+.@points_bonus+" Race Points.";
+	else if (.@points_bonus == 0)
+		mes "Because you're a "+.@race$+", you will not GAIN nor LOSE any Race Points.";
+	else
+		mes "Because you're a "+.@race$+", you will LOSE "+.@points_bonus+" Race Points.";
+	mes "You currently have "+.@points+" Race Points.";
+	next;
+	mes "[Token Trader]";
+	delitem 16045,.@aven_tokens;
+	delitem 16046,.@daeva_tokens;
+	delitem 16047,.@elverre_tokens;
+	delitem 16048,.@onerei_tokens;
+	if (.@points+.@points_bonus < 0)
+		set .@points_bonus,-.@points;
+	query_sql "UPDATE `races` SET `points` = (`points` + "+escape_sql(.@points_bonus)+") WHERE `char_id` = "+escape_sql(getcharid(0));
+	mes "Thanks for the tokens!";
+	mes "You now have "+(.@points+.@points_bonus)+" Race Points!";
+	close;
+}

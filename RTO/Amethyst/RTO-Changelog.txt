@@ -1,0 +1,283 @@
+Commits start from Revision 4.
+Record ALL changes, big or small to this changelog file and be sure to specify who changed what. Be sure to put the most recent change at the top.
+
+<Date>
+<tab>	- Main change [Name]
+	* Comment or notes of main change
+	! Requires immediate attention
+	
+	
+
+-----
+3/25/2008
+	- Changed mob HP back to normal. [Axiom]
+	
+3/15/2008
+	- Updated to eA. [Axiom]
+	
+3/4/2008
+	- Updated databases to fix small issues. [Axiom]
+	- Made the novice skill Act Dead learnable by Super Novices. [Axiom]
+	- Changed delay for stormgust [Axiom]
+	- Tweaked something in monster.conf I forgot. [Axiom]
+	
+1/8/2008
+	- Added more custom items. [Axiom]
+	
+2/7/2008
+	- Added in like 100 custom items and fixed their item sprite. [Axiom]
+	- Updated scripts to newest revision. [Axiom]
+	
+2/3/2008
+	- Changed the name of the Cash Shop NPC to Donation Redeemer. [Axiom]
+	- Moved Kafra and Mail Box from center of prontera to the top. [Axiom]
+	- Changed some atcommands usage level. [Axiom]
+	
+1/29/2008
+	- Fixed Silent's typo in cash shop NPC. >:O [Axiom]
+	
+1/26/2008
+	- Added Cash Shop NPC for testing. [Axiom]
+	- Decreased cast time for Naplam Beat. [Axiom]
+	- Fixed some stuff with shops. [Axiom]
+	- Fixed some warps and added a delay to argos for some reason.. [Axiom]
+	- Fixed Bio Labs MVPs not summoning clones. [Axiom]
+	
+1/25/2008
+	- Removed txt databases. Added SQL databases. [Axiom]
+	- Changed a bunch of card bonuses and drop rates for cards. [Axiom]
+	
+1/23/2008
+	- Removed a bunch of nomemo maps and made mvp/miniboss maps no memo only. [Axiom]
+	- Fixed a bunch of conf file errors. [Axiom]
+	- Fixed typo with Kafra in the dungeons map. [Axiom]
+	- Made the refine safe limit lower. It was set to never fail. [Axiom]
+	- Began update to dynamic mob levels in all maps. [Axiom]
+	- Fixed Toyfactory warp in warper. [Silent]
+	- Deleted zeny restrictions in PVP Realm. [Axiom]
+	
+1/22/2008
+	- Fixed a few percentages and grammar errors with the mining script. [Axiom]
+	- Added mining quest/minigame for testing. [Axiom]
+	
+1/21/2008
+	- Updated to eA. [Axiom]
+	- Fixed Thunderstorm not dealing 50k+ damage. [Silent]
+	- Changed some skill options in the conf files. [Axiom]
+	- Fixed card drops from certain monsters that were droping the wrong card
+	- Changed minigame mobs n the TXT file to level 99 template. [Axiom]
+	- Changes to all mage skills, Bowling Bash, Sonic Blow and Fire Pillar. [Axiom]
+	- Added Skill Point Remover to Kafra functions. [Axiom]
+	- Changed multiple cards to balance. [Axiom]
+	
+1/19/21
+	- Changed pay_arche Kafra to allow saves. [Axiom]
+	- Updated Shogred, Turven, Grasken and Mordlin Dungeons to include level ranges. [Axiom]
+	- Added extra dialogue to trans npcs in Valkyrie. [Axiom]
+	- Added potion distribution to job change npcs. [Axiom]
+	
+1/18/2008
+	- Changed Wizard skill Fire Ivy to include a cast delay each level by 1 second. [Axiom]
+	- Fixed Reset option in Kafra not taking away correct amount of zeny. [Axiom]
+	- Updated treasure spawn script to only spawn in last map of certain dungeons every 25 hours. [Axiom]
+	- Changed job exp gain. [Axiom]
+	- Gave Valkyrie a skill removal option. [Axiom]
+	- Fixed rachel quest needing 10k donations to enter quest. Removed. [Axiom]
+	
+1/17/2008
+	- Updated first advancement to give pots on change. [Axiom]
+	- Updated Warper to give a full heal on click. [Axiom]
+	- Updated Kafra to include a reset option. [Axiom]
+	
+1/12/2008
+	- Restored our custom items because I deleted them by accident last update >_> [Axiom]
+	
+1/11/2008
+	- Updated the item DB to get rid of most of Dubby's custom items. They were a pain in the ass to change int he desc tables >_> [Axiom]
+	- Updated Cultivation. [Axiom]
+
+1/10/2008
+	- Updated first job advancements to give a starter weapon and check for basic skill. [Axiom]
+	- Updated some cards. Rearranged the item database a little. [Axiom]
+	- Fixed second advancement to trans class jobchange bug. [Axiom]
+	- Made it so all jobs get a 10 skillpoint boost on change to make up for the SkillPoint loss on job change. [Axiom]
+	 * Super Novices get a 20 SkillPoint boost becasue they have like.. 400-something total skill points to get all skills... crazy x_x
+	- Restricted GMs level 98 and below from using any of the PVP Realm npcs. Security issue. [Axiom]
+	
+1/9/2008
+	- Changed most skills back to official, left gunslinger quests and a few other class skills the same. [Axiom + Silent]
+	- Fixed more mob spawn bugs. [Axiom]
+	- Updated packet_db [Axiom]
+	- Changed Wizard quest so you no longer need to do the quiz. [Axiom]
+	 * Was a stupid part to the wizard quest anyway >_>
+	- Commented out the izlude arena. [Axiom]
+	 * Overlapped the custom pvp arena we have for the RP Realm.
+	 
+1/7/2008
+	- Added restrictions to warp portals that lead to no where in pvplobby and rplobby. [Axiom]
+	- Updated Gonryun, Lutie, Comodo, and Alberta fields, dungeons and town NPCs/warps. [Axiom]
+	- Updated Mr. Smile to include a bug fix. [Axiom]
+	- Updated Grasken dungeon to Aegis standard scripting. [Silent]
+	
+1/6/2008
+	- Added more warpers to towns. [Axiom]
+	 * Still A LOT more to go...
+	- Made main town able to be warped to without having to visit them first. [Silent]
+	- Added new Stylist and enabled hair colors to 251 and cloth colors up to 300. [Axiom]
+	- Fixed some of the mob console errors. [Axiom]
+	 * Still a lot more to go but Delta won't gimmie my box back ;(
+	- Fixed exploits in pvp.txt [Axiom]
+	- Removed 999999999z in PVP Realm. Also removed item drop in veterans room. [Silent]
+	- Changed first job advancements so you no longer need to do the quest. [Axiom]
+
+1/5/2008
+	- Hexed both exes so they do the proper things. [Silent]
+	- Setup Neoncube with extra features. [Silent]
+
+1/4/2008
+	- Fixed up warper NPC. Added new dungeons and adjusted prices accordingly. [Silent]
+	- Added Party warping system. [Silent]
+	- Updated areamonster, monster, and mobspawn with appropriate levels. [Axiom]
+	- Updated new mobs. [Silent]
+	- Fixed The Sign Quest [Silent]
+	
+1/1/2008
+	- Updated item and mob database files. [Axiom]
+	- Fixed a few bugs with novice and kiel quest. [Axiom]
+	- Fixed typo. [Axiom]
+	*** Happy New Year! ***
+	
+12/29/2007
+	- Updated mob spawns of Veins. [Axiom]
+	- Removed passive skills from Abra Kadabra skill. [Axiom]
+	- Updated MVP drops to official. Also changed HP of Moskovia mob Uzdas (aka Kikimora). [Axiom]
+	 ! An update to SQL is needed for the mob DB.
+	 
+12/27/2007
+	- Updated to eA SVN. [Silent]
+
+12/24/2007
+	- Updated SQL files. [Axiom]
+	- Fixed a few mobs that had extra fields. [Axiom]
+	
+12/23/2007
+	- Set SQL password. [Axiom]
+	
+12/22/2007
+	- Updated job quest NPCs. [Axiom]
+	- Fixed jobchange tree in all advanced class scripts. [Axiom]
+	 * Added a function to memo advance job change .
+	- Updated Packet DB. [Axiom]
+	
+12/15/2007
+	- Fixed negative def bug on dynamic mobs. [Silent]
+	- Leveled the prontera field mobs to have a 5 level range. [Silent]
+	- Fixed npc issues from the newest source merge [Silent]
+	- Possibly fixed the PVP Ladder [Silent]
+	- Bunch of small fixes to NPCs and fixed emperiums not spawning properly. [Axiom]
+	- Changed conf files a little. [Axiom]
+	- setup SQL conf files. [Axiom]
+	- Updated some mob card/item drops. [Axiom]
+	
+12/14/2007
+	- Updated entire NPC folder. [Axiom]
+	 * Could use bug testing... not entirely sure if everything is working right.
+	- Changed autocast percent of staves to a lower percent. Needs tweaking. [Axiom]
+	
+12/13/2007
+	- Rescripted the Conductor NPC in serverlobby. Novices can no longer enter the PVP Realm (Why should they?) [Axiom]
+	- Changed words around in lightsout minigame. [Axiom]
+	
+12/11/2007
+	- Attempting a bugfix for duplicate serverlobby bug. Removed all .gat and double tabbed warps from all files. [Axiom]
+	 * Edit: It fixed the error. :D I feel like win.
+	 
+12/08/2007
+	- Updated maps and added in new mobs. [Axiom]
+
+12/06/2007
+	- Finished server edits to include a working dynamic mob system. [Silent]
+	 ! Server is in dire need of testing with this new system. Bugs have been found already.
+	 
+12/02/2007
+	- Updated DB files. [Axiom]
+	- Changed Mob_DB.txt and Mob_DB2.txt to work as a template for dynamic mobs. [Silent]
+	- Added changes to the AdminCP in LightsOut minigame. [Axiom]
+	 * Fixed an error where it wouldn't link to next NPC mes. Also cleaned up double next; commands
+	- Finished mob spawn scripts with the addition of grasken mob level changes. [Axiom]
+	- Changed motd [Axiom]
+	
+11/28/2007
+	- Updated poring smash minigame to spawn new mob IDs. [Axiom]
+	
+11/26/2007
+	- Added some content to the realms script [Axiom]
+	 * Added some lines of text telling players to follow rules and all that good stuff.
+	- Updated item_db.txt and item_db2.txt to introduce new items. [Axiom]
+	- Reordered cards because their IDs were messed up. [Axiom]
+	 ! Card IDs need testing. I have no idea if the mobs were using the old IDs or not.
+	 
+11/24/2007
+	- Fixed a few disguise label errors in the PVP realm script. [Axiom]
+	- Changed all fakenpcname commands to setnpcdisplay in the custom scripts folder. [Axiom]
+	
+11/19/2007
+	- Fixed atcommand.conf [Silent]
+	- Fixed small errors in rp realm pvp and both Realm mechanisms [Axiom]
+	- Changed mob_avail so our custom mobs match the proper IDs. [Axiom]
+	- Fixed duplicate names of several NPCs because of updated eA scripting system. [Axiom]
+	- Fixed a few script errors. [Axiom]
+
+11/18/2007
+	- Fixed pretty much all scripts with new eA standards. (No .gat and unique names for everything.) [Silent]
+
+11/12/2007
+	- Changed server IP from recent server move. [Axiom]
+	- Unloaded all WOE scripts until we've set an official time/day, [Axiom]
+	
+10/24/2007
+	- fixed custom pet eggs, moved spiral pierce to paladin, hopefully fixed waterball in src, needs to be compiled again [dubby]
+
+10/23/2007
+	- added sage skill changes and moved waterball from wiz to sage.  src needs to be compiled. [dubby]
+
+10/22/2007
+	- Added the extra fields into ALL the mob spawn scripts. [Axiom]
+	 * I hate myself for doing this... hours and hours :(
+
+10/21/2007
+	- some skill cast/nodex tweaks [dubby]
+	- finished exp values for all monsters but custom dungeon ones [dubby]
+	- Updated src with gunslinger weapon type changes, and changed AC_DOUBLE and AC_SHOWER. [dubby]
+	- Updated skill db files with changes to gunslinger & archer skills' compatibility & stats [dubby]
+	 * the src needs to be recompiled, shotgun weapons have experimental distance calcs. if these error let me know asap [dubby]
+	 ! 3rd job classes all have the "steal" skill when their skillpoints get reset, and can't get their normal job skills until they put a point in steal and max their novice skills to 9.  If they mess up they don't even get access to their job skills.  Seriously, this is fucked up.  Silent, fix it. [dubby]
+
+10/18/2007
+	- Fixed mob_skill_db2.txt to fit the mob ID changes. [Axiom]
+	- Updated item_db.txt because lots of the items didn't have OnEquip and OnUnEquip script {}. [Axiom]
+	- more updates [dubby]
+	 * src needs to be recompiled whenever, adrenaline was changed.
+
+10/17/2007
+	- fixed refine bug with upgrading armors [dubby]
+
+10/16/2007
+	- updated skill changes in the src & db. affected skills are listed in the skill specs file, which are currently being converted to the /data skilldesc format. [dubby]
+	- commented out mvp bosses so they do not spawn normally, in preparation for scripted mvp bosses.  [dubby]
+	- updated merchants to sell blue potions. [dubby]
+	- also a few other misc. updates to the db. [dubby]
+	- and reconfigured many important settings in the  /conf/battle/ folder.  also setup new characters to get the starter kit instead of knife+cotton shirt. [dubby]
+	- also updated the atcommands available to players, and made some minor changes to ingame messages the system displays. [dubby]
+	 * there are too many changes to list them all, so if you need to know specifically what's been altered, just do a keyword search over the /src/map folder with the skills listed in the skill specs file.
+	
+10/06/2007
+	- Expanded job level stat bonuses to extend up to each job's respective maximum (1st=50,2nd=100,3rd=150) [dubby]
+	- Updated 2nd job change quests to work with new exp table & job levels [dubby]
+	 * also added our own /npc/ changelog, in the /npc/ folder.
+
+10/05/2007
+	- Updated everything.  Now you two should be on the same page I am. [dubby]
+
+09/25/2007
+	- Imported server files [Axiom]

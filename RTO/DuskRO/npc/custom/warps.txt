@@ -1,0 +1,21 @@
+// -- Bio 4 --
+
+lhz_dun03,47,226,0	warp	lhzbio401	1,1,lhz_dun04,44,226
+lhz_dun04,47,226,0	warp	lhzbio402	1,1,lhz_dun03,44,226
+lhz_dun03,238,50,0	warp	lhzbio403	1,1,lhz_dun04,238,53
+lhz_dun04,238,50,0	warp	lhzbio404	1,1,lhz_dun03,238,53
+
+// -- Old Payon --
+payo1_in01,70,53,0	warp	payonold00	2,2,payo1_in01,85,33 //centre to left
+payo1_in01,86,36,0	warp	payonold01	2,2,payo1_in01,70,56,0 //left to centre
+payo1,22,174	warp	payonold02	2,2,payo1_in01,97,26 //left entry
+payo1_in01,100,26,0	warp	payonold03	2,2,payo1,22,171 //left exit
+payo1_in01,130,36,0	warp	payonold04	2,2,payo1_in01,70,71 //right to centre
+payo1_in01,70,74,0	warp	payonold05	2,2,payo1_in01,130,39 //centre to right
+payo1_in01,144,45,0	warp	payonold06	2,2,payo1,38,171 //right exit
+payo1,38,174	warp	payonold07	2,2,payo1_in01,141,45 //right entry
+payo1_in01,82,63,0	warp	payonold08	2,2,payo1,30,174 //centre exit
+payo1,30,177,0	warp	payonold09	2,2,payo1_in01,79,63 //centre entry
+
+// -- Vending --
+force_1-2,158,177,0	warp	vendtopayon	0,0,payo1,71,102

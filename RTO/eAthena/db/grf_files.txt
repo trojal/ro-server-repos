@@ -1,0 +1,19 @@
+//-----------------------------------------
+// GRF List
+//-----------------------------------------
+
+grf: F:\Program Files\Gravity\RO\sdata.grf
+grf: F:\Program Files\Gravity\RO\dusk.grf
+grf: F:\Program Files\Gravity\RO\data.grf
+
+
+// You may add more in this format
+// grf: <data file path>
+
+//------ Others ---------------------------
+
+//Path to directory that contains the data dir 
+//NOTE: Path must include trailing backslash, only one data_dir entry is supported.
+//data_dir: C:\Program Files\Gravity\RO\
+
+data_dir: F:\Program Files\Gravity\Copy of RO\

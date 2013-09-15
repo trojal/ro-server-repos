@@ -1,0 +1,4 @@
+// Internal default is limited to 128 lines.  If you need more, you will need to modify the MOTD_LINE_SIZE definition in pc.c
+Please note that the WoE 2 castles are not specific to any single WoE.
+This is to allow people to test and have fun in those castles, regardless of which WoE they are attending!
+Don't bother defending them :)

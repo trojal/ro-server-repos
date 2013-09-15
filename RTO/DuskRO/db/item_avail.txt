@@ -1,0 +1,52 @@
+// item id,sprite id
+// Replaces an item client-side while keeping them separate server-side.
+// Think of it as a way to disguise items.
+// If 0 is used then item will be disabled.
+2240,2241 //Beard - Grampa Beard
+
+//Treasure Hunters Quest Items
+//use these aliases if your game client doesn't support them normally
+//7950,7021
+//7951,7042
+//1998,1250
+//1999,1472
+
+//St. Patric's Day Quest (2008) Items
+//Enable if you plan to use the quest.
+//12715,7721
+//7915,673
+//7916,675
+
+//Pvp Realm Items
+15202,1750//arrow
+15203,1751//silver arrow
+15204,1752//fire arrow
+15205,1753//steel arrow
+15206,1754//crystal arrow
+15207,1755//wind arrow
+15208,1756//stone arrow
+15209,1757//immaterial arrow
+15210,1758//stun arrow
+15211,1759//freeze arrow
+15212,1760//flash arrow
+15213,1761//cursed arrow
+15214,1762//rusty arrow
+15215,1763//poison arrow
+15216,1764//sharp arrow
+15217,1765//oridecon arrow
+15218,1766//arrow of counter evil
+15219,1767//shadow arrow
+15220,1768//sleep arrow
+15221,1769//mute arrow
+15222,1770//iron arrow
+15223,501//red potion
+15224,502//orange potion
+15225,503//yellow potion
+15226,504//white potion
+15227,505//blue potion
+15228,506//green potion
+15229,645//concentration potion
+15230,656//awake potion
+15231,657//berserk potion
+15232,610//ygg leaf
+15233,601//fly wing

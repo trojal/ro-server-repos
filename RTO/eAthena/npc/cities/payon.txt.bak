@@ -1,0 +1,949 @@
+//===== eAthena Script ======================================= 
+//= Payon City
+//===== By: ================================================== 
+//= Muad Dib (1.0) Darkchild (1.1) Muad Dib (1.2)
+//= Darkchild (1.3) DracoRPG (1.5)
+//===== Current Version: ===================================== 
+//= 2.0
+//===== Compatible With: ===================================== 
+//= Any eAthena Mod
+//===== Description: ========================================= 
+//= (New) Payon City Npcs
+//===== Additional Comments: ================================= 
+//= Most Credits To Muad Dib, Some Stuff By Me
+//= 1.4 - Corrected a few typos
+//= 1.5 - Rescripted old NPCs + scripted new ones (from iRO Sak) [DracoRPG]
+//= 1.5b - Used Dino9021's script for the Gemstone exchanger [DracoRPG]
+//= 1.5b1 fixed Gemstone Exchanger NPC [Lupus]
+//= 1.5b2 added adv.classes/baby classes support [Lupus]
+//= 1.6 Fixed typo’s [Nexon]
+//= 1.7 Fixed bugs and exploits V__V [Lupus]
+//= 1.8 Removed Duplicates [Silent]
+//= 1.9 Fixed missing next;'s [Evera]
+//= 2.0 fixed some bugs, optimized script, added missing msg [Lupus]
+//============================================================ 
+
+
+
+
+pay_arche,77,131,2	script	Archer Joe	88,{
+	mes "[Archer Joe]";
+	mes "Payon! What a wonderful place! Superb Bows! Excellent Archers!";
+	emotion e_no1;
+	next;
+	mes "[Archer Joe]";
+	mes "Hay you! Have you heard of our fame?";
+	next;
+	menu "Oh yeah!",L_Menu1,"Err Sorry?!",L_Menu2,"......",L_Menu3;
+L_Menu1:
+	mes "[Archer Joe]";
+	mes "Oh! You my man buddy! Archers of Payon! You know who we are!";
+	emotion e_ok;
+	next;
+	mes "[Archer Joe]";
+	mes "Arrows of Payon Archers never miss the targets! Even it can aim at the heart of the enemy from a long distance!";
+	next;
+      menu "You like this place, huh?",L_Msub1,"Haha...",L_Msub2;
+L_Msub1:
+	mes "[Archer Joe]";
+	mes "Yes! I love this place! So now I am researching Payon!";
+	mes "If you have any questions, please ask me!";
+	emotion e_ok;
+	next;
+	menu "People are wearing unique costumes in here.",L_Mpara1,"Can you tell me what the building is in the middle of town?",L_Mpara2,"Who is the guy drinking...Over there?",L_Mpara3,"Talk to you later.",L_Mpara4;
+L_Mpara1:
+	mes "[Archer Joe]";
+	mes "Yes, I agree.";
+	mes "You must know this place has been isolated from the outside because of the thick forest, and people living here got to form a very unique culture, which is quite different from the one of this continent.";
+	mes "This costume is the one of their traditional clothing! Why don't you try? It is very comfortable!";
+	close;
+L_Mpara2:
+	mes "[Archer Joe]";
+	mes "Strangers are not allowed to enter the central palace. I've never been there.";
+	mes "People say, royal families and their friends from outside are gathered in the place.";
+	mes "In fact I would like to go in there. It attracts my attention.";
+	close;
+L_Mpara3:
+	mes "[Archer Joe]";
+	mes "Oh! He is a notorious guy in this town! Don't treat him to drinks! You will regret that!";
+	emotion e_gasp;
+	close;
+L_Mpara4:
+	mes "[Archer Joe]";
+	mes "Ok! Catch you later! See ya!";
+	close;
+L_Msub2:
+	close;
+L_Menu2:
+	mes "[Archer Joe]";
+	mes "Oh boy, what a shame! How on earth can't you know there is something about archers of Payon!";
+	emotion e_omg;
+	next;
+	mes "[Archer Joe]";
+	mes "Please come back later when you become more skillful! Let's talk about what makes archers of Payon so attractive later!";
+	close;
+L_Menu3:
+	mes "[Archer Joe]";
+	mes "What makes you zip your mouth? Are you shy?";
+	mes "Ummm... you don't have to be shy before me..";
+	emotion e_hmm;
+	close;	
+}
+
+
+payon,158,246,4	script	Guardsman	708,{}
+payon,158,245,4	script	PayonGuard1TriggerArea	139,3,2,{
+	mes "[Guardsman]";
+	mes "This is the Central Palace of Payon. This place is open to the public, but in accordance with our laws, you must behave in an orderly fashion while inside.";
+	next;
+	mes "[Guardsman]";
+	mes "In the interest of protecting the peace, we will disarm your equipment once you enter.";
+	mes "Your cooperation is";
+	mes "much appreciated.";
+	close;
+}
+
+payon_in03,96,116,4	script	Chief Guardsman	708,{}
+payon_in03,96,117,4	script	PayonGuard2TriggerArea	139,3,2,{
+	mes "[Chief Guardsman]";
+	mes "What brings";
+	mes "you here?";
+	next;
+	mes "[Chief Guardsman]";
+	mes "I can see you are none of the Payon locals. I would just like to remind you to conduct yourself in an orderly manner. Remember, you are a guest here.";
+	next;
+	nude;
+	mes "[Chief Guardsman]";
+	mes "In the interest of protecting the public peace, I will disarm your equipment. Thank you for your cooperation.";
+	close;
+}
+
+payon_in03,102,185,4	script	Guard#06	708,{
+	mes "[Guard]";
+	mes "Hey...!";
+	mes "You're not";
+	mes "allowed here!";
+	mes "Go back outside!";
+	close;
+}
+
+
+payon,160,185,0	script	Billboard	111,{
+	mes "^993333- The Billboard Reads -^000000";
+	mes "Welcome, and enjoy your stay in";
+	mes "the beautiful town of Payon.";
+	close;
+}
+
+payo1_in01,126,51,6	script	Ebony#01	895,{
+	mes "[Ebony]";
+	mes "Bring me two";
+	mes "Gemstones of the";
+	mes "same color, and I will";
+	mes "change them to Gemstones";
+	mes "of a different color.";
+	next;
+
+	menu "Blue Gemstones into Red ones!",L_BlueToRed,"Red Gemstones into Yellow ones!",L_RedToYellow,"Yellow Gemstones into Blue ones!",L_YellowToBlue,"Cancel",L_Cancel;
+
+L_BlueToRed:
+	set @SourceGemstones$,"Blue";
+	set @SourceGemstonesID,717;
+	set @TargetGemstones$,"Red";
+	set @TargetGemstonesID,716;
+	goto L_BeginExchange;
+
+L_RedToYellow:
+	set @SourceGemstones$,"Red";
+	set @SourceGemstonesID,716;
+	set @TargetGemstones$,"Yellow";
+	set @TargetGemstonesID,715;
+	goto L_BeginExchange;
+
+L_YellowToBlue:
+	set @SourceGemstones$,"Yellow";
+	set @SourceGemstonesID,715;
+	set @TargetGemstones$,"Blue";
+	set @TargetGemstonesID,717;
+	goto L_BeginExchange;
+
+L_BeginExchange:
+	if(countitem(@SourceGemstonesID) >= 2) goto L_ExchangeOK;
+	mes "[Ebony]";
+	mes "Hah...!";
+	mes "You're kidding me, right?";
+	mes "I can't give you "+@TargetGemstones$+" Gemstones";
+	mes "if you don't give me at least";
+	mes "2 "+@SourceGemstones$+" Gemstones!";
+	close;
+
+L_ExchangeOK:
+	set @ExchangeCount,countitem(@SourceGemstonesID)/2;
+	mes "[Ebony]";
+	mes "This may Exchange "+@ExchangeCount+" "+@TargetGemstones$+" Gemstones";
+	mes "How many do you want?";
+	next;
+	menu "Exchange all",L_ExchangeAll,"I want to set a number",L_PointCount,"Cancel",L_Cancel;
+
+L_ExchangeAll:
+	if(countitem(@SourceGemstonesID) < @ExchangeCount*2) goto L_ExchangeNo;
+	delitem @SourceGemstonesID,@ExchangeCount*2;
+	getitem @TargetGemstonesID,@ExchangeCount;
+	goto L_ExchangeDone;
+
+L_PointCount:
+	mes "[Ebony]";
+	mes "How many do you want?";
+	mes "Limit is '100'";
+	next;
+L_InputPointCount:
+	input @number;
+	if(@number <= 0) goto L_ExchangeNo;
+	if(@number > 100) goto L_ExchangeAbove;
+	if(@number > @ExchangeCount) goto L_ExchangeNotEnough;
+	if(countitem(@SourceGemstonesID) < @number*2) goto L_ExchangeNo;
+	delitem @SourceGemstonesID,@number*2;
+	getitem @TargetGemstonesID,@number;
+	goto L_ExchangeDone;
+
+L_ExchangeNo:
+	mes "[Ebony]";
+	mes "Hmmm... Very funny...";
+	 close;
+
+L_ExchangeAbove:
+	mes "[Ebony]";
+	mes "Hmmm... Please don't set a number above '100'";
+	next;
+	goto L_InputPointCount;
+
+L_ExchangeNotEnough:
+	mes "[Ebony]";
+	mes "Hmmm... The "+@SourceGemstones$+" Gemstones you have";
+	mes "is not enough for "+@number+" "+@TargetGemstones$+" Gemstones.";
+	mes "Please set a new number";
+	next;
+	goto L_InputPointCount;
+
+L_ExchangeDone:
+	mes "[Ebony]";
+	mes "Here, This is the "+@TargetGemstones$+" Gemstones you need...";
+	mes "Come back to me when you need more";
+	mes "...mmm? Is there something on my face?";
+	close;
+
+L_Cancel:
+	mes "[Ebony]";
+	mes "OK, Very well... Come back if you need anything.";
+	mes "I'll Exchange it for you anytime.";
+	close;
+}
+
+//Need to find out ALL fortunes he can tell for each answer...
+payon_in03,117,128,4	script	Fortune Teller	704,{
+	mes "[Lhimetorra]";
+	mes "You're an adventurer of this";
+	mes "world... " + strcharinfo(0) + ", right? So, what can an old person like me do for you?";
+	next;
+	menu "I would like a tarot card reading.",-,"What's a tarot card reading?",L_Info;
+	mes "[Lhimetorra]";
+	mes "Is that so...?";
+	mes "Well, if you want a monster card reading, you must first show me your faith. Otherwise, the spirits will grow angry and place a curse on you.";
+	next;
+	mes "[Lhimetorra]";
+	mes "So, would you like a monster card reading?";
+	next;
+	menu "Yes.",-,"I would like to think over it once more.",L_No;
+	mes "[Lhimetorra]";
+	mes "Then...";
+	mes "Please pay your fee with all of your sincerity.";
+	next;
+	input @fee;
+	if(@fee < 0 || @fee > Zeny) goto L_FeeNotOK;
+	if(@fee > 0) goto L_FeeOK;
+	mes "[Lhimetorra]";
+	mes "Ah...?!";
+	mes "You have angered the monster spirits!";
+	close;
+L_FeeNotOK:
+	mes "[Lhimetorra]";
+	mes "There's no need to overdo it! Just give with all your heart... *Tsk";
+	mes "tsk*";
+	close;
+L_FeeOK:
+	set Zeny,Zeny-@fee;
+	mes "[Lhimetorra]";
+	mes "I accept your heart and your";
+	mes "devotion with my gratitude.";
+	mes "Thoughts are more important than the amount when paying a fortune teller.";
+	next;
+	mes "[Lhimetorra]";
+	mes "Then, I will begin to tell the";
+	mes "fortune of your wish. Concentrate";
+	mes "on yourself...";
+	next;
+	mes "[Lhimetorra]";
+	mes "...";
+	mes "Clear your mind...";
+	next;
+	mes "[Lhimetorra]";
+	mes "...";
+	mes "Once you have emptied your mind, think of the thing you most wish to know.";
+	next;
+	mes "[Lhimetorra]";
+	menu "(I would like to know my love fortune.)",L_AskLove,"(How rich will I be?)",L_AskMoney,"(I need advice about my future.)",L_AskFuture,"(Can I get a warning of any dangers awaiting?)",L_AskDangers;
+L_AskLove:
+	mes "[Lhimetorra]";
+	mes "I see it... I see a sign of";
+	mes "love...";
+	next;
+	set @TEMP,rand(6);
+	mes "[Lhimetorra]";
+	if(@TEMP == 0) mes "Can't you hear the cry of the card? It is suffering. Love is like that.";
+	if(@TEMP == 1) mes "His navel is very pretty. You have to meet someone with that type of navel to be happy.";
+	if(@TEMP == 2) {
+		mes "Hmm. How about giving a cute puppy as a gift? One with a round nose.";
+		mes "Then they will surely be happy.";
+	}
+	if(@TEMP == 3) mes "No matter how fearful the bull may be, if it has a nose ring, it has already been tamed by humans. No matter how astonishing that person may be, taming is your responsibility.";
+	if(@TEMP == 4) mes "Who is he so fiercely gazing at with those grand muscles? He is looking at someone else for sure.";
+	if(@TEMP == 5){
+		mes "They may seem dreary and ominous, but their attire is spotless. They show devotion to the other.";
+		mes "Even though you are not satisfied with your love right now, take a look at they attire.";
+	}
+	next;
+	mes "[Lhimetorra]";
+	if(@TEMP == 0) mes "So don't be upset about it!";
+	if(@TEMP == 1) mes "Ok? Keep that in mind~";
+	if(@TEMP == 2){
+		mes "But can't help if they don't";
+		mes "like puppies.";
+	}
+	if(@TEMP == 3) mes "Approach them with more sincerity and consideration.";
+	if(@TEMP == 4) mes "Don't get sidetracked and look elsewhere! You will be cursed!";
+	if(@TEMP == 5){
+		mes "If it is carefully worn, their";
+		mes "heart for you can be seen in it as well..";
+	}
+	next;
+	mes "[Lhimetorra]";
+	mes "You seek advice about love.";
+	mes "Even if you may not pleased with it, consider it calmly and make an effort to find true happiness.";
+	next;
+	mes "[Lhimetorra]";
+	mes "Then...";
+	close;
+L_AskMoney:
+	mes "[Lhimetorra]";
+	mes "Ooh... something about your future is starting to show...";
+	next;
+	set @TEMP,rand(3);
+	mes "[Lhimetorra]";
+	if(@TEMP == 0) mes "Do you know what a joker's specialty is? It is tricking others and making money. Be wary of the joker.";
+	if(@TEMP == 1) mes "The Skeleton says that you can make money by going north. Go north.";	
+	if(@TEMP == 2) mes "A knight values honor more than fortune. They consider discussing wealth itself dirty not worthy. How would you be able to as such a knight a fortune about wealth?";
+	next;
+	mes "[Lhimetorra]";
+	if(@TEMP == 0) mes "Jokers do not exist in one form. They will aim for your money in several different ways.";
+	if(@TEMP == 1) mes "There must be great fortune in that direction.";
+	if(@TEMP == 2) mes "The knight says that a new road of life will open once you look away from fortune.";
+	next;
+	mes "[Lhimetorra]";
+	mes "Most people are curious about money.";
+	mes "It is a very humanly and common curiosity. Cards are very stingy about fortunes regarding wealth.";
+	next;
+	mes "[Lhimetorra]";
+	mes "Therefore, getting a fortune like this is considered being lucky. Use this fortune to prosper.";
+	close;
+L_AskFuture:
+	mes "[Lhimetorra]";
+	mes "Future... the card that sees the future is beginning to speak...... Prepare yourself...";
+	next;
+	set @TEMP,rand(2);
+	mes "[Lhimetorra]";
+	if(@TEMP == 0) mes "Jack says you may be frustrated in the future.";
+	if(@TEMP == 1) mes "He says to overcome the frustration, it is necessary to think of happy thoughts.";
+	next;
+	mes "[Lhimetorra]";
+	if(@TEMP == 0) mes "Meaning your future will become a battle between happiness and frustration...";
+	if(@TEMP == 1) mes "......"; //missing txt
+	next;
+	mes "[Lhimetorra]";
+	mes "Speaking of the future is as dangerous act.";
+	mes "Humans may face disaster if speaking of the future carelessly. That's why we ask cards about the future.";
+	next;
+	mes "[Lhimetorra]";
+	mes "Your fortune is a rather good one. There are some in this world who get more horrible fortunes.";
+	mes "Use this fortune as a support in your life. Ok?";
+	close;
+L_AskDangers:
+	mes "[Lhimetorra]";
+	mes "Someone that knows of the dangers you do not, will warn you in the";
+	mes "form of cards... so listen";
+	mes "carefully-!";
+	next;
+	set @TEMP,rand(2);
+	mes "[Lhimetorra]";
+	if(@TEMP == 0) mes "The pirate is warning you of your beauty. Don't show off your beauty too much. Pirates are very jealous of appearance, as well.";
+	if(@TEMP == 1) mes "A warning is always a useful fortune. You can never lose anything.";
+	next;
+	mes "[Lhimetorra]";
+	mes "I hope you will able to avoid misfortune with this warning.";
+	mes "Then...";
+	close;
+L_No:
+	mes "[Lhimetorra]";
+	mes "Ok then. Young adventurer, may luck be with you.";
+	close;
+L_Info:
+	mes "[Lhimetorra]";
+	mes "Monster card reading uses the cards of familiar monsters around us to get advice about our future, love and many other things.";
+	mes "A fortuneteller like me takes a question from a person and asks the card. The card answers and I tell the person.";
+	next;
+	mes "[Lhimetorra]";
+	mes "You should get no more than one card reading a day, and don't get one often since the cards can get angry or confused.";
+	mes "Also, it can have a bad influence on your life, too!";
+	next;
+	mes "[Lhimetorra]";
+	mes "And... one more thing.";
+	mes "A card reading is only a";
+	mes "reading... No matter how";
+	mes "extraordinary the result may be,";
+	mes "don't get too caught up with it.";
+	mes "Bear that in mind.";
+	close;
+}
+
+payon_in03,131,7,4	script	Hunter	59,{
+	mes "[Hunter]";
+	mes "...Can I help you?";
+	mes "I'm here for official business and am busy at the moment. If you'll excuse me...";
+	close;
+}
+
+payo1,83,145,5	script	Reset Camel	938,{
+	mes "[Reset Camel]";
+	mes "I am a Reset Camel.";
+	mes "I'll reset your stats or your";
+	mes "skills.";
+	next;
+	mes "Please select the service you want:";
+	menu "^FF3355-Reset Skills - 60k",L0,"-Reset Stats - 60k",L1,"-Reset Both - 100k^000000",L2,"Quit",LEnd;
+	
+	L0:
+		if (Zeny < 60000) goto NO_ZENY_RESET;
+		mes "[Reset Camel]";
+		mes "Alright, here we go now.. ";
+		set zeny,zeny - 60000;
+		ResetSkill;
+		close;
+	L1:
+		if (Zeny < 60000) goto NO_ZENY_RESET;
+		mes "[Reset Camel]";
+		mes "Alright, here we go now..";
+		set zeny,zeny - 60000;
+		ResetStatus;
+		close;
+	L2:
+		if (Zeny < 100000) goto NO_ZENY_RESET;
+		mes "[Reset Camel]";
+		mes "Alright, here we go now..";
+		set zeny,zeny - 100000;
+		ResetSkill;
+		ResetStatus;
+		close;
+
+	NO_ZENY_RESET:
+		mes "[Reset Camel]";
+		mes "Begone! Come back when you can actually afford my services!";
+		close;
+
+	LEnd:
+		close;	
+}
+
+payo1,66,108,5	script	Newbie Helper	952,{
+
+	if (newb_payo==1) goto Done;
+	mes "[ ^9966CC Newbie Helper ^000000 ]";
+	mes "Hi there, you must be new here. I've been collecting things to help new people!";
+	next;
+	mes "[ ^9966CC Newbie Helper ^000000 ]";
+	mes "I should tell you a few things first.";
+	next;
+	mes "[ ^9966CC Newbie Helper ^000000 ]";
+	mes "You can find most of what you need around the center of payon. You might need to look around a bit to find some.";
+	next;
+	mes "[ ^9966CC Newbie Helper ^000000 ]";
+	mes "You can find most of the items you will need in the Tool Dealer.";
+	next;
+	mes "[ ^9966CC Newbie Helper ^000000 ]";
+	mes "The refiner and repairman are in the top left building.";
+	next;
+	mes "[ ^9966CC Newbie Helper ^000000 ]";
+	mes "Also, don't forget to report any bugs on the forums.";
+	next;
+	getitem 569,300;
+	getitem 601,20;
+	getitem 602,5;
+	getitem 5039,1;
+	getitem 5015,1;
+	getitem 2201,1;
+	getitem 2501,1;
+	getitem 2401,1;
+	getitem 2305,1;
+	getitem 2101,1;
+	getitem 1207,1;
+	set newb_payo, 1;
+	mes "[ ^9966CC Newbie Helper ^000000 ]";
+	mes "Have fun!";
+	close;
+
+Done:
+	mes "[ ^9966CC Newbie Helper ^000000 ]";
+	mes "I've already helped you! Go off and explore or something!";
+	close;
+}
+
+//Stylist------------------------------------------------------------------------------------------------------------
+payo1,96,145,5	script	Stylist	122,{
+	mes "[^FF8000Stylist^000000]";
+	mes "I'm the greatest stylist in all of Rune-Midgard~~!";
+	mes "I can change your hair style or color!";
+	mes "What do you wish to change?";
+	next;
+	menu "Hair style",Lstyle,"Hair color",Lcolor,"Cloth Color",Lcloth,"Nothing",LCancel;
+
+	Lstyle:
+		mes "[^FF8000Stylist^000000]";
+		mes "Do you want to browse through the choices, or do you know what you want?";
+		next;
+		menu "Browse",Lbrowsesty,"I know what I want",Lwantsty;
+
+	Lwantsty:
+		mes "[^FF8000Stylist^000000]";
+		mes "Great!  Now just pick a style and I'll get started!";
+ 		next;
+		mes "[^FF8000Stylist^000000]";
+		mes "Please pick a style number ^0000FFbetween 0 and 23^000000.";
+		mes "Number 0, by the way, is the default style for your character.";
+ 		next;
+		input @sty;
+		if (@sty>37) close;
+		if (@sty<0) close;
+		setlook 1,@sty;
+		next;
+		mes "[^FF8000Stylist^000000]";
+		mes "Is this good, or do you want a different style?";
+		next;
+		menu "This is good",-,"Different style, please",Lwantsty;
+		next;
+		mes "[^FF8000Stylist^000000]";
+		mes "You look great~!  Come back again, okay?";
+		close;
+
+	Lbrowsesty:
+		set @look, -1;
+		mes "[^FF8000Stylist^000000]";
+		mes "Okay, here we go~!  Just stop me when you see something you like, okay?";
+		next;
+
+	Lbrowserep:
+		set @look,@look+1;
+		setlook 1,@look;
+		mes "This is Pallete Number^FF9009 "+@look+" ^000000!"; 
+		if(@look == 37) menu "Back To The Begin",Lbrowsesty,"I like this one",Lstop;
+		if(@look != 37)	menu "Keep going",Lbrowserep,"I like this one",Lstop;
+		
+	Lcolor:
+		mes "[^FF8000Stylist^000000]";
+		mes "Do you want to browse through the choices, or do you know what you want?";
+		next;
+		menu "Browse",Lbrowsecolor,"I know what I want",Lwantcolor;
+
+	Lwantcolor:
+		mes "[^FF8000Stylist^000000]";
+		mes "Just pick a color and we can get started.";
+		next;
+		mes "[^FF8000Stylist^000000]";
+		mes "Please pick a style number ^0000FFbetween 0 and 20^000000.";
+		mes "Number 0, by the way, is the default color for your character.";
+ 		next;
+		mes "[^FF8000Stylist^000000]";
+		mes "0 is default...";
+		mes "1 is blonde...";
+		mes "2 is lavender...";
+		mes "3 is brown...";
+		mes "4 is green...";
+		mes "5 is blue...";
+		mes "6 is white...";
+		mes "7 is black...";
+		mes "8 is red...";
+		input @color;
+		if (@color>8) close;
+		if (@color<0) close;
+		setlook 6,@color;
+		next;
+		mes "[^FF8000Stylist^000000]";
+		mes "Is this good, or do you want a different color?";
+		next;
+		menu "This is good",-,"Different color, please",Lwantcolor;
+		next;
+		mes "[^FF8000Stylist^000000]";
+		mes "You look great~!  Come back again, okay?";
+		close;
+
+	Lbrowsecolor:
+		set @look, -1;
+		mes "[^FF8000Stylist^000000]";
+		mes "Okay, here we go~!  Just stop me when you see something you like, okay?";
+		next;
+
+	Lbrowsecolorrep:
+		set @look,@look+1;
+		setlook 6,@look;
+		mes "This is Pallete Number^FF9009 "+@look+" ^000000!"; 
+		if(@look == 8) menu "Back To The Begin",Lbrowsecolor,"I like this one",Lstop;
+		if(@look != 8)	menu "Keep going",Lbrowsecolorrep,"I like this one",Lstop;
+
+		Lstop:
+			mes "[^FF8000Stylist^000000]";
+			mes "You look great~!  I love it~! ^_^";
+			close;
+
+	LCancel:
+		mes "[^FF8000Stylist^000000]";
+		mes "Well come again.";
+		close;
+
+	Lcloth:
+		mes "[^FF8000Stylist^000000]";
+		mes "Do you want to browse through the choices, or do you know what you want?";
+		next;
+		menu "Browse",Lbrowsecloth,"I know what I want",Lwantcloth;
+
+	Lwantcloth:
+		mes "[^FF8000Stylist^000000]";
+		mes "Great!  Now just pick a pallete and I'll get started!";
+ 		next;
+		mes "[^FF8000Stylist^000000]";
+		mes "Please pick a style number ^0000FFbetween 0 and 573^000000.";
+		mes "Number 0, by the way, is the default style for your character.";
+ 		next;
+		input @pal;
+		if (@pal>573) close;
+		if (@pal<0) close;
+		setlook 7,@pal;
+		next;
+		mes "[^FF8000Stylist^000000]";
+		mes "Is this good, or do you want a different pallet";
+		next;
+		menu "This is good",-,"Different pallet, please",Lwantcloth;
+		next;
+		mes "[^FF8000Stylist^000000]";
+		mes "You look great~!  Come back again, okay?";
+		close;
+
+	Lbrowsecloth:
+		set @look, -1;
+		mes "[^FF8000Stylist^000000]";
+		mes "Okay, here we go~!  Just stop me when you see something you like, okay?";
+		next;
+
+	Lbrowseclothrep:
+		set @look,@look+1;
+		setlook 7,@look;
+		mes "This is Pallete Number^FF9009 "+@look+" ^000000!"; 
+		if(@look == 573) menu "Back To The Begin",Lbrowsecloth,"I like this one",Lstop;
+		if(@look != 573)	menu "Keep going",Lbrowseclothrep,"I like this one",Lstop;
+}
+
+payo1,94,134,4	script	PvP Warper::pvpguy	943,{
+	mes "[^9966CCPvp Warper^000000]";
+	set @room1$, "PvP Arena";
+	set @room2$, "Izlude PvP";
+	set @room3$, "Alberta PvP";
+	set @room4$, "GvG";
+	mes "Hi there, would you like to go to pvp or gvg?";
+		next;
+menu @room1$ + " [ ^9966CC" + getmapusers("guild_vs5") + "^000000 ]",pvp,
+@room2$ + " [ ^9966CC" + getmapusers("pvp_y_1-2") + "^000000 ]",pvp2,
+@room3$ + " [ ^9966CC" + getmapusers("pvp_y_1-4") + "^000000 ]",pvp3,
+@room4$ + " [ ^9966CC" + getmapusers("guild_vs1") + "^000000 ]",gvg;
+
+pvp:
+warp "guild_vs5",0,0;
+end;
+pvp2:
+warp "pvp_y_1-2",0,0;
+end;
+pvp3:
+warp "pvp_y_1-4",0,0;
+end;
+gvg:
+warp "guild_vs1",0,0;
+end;
+
+}
+
+morocc,162,95,5	duplicate(pvpguy)	PvP Warper#2	943
+ayothaya,155,117,5	duplicate(pvpguy)	PvP Warper#3	943
+geffen,115,69,5	duplicate(pvpguy)	PvP Warper#4	943
+umbala,98,159,5	duplicate(pvpguy)	PvP Warper#5	943
+alberta,108,59,5	duplicate(pvpguy)	PvP Warper#6	943
+aldebaran,132,121,5	duplicate(pvpguy)	PvP Warper#7	943
+izlude,131,120,5	duplicate(pvpguy)	PvP Warper#8	943
+xmas,152,135,5	duplicate(pvpguy)	PvP Warper#9	943
+comodo,183,158,5	duplicate(pvpguy)	PvP Warper#10	943
+amatsu,202,81,5	duplicate(pvpguy)	PvP Warper#11	943
+gonryun,155,128,5	duplicate(pvpguy)	PvP Warper#12	943
+yuno,165,188,5	duplicate(pvpguy)	PvP Warper#13	943
+niflheim,196,178,5	duplicate(pvpguy)	PvP Warper#14	943
+louyang,208,102,5	duplicate(pvpguy)	PvP Warper#15	943
+rachel,123,119,5	duplicate(pvpguy)	PvP Warper#16	943
+lighthalzen,162,79,5	duplicate(pvpguy)	PvP Warper#17	943
+hugel,93,156,5	duplicate(pvpguy)	PvP Warper#18	943
+einbech,81,105,5	duplicate(pvpguy)	PvP Warper#19	943
+einbroch,68,203,5	duplicate(pvpguy)	PvP Warper#20	943
+prontera,151,190,5	duplicate(pvpguy)	PvP Warper#21	943
+//prt_monk,229,153,5	duplicate(pvpguy)	PvP Warper#22	943
+//force_1-2,91,34,4	duplicate(pvpguy)	PvP Warper#23	943
+//job_thief1,173,54,4	duplicate(pvpguy)	PvP Warper	943
+//payon,176,107,5	duplicate(pvpguy)	PvP Warper	943
+
+// Card removal NPC by TyrNemesis^
+// DANGEROUS! TODO: Think.. think 8) [Lupus]
+
+
+payo1_in01,133,51,4	script	Wise Old Woman	918,{
+
+UPGRADEROOT:
+	mes "[Wise Old Woman]";
+	mes "Good day, young one. I have the power to remove cards that you have compounded onto your equipment. Does this idea please you?";
+	next;
+	menu "Yes, it does.",REMOVEMENU,
+	     "What do you charge?",REMOVEPRICE,
+	     "No thanks.",CLOSEOUT;
+
+REMOVEPRICE:
+	mes "[Wise Old Woman]";
+	mes "I charge a flat fee of 200000 zeny, plus 25000 zeny for each card I remove from the item. In addition, I need a star crumb and a yellow gemstone to work my magic.";
+	next;
+	menu "Very well. Let's do it.",REMOVEMENU,
+	     "No thanks.",CLOSEOUT;
+
+REMOVEMENU:
+	mes "[Wise Old Woman]";
+	mes "Very well. Which item shall I examine for you?";
+	next;
+	menu "I changed my mind.",CLOSEOUT,
+	     getequipname(1),SLOT1,
+	     getequipname(2),SLOT2,
+	     getequipname(3),SLOT3,
+	     getequipname(4),SLOT4,
+	     getequipname(5),SLOT5,
+	     getequipname(6),SLOT6,
+	     getequipname(7),SLOT7,
+	     getequipname(8),SLOT8,
+	     getequipname(9),SLOT9,
+	     getequipname(10),SLOT10;
+
+SLOT1:
+	set @part,1;
+	goto CARDNUMCHECK;
+
+SLOT2:
+	set @part,2;
+	goto CARDNUMCHECK;
+
+SLOT3:
+	set @part,3;
+	goto CARDNUMCHECK;
+
+SLOT4:
+	set @part,4;
+	goto CARDNUMCHECK;
+
+SLOT5:
+	set @part,5;
+	goto CARDNUMCHECK;
+
+SLOT6:
+	set @part,6;
+	goto CARDNUMCHECK;
+
+SLOT7:
+	set @part,7;
+	goto CARDNUMCHECK;
+
+SLOT8:
+	set @part,8;
+	goto CARDNUMCHECK;
+
+SLOT9:
+	set @part,9;
+	goto CARDNUMCHECK;
+
+SLOT10:
+	set @part,10;
+	goto CARDNUMCHECK;
+
+CARDNUMCHECK:
+	if(getequipcardcnt(@part) == 0) goto DENYCARDCOUNT;
+	set @cardcount,getequipcardcnt(@part);
+	if(@cardcount > 1) goto CARDNUMMULTIMSG;
+	mes "[Wise Old Woman]";
+	mes "This item has " + @cardcount + " card compounded on it. To perform my magic, I will need 225000 zeny, a ^0000FFStar Crumb^000000, and a ^0000FFYellow Gemstone^000000.";
+	goto CARDNUMPOSTMSG;
+CARDNUMMULTIMSG:
+	mes "[Wise Old Woman]";
+	mes "This item has " + @cardcount + " cards compounded on it. To perform my magic, I will need " + (200000+(@cardcount * 25000)) + " zeny, a ^0000FFStar Crumb^000000, and a ^0000FFYellow Gemstone^000000.";
+CARDNUMPOSTMSG:
+	next;
+	menu "Very well. Do it.",REMOVECARDWARNING,
+	     "Never mind.",CLOSEOUT;
+
+REMOVECARDWARNING:
+	mes "[Wise Old Woman]";
+	mes "Before I begin, I must warn you--I may fail. If I do, I may destroy the cards, the item, or both. I do not give refunds. That being said, which is more important to you: The cards, or the item?";
+	next;
+	menu "I changed my mind about this.",CLOSEOUT,
+	     "The item.",PRIORITYITEM,
+	     "The cards.",PRIORITYCARD;
+
+PRIORITYITEM:
+	set @failtype,1;
+	goto REMOVECARD;
+
+PRIORITYCARD:
+	set @failtype,2;
+	goto REMOVECARD;
+
+REMOVECARD:
+	mes "[Wise Old Woman]";
+	mes "Very well. I shall begin.";
+	if((zeny < (200000+(@cardcount * 25000))) || (countitem(1000) < 1) || (countitem(715) < 1)) goto DENYMATERIAL;
+	set zeny,zeny - (200000+(@cardcount * 25000));
+	delitem 1000,1;
+	delitem 715,1;
+// Replace the constants in the next 3 lines with failure chance values defined in refine_db.txt
+// First value = Total failure chance (item and cards destroyed)
+// Second value = Partial failure chance (one or the other is destroyed, player decides which one is safe)
+// Third value = Harmless failure chance (all that's lost is your investment)
+
+	set @failchance,rand(100);
+//	if(@failchance < 2) goto FAILREMOVECARD0;
+//	if((@failchance < 8) && (@failtype == 1)) goto FAILREMOVECARD1;
+//	if((@failchance < 8) && (@failtype == 2)) goto FAILREMOVECARD2;
+	if(@failchance < 10) goto FAILREMOVECARD3;
+	successremovecards @part;
+	next;
+	mes "[Wise Old Woman]";
+	mes "The process was a success. Here are your cards and your item. Farewell.";
+	close;
+
+FAILREMOVECARD0:
+	failedremovecards @part,0;
+	next;
+	mes "[Wise Old Woman]";
+	mes "The process was a total failure. I am afraid the item and the cards were destroyed.";
+	close;
+
+FAILREMOVECARD1:
+	failedremovecards @part,1;
+	next;
+	mes "[Wise Old Woman]";
+	mes "While I have managed to remove the cards from the item, they were destroyed in the process. The item, however, is okay.";
+	close;
+
+FAILREMOVECARD2:
+	failedremovecards @part,2;
+	next;
+	mes "[Wise Old Woman]";
+	mes "Most unfortunate. I succeeded at removing the cards, but the item itself was destroyed in the process.";
+	close;
+
+FAILREMOVECARD3:
+	failedremovecards @part,3;
+	next;
+	mes "[Wise Old Woman]";
+	mes "I have failed to remove the cards. Luckily, however, both the item and the cards are still okay.";
+	close;
+
+DENYCARDCOUNT:
+	mes "[Wise Old Woman]";
+	mes "Young one... There are no cards compounded on this item. I can do nothing with it, I'm afraid.";
+	close;
+
+DENYMATERIAL:
+	next;
+	mes "[Wise Old Woman]";
+	mes "You do not have all the items I require to work my magic, child. Come again when you do.";
+	close;
+
+CLOSEOUT:
+	mes "[Wise Old Woman]";
+	mes "Very well. Return at once if you seek my services.";
+	close;
+}
+
+//"UPDATE `char` SET `last_map`='prontera.gat', `last_x`=156, `last_y`=191 WHERE
+//	if (@krank$ <= 4){query_sql "UPDATE `races` SET `points` = '"+@kpoints+" +1' WHERE `name` = "+@PlayerKiller$;
+
+//	if (@krank$ <= 4){query_sql "UPDATE `races` SET `points` = '"+escape_sql($@kpoints, $@kpoints+1)+"' WHERE `name` = "+@PlayerKiller$;
+
+//`name` = '"+escape_sql(@name$)+"'",
+
+
+//set getd("$@Playerkiller"),getcharid(3);
+
+
+
+// ("+@char_id+", "+@acc_id+", '"+escape_sql(@name$)+"', '"+escape_sql(@race$)+"', "+@rank+", "+@points+")";
+
+payo1,75,125,4	script	Race Viewer	904,{
+setarray $races$[0],"Mortal","Seraphim","Descendant of Fenrir","Elverre Leader","Terror of Hell","Cherubim","Black Fury","Honor Guard","Arch Daeva","Throne","Bone Gnawer","Captain","Greater Daeva","Virtue","Wild Fang","Ranger","Soldier Daeva","Power","Child of Gaia","Woodsman","Lesser Daeva";
+if (BaseLevel >= 1) goto L_CHARACTER;
+
+L_CHARACTER:
+mes "This retrieves character and race information.";
+next;
+mes "Would you like to view a character?";
+menu "Yes",-,"No",L_CLOSE;
+mes "Which character would you like to view?";
+input .@name$;
+query_sql "SELECT `char_id`, `account_id`, `char_num`, `class`, `base_level`, `job_level`, `zeny` FROM `char` WHERE `name` = '"+escape_sql(.@name$)+"'",.@char_id,.@account_id,.@char_num,.@class,.@base_level,.@job_level,.@zeny;
+query_sql "SELECT `race`, `rank`, `points` FROM `races` WHERE `char_id` = "+escape_sql(.@char_id),.@race$,.@rank,.@points;
+if(!.@char_id){
+	mes "Character "+.@name$+" does not exist!";
+	next;
+	goto L_CHARACTER;
+	}
+query_sql "SELECT `userid` FROM `login` WHERE `account_id` = "+escape_sql(.@account_id),.@userid$;
+next;
+mes "Class: "+jobname(.@class);
+mes "Base Level: "+.@base_level;
+mes "Job Level: "+.@job_level;
+mes "Race: "+.@race$;
+mes "Rank: "+$races$[.@rank];
+mes "Points: "+.@points;
+mes "Zeny: "+.@zeny;
+menu "View another character",L_CHARACTER,"Cancel",-;
+
+L_CLOSE:
+	close;
+}
+
+thor_v01	mapflag	nomemo
+thor_v02	mapflag	nomemo
+thor_v03	mapflag	nomemo
+ve_in	mapflag	nomemo
+nameless_i	mapflag	nomemo
+nameless_n	mapflag	nomemo
+nameless_in	mapflag	nomemo
+abbey01	mapflag	nomemo
+abbey02	mapflag	nomemo
+abbey03	mapflag	nomemo
+mosk_dun01	mapflag	nomemo
+mosk_dun02	mapflag	nomemo
+mosk_dun03	mapflag	nomemo

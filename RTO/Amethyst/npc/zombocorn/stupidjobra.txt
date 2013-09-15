@@ -1,0 +1,782 @@
+//Job Changer Script
+//Description: Changes your job for you
+//Current version: 1
+//Author Notes: 
+// v2.0 - Rewritten by Dubby
+// V1.0 - Finished
+// V0.5 - All but Advanced classes done
+// V0.1 - Being Written
+
+//Section 1 - Super Novice
+//Section 2 - 1st Class
+//Section 3 - 2nd Class
+//Section 4 - High Novice 
+//Section 5 - High First Class
+//Section 6 - High Second Class
+
+prontera.gat,161,190,5	script	Jobra	112,{
+	mes "[Jobra]";
+	mes "Would you like to change your job today?";
+	next;
+	menu "Yes",-,"No",L_No;
+	mes "What would you like to become?";
+//No Baby support.
+	if (getgmlevel()==99) mes "I hate jobras.";
+	if (!Class) menu "Super Novice",L_SNovice,"First Class",L_First;
+	if (Class==4001) menu "Super Novice",L_SNovice,"High First Class",L_HFirst;
+	if ((Class<7&&Class!=4023&&!Class) || Class==Job_Taekwon) menu "Second Class",L_Second;
+	if (Class>6&&Class<22) menu "High Novice",L_HNovice;
+	if (Class>4000&&Class<4008) menu "High Second Class",L_HSecond;
+	next;
+	mes "[Jobra]";
+	mes "Oh, I'm sorry I see you are already at the higheset job possible...";
+	close;
+L_No:
+	mes "[Jobra]";
+	mes "Oh, so you don't want to change your job?";
+	mes "Okay then, good bye.";
+	close;
+
+//-----[1]Super Novice---------------------------------------------------------------------------------------------
+L_SNovice:
+	mes "[Jobra]";
+	mes "So you'd like to become a Super Novice then?";
+	next;
+	menu "Yes",-,"No",L_NoSN;
+	if (JobLevel<10) goto L_Nolevel;
+	if (BaseLevel<60) goto L_Nolevel;
+	jobchange 23;
+	set job,2;
+	announce strcharinfo(0)+" has changed their job to Super Novice",8;
+	mes "[Jobra]";
+	mes "There we go, all done!";	
+	close;
+L_NoSN:
+	mes "[Jobra]";
+	mes "So you dont want to become a Super Novice then,";
+	mes "Very well then,";
+	mes "Its up to you";
+	close;
+L_Nolevel:
+	mes "[Jobra]";
+	mes "Im sorry but your not a high enough level.";
+	mes "Go level up a bit";
+	close;
+
+//-----[2]First Class----------------------------------------------------------------------------------------------
+L_First:
+	if (Class != 0) goto L_NoJob;
+	if (joblevel < 10) goto L_Nolevel;
+	mes "What job do you want me to change you to?";
+	menu "Swordsman",L_Swords,"Mage",L_Mage,"Merchant",L_Merch,"Thief",L_Thief,"Acolyte",L_Aco,"Archer",L_Archer,"Taekwon",L_TaeKwon,"Gunslinger",L_Gunslinger,"Ninja",L_Ninja;
+	
+L_Swords:
+	mes "So you want to be a Swordsman then";
+	mes "So I'll change you to one";
+	jobchange "1";
+	set job,3;
+	Announce strcharinfo(0) + " has changed their job to Swordsman",8;
+	close;
+	end;
+	
+L_Mage:
+	mes "So you want to be a Mage then";
+	mes "So I'll change you to one";
+	jobchange "2";
+	set job,4;
+	Announce strcharinfo(0) + " has changed their job to Mage",8;
+	close;
+	end;
+	
+L_Merch:
+	mes "So you want to be a Merchant then";
+	mes "So I'll change you to one";
+	jobchange "5";
+	set job,5;	
+	Announce strcharinfo(0) + " has changed their job to Merchant",8;
+	close;
+	end;
+	
+L_Thief:
+	mes "So you want to be a Thief then";
+	mes "So I'll change you to one";
+	jobchange "6";
+	set job,6;
+	Announce strcharinfo(0) + " has changed their job to Thief",8;
+	close;
+	end;	
+
+L_Aco:
+	mes "So you want to be an Acolyte then";
+	mes "So I'll change you to one";
+	jobchange "4";
+	set job,7;	
+	Announce strcharinfo(0) + " has changed their job to Acolyte",8;
+	close;
+	end;
+
+L_Archer:
+	mes "So you want to be an Archer then";
+	mes "So I'll change you to one";
+	jobchange "3";
+	set job,34;	
+	Announce strcharinfo(0) + " has changed their job to Archer",8;
+	close;
+	end;
+	
+L_TaeKwon:
+	mes "So you want to be a TaeKwon then";
+	if (BaseLevel < 19) {
+		mes "I'm sorry, but to become a TaeKwon you must be level 20";
+		close;
+		end;
+	} else {
+		mes "So I'll change you to one";
+		jobchange Job_Taekwon;
+		//set job,Job_Taekwon; FIX
+		Announce strcharinfo(0) + " has changed their job to TaeKwon",8;
+		close;
+		end;
+	}
+	
+L_Gunslinger:
+	mes "So you want to be a Gunslinger then";
+	mes "So I'll change you to one";
+	jobchange Job_Gunslinger;
+	set job,Job_Gunslinger;
+	Announce strcharinfo(0) + " has changed their job to Gunslinger",8;
+	close;
+	end;
+	
+L_Ninja:
+	mes "So you want to be a Ninja then";
+	mes "So I'll change you to one";
+	jobchange Job_Ninja;
+	set job,Job_Ninja;
+	Announce strcharinfo(0) + " has changed their job to Ninja",8;
+	close;
+	end;
+
+//Section 3 - 2nd Class
+
+C_second:
+
+	if (joblevel < 50) goto sec_nojob;
+	if (job==3) goto S_Swordsman;
+	if (job==4) goto S_Mage;
+	if (job==5) goto S_Merchant;
+	if (job==6) goto S_Thief;
+	if (job==7) goto S_Acolyte;
+	if (job==34) goto S_Archer;
+	if (job==Job_Taekwon) goto S_TaeKwon;
+	
+S_Swordsman:
+	mes "[Jobra]";
+	mes "I see you're a Swordsman";
+	next;
+	mes "[Jobra]";
+	mes "What would you like to become next?";
+	menu "Knight",S_Knight,"Crusader",S_Crusader;
+
+S_Knight:
+	mes "So you want to become a Knight";
+	mes "So I'll change you to one";
+	jobchange "7";
+	set job,8;
+	Announce strcharinfo(0) + " has changed their job to Knight",8;
+	close;
+	end;
+	
+S_Crusader:
+	mes "So you want to become a Crusader";
+	mes "So I'll change you to one";
+	jobchange "14";
+	set job,9;
+	Announce strcharinfo(0) + " has changed their job to Crusader",8;
+	close;
+	end;
+
+S_Mage:
+	mes "[Jobra]";
+	mes "I see you're a Mage";
+	next;
+	mes "[Jobra]";
+	mes "What would you like to become next?";
+	menu "Sage",M_Sage,"Wizard",M_Wizard;
+
+M_Wizard:
+	mes "So you want to become a Wizard";
+	mes "So I'll change you to one";
+	jobchange "9";
+	set job,11;
+	Announce strcharinfo(0) + " has changed their job to Wizard",8;
+	close;
+	end;
+	
+	
+M_Sage:
+	mes "So you want to become a Sage";
+	mes "So I'll change you to one";
+	jobchange "16";
+	set job,10;
+	Announce strcharinfo(0) + " has changed their job to Sage",8;
+	close;
+	end;
+	
+	
+S_Merchant:
+	mes "[Jobra]";
+	mes "I see you're a Merchant";
+	next;
+	mes "[Jobra]";
+	mes "What would you like to become next?";
+	menu "Blacksmith",Me_Black,"Alchemist",Me_Al;
+
+Me_Black:
+	mes "So you want to become a Blacksmith";
+	mes "So I'll change you to one";
+	jobchange "10";
+	set job,12;
+	Announce strcharinfo(0) + " has changed their job to Blacksmith",8;
+	close;
+	end;
+	
+	
+Me_Al:
+	mes "So you want to become a Alchemist";
+	mes "So I'll change you to one";
+	jobchange "18";
+	set job,13;
+	Announce strcharinfo(0) + " has changed their job to Alchemist",8;
+	close;
+	end;
+	
+S_Thief:
+	mes "[Jobra]";
+	mes "I see you're a Thief";
+	next;
+	mes "[Jobra]";
+	mes "What would you like to become next?";
+	menu "Assassin",T_Sin,"Rouge",T_Rouge;
+
+T_Sin:
+	mes "So you want to become an Assassin";
+	mes "So I'll change you to one";
+	jobchange "12";
+	set job,14;
+	Announce strcharinfo(0) + " has changed their job to Assassin",8;
+	close;
+	end;
+	
+	
+T_Rouge:
+	mes "So you want to become a Rouge";
+	mes "So I'll change you to one";
+	jobchange "17";
+	set job,15;
+	Announce strcharinfo(0) + " has changed their job to Rouge",8;
+	close;
+	end;	
+	
+S_Acoylte:
+	mes "[Jobra]";
+	mes "I see you're an Acolyte";
+	next;
+	mes "[Jobra]";
+	mes "What would you like to become next?";
+	menu "Priest",A_Priest,"Monk",A_Monk;
+
+A_Priest:
+	mes "So you want to become a Priest";
+	mes "So I'll change you to one";
+	jobchange "18";
+	set job,16;
+	Announce strcharinfo(0) + " has changed their job to Priest",8;
+	close;
+	end;
+	
+	
+A_Monk:
+	mes "So you want to become a Monk";
+	mes "So I'll change you to one";
+	jobchange "15";
+	set job,17;
+	Announce strcharinfo(0) + " has changed their job to Monk",8;
+	close;
+	end;
+
+S_Archer:
+if (Sex == 0) goto NextArch;
+	mes "[Jobra]";
+	mes "I see you're an Archer";
+	next;
+	mes "[Jobra]";
+	mes "What would you like to become next?";
+	menu "Hunter",Ar_Hunter1,"Bard",Ar_Bard;
+	
+Ar_Hunter1:
+	mes "So you want to become a Hunter";
+	mes "So I'll change you to one";
+	jobchange "11";
+	set job,36;
+	Announce strcharinfo(0) + " has changed their job to Hunter",8;
+	close;
+	end;
+	
+	
+Ar_Bard:
+	mes "So you want to become a Bard";
+	mes "So I'll change you to one";
+	jobchange "19";
+	set job,38;
+	Announce strcharinfo(0) + " has changed their job to Bard",8;
+	close;
+	end;
+	
+NextArch:
+	mes "[Jobra]";
+	mes "I see you're an Archer";
+	next;
+	mes "[Jobra]";
+	mes "What would you like to become next?";
+	menu "Hunter",Arc_Hunter,"Daner",Ar_Dancer;
+	
+Arc_Hunter:
+	mes "So you want to become a Hunter";
+	mes "So I'll change you to one";
+	jobchange "11";
+	set job,36;
+	Announce strcharinfo(0) + " has changed their job to Hunter",8;
+	close;
+	end;
+	
+	
+Arc_Dancer:
+	mes "So you want to become a Dancer";
+	mes "So I'll change you to one";
+	jobchange "20";
+	set job,37;
+	Announce strcharinfo(0) + " has changed their job to Dancer",8;
+	close;
+	end;
+	
+S_TaeKwon:
+	mes "[Jobra]";
+	mes "I see you're a TaeKwon";
+	next;
+	mes "[Jobra]";
+	mes "What would you like to become next?";
+	switch( select("Star Gladiator","Soul Linker") ) {
+		case 1:
+			mes "So you want to become a Star Gladiator";
+			mes "So I'll change you to one";
+			jobchange Job_StarGladiator;
+			set job,Job_StarGladiator;
+			Announce strcharinfo(0) + " has changed their job to Star Gladiator",8;
+			close;
+			end;
+			break;
+		case 2:
+			mes "So you want to become a ";
+			mes "So I'll change you to one";
+			jobchange Job_SoulLinker;
+			set job,Job_SoulLinker;
+			Announce strcharinfo(0) + " has changed their job to Soul Linker",8;
+			close;
+			end;
+			break;
+	}
+	close;
+	end;
+
+//Section 4 - High Novice
+
+C_hnovice:
+
+	mes "So you want to be a higher level now?";
+	mes "Are you a high enough level?";
+	if (joblevel < 50) goto HN_nolevel;
+	if (baselevel < 99) goto HM_nolevel;
+	if (job==3) goto HN_nojob; //Swordsman
+	if (job==4) goto HN_nojob; //Mage
+	if (job==5) goto HN_nojob; //Merchant
+	if (job==6) goto HN_nojob; // Thief
+	if (job==7) goto HN_nojob; //Acolyte
+	if (job==34) goto HN_nojob; //Archer
+
+	mes "You are a high enough level";
+	next;
+	mes "Do you have the required item?";
+	mes "You need ^FF00001 Fake Angel Wing^000000";
+	if //Need to look up if fake angel wing (7104) doesn't = 1 goto NO_Item
+	mes "I'll now change you to a novice high";
+	delitem 7104,1;
+	jobchange "24";
+	Announce strcharinfo(0) + " has changed their job to Novice High",8;
+	close;
+	end;
+	
+//Section 5 - High First Class
+
+	mes "So now you want to become a High First class";
+	next;
+	mes "I'll now change you to the High of your first class";
+	mes "But first I must check your level";
+	if (joblevel < 10) goto HFirst_Nolevel;
+	if (job==8) goto HSwords;
+	if (job==9) goto HSwords;
+	if (job==10) goto HMage;
+	if (job==11) goto HMage;
+	if (job==12) goto HMerch;
+	if (job==13) goto HMerch;
+	if (job==14) goto HThief;
+	if (job==15) goto HThief;
+	if (job==16) goto HAco;
+	if (job==17) goto HAco;
+	if (job==36) goto HArcher;
+	if (job==37) goto HArcher;
+	if (job==38) goto HArcher;
+
+HSwords:
+	mes "I see you were a Swordsman";
+	next;
+	mes "[Jobra]";
+	mes "I'll change you to a Swordsman High now";
+	jobchange "25";
+	set hjob,19;
+	Announce strcharinfo(0) + " has changed their job to Swordsman High",8;
+	mes "All done now";
+	close;
+	end;
+	
+HMage:
+	mes "I see you were a Mage";
+	next;
+	mes "[Jobra]";
+	mes "I'll change you to a Mage High now";
+	jobchange "26";
+	set hjob,20;
+	Announce strcharinfo(0) + " has changed their job to Mage High",8;
+	mes "All done now";
+	close;
+	end;	
+	
+HMerch:
+	mes "I see you were a Merchant";
+	next;
+	mes "[Jobra]";
+	mes "I'll change you to a Merchant High now";
+	jobchange "29";
+	set hjob,21;
+	Announce strcharinfo(0) + " has changed their job to Merchant High",8;
+	mes "All done now";
+	close;
+	end;
+
+HThief:
+	mes "I see you were a Thief";
+	next;
+	mes "[Jobra]";
+	mes "I'll change you to a Thief High now";
+	jobchange "30";
+	set hjob,22;
+	Announce strcharinfo(0) + " has changed their job to Thief High",8;
+	mes "All done now";
+	close;
+	end;
+	
+HAco:
+	mes "I see you were an Acolyte";
+	next;
+	mes "[Jobra]";
+	mes "I'll change you to an Acolyte High now";
+	jobchange "28";
+	set hjob,23;
+	Announce strcharinfo(0) + " has changed their job to Acolyte High",8;
+	mes "All done now";
+	close;
+	end;
+
+HArcher:
+	mes "I see you were an Archer";
+	next;
+	mes "[Jobra]";
+	mes "I'll change you to an Archer High now";
+	jobchange "27";
+	set hjob,35;
+	Announce strcharinfo(0) + " has changed their job to Archer High",8;
+	mes "All done now";
+	close;
+	end;
+	
+//Section 6 - High Second Class
+
+C_hsecond:
+	mes "So now you want to become an Advanced Second Class";
+	next;
+	mes "So I'll change you to according to your earlier jobs";
+	mes "Lets make sure you a high enough level first";
+	if (joblevel < 50) goto HS_Nojob;
+	if (hjob==19) goto HS_Next;
+	if (hjob==20) goto HS_Next;
+	if (hjob==21) goto HS_Next;
+	if (hjob==22) goto HS_Next;
+	if (hjob==23) goto HS_Next;
+	if (hjob==35) goto HS_Next;
+	mes "Your not the right job, go away";
+	close;
+	end;
+	
+HS_Next:
+	if (job==8) goto HS_LK;
+	if (job==9) goto HS_Pal;
+	if (job==10) goto HS_Prof;
+	if (job==11) goto HS_Hwiz;
+	if (job==12) goto HS_White;
+	if (job==13) goto HS_Creator;
+	if (job==14) goto HS_SinX;
+	if (job==15) goto HS_Stalker;
+	if (job==16) goto HS_HPriest;
+	if (job==17) goto HS_Champ;
+	if (job==36) goto HS_Sniper;
+	if (job==37) goto HS_Gypsy;
+	if (job==38) goto HS_Clown;
+	
+HS_LK:
+	mes "I see your ready to become a Lord Knight now";
+	next;
+	mes "[Jobra]";
+	mes "So I shall change you to one";
+	jobchange "31";
+	set job,24;
+	Announce strcharinfo(0) + " has changed their job to Lord Knight",8;
+	next;
+	mes "[Jobra]";
+	mes "There we are, all done now";
+	close;
+	end;
+	
+HS_Pal:
+	mes "I see your ready to become a Paladin now";
+	next;
+	mes "[Jobra]";
+	mes "So I shall change you to one";
+	jobchange "38";
+	set job,25;
+	Announce strcharinfo(0) + " has changed their job to Paladin",8;
+	next;
+	mes "[Jobra]";
+	mes "There we are, all done now";
+	close;
+	end;
+	
+HS_Prof:
+	mes "I see your ready to become a Professor now";
+	next;
+	mes "[Jobra]";
+	mes "So I shall change you to one";
+	jobchange "40";
+	set job,26;
+	Announce strcharinfo(0) + " has changed their job to Professor",8;
+	next;
+	mes "[Jobra]";
+	mes "There we are, all done now";
+	close;
+	end;
+
+HS_Hwiz:
+	mes "I see your ready to become a High Wizard now";
+	next;
+	mes "[Jobra]";
+	mes "So I shall change you to one";
+	jobchange "33";
+	set job,27;
+	Announce strcharinfo(0) + " has changed their job to High Wizard",8;
+	next;
+	mes "[Jobra]";
+	mes "There we are, all done now";
+	close;
+	end;
+
+HS_White:
+	mes "I see your ready to become a Whitesmith now";
+	next;
+	mes "[Jobra]";
+	mes "So I shall change you to one";
+	jobchange "34";
+	set job,28;
+	Announce strcharinfo(0) + " has changed their job to Whitesmith",8;
+	next;
+	mes "[Jobra]";
+	mes "There we are, all done now";
+	close;
+	end;
+	
+HS_Creator:
+	mes "I see your ready to become a Creator now";
+	next;
+	mes "[Jobra]";
+	mes "So I shall change you to one";
+	jobchange "42";
+	set job,29;
+	Announce strcharinfo(0) + " has changed their job to Creator",8;
+	next;
+	mes "[Jobra]";
+	mes "There we are, all done now";
+	close;
+	end;	
+	
+HS_SinX:
+	mes "I see your ready to become an Assassin Cross now";
+	next;
+	mes "[Jobra]";
+	mes "So I shall change you to one";
+	jobchange "36";
+	set job,30;
+	Announce strcharinfo(0) + " has changed their job to Assassin Cross",8;
+	next;
+	mes "[Jobra]";
+	mes "There we are, all done now";
+	close;
+	end;	
+	
+HS_Stalker:
+	mes "I see your ready to become a Stalker now";
+	next;
+	mes "[Jobra]";
+	mes "So I shall change you to one";
+	jobchange "41";
+	set job,31;
+	Announce strcharinfo(0) + " has changed their job to Stalker",8;
+	next;
+	mes "[Jobra]";
+	mes "There we are, all done now";
+	close;
+	end;	
+	
+HS_HPriest:
+	mes "I see your ready to become a High Priest now";
+	next;
+	mes "[Jobra]";
+	mes "So I shall change you to one";
+	jobchange "32";
+	set job,32;
+	Announce strcharinfo(0) + " has changed their job to High Priest",8;
+	next;
+	mes "[Jobra]";
+	mes "There we are, all done now";
+	close;
+	end;	
+	
+HS_Champ:
+	mes "I see your ready to become a Champion now";
+	next;
+	mes "[Jobra]";
+	mes "So I shall change you to one";
+	jobchange "39";
+	set job,33;
+	Announce strcharinfo(0) + " has changed their job to Champion",8;
+	next;
+	mes "[Jobra]";
+	mes "There we are, all done now";
+	close;
+	end;	
+	
+HS_Sniper:
+	mes "I see your ready to become a Sniper now";
+	next;
+	mes "[Jobra]";
+	mes "So I shall change you to one";
+	jobchange "27";
+	set job,35;
+	Announce strcharinfo(0) + " has changed their job to Sniper",8;
+	next;
+	mes "[Jobra]";
+	mes "There we are, all done now";
+	close;
+	end;
+	
+HS_Gypsy:
+	mes "I see your ready to become a Gypsy now";
+	next;
+	mes "[Jobra]";
+	mes "So I shall change you to one";
+	jobchange "44";
+	set job,40;
+	Announce strcharinfo(0) + " has changed their job to Gypsy",8;
+	next;
+	mes "[Jobra]";
+	mes "There we are, all done now";
+	close;
+	end;
+	
+HS_Clown:
+	mes "I see your ready to become a Clown now";
+	next;
+	mes "[Jobra]";
+	mes "So I shall change you to one";
+	jobchange "43";
+	set job,41;
+	Announce strcharinfo(0) + " has changed their job to Clown",8;
+	next;
+	mes "[Jobra]";
+	mes "There we are, all done now";
+	close;
+	end;	
+	
+	
+//Section 7 - Cancels
+
+	
+L_NoLevel:
+	mes "Your not a high enough level to change to a Super Novice";
+	mes "Go train a bit more";
+	next;
+	mes "[Jobra]";
+	mes "You have to have a base level of 75";
+	mes "and a job level of 10";
+	close;
+	end;
+	
+No_Job:
+	mes "How can I change you to a Super Novice when your not a Novice?";
+	close;
+	end;
+	
+Sec_nojob:
+	mes "Your not job level 50,";
+	mes "you need to be job level 50 to change jobs";
+	close;
+	end;
+	
+HN_nolevel:
+	mes "Your not a high enough level to change.";
+	mes "You need to be Base level 99 and job level 50";
+	close;
+	end;
+	
+NH_noitem:
+	mes "You need a Fake Angel's Wing to go to a High Novice";
+	mes "You dont have one";
+	close;
+	end;
+	
+Hfirst_nolevel:
+	mes "Your not job level 10.";
+	mes "Go train a bit";
+	close;
+	end;
+	
+HS_nojob:
+	mes "Your not Job level 50";
+	mes "Go train a bit";
+	close;
+	end;
+	
+Hno_first:
+	mes "Your not an Advanced Class";
+	mes "Go Away";
+	close;
+	end;
+	
+}

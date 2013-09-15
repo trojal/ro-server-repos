@@ -1,0 +1,87 @@
+// Turven Dungeon script
+//
+
+//warps
+gef_fild09,296,58,8	script	turvenwarp01	45,1,1,{
+	if (!CDungeonT) goto L_Mess;
+	warp "turven01",268,204;
+	end;
+L_Mess:
+	message strcharinfo(0),"You sense a great power from within, perhaps it is not your time...";
+	end;
+}
+turven01,269,198,0	warp	turvenwarp02	1,1,gef_fild09,296,54
+turven01,287,57,0	warp	turvenwarp03	1,1,turven02,272,67
+turven02,276,67,0	warp	turvenwarp04	1,1,turven01,280,57
+turven02,55,257,4	script	turvenwarp05a	45,1,1,{
+	set @tu,0;
+	warp "turven03",150,46; end;
+}
+turven02,24,220,4	script	turvenwarp05b	45,1,1,{
+	set @tu,1;
+	warp "turven03",150,46; end;
+}
+turven03,146,46,4	script	turvenwarp06	45,1,1,{
+	if (@tu) { warp "turven02",27,216; }
+	else { warp "turven02",59,253; }
+	end;
+}
+turven03,340,331,0	warp	turvenwarp07	1,1,oldtun1,89,19
+oldtun1,94,19,0	warp	turvenwarp08	1,1,turven03,340,329
+turven03,236,197,0	warp	turvenwarp09	1,1,turven04,168,169
+turven04,168,173,0	warp	turvenwarp10	1,1,turven03,236,200
+turven04,39,42,0	warp	turvenwarp11	1,1,turven05,238,269
+turven05,238,274,0	warp	turvenwarp12	1,1,turven04,39,48
+
+//monsters
+//-- Turven Cave Floor 1
+turven01,0,0,0,0	monster	Neraid	1255,15,40,46,0,0,0
+turven01,0,0,0,0	monster	Penomena	1216,15,55,59,0,0,0
+turven01,0,0,0,0	monster	Pest	1256,7,38,43,0,0,0
+turven01,0,0,0,0	monster	Feeder	2605,4,70,74,0,0,0
+turven01,0,0,0,0	monster	Pincer Leech	2604,5,70,75,0,0,0
+turven01,0,0,0,0	monster	Trilomite	2613,15,57,64,0,0,0
+turven01,0,0,0,0	monster	Water Crystal	1398,1,1,1,60000,1800000,0
+//-- Turven Cave Floor 2
+turven02,0,0,0,0	monster	Thara Frog	1034,10,22,26,0,0,0
+turven02,0,0,0,0	monster	Pincer Leech	2604,15,74,80,0,0,0
+turven02,0,0,0,0	monster	Feeder	2605,25,73,77,0,0,0
+turven02,0,0,0,0	monster	Neraid	1255,10,37,41,0,0,0
+turven02,0,0,0,0	monster	Pest	1256,12,40,44,0,0,0
+turven02,0,0,0,0	monster	Trilomite	2613,40,60,67,0,0,0
+turven02,0,0,0,0	monster	Penomena	1216,20,57,61,0,0,0
+turven02,0,0,0,0	monster	Water Crystal	1398,1,1,1,60000,1800000,0
+turven02,0,0,0,0	monster	Black Mushroom	1084,15,1,1,0,0,0
+turven02,0,0,0,0	monster	Red Mushroom	1085,10,1,1,0,0,0
+//-- Turven Cave Floor 3
+turven03,0,0,0,0	monster	Neraid	1255,55,44,49,0,0,0
+turven03,0,0,0,0	monster	Penomena	1216,90,59,64,0,0,0
+turven03,0,0,0,0	monster	Thara Frog	1034,40,25,29,0,0,0
+turven03,0,0,0,0	monster	Feeder	2605,15,76,79,0,0,0
+turven03,0,0,0,0	monster	Atomic	2609,50,150,150,0,0,0
+turven03,0,0,0,0	monster	Curmudgeon	2610,60,77,82,0,0,0
+turven03,0,0,0,0	monster	Trilomite	2613,110,64,70,0,0,0
+turven03,0,0,0,0	monster	Red Mushroom	1085,20,1,1,0,0,0
+turven03,0,0,0,0	monster	Black Mushroom	1084,10,1,1,0,0,0
+turven03,0,0,0,0	monster	Water Crystal	1398,1,1,1,60000,1800000,0
+//-- Turven Cave Floor 4
+turven04,0,0,0,0	monster	Kraken	2614,27,92,95,0,0,0
+turven04,0,0,0,0	monster	Curmudgeon	2610,50,79,85,0,0,0
+turven04,0,0,0,0	monster	Trilomite	2613,100,67,73,0,0,0
+turven04,0,0,0,0	monster	Penomena	1216,30,59,61,0,0,0
+turven04,0,0,0,0	monster	Pincer Leech	2604,75,79,83,0,0,0
+turven04,0,0,0,0	monster	Feeder	2605,30,78,82,0,0,0
+turven04,0,0,0,0	monster	Atomic	2609,65,150,150,0,0,0
+turven04,0,0,0,0	monster	Red Mushroom	1085,15,1,1,0,0,0
+turven04,0,0,0,0	monster	Black Mushroom	1084,30,1,1,0,0,0
+turven04,0,0,0,0	monster	Water Crystal	1398,1,1,1,60000,1800000,0
+//-- Turven Cave Floor 5
+turven05,0,0,0,0	monster	Trilomite	2613,60,70,75,0,0,0
+turven05,0,0,0,0	monster	Kraken	2614,10,94,97,0,0,0
+turven05,0,0,0,0	monster	Pincer Leech	2604,30,80,84,0,0,0
+turven05,0,0,0,0	monster	Bulwark	2616,45,92,95,0,0,0
+turven05,0,0,0,0	monster	Feeder	2605,15,81,84,0,0,0
+turven05,0,0,0,0	monster	Grumbler	2615,40,86,90,0,0,0
+turven05,0,0,0,0	monster	Red Mushroom	1085,20,1,1,0,0,0
+turven05,0,0,0,0	monster	Black Mushroom	1084,20,1,1,0,0,0
+turven05,0,0,0,0	monster	Treasure Chest	1325,1,1,1,57600000,14400000,0

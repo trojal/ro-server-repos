@@ -1,0 +1,77 @@
+//Attempt at a custom made thief quest.
+//By Axiom
+
+mapname,x,y,z	script	Fred	113,{
+	if (Class = Job_Thief && BaseLevel > 50) {
+		if (ctheft = 0) {
+			mes "[Codename Fred]";
+			mes "Shh...";
+			next;
+			mes "[Codename Fred]";
+			mes "My name is Dominic.";
+			mes "I'm a fellow thief, so I'm under the codename 'Fred'";
+			mes "You will call me Fred, okay?";
+			next;
+			mes "[Codename Fred]";
+			mes "I'm here to train thieves like myself to become stronger.";
+			mes "I've been through several experiences in my life that have changed me.";
+			next;
+			mes "I only train the strong to become stronger, are you willing to become my student?";
+			next;
+			if(select(Yeah, sure. Sounds good.:Not right now, I'm busy..) == 1) {
+				mes "[Codename Fred]";
+				mes "Excellent.";
+				mes "My tasks will be difficult, even for a thief like myself.";
+				next;
+				mes "[Codename Fred]";
+				mes "First of all, I have a package to deliver to the Refiner in Prontera.";
+				next;
+				mes "[Codename Fred]";
+				mes "It provides the raw materials needed to craft a weapon of incomparable strength.";
+				mes "Don't even think of opening it. Hollengren and I are close friends..";
+				mes "Don't screw up.";
+				close;
+			} 
+				
+			mes "[Codename Fred]";
+			mes "Seek me when you are ready, young Thief.";
+			close;
+			
+		} 
+		else 
+		if (cthief = 1) {
+			mes "[Codename Fred]";
+			mes "Awesome, you delivered it?";
+			mes "Alright then.";
+			next;
+			mes "[Codename Fred]";
+			mes "My next task is ready for you.";
+			mes "Would you like to take it now?";
+			if(select(I'll quit for now and come back later.:I'm ready.) == 1) {
+				mes "[Codename Fred]";
+				mes "Just talk to me whenever you're ready.";
+				close;
+			}
+				
+			mes "[Codename Fred]";
+			mes "Now that you delivered the package, I need you to steal it from him.";
+			mes "He gave it to his friend so he could work on the materials.";
+			mes "I'm surprised he hasn't started working on the materials yet, which is fortunate for us.";
+			next;
+			mes "[Codename Fred]";
+			mes "Since it's you that's stealing it, Hollengren won't even know it's me, and we'll still be friends.";
+			mes "Maybe I'll steal from him again.. heheheh";
+			next;
+			mes "[Codename Fred]";
+			mes "Go now. Retrieve the package.";
+			mes "Hollengren's friend is located here in morroc. His name is FILLMEIN";
+			mes "He's in a house located in southern morroc.";
+			close;
+		}
+OnTouch:
+	if (BaseLevel > 50 && Class = Job_Thief) {
+	mes "[Codename Fred]";
+	mes "Psst. Thief. Over here...";
+	close;
+	}
+end;

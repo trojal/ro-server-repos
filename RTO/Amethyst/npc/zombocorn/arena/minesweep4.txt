@@ -1,0 +1,1714 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////\
+//  Minesweeper! // v0.93 ////////////////////////////////////////////////////////////////////////\
+///////////////////////////////////////////////////////////////////////////////////////////////////\
+//=========== Written by =========================================================================//
+// Dubby                                                                                          //
+//=========== Compatible with ====================================================================//
+// Tested with SVN 2555 Version                                                                   //
+//                                                                                                //
+//=========== Description ========================================================================//
+// This is a 9x9 poring version of the infamous pc game, Minesweeper.                             //
+//                                                                                                //
+//=========== Map Info ===========================================================================//
+// ["minesweep4" is "job_knt"]                                                            //
+//                                                                                                //
+//=========== Version History ====================================================================//
+// v0.93 - [Dubby] - Debugging completed, script is fully functional, albeit a few kinks          //
+//                                                                                                //
+//=========== Known Problems =====================================================================//
+// 1. [Dubby] Bizarre "shrinking" problem rarely affects tiles 72 - 81 (Does not affect the       //
+//            gameplay in the least bit)                                                          //
+// 2. [Dubby] Occassional "mismatched" victory points cause an early victory.  Only occurs when   //
+//            there are only a few porings left to click on, such as 2 or 3.                      //
+//                                                                                                //
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//---Mapflags----------------------------------------------------------------------------------
+minesweep4	mapflag	nosave	SavePoint
+minesweep4	mapflag	noreturn
+minesweep4	mapflag	pvp	off
+minesweep4	mapflag	nopenalty
+minesweep4	mapflag	nozenypenalty
+minesweep4	mapflag	nomemo
+minesweep4	mapflag	nobranch
+minesweep4	mapflag	noteleport
+minesweep4	mapflag	nowarp
+minesweep4	mapflag	nowarpto
+
+//---Main NPC----------------------------------------------------------------------------------
+minesweep4,124,75,5	script	Mine4Control	770,{
+		if ($@MS4Ready == 1) goto M_NotReady;
+	M_Menu:
+		if ($@MS4On == 1) goto M_Menu2;
+		mes "[Room Controller]";
+		mes "Hello "+strcharinfo(0)+", welcome to Minesweeper!  This is room 1.";
+		next;
+		if (getgmlevel() == 0) menu "Information",M_Info,"Start Game",-,"Leave Room",M_Exit;
+		if (getgmlevel() > 79) menu "Information",M_Info,"Start Game",-,"Control Panel",M_Control,"Leave Room",M_Exit;
+	M_Start:
+		mes "[Room Controller]";
+		mes "The board is 9x9, with 81 tiles.  You may set the mine count to a minimum of "+$MS4Minimum+", and a maximum of "+$MS4Maximum+".";
+		next;
+		mes "[Room Controller]";
+		mes "Please input the amount of mines to be planted on the field.";
+	M_RepeatInput:
+		next;
+		input $@MS4Amount;
+		next;
+		if ($@MS4Amount < $MS4Minimum || $@MS4Amount > $MS4Maximum) message strcharinfo(0),"The number cannot be below "+$MS4Minimum+", and cannot be above "+$MS4Maximum+"!";
+		if ($@MS4Amount < $MS4Minimum || $@MS4Amount > $MS4Maximum) goto M_RepeatInput;
+		mes "[Room Controller]";
+		mes "Alright, you have set "+$@MS4Amount+" mines!  The room will activate shortly!";
+		close2;
+		set $@MS4On,1;
+		goto L_Timer;
+	M_Menu2:
+		if ($@MS4CD == 1) end;
+		mes "[Room Controller]";
+		mes "The game is in progress.  What would you like to do?";
+		mes " ";
+		mes " ";
+		set $@MS4MNTM,(((getnpctimer(0,"Mine4Control") / 2000) / 60) %60);
+		set $@MS4SETM,((getnpctimer(0,"Mine4Control") / 2000) % 60);
+		if ($@MS4SETM == 0 ) goto M_NewMin1;
+		if ($@MS4SETM >= 51 ) goto M_Addzero1;
+		mes "[Time remaining: " + (4-$@MS4MNTM) + ":" + (60-$@MS4SETM) + "]";
+		goto M_Menu2a;
+	M_NewMin1:
+		mes "[Time remaining: " + (5-$@MS4MNTM) + ":00]";
+		goto M_Menu2a;
+	M_Addzero1:
+		mes "[Time remaining: " + (4-$@MS4MNTM) + ":0" + (60-$@MS4SETM) + "]";
+		goto M_Menu2a;
+	M_Menu2a:
+		next;
+		if (getgmlevel() == 0) menu "Cancel",-,"Information and Rules",M_Info,"Leave Room",M_Warpout;
+		if (getgmlevel() > 79) menu "Cancel",-,"Information and Rules",M_Info,"Control Panel",M_Control,"Leave Room",M_Warpout;
+		close;
+	M_Info:
+		mes "[Room Controller]";
+		mes "Firstly, the game is a 9x9 grid of tiles (porings).  That's 81 tiles.  There are a certain number of hidden mines on the field.";
+		next;
+		mes "[Room Controller]";
+		mes "The goal of the game is to 'Flag' all the mines.  If you click on a tile and there is a mine there, game over!";
+		next;
+		mes "[Room Controller]";
+		mes "When you click on a tile, the tile will be flagged, and turn blue.  If you click on a flagged tile, it will open up.  If there's nothing there, a chain reaction will start.  If there's a number there, it'll show the number.  If there's a mine there, game over!";
+		next;
+		mes "[Room Controller]";
+		mes "Be careful!  You only have ONE chance to flag a tile!  No flagging and unflagging here.";
+		next;
+		mes "[Room Controller]";
+		if ($MS4Window == 0) mes "Now about the tiles.  Yellow means the tile has not been clicked on yet.  Blue means the tile is flagged.  And if red, it will have a waiting room window with a number inside.  Say, if there is a red tile with a '5' in the waiting room, then that means there are 5 mines within a 3x3 box centered on that tile.";
+		if ($MS4Window == 1) mes "Now about the tiles.  Yellow means the tile has not been clicked on yet.  Blue means the tile is flagged.  And if red, the npc's name will be the number of that tile.  Say, if there is a red tile with a '5' in the waiting room, then that means there are 5 mines within a 3x3 box centered on that tile.";
+		if ($MS4Window == 2) mes "Now about the tiles.  Yellow means the tile has not been clicked on yet.  Blue means the tile is flagged.  And if red, it will have a waiting room window with a number inside and a waiting room with the number in there too.  Say, if there is a red tile with a '5' in the waiting room, then that means there are 5 mines within a 3x3 box centered on that tile.";
+		next;
+		mes "[Room Controller]";
+		mes "You get points for clicking on a tile that has a number on it.  You have to finish the game to get any kind of reward though!";
+		next;
+		mes "[Room Controller]";
+		mes "Reward is based on the amount of points you accumulate from opening numbered tiles, and how many mines there are on the field.";
+		next;
+		mes "[Room Controller]";
+		mes "This is also a minigame you can play by yourself.  And that's about it!";
+		next;
+		goto M_Menu;
+	M_Wait:
+		mes "[Room Controller]";
+		mes "Alright.";
+		close;
+	M_Warpout:
+		mes "[Room Controller]";
+		mes "The game is in progress, are you sure you want to leave?";
+		next;
+		menu "No, I'll stay",M_Wait,"Yes.",M_Exit;
+	M_Exit:
+		mes "[Room Controller]";
+		mes "Please enjoy your stay in the Arena!";
+		if (@MSpt > 0) set @MSpt,0;
+		close2;
+	warp "pvp_m_room", 51, 38;
+		end;
+	M_NotReady:
+		mes "[Room Controller]";
+		mes "Hello "+strcharinfo(0)+", this room has ended and is in a cooldown phase.  The room will be open again in a short while.";
+		mes " ";
+		set $@MS4MNTM,(((getnpctimer(0,"Mine4Control") / 2000) / 60) %60);
+		set $@MS4SETM,((getnpctimer(0,"Mine4Control") / 2000) % 60);
+		if ($@MS4SETM == 0 ) goto M_NewMin2;
+		if ($@MS4SETM >= 51 ) goto M_Addzero2;
+		mes "[Time remaining: " + ($@MS4MNTM) + ":" + (60-$@MS4SETM) + "]"; // Counts down, this is the base timer
+		goto M_NotReady2;
+	M_NewMin2:
+		mes "[Time remaining: " + (1-$@MS4MNTM) + ":00]"; // Keeps the second from starting at 60
+		goto M_NotReady2;
+	M_Addzero2:
+		mes "[Time remaining: " + ($@MS4MNTM) + ":0" + (60-$@MS4SETM) + "]"; // Adds a 0 infront of 1-9
+		goto M_NotReady2;
+	M_NotReady2:
+		next;
+		if ($@MS4Lose == 1) goto M_NotReady4;
+		if (@MSpt > 0) goto M_NotReady3;
+	M_NotReady4:
+		if (getgmlevel() > 79) menu "Wait in room.",M_Wait,"Control Panel",M_Control,"Leave Room",M_Exit;
+		if (getgmlevel() < 80) menu "Wait in room.",M_Wait,"Leave Room",M_Exit;
+	M_NotReady3:
+		if (getgmlevel() > 79) menu "Wait in room.",M_Wait,"Control Panel",M_Control,"Cash in",M_Cashin;
+		if (getgmlevel() < 80) menu "Wait in room.",M_Wait,"Cash in",M_Cashin;
+	M_Cashin:
+		mes "[Room Controller]";
+		mes "Alright.... lets see how you did.";
+		mes " ";
+		mes " ";
+		mes " ";
+		mes "Total Points : "+@MSpt;
+		if ($MS4RewType == 0) mes "Kafra Points Earned : "+(((@MSpt*3)+($@MS4Amount*$@MS4Amount))/$MS4Reward)+" KP";
+		if ($MS4RewType == 1) mes "Zeny Earned : "+(((@MSpt*3)+($@MS4Amount*$@MS4Amount)*50)/10/$MS4Reward)+"z";
+		next;
+		mes "[Room Controller]";
+		mes "Thank you for playing.";
+		if ($MS4RewType == 0) set RESRVPTS,RESRVPTS + (((@MSpt*3)+($@MS4Amount*$@MS4Amount))/$MS4Reward);
+		if ($MS4RewType == 1) set Zeny,Zeny + (((@MSpt*3)+($@MS4Amount*$@MS4Amount)*50)/10/$MS4Reward);
+		if ($MS4RewType == 0) dispbottom "[You have "+RESRVPTS+" Kafra Reserve Points]";
+		set @MSpt,0;
+		next;
+		mes "[Room Controller]";
+		mes "Do you wish to stay here and wait for the room to become available, or return to the station?";
+		next;
+		menu "Wait in room.",M_Wait,"Leave Room",M_Exit;
+	L_Timer:
+		set $@MS4CD,1;
+		setnpctimer 0; //safeguard
+		StartNPCTimer "Mine4Control";
+		set $@MS4On,1;
+		set $@MS4Title$,"- Game in Progress";
+		mapannounce "minesweep4",$@MS4Amount+" mines have been planted! You have a 5 minute time limit!",1;
+		set $@MS4Count,1;
+		cleararray $@MS4State[0],0,82;
+		cleararray $@MS4Mines[0],0,82;
+		cleararray $@MS4Field[0],0,82;
+		goto L_Start;
+	OnTimer1000:
+		if ($@MS4Count == 0) end;
+		mapannounce "minesweep4","[10]",1;
+		end;
+	OnTimer2000:
+		if ($@MS4Count == 0) end;
+		mapannounce "minesweep4","[9]",1;
+		end;
+	OnTimer3000:
+		if ($@MS4Count == 0) end;
+		mapannounce "minesweep4","[8]",1;
+		end;
+	OnTimer4000:
+		if ($@MS4Count == 0) end;
+		mapannounce "minesweep4","[7]",1;
+		end;
+	OnTimer5000:
+		if ($@MS4Ready == 1 && $@MS4Lose == 0) mapannounce "minesweep4","The game is over, please redeem your earned points by talking to the Room Controller.",1;
+		if ($@MS4Count == 0) end;
+		mapannounce "minesweep4","[6]",1;
+		end;
+	OnTimer6000:
+		if ($@MS4Count == 0) end;
+		mapannounce "minesweep4","[5]",1;
+		end;
+	OnTimer7000:
+		if ($@MS4Count == 0) end;
+		mapannounce "minesweep4","[4]",1;
+		end;
+	OnTimer8000:
+		if ($@MS4Count == 0) end;
+		mapannounce "minesweep4","[3]",1;
+		end;
+	OnTimer9000:
+		if ($@MS4Count == 0) end;
+		mapannounce "minesweep4","[2]",1;
+		end;
+	OnTimer10000:
+		if ($@MS4Count == 0) end;
+		mapannounce "minesweep4","[1]",1;
+		areawarp "minesweep4",1,1,400,400,"minesweep4",144,56;
+		end;
+	OnTimer11000:
+		if ($@MS4Count == 0) end;
+		emotion 27;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		mapannounce "minesweep4","[GO!]",1;
+		set $@MS4CD,0;
+		set $@MS4Count,0;
+		set $@MS4CYCLE,0;
+		set $@MS4Total,0;
+		setnpctimer 0;
+		goto L_TurnOn;
+	OnTimer30000:
+		if ($@MS4Ready == 1 && $@MS4Lose == 0) mapannounce "minesweep4","Please redeem your points with the Room Controller, you will be returned to the station automatically in one minute.",1;
+		if ($@MS4Lose == 1) mapannounce "minesweep4","The game is over, you will be returned to the station automatically in thirty seconds.",1;
+		end;
+	OnTimer40000:
+		if ($@MS4Ready == 1 && $@MS4Lose == 0) mapannounce "minesweep4","Please redeem your points with the Room Controller, you will be returned to the station automatically in twenty seconds.",1;
+		if ($@MS4Lose == 1) mapannounce "minesweep4","You will be returned to the station automatically in twenty seconds.",1;
+		end;
+	OnTimer50000:
+		if ($@MS4Ready == 1 && $@MS4Lose == 0) mapannounce "minesweep4","Please redeem your points with the Room Controller, you will be returned to the station automatically in ten seconds.",1;
+		if ($@MS4Lose == 1) mapannounce "minesweep4","You will be returned to the station automatically in ten seconds.",1;
+		end;
+	OnTimer55000:
+		if ($@MS4Ready == 1 && $@MS4Lose == 0) mapannounce "minesweep4","Please redeem your points with the Room Controller, you will be returned to the station automatically in five seconds.",1;
+		if ($@MS4Lose == 1) mapannounce "minesweep4","You will be returned to the station automatically in five seconds.",1;
+		end;
+	OnTimer56000:
+		if ($@MS4Ready == 1) mapannounce "minesweep4","Four!",1;
+		end;
+	OnTimer57000:
+		if ($@MS4Ready == 1) mapannounce "minesweep4","Three!",1;
+		end;
+	OnTimer58000:
+		if ($@MS4Ready == 1) mapannounce "minesweep4","Two!",1;
+		end;
+	OnTimer59000:
+		if ($@MS4Ready == 1) mapannounce "minesweep4","One!!",1;
+		end;
+	OnTimer60000:
+		if ($MS4AutoRst == 0 && getmapusers("minesweep4") == 0) goto L_GMReset;
+		if ($@MS4Ready == 0) mapannounce "minesweep4","Four minutes remaining.",1;
+		if ($@MS4Ready == 1) goto L_GMReset;
+		//if ($@MS4Ready == 1) goto L_ResetPC;
+		end;
+	OnTimer90000:
+		mapannounce "minesweep4","Three minutes remaining.",1;
+		end;
+	OnTimer120000:
+		if ($MS4AutoRst == 0 && getmapusers("minesweep4") == 0) goto L_GMReset;
+		mapannounce "minesweep4","Two minutes remaining.",1;
+		end;
+	OnTimer180000:
+		if ($MS4AutoRst == 0 && getmapusers("minesweep4") == 0) goto L_GMReset;
+		if ($@MS4Ready == 0) mapannounce "minesweep4","One minute remaining.",1;
+		end;
+	OnTimer210000:
+		mapannounce "minesweep4","Thirty seconds remaining.",1;
+		end;
+	OnTimer220000:
+		mapannounce "minesweep4","Twenty seconds remaining.",1;
+		end;
+	OnTimer230000:
+		mapannounce "minesweep4","Ten seconds remaining.",1;
+		end;
+	OnTimer235000:
+		mapannounce "minesweep4","Five!",1;
+		end;
+	OnTimer236000:
+		mapannounce "minesweep4","Four!",1;
+		end;
+	OnTimer237000:
+		mapannounce "minesweep4","Three!!",1;
+		end;
+	OnTimer238000:
+		mapannounce "minesweep4","Two!!",1;
+		end;
+	OnTimer239000:
+		mapannounce "minesweep4","One!!!",1;
+		end;
+	OnTimer240000:
+		if ($MS4AutoRst == 0 && getmapusers("minesweep4") == 0) goto L_GMReset;
+		mapannounce "minesweep4","You have FAILED!!  Five minutes have elapsed and the game is over, the room will be able to start another game in 3 minutes.  You will be returned to the station automatically in one minute.",1;
+		set $@MS4Ready,1;
+		set $@MS4Lose,1;
+		set $@MS4CYCLE,0;
+		set $@MS4Sequence,0;
+		setnpctimer 0;
+		goto L_TurnOff;
+	L_ResetPC:
+		set $@MS4On,0;
+		set $@MS4Lose,0;
+		set $@MS4Title$,"- Room in Cooldown";
+		mapannounce "minesweep4","Thank you for playing.",1;
+		areawarp "minesweep4",1,1,400,400,"pvp_m_room",51,38;
+		end;
+	L_Reset:
+		set $@MS4Ready,0;
+		set $@MS4Title$,"";
+		StopNPCTimer "Mine4Control";
+		setnpctimer 0;
+		mapannounce "minesweep4","This room is now ready to start a game.",1;
+		end;
+	L_GMReset:
+		set $@MS4On,0;
+		set $@MS4Lose,0;
+		set $@MS4Ready,0;
+		set $@MS4Title$,"";
+		cleararray $@MS4Mines[0],0,82;
+		cleararray $@MS4Field[0],0,82;
+		cleararray $@MS4State[0],0,82;
+		StopNPCTimer "Mine4Control";
+		setnpctimer 0;
+		areawarp "minesweep4",1,1,400,400,"pvp_m_room",51,38;
+		goto L_TurnOff;
+	L_TurnOn:
+		if ($@MS4CYCLE == 81 && $@MS4Debug == 1) debugmes "81 Tiles loaded into grid";
+		if ($@MS4CYCLE == 81) goto L_StopCycle;
+		set $@MS4CYCLE,$@MS4CYCLE + 1;
+		enablenpc "Tile4_"+$@MS4CYCLE+"";
+		setnpcdisplay "Tile4_"+$@MS4CYCLE," ",1113;
+		donpcevent "Tile4_"+$@MS4CYCLE+"::OnFlip";
+		goto L_TurnOn;
+	L_TurnOff:
+		if ($@MS4CYCLE == 81 && $@MS4Debug == 1) debugmes "81 Tiles removed from grid";
+		if ($@MS4CYCLE == 81) goto L_StopCycle;
+		set $@MS4CYCLE,$@MS4CYCLE + 1;
+		donpcevent "Tile4_"+$@MS4CYCLE+"::OnFlip";
+		disablenpc "Tile4_"+$@MS4CYCLE+"";
+		goto L_TurnOff;
+	L_StopCycle:
+		cleararray $@MS4Mines[0],0,82;
+		cleararray $@MS4State[0],0,82;
+		set $@MS4CYCLE,0;
+		end;
+//---GM Control Panel----------------------------------------------------------------------------------
+	M_Control:
+		next;
+		mes "[Room Controller]";
+		mes "What would you like to do?";
+		next;
+		if (getgmlevel() < 99 && @MS4On == 1) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu;
+		if (getgmlevel() < 99 && @MS4Lose == 1 || $@MS4Ready == 1) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu;
+		if (getgmlevel() < 99) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu;
+		if (getgmlevel() == 99 && @MS4On == 1) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu,"Console Debug",M_Debug;
+		if (getgmlevel() == 99 && @MS4Lose == 1 || $@MS4Ready == 1) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu,"Console Debug",M_Debug;
+		if (getgmlevel() == 99) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu,"Console Debug",M_Debug;
+	M_Settings:
+		mes "[Room Controller]";
+		mes "Please select a setting to alter.";
+		next;
+		menu "Number Display",-,"Change Boom",M_Boom,"Set Min/Max Mines",M_MinMax,"Set Pain",M_Pain,"Change Sequence Cap",M_Sequence,"Reset Room",M_RmReset,"Return",M_Control;
+		mes "[Room Controller]";
+		mes "This changes the number display.";
+		mes "0 = Display Waiting Room, NPC has no name";
+		mes "1 = NPC name displays number, no waiting room";
+		mes "2 = Display Waiting Room, NPC's name displays the number";
+		next;
+	L_Input:
+		input $MS4Window;
+		next;
+		if ($MS4Window < 0 || $MS4Window > 2) message strcharinfo(0),"Number must be 0, 1, or 2.";
+		if ($MS4Window < 0 || $MS4Window > 2) goto L_Input;
+		mes "[Room Controller]";
+		mes "Setting changed to "+$MS4Window+".";
+		next;
+		goto M_Control;
+	M_Sequence:
+		mes "[Room Controller]";
+		mes "This controls how much the reaction will fission, or how many chain reactions can fire one after another.  The higher the reaction number is, the more points players will be able to gain from empty tiles.  This feature is pointless on minefields with a high number of mines, as there are no empty tiles.";
+		next;
+		mes "[Room Controller]";
+		mes "The setting cannot be higher then 15, or lower then 2.";
+		mes " ";
+		mes " ";
+		mes "Current setting : "+$MS4Fission+".";
+		next;
+	L_Sequence:
+		input $MS4Fission;
+		next;
+		if ($MS4Fission < 2 || $MS4Fission > 15) message strcharinfo(0),"Number must be between 2 and 15!";
+		if ($MS4Fission < 2 || $MS4Fission > 15) goto L_Sequence;
+		mes "[Room Controller]";
+		mes "Thank you, the setting has been changed to "+$MS4Fission+".";
+		next;
+		goto M_Control;
+	M_Boom:
+		mes "[Room Controller]";
+		if ($MS4Boom == 0) mes "The chain explosion on a game over is currently on.  Turn off?";
+		if (($MS4Boom == 0) && select("Yes","No") == 1) set $MS4Boom,1;
+		if ($MS4Boom == 1) mes "The chain explosion on a game over is currently off.  Turn on?";
+		if (($MS4Boom == 1) && select("Yes","No") == 1) set $MS4Boom,0;
+		next;
+		goto M_Control;
+	M_MinMax:
+		mes "[Room Controller]";
+		mes "Here you may set the minimum, and maximum, limitations of the mines players can designate per game.  Suggested range is 8-25 mines.";
+		next;
+		mes "[Room Controller]";
+		mes "The minimum cannot be lower then 5, or higher then 60.";
+		mes " ";
+		mes "Please input the Minimum limit.";
+		next;
+	L_Minimum:
+		input $MS4Minimum;
+		next;
+		if ($MS4Minimum < 5 || $MS4Minimum > 60) message strcharinfo(0),"Number must be between 5 and 60!";
+		if ($MS4Minimum < 5 || $MS4Minimum > 60) goto L_Minimum;
+		mes "[Room Controller]";
+		mes "The maximum cannot be lower then 15, or higher then 75.";
+		mes " ";
+		mes "Please input the Maximum limit.";
+		next;
+	L_Maximum:
+		input $MS4Maximum;
+		next;
+		if ($MS4Maximum < 15 || $MS4Maximum > 75) message strcharinfo(0),"Number must be between 15 and 75!";
+		if ($MS4Maximum < 15 || $MS4Maximum > 75) goto L_Maximum;
+		mes "[Room Controller]";
+		mes "The mine range is now "+$MS4Minimum+" to "+$MS4Maximum+" mines.";
+		next;
+		goto M_Control;
+	M_Pain:
+		mes "[Room Controller]";
+		mes "This controls whether or not to damage the player who clicks the losing mine, and how much.";
+		next;
+		if ($MS4Hurts == 2) menu "Turn Off",M_PainOff,"Change to Percent",M_PainPercent,"Change damage",-;
+		if ($MS4Hurts == 1) menu "Turn Off",M_PainOff,"Change to Digits",M_PainDigit,"Change damage",-;
+		if ($MS4Hurts == 0) menu "Turn On",M_PainOn;
+	M_PainPercent:
+		mes "[Room Controller]";
+		mes "This damage is percentile based.  Set the number of hp damage between -1% and -100%.  (Input the number, not the - sign)";
+		mes " ";
+		if ($MS4Hurts == 1) mes "Current setting is "+$MS4Ow+"%.";
+		next;
+	L_Pain1Input:
+		input $MS4Ow;
+		next;
+		if ($MS4Ow < 1 || $MS4Ow > 100) message strcharinfo(0),"Number must be between 1 and 100!";
+		if ($MS4Ow < 1 || $MS4Ow > 100) goto L_Pain1Input;
+		set $MS4Ow,($MS4Ow*-1);
+		set $MS4Hurts,1;
+		goto M_Control;
+	M_PainDigit:
+		mes "[Room Controller]";
+		mes "This damage is number based.  Set the number of hp damage between -1 and -999999.  (Input the number, not the - sign)";
+		mes " ";
+		if ($MS4Hurts == 2) mes "Current setting is "+$MS4Ow+".";
+		next;
+	L_Pain2Input:
+		input $MS4Ow;
+		next;
+		if ($MS4Ow < 1 || $MS4Ow > 999999) message strcharinfo(0),"Number must be between 1 and 999999!";
+		if ($MS4Ow < 1 || $MS4Ow > 999999) goto L_Pain2Input;
+		set $MS4Hurts,2;
+		set $MS4Ow,($MS4Ow*-1);
+		goto M_Control;
+	M_PainOn:
+		set $MS4Hurts,1;
+		set $MS4Ow,-75;
+		mes "[Room Controller]";
+		mes "Players will now be damaged if they click on a mine.  Damage type is defaulted to Percent and Damage is set to -75%.";
+		goto M_Control;
+	M_PainOff:
+		set $MS4Hurts,0;
+		set $MS4Ow,1;
+		mes "[Room Controller]";
+		mes "Players will no longer be harmed if they click on a mine, and damage is set to 1.";
+		goto M_Control;
+	M_Debug:
+		mes "[Room Controller]";
+		mes "Beep!";
+		next;
+		mes "While on, this will cause the minigame to return feedback to the map-server.exe console window.  Use this to check for minefield abnormalities, excessive cycles, or other odd behavior.";
+		next;
+		mes "^FF0000ONLY USE THIS IF YOU KNOW EXACTLY WHAT YOU ARE DOING.!!!!!!!!!!!!!!!!!!!!!!!!!!^000000";
+		mes "^FF0000ONLY USE THIS IF YOU KNOW EXACTLY WHAT YOU ARE DOING.!!!!!!!!!!!!!!!!!!!!!!!!!!^000000";
+		mes "^FF0000ONLY USE THIS IF YOU KNOW EXACTLY WHAT YOU ARE DOING.!!!!!!!!!!!!!!!!!!!!!!!!!!^000000";
+		mes "^FF0000ONLY USE THIS IF YOU KNOW EXACTLY WHAT YOU ARE DOING.!!!!!!!!!!!!!!!!!!!!!!!!!!^000000";
+		next;
+		mes "This is a temporary server variable, and will reset to OFF if the server is reset!  Please ONLY use this if you suspect a problem with the script and wish to observe the script move to uncover the suspected problem.";
+		next;
+		if ($@MS4Debug == 0) menu "TURN ON DEBUG",L_DebugOn,"Cancel",-;
+		if ($@MS4Debug == 1) menu "TURN OFF DEBUG",L_DebugOff,"Cancel",-;
+		goto M_Control;
+	L_DebugOn:
+		set $@MS4Debug,1;
+		message strcharinfo(0),"DEBUG IS NOW -ON-";
+		debugmes "MINESWEEPER DEBUG HAS BEEN TURNED ON.";
+		next;
+		goto M_Control;
+	L_DebugOff:
+		set $@MS4Debug,0;
+		message strcharinfo(0),"DEBUG IS NOW -OFF-";
+		debugmes "MINESWEEPER DEBUG HAS BEEN TURNED OFF.";
+		next;
+		goto M_Control;
+	M_AutoReset:
+		mes "[Room Controller]";
+		if ($MS4AutoRst == 0) mes "The room is set to automatically reset if the room is empty.  The room checks this once every minute while the timer is active.  Do you wish to turn this feature off?";
+		if ($MS4AutoRst == 1) mes "The room is set to wait the full 20 minutes before reseting, even if the room is empty.  Do you wish to turn the automatic reset feature on?";
+		next;
+		if ($MS4AutoRst == 0) menu "Yes",M_AutOff,"No",M_Control;
+		if ($MS4AutoRst == 1) menu "Yes",-,"No",M_Control;
+		set $MS4AutoRst,0;
+		goto M_Control;
+	M_AutOff:
+		set $MS4AutoRst,1;
+		goto M_Control;
+	M_Reward:
+		mes "[Room Controller]";
+		mes "How would you like to setup the reward?";
+		next;
+		menu "Change Modifier",-,"Change Type",M_RewType,"Return",M_Control;
+		mes "[Room Controller]";
+		mes "This modifier controls how the player's points are divided when they complete the game.";
+		next;
+		mes "[Room Controller]";
+		mes "The player's points is divided by this modifier.  If the reward type is set to zeny, then a multiplier is added to the equation to give reasonable amounts of zeny.";
+		next;
+		mes "[Room Controller]";
+		mes "The variable cannot be 0, and cannot be more then 10.";
+		mes "Current Setting is ["+$MS4Reward+"]";
+		next;
+		input $MS4Reward;
+		next;
+		if ($MS4Reward == 0 || $MS4Reward > 10) goto M_RewInError;
+		mes "[Room Controller]";
+		mes "The reward modifier has been set to "+$MS4Reward+".";
+		next;
+		goto M_Control;
+	M_RewType:
+		mes "[Room Controller]";	
+		mes "Do you want the players do receive a KP (Kafra Point) reward, or a Zeny reward?";
+		if ($MS4RewType == 1) mes "[Reward currently set to Zeny]";
+		if ($MS4RewType == 0) mes "[Reward currently set to Kafra Points]";
+		next;
+		menu "Zeny",-,"Kafra Point",M_RewKP;
+		set $MS4RewType,1;
+	M_RewInf:
+		mes "[Room Controller]";
+		if ($MS4RewType == 1) mes "Thank you, the reward is now set to Zeny.";
+		if ($MS4RewType == 0) mes "Thank you, the reward is now set to Kafra Points.";
+		goto M_Control;
+	M_RewKP:
+		set $MS4RewType,0;
+		goto M_RewInf;
+	M_RmReset:
+		mes "[Room Controller]";
+		mes "Resetting room...";
+		goto L_GMReset;
+//---Events----------------------------------------------------------------------------------
+	OnWin:
+		set $@MS4Ready,1;
+		mapannounce "minesweep4","Victory!  Congratulations!",1;
+		setnpctimer 0;
+		goto L_TurnOff;
+	OnBoom:
+		setnpctimer 0;
+		end;
+	OnInit:
+		if ($MS4Fission == 0) set $MS4Fission,8;
+		if ($MS4Ow == 0) set $MS4Ow,-75;
+		if ($MS4Minimum == 0 && $MS4Hurts == 0) set $MS4Hurts,1;
+		if ($MS4Minimum == 0) set $MS4Window,1;
+		if ($MS4Minimum == 0) set $MS4Minimum,8;
+		if ($MS4Maximum == 0) set $MS4Maximum,25;
+		if ($MS4Reward == 0) set $MS4Reward,2;
+		setnpcdisplay "Mine4Control","Room Controller",770;
+		L_Disable:
+			disablenpc "Tile4_"+$@MS4CYCLE+"";
+			if ($@MS4CYCLE == 81) goto L_DisEnd;
+			set $@MS4CYCLE,$@MS4CYCLE + 1;
+			goto L_Disable;
+		L_DisEnd:
+			set $@MS4CYCLE,0;
+			end;
+//---Mine Generator----------------------------------------------------------------------------------
+L_Start:
+	set $@MS4Minetick,0;
+	set $@MS4CYCLE,0;
+	set $@MS4Tile,0;
+L_MTrigger:
+	if ($@MS4Minetick >= $@MS4Amount) goto L_MStop;
+	set $@MS4CYCLE,$@MS4CYCLE + 1;
+	set $@MS4Tile,rand(1,81);
+//	if ($@MS4Debug == 1) debugmes "[Mine Generation Tick: "+$@MS4CYCLE+"]";
+	if ($@MS4Mines[$@MS4Tile] == 0) goto L_MTick;
+	goto L_MTrigger;
+L_MTick:
+	set $@MS4Mines[$@MS4Tile],1;
+	set $@MS4Minetick,$@MS4Minetick + 1;
+	goto L_MTrigger;
+L_MStop:
+	//Some of these are always on to detect if there are abnormalities in the mine generation revolver
+	if ($@MS4Debug == 0 && $@MS4CYCLE >= 1900) debugmes "[!WARNING! DANGEROUS MINEFIELD ANOMOLY DETECTED!! - "+$@MS4CYCLE+" cycles processed!]";
+	if ($@MS4Debug == 0 && $@MS4CYCLE >= 1900) debugmes "[!WARNING! DANGEROUS MINEFIELD ANOMOLY DETECTED!! - "+$@MS4CYCLE+" cycles processed!]";
+	if ($@MS4Debug == 0 && $@MS4CYCLE >= 1900) debugmes "[!WARNING! DANGEROUS MINEFIELD ANOMOLY DETECTED!! - "+$@MS4CYCLE+" cycles processed!]";
+	if ($@MS4Debug == 0 && $@MS4CYCLE >= 1400 && $@MS4CYCLE < 1900) debugmes "[!WARNING! ABNORMAL MINEFIELD CYCLE! - "+$@MS4CYCLE+" cycles processed!]";
+	if ($@MS4Debug == 0 && $@MS4CYCLE >= 1400 && $@MS4CYCLE < 1900) debugmes "[!WARNING! ABNORMAL MINEFIELD CYCLE! - "+$@MS4CYCLE+" cycles processed!]";
+	if ($@MS4Debug == 0 && $@MS4CYCLE >= 700 && $@MS4CYCLE < 1400) debugmes "[!WARNING! LARGE MINEFIELD CYCLE! - "+$@MS4CYCLE+" cycles processed!]";
+	if ($@MS4Debug == 0 && $@MS4CYCLE >= 250 && $@MS4CYCLE < 700) debugmes "[!WARNING! BIG MINEFIELD CYCLE! - "+$@MS4CYCLE+" cycles processed!]";
+	if ($@MS4Debug == 1) debugmes ".===============================.";
+	if ($@MS4Debug == 1) debugmes "|  Minesweeper Room 1 Readout   |";
+	if ($@MS4Debug == 1) debugmes "|       [mine locations]        |";
+	if ($@MS4Debug == 1) debugmes "|===============================|";
+	if ($@MS4Debug == 1 && $@MS4CYCLE > 1499) debugmes "| !WARNING! DANGEROUSLY HIGH    |";
+	if ($@MS4Debug == 1 && $@MS4CYCLE > 1499) debugmes "|    CYCLE TICK!! "+$@MS4CYCLE+"!!       |";
+	if ($@MS4Debug == 1 && $@MS4CYCLE < 10) debugmes "| Field generated in 00"+$@MS4CYCLE+" cycles.|";
+	if ($@MS4Debug == 1 && $@MS4CYCLE < 100 && $@MS4CYCLE > 99) debugmes "| Field generated in 0"+$@MS4CYCLE+" cycles.|";
+	if ($@MS4Debug == 1 && $@MS4CYCLE > 99 && $@MS4CYCLE < 1000) debugmes "| Field generated in "+$@MS4CYCLE+" cycles.|";
+	if ($@MS4Debug == 1 && $@MS4CYCLE > 999 && $@MS4CYCLE < 1500) debugmes "| Field generated in "+$@MS4CYCLE+" cycles|";
+	if ($@MS4Debug == 1 && $@MS4Minetick < 10) debugmes "| Field should contain 0"+$@MS4Minetick+" mines.|";
+	if ($@MS4Debug == 1 && $@MS4Minetick > 9) debugmes "| Field should contain "+$@MS4Minetick+" mines.|";
+	if ($@MS4Debug == 1) debugmes "|-------------------------------|";
+	if ($@MS4Debug == 1) debugmes "| 9 ["+$@MS4Mines[73]+"]["+$@MS4Mines[74]+"]["+$@MS4Mines[75]+"]["+$@MS4Mines[76]+"]["+$@MS4Mines[77]+"]["+$@MS4Mines[78]+"]["+$@MS4Mines[79]+"]["+$@MS4Mines[80]+"]["+$@MS4Mines[81]+"] |";
+	if ($@MS4Debug == 1) debugmes "| 8 ["+$@MS4Mines[64]+"]["+$@MS4Mines[65]+"]["+$@MS4Mines[66]+"]["+$@MS4Mines[67]+"]["+$@MS4Mines[68]+"]["+$@MS4Mines[69]+"]["+$@MS4Mines[70]+"]["+$@MS4Mines[71]+"]["+$@MS4Mines[72]+"] |";
+	if ($@MS4Debug == 1) debugmes "| 7 ["+$@MS4Mines[55]+"]["+$@MS4Mines[56]+"]["+$@MS4Mines[57]+"]["+$@MS4Mines[58]+"]["+$@MS4Mines[59]+"]["+$@MS4Mines[60]+"]["+$@MS4Mines[61]+"]["+$@MS4Mines[62]+"]["+$@MS4Mines[63]+"] |";
+	if ($@MS4Debug == 1) debugmes "| 6 ["+$@MS4Mines[46]+"]["+$@MS4Mines[47]+"]["+$@MS4Mines[48]+"]["+$@MS4Mines[49]+"]["+$@MS4Mines[50]+"]["+$@MS4Mines[51]+"]["+$@MS4Mines[52]+"]["+$@MS4Mines[53]+"]["+$@MS4Mines[54]+"] |";
+	if ($@MS4Debug == 1) debugmes "| 5 ["+$@MS4Mines[37]+"]["+$@MS4Mines[38]+"]["+$@MS4Mines[39]+"]["+$@MS4Mines[40]+"]["+$@MS4Mines[41]+"]["+$@MS4Mines[42]+"]["+$@MS4Mines[43]+"]["+$@MS4Mines[44]+"]["+$@MS4Mines[45]+"] |";
+	if ($@MS4Debug == 1) debugmes "| 4 ["+$@MS4Mines[28]+"]["+$@MS4Mines[29]+"]["+$@MS4Mines[30]+"]["+$@MS4Mines[31]+"]["+$@MS4Mines[32]+"]["+$@MS4Mines[33]+"]["+$@MS4Mines[34]+"]["+$@MS4Mines[35]+"]["+$@MS4Mines[36]+"] |";
+	if ($@MS4Debug == 1) debugmes "| 3 ["+$@MS4Mines[19]+"]["+$@MS4Mines[20]+"]["+$@MS4Mines[21]+"]["+$@MS4Mines[22]+"]["+$@MS4Mines[23]+"]["+$@MS4Mines[24]+"]["+$@MS4Mines[25]+"]["+$@MS4Mines[26]+"]["+$@MS4Mines[27]+"] |";
+	if ($@MS4Debug == 1) debugmes "| 2 ["+$@MS4Mines[10]+"]["+$@MS4Mines[11]+"]["+$@MS4Mines[12]+"]["+$@MS4Mines[13]+"]["+$@MS4Mines[14]+"]["+$@MS4Mines[15]+"]["+$@MS4Mines[16]+"]["+$@MS4Mines[17]+"]["+$@MS4Mines[18]+"] |";
+	if ($@MS4Debug == 1) debugmes "| 1 ["+$@MS4Mines[1]+"]["+$@MS4Mines[2]+"]["+$@MS4Mines[3]+"]["+$@MS4Mines[4]+"]["+$@MS4Mines[5]+"]["+$@MS4Mines[6]+"]["+$@MS4Mines[7]+"]["+$@MS4Mines[8]+"]["+$@MS4Mines[9]+"] |";
+	if ($@MS4Debug == 1) debugmes "|    1  2  3  4  5  6  7  8  9  |";
+	if ($@MS4Debug == 1) debugmes "|===============================|";
+	if ($@MS4Debug == 1) debugmes "|  1 = Mine        0 = Nothing  |";
+	if ($@MS4Debug == 1) debugmes "`==============================='";
+	set $@MS4Minetick,0;
+	set $@MS4CYCLE,0;
+	set $@MS4Tile,0;
+	cleararray $@MS4Field[0],0,82;
+	set $@MS4C,1;
+	set $@MS4NW,0;
+	set $@MS4W,0;
+	set $@MS4SW,0;
+	set $@MS4S,0;
+	set $@MS4SE,0;
+	set $@MS4E,0;
+	set $@MS4N,0;
+	set $@MS4NW,0;
+	set $@MS4N,0;
+L_FTrigger:
+	if ($@MS4CYCLE == 81) goto L_FStop;
+	set $@MS4CYCLE,$@MS4CYCLE + 1;
+	set $@MS4C,$@MS4CYCLE;
+//	if ($@MS4Debug == 1) debugmes "[Field Generation Tick: "+$@MS4CYCLE+"]";
+	if ($@MS4Mines[$@MS4CYCLE] == 1) goto L_FSetup;
+	goto L_FTrigger;
+L_FSetup:
+	set $@MS4NW,0;
+	set $@MS4W,0;
+	set $@MS4SW,0;
+	set $@MS4S,0;
+	set $@MS4SE,0;
+	set $@MS4E,0;
+	set $@MS4N,0;
+	set $@MS4NW,0;
+	set $@MS4N,0;
+	set $@MS4NW,$@MS4C + 8;
+	set $@MS4W,$@MS4C - 1;
+	set $@MS4SW,$@MS4C - 10;
+	set $@MS4S,$@MS4C - 9;
+	set $@MS4SE,$@MS4C - 8;
+	set $@MS4E,$@MS4C + 1;
+	set $@MS4NE,$@MS4C + 10;
+	set $@MS4N,$@MS4C + 9;
+	if ($@MS4C == 1 || $@MS4C == 10 || $@MS4C == 19 || $@MS4C == 28 || $@MS4C == 37 || $@MS4C == 46 || $@MS4C == 55 || $@MS4C == 64 || $@MS4C > 72) set $@MS4NW,0;
+	if ($@MS4C == 1 || $@MS4C == 10 || $@MS4C == 19 || $@MS4C == 28 || $@MS4C == 37 || $@MS4C == 46 || $@MS4C == 55 || $@MS4C == 64 || $@MS4C == 73) set $@MS4W,0;
+	if ($@MS4C < 11 || $@MS4C == 19 || $@MS4C == 28 || $@MS4C == 37 || $@MS4C == 46 || $@MS4C == 55 || $@MS4C == 64 || $@MS4C == 73) set $@MS4SW,0;
+	if ($@MS4C < 10) set $@MS4S,0;
+	if ($@MS4C < 10 || $@MS4C == 18 || $@MS4C == 27 || $@MS4C == 36 || $@MS4C == 45 || $@MS4C == 54 || $@MS4C == 63 || $@MS4C == 72 || $@MS4C == 81) set $@MS4SE,0;
+	if ($@MS4C == 9 || $@MS4C == 18 || $@MS4C == 27 || $@MS4C == 36 || $@MS4C == 45 || $@MS4C == 54 || $@MS4C == 63 || $@MS4C == 72 || $@MS4C == 81) set $@MS4E,0;
+	if ($@MS4C == 9 || $@MS4C == 18 || $@MS4C == 27 || $@MS4C == 36 || $@MS4C == 45 || $@MS4C == 54 || $@MS4C == 63 || $@MS4C > 71) set $@MS4NE,0;
+	if ($@MS4C > 72) set $@MS4N,0;
+	set $@MS4Field[$@MS4C],9;
+	if ($@MS4NW != 0) set $@MS4Field[$@MS4NW],$@MS4Field[$@MS4NW] + 1;
+	if ($@MS4W != 0) set $@MS4Field[$@MS4W],$@MS4Field[$@MS4W] + 1;
+	if ($@MS4SW != 0) set $@MS4Field[$@MS4SW],$@MS4Field[$@MS4SW] + 1;
+	if ($@MS4S != 0) set $@MS4Field[$@MS4S],$@MS4Field[$@MS4S] + 1;
+	if ($@MS4SE != 0) set $@MS4Field[$@MS4SE],$@MS4Field[$@MS4SE] + 1;
+	if ($@MS4E != 0) set $@MS4Field[$@MS4E],$@MS4Field[$@MS4E] + 1;
+	if ($@MS4NE != 0) set $@MS4Field[$@MS4NE],$@MS4Field[$@MS4NE] + 1;
+	if ($@MS4N != 0) set $@MS4Field[$@MS4N],$@MS4Field[$@MS4N] + 1;
+	if ($@MS4Field[$@MS4NW] > 9) set $@MS4Field[$@MS4NW],9;
+	if ($@MS4Field[$@MS4W] > 9) set $@MS4Field[$@MS4W],9;
+	if ($@MS4Field[$@MS4SW] > 9) set $@MS4Field[$@MS4SW],9;
+	if ($@MS4Field[$@MS4S] > 9) set $@MS4Field[$@MS4S],9;
+	if ($@MS4Field[$@MS4SE] > 9) set $@MS4Field[$@MS4SE],9;
+	if ($@MS4Field[$@MS4E] > 9) set $@MS4Field[$@MS4E],9;
+	if ($@MS4Field[$@MS4NE] > 9) set $@MS4Field[$@MS4NE],9;
+	if ($@MS4Field[$@MS4N] > 9) set $@MS4Field[$@MS4N],9;
+	set $@MS4C,0;
+	goto L_FTrigger;
+L_FCheck:
+	if ($@MS4CYCLE == 81) goto L_FResume;
+	set $@MS4CYCLE,$@MS4CYCLE + 1;
+	if ($@MS4Field[$@MS4CYCLE] < 9 && $@MS4Field[$@MS4CYCLE] > 0) set $@MS4FCheck,$@MS4FCheck + $@MS4Field[$@MS4CYCLE];
+	goto L_FCheck;
+L_FStop:
+	set $@MS4CYCLE,0;
+	set $@MS4FCheck,0;
+	if ($@MS4Debug == 1) goto L_FCheck;
+L_FResume:
+	set $@MS4C,0;
+	set $@MS4NW,0;
+	set $@MS4W,0;
+	set $@MS4SW,0;
+	set $@MS4S,0;
+	set $@MS4SE,0;
+	set $@MS4E,0;
+	set $@MS4NE,0;
+	set $@MS4N,0;
+	cleararray $@MS4Mines[0],0,82;
+	if ($@MS4Debug == 1) debugmes ".===============================.";
+	if ($@MS4Debug == 1) debugmes "|  Minesweeper Room 1 Readout   |";
+	if ($@MS4Debug == 1) debugmes "|      [point value map]        |";
+	if ($@MS4Debug == 1) debugmes "|===============================|";
+	if ($@MS4Debug == 1 && $@MS4FCheck < 10) debugmes "| Total Point Value : "+$@MS4FCheck+" pts     |";
+	if ($@MS4Debug == 1 && $@MS4FCheck < 100 && $@MS4FCheck > 9) debugmes "| Total Point Value : "+$@MS4FCheck+" pts    |";
+	if ($@MS4Debug == 1 && $@MS4FCheck < 1000 && $@MS4FCheck > 99) debugmes "| Total Point Value : "+$@MS4FCheck+" pts   |";
+	if ($@MS4Debug == 1 && $@MS4FCheck < 10000 && $@MS4FCheck > 999) debugmes "| Total Point Value : "+$@MS4FCheck+" pts  |";
+	if ($@MS4Debug == 1 && $@MS4Amount < 10) debugmes "| Field should contain 0"+$@MS4Amount+" mines.|";
+	if ($@MS4Debug == 1 && $@MS4Amount > 9) debugmes "| Field should contain "+$@MS4Amount+" mines.|";
+	if ($@MS4Debug == 1) debugmes "|-------------------------------|";
+	if ($@MS4Debug == 1) debugmes "| 9 ["+$@MS4Field[73]+"]["+$@MS4Field[74]+"]["+$@MS4Field[75]+"]["+$@MS4Field[76]+"]["+$@MS4Field[77]+"]["+$@MS4Field[78]+"]["+$@MS4Field[79]+"]["+$@MS4Field[80]+"]["+$@MS4Field[81]+"] |";
+	if ($@MS4Debug == 1) debugmes "| 8 ["+$@MS4Field[64]+"]["+$@MS4Field[65]+"]["+$@MS4Field[66]+"]["+$@MS4Field[67]+"]["+$@MS4Field[68]+"]["+$@MS4Field[69]+"]["+$@MS4Field[70]+"]["+$@MS4Field[71]+"]["+$@MS4Field[72]+"] |";
+	if ($@MS4Debug == 1) debugmes "| 7 ["+$@MS4Field[55]+"]["+$@MS4Field[56]+"]["+$@MS4Field[57]+"]["+$@MS4Field[58]+"]["+$@MS4Field[59]+"]["+$@MS4Field[60]+"]["+$@MS4Field[61]+"]["+$@MS4Field[62]+"]["+$@MS4Field[63]+"] |";
+	if ($@MS4Debug == 1) debugmes "| 6 ["+$@MS4Field[46]+"]["+$@MS4Field[47]+"]["+$@MS4Field[48]+"]["+$@MS4Field[49]+"]["+$@MS4Field[50]+"]["+$@MS4Field[51]+"]["+$@MS4Field[52]+"]["+$@MS4Field[53]+"]["+$@MS4Field[54]+"] |";
+	if ($@MS4Debug == 1) debugmes "| 5 ["+$@MS4Field[37]+"]["+$@MS4Field[38]+"]["+$@MS4Field[39]+"]["+$@MS4Field[40]+"]["+$@MS4Field[41]+"]["+$@MS4Field[42]+"]["+$@MS4Field[43]+"]["+$@MS4Field[44]+"]["+$@MS4Field[45]+"] |";
+	if ($@MS4Debug == 1) debugmes "| 4 ["+$@MS4Field[28]+"]["+$@MS4Field[29]+"]["+$@MS4Field[30]+"]["+$@MS4Field[31]+"]["+$@MS4Field[32]+"]["+$@MS4Field[33]+"]["+$@MS4Field[34]+"]["+$@MS4Field[35]+"]["+$@MS4Field[36]+"] |";
+	if ($@MS4Debug == 1) debugmes "| 3 ["+$@MS4Field[19]+"]["+$@MS4Field[20]+"]["+$@MS4Field[21]+"]["+$@MS4Field[22]+"]["+$@MS4Field[23]+"]["+$@MS4Field[24]+"]["+$@MS4Field[25]+"]["+$@MS4Field[26]+"]["+$@MS4Field[27]+"] |";
+	if ($@MS4Debug == 1) debugmes "| 2 ["+$@MS4Field[10]+"]["+$@MS4Field[11]+"]["+$@MS4Field[12]+"]["+$@MS4Field[13]+"]["+$@MS4Field[14]+"]["+$@MS4Field[15]+"]["+$@MS4Field[16]+"]["+$@MS4Field[17]+"]["+$@MS4Field[18]+"] |";
+	if ($@MS4Debug == 1) debugmes "| 1 ["+$@MS4Field[1]+"]["+$@MS4Field[2]+"]["+$@MS4Field[3]+"]["+$@MS4Field[4]+"]["+$@MS4Field[5]+"]["+$@MS4Field[6]+"]["+$@MS4Field[7]+"]["+$@MS4Field[8]+"]["+$@MS4Field[9]+"] |";
+	if ($@MS4Debug == 1) debugmes "|    1  2  3  4  5  6  7  8  9  |";
+	if ($@MS4Debug == 1) debugmes "|===============================|";
+	if ($@MS4Debug == 1) debugmes "|  9 = Mine        0 = Nothing  |";
+	if ($@MS4Debug == 1) debugmes "`==============================='";
+	end;
+}
+
+//---Chain Reaction Function----------------------------------------------------------------------------------
+function	script	F_M4Fission	{
+	if ($@MS4Sequence == $MS4Fission) end;
+	set $@MS4Total,$@MS4Total + 2;
+	if ($@MS4Debug == 1) debugmes "Victory Total "+$@MS4Total+"/"+(162-$@MS4Amount)+", tile : "+getarg(0);
+	set $@MS4Sequence,$@MS4Sequence + 1;
+	set $@MS4State[getarg(0)],2;
+	set $@MS4Mines[getarg(0)],3;
+	set $@MS4NW,0;
+	set $@MS4W,0;
+	set $@MS4SW,0;
+	set $@MS4S,0;
+	set $@MS4SE,0;
+	set $@MS4E,0;
+	set $@MS4N,0;
+	set $@MS4NW,0;
+	set $@MS4N,0;
+	set $@MS4NW,getarg(0) + 8;
+	set $@MS4W,getarg(0) - 1;
+	set $@MS4SW,getarg(0) - 10;
+	set $@MS4S,getarg(0) - 9;
+	set $@MS4SE,getarg(0) - 8;
+	set $@MS4E,getarg(0) + 1;
+	set $@MS4NE,getarg(0) + 10;
+	set $@MS4N,getarg(0) + 9;
+	if (getarg(0) == 1 || getarg(0) == 10 || getarg(0) == 19 || getarg(0) == 28 || getarg(0) == 37 || getarg(0) == 46 || getarg(0) == 55 || getarg(0) == 64 || getarg(0) > 72) set $@MS4NW,0;
+	if (getarg(0) == 1 || getarg(0) == 10 || getarg(0) == 19 || getarg(0) == 28 || getarg(0) == 37 || getarg(0) == 46 || getarg(0) == 55 || getarg(0) == 64 || getarg(0) == 73) set $@MS4W,0;
+	if (getarg(0) < 11 || getarg(0) == 19 || getarg(0) == 28 || getarg(0) == 37 || getarg(0) == 46 || getarg(0) == 55 || getarg(0) == 64 || getarg(0) == 73) set $@MS4SW,0;
+	if (getarg(0) < 10) set $@MS4S,0;
+	if (getarg(0) < 10 || getarg(0) == 18 || getarg(0) == 27 || getarg(0) == 36 || getarg(0) == 45 || getarg(0) == 54 || getarg(0) == 63 || getarg(0) == 72 || getarg(0) == 81) set $@MS4SE,0;
+	if (getarg(0) == 9 || getarg(0) == 18 || getarg(0) == 27 || getarg(0) == 36 || getarg(0) == 45 || getarg(0) == 54 || getarg(0) == 63 || getarg(0) == 72 || getarg(0) == 81) set $@MS4E,0;
+	if (getarg(0) == 9 || getarg(0) == 18 || getarg(0) == 27 || getarg(0) == 36 || getarg(0) == 45 || getarg(0) == 54 || getarg(0) == 63 || getarg(0) > 71) set $@MS4NE,0;
+	if (getarg(0) > 72) set $@MS4N,0;
+	if ($@MS4NW != 0 && $@MS4State[$@MS4NW] == 1) set $@MS4Mines[$@MS4NW],3;
+	if ($@MS4W != 0 && $@MS4State[$@MS4W] == 1) set $@MS4Mines[$@MS4W],3;
+	if ($@MS4SW != 0 && $@MS4State[$@MS4SW] == 1) set $@MS4Mines[$@MS4SW],3;
+	if ($@MS4S != 0 && $@MS4State[$@MS4S] == 1) set $@MS4Mines[$@MS4S],3;
+	if ($@MS4SE != 0 && $@MS4State[$@MS4SE] == 1) set $@MS4Mines[$@MS4SE],3;
+	if ($@MS4E != 0 && $@MS4State[$@MS4E] == 1) set $@MS4Mines[$@MS4E],3;
+	if ($@MS4NE != 0 && $@MS4State[$@MS4NE] == 1) set $@MS4Mines[$@MS4NE],3;
+	if ($@MS4N != 0 && $@MS4State[$@MS4N] == 1) set $@MS4Mines[$@MS4N],3;
+	if ($@MS4NW != 0 && $@MS4Field[$@MS4NW] == 0 && $@MS4Mines[$@MS4NW] == 0) set $@MS4Mines[$@MS4NW],1;
+	if ($@MS4W != 0 && $@MS4Field[$@MS4W] == 0 && $@MS4Mines[$@MS4W] == 0) set $@MS4Mines[$@MS4W],1;
+	if ($@MS4SW != 0 && $@MS4Field[$@MS4SW] == 0 && $@MS4Mines[$@MS4SW] == 0) set $@MS4Mines[$@MS4SW],1;
+	if ($@MS4S != 0 && $@MS4Field[$@MS4S] == 0 && $@MS4Mines[$@MS4S] == 0) set $@MS4Mines[$@MS4S],1;
+	if ($@MS4SE != 0 && $@MS4Field[$@MS4SE] == 0 && $@MS4Mines[$@MS4SE] == 0) set $@MS4Mines[$@MS4SE],1;
+	if ($@MS4E != 0 && $@MS4Field[$@MS4E] == 0 && $@MS4Mines[$@MS4E] == 0) set $@MS4Mines[$@MS4E],1;
+	if ($@MS4NE != 0 && $@MS4Field[$@MS4NE] == 0 && $@MS4Mines[$@MS4NE] == 0) set $@MS4Mines[$@MS4NE],1;
+	if ($@MS4N != 0 && $@MS4Field[$@MS4N] == 0 && $@MS4Mines[$@MS4N] == 0) set $@MS4Mines[$@MS4N],1;
+	if ($@MS4NW != 0 && $@MS4Field[$@MS4NW] > 0 && $@MS4Field[$@MS4NW] < 9 && $@MS4Mines[$@MS4NW] == 0) set $@MS4Mines[$@MS4NW],2;
+	if ($@MS4W != 0 && $@MS4Field[$@MS4W] > 0 && $@MS4Field[$@MS4W] < 9 && $@MS4Mines[$@MS4W] == 0) set $@MS4Mines[$@MS4W],2;
+	if ($@MS4SW != 0 && $@MS4Field[$@MS4SW] > 0 && $@MS4Field[$@MS4SW] < 9 && $@MS4Mines[$@MS4SW] == 0) set $@MS4Mines[$@MS4SW],2;
+	if ($@MS4S != 0 && $@MS4Field[$@MS4S] > 0 && $@MS4Field[$@MS4S] < 9 && $@MS4Mines[$@MS4S] == 0) set $@MS4Mines[$@MS4S],2;
+	if ($@MS4SE != 0 && $@MS4Field[$@MS4SE] > 0 && $@MS4Field[$@MS4SE] < 9 && $@MS4Mines[$@MS4SE] == 0) set $@MS4Mines[$@MS4SE],2;
+	if ($@MS4E != 0 && $@MS4Field[$@MS4E] > 0 && $@MS4Field[$@MS4E] < 9 && $@MS4Mines[$@MS4E] == 0) set $@MS4Mines[$@MS4E],2;
+	if ($@MS4NE != 0 && $@MS4Field[$@MS4NE] > 0 && $@MS4Field[$@MS4NE] < 9 && $@MS4Mines[$@MS4NE] == 0) set $@MS4Mines[$@MS4NE],2;
+	if ($@MS4N != 0 && $@MS4Field[$@MS4N] > 0 && $@MS4Field[$@MS4N] < 9 && $@MS4Mines[$@MS4N] == 0) set $@MS4Mines[$@MS4N],2;
+	if ($@MS4NW != 0 && $@MS4Field[$@MS4NW] == 9 && $@MS4Mines[$@MS4NW] == 0) set $@MS4Mines[$@MS4NW],3;
+	if ($@MS4W != 0 && $@MS4Field[$@MS4W] == 9 && $@MS4Mines[$@MS4W] == 0) set $@MS4Mines[$@MS4W],3;
+	if ($@MS4SW != 0 && $@MS4Field[$@MS4SW] == 9 && $@MS4Mines[$@MS4SW] == 0) set $@MS4Mines[$@MS4SW],3;
+	if ($@MS4S != 0 && $@MS4Field[$@MS4S] == 9 && $@MS4Mines[$@MS4S] == 0) set $@MS4Mines[$@MS4S],3;
+	if ($@MS4SE != 0 && $@MS4Field[$@MS4SE] == 9 && $@MS4Mines[$@MS4SE] == 0) set $@MS4Mines[$@MS4SE],3;
+	if ($@MS4E != 0 && $@MS4Field[$@MS4E] == 9 && $@MS4Mines[$@MS4E] == 0) set $@MS4Mines[$@MS4E],3;
+	if ($@MS4NE != 0 && $@MS4Field[$@MS4NE] == 9 && $@MS4Mines[$@MS4NE] == 0) set $@MS4Mines[$@MS4NE],3;
+	if ($@MS4N != 0 && $@MS4Field[$@MS4N] == 9 && $@MS4Mines[$@MS4N] == 0) set $@MS4Mines[$@MS4N],3;
+	if ($@MS4NW != 0 && $@MS4Mines[$@MS4NW] == 2) donpcevent "Tile4_"+$@MS4NW+"::OnDisplay";
+	if ($@MS4W != 0 && $@MS4Mines[$@MS4W] == 2) donpcevent "Tile4_"+$@MS4W+"::OnDisplay";
+	if ($@MS4SW != 0 && $@MS4Mines[$@MS4SW] == 2) donpcevent "Tile4_"+$@MS4SW+"::OnDisplay";
+	if ($@MS4S != 0 && $@MS4Mines[$@MS4S] == 2) donpcevent "Tile4_"+$@MS4S+"::OnDisplay";
+	if ($@MS4SE != 0 && $@MS4Mines[$@MS4SE] == 2) donpcevent "Tile4_"+$@MS4SE+"::OnDisplay";
+	if ($@MS4E != 0 && $@MS4Mines[$@MS4E] == 2) donpcevent "Tile4_"+$@MS4E+"::OnDisplay";
+	if ($@MS4NE != 0 && $@MS4Mines[$@MS4NE] == 2) donpcevent "Tile4_"+$@MS4NE+"::OnDisplay";
+	if ($@MS4N != 0 && $@MS4Mines[$@MS4N] == 2) donpcevent "Tile4_"+$@MS4N+"::OnDisplay";
+	attachrid(getcharid(3,$@MS4NAME$));
+	if ($@MS4NW != 0 && $@MS4Mines[$@MS4NW] == 2) set @MSpt,@MSpt + $@MS4Field[$@MS4NW];
+	if ($@MS4W != 0 && $@MS4Mines[$@MS4W] == 2) set @MSpt,@MSpt + $@MS4Field[$@MS4W];
+	if ($@MS4SW != 0 && $@MS4Mines[$@MS4SW] == 2) set @MSpt,@MSpt + $@MS4Field[$@MS4SW];
+	if ($@MS4S != 0 && $@MS4Mines[$@MS4S] == 2) set @MSpt,@MSpt + $@MS4Field[$@MS4S];
+	if ($@MS4SE != 0 && $@MS4Mines[$@MS4SE] == 2) set @MSpt,@MSpt + $@MS4Field[$@MS4SE];
+	if ($@MS4E != 0 && $@MS4Mines[$@MS4E] == 2) set @MSpt,@MSpt + $@MS4Field[$@MS4E];
+	if ($@MS4NE != 0 && $@MS4Mines[$@MS4NE] == 2) set @MSpt,@MSpt + $@MS4Field[$@MS4NE];
+	if ($@MS4N != 0 && $@MS4Mines[$@MS4N] == 2) set @MSpt,@MSpt + $@MS4Field[$@MS4N];
+	if ($@MS4Mines[$@MS4NW] == 2 || $@MS4Mines[$@MS4W] == 2 || $@MS4Mines[$@MS4SW] == 2 || $@MS4Mines[$@MS4S] == 2 || $@MS4Mines[$@MS4SE] == 2 || $@MS4Mines[$@MS4E] == 2 || $@MS4Mines[$@MS4NE] == 2 || $@MS4Mines[$@MS4N] == 2) dispbottom "[Points : "+@MSpt+"]";
+	detachrid;
+	if ($@MS4NW != 0 && $@MS4Mines[$@MS4NW] == 2) set $@MS4Total,$@MS4Total + 2;
+	if ($@MS4W != 0 && $@MS4Mines[$@MS4W] == 2) set $@MS4Total,$@MS4Total + 2;
+	if ($@MS4SW != 0 && $@MS4Mines[$@MS4SW] == 2) set $@MS4Total,$@MS4Total + 2;
+	if ($@MS4S != 0 && $@MS4Mines[$@MS4S] == 2) set $@MS4Total,$@MS4Total + 2;
+	if ($@MS4SE != 0 && $@MS4Mines[$@MS4SE] == 2) set $@MS4Total,$@MS4Total + 2;
+	if ($@MS4E != 0 && $@MS4Mines[$@MS4E] == 2) set $@MS4Total,$@MS4Total + 2;
+	if ($@MS4NE != 0 && $@MS4Mines[$@MS4NE] == 2) set $@MS4Total,$@MS4Total + 2;
+	if ($@MS4N != 0 && $@MS4Mines[$@MS4N] == 2) set $@MS4Total,$@MS4Total + 2;
+	if ($@MS4Debug == 1 && $@MS4NW != 0 && $@MS4Mines[$@MS4NW] == 2) debugmes "Victory Total "+$@MS4Total+"/"+(162-$@MS4Amount)+", tile : "+$@MS4NW;
+	if ($@MS4Debug == 1 && $@MS4W != 0 && $@MS4Mines[$@MS4W] == 2) debugmes "Victory Total "+$@MS4Total+"/"+(162-$@MS4Amount)+", tile : "+$@MS4W;
+	if ($@MS4Debug == 1 && $@MS4SW != 0 && $@MS4Mines[$@MS4SW] == 2) debugmes "Victory Total "+$@MS4Total+"/"+(162-$@MS4Amount)+", tile : "+$@MS4SW;
+	if ($@MS4Debug == 1 && $@MS4S != 0 && $@MS4Mines[$@MS4S] == 2) debugmes "Victory Total "+$@MS4Total+"/"+(162-$@MS4Amount)+", tile : "+$@MS4S;
+	if ($@MS4Debug == 1 && $@MS4SE != 0 && $@MS4Mines[$@MS4SE] == 2) debugmes "Victory Total "+$@MS4Total+"/"+(162-$@MS4Amount)+", tile : "+$@MS4SE;
+	if ($@MS4Debug == 1 && $@MS4E != 0 && $@MS4Mines[$@MS4E] == 2) debugmes "Victory Total "+$@MS4Total+"/"+(162-$@MS4Amount)+", tile : "+$@MS4E;
+	if ($@MS4Debug == 1 && $@MS4NE != 0 && $@MS4Mines[$@MS4NE] == 2) debugmes "Victory Total "+$@MS4Total+"/"+(162-$@MS4Amount)+", tile : "+$@MS4NE;
+	if ($@MS4Debug == 1 && $@MS4N != 0 && $@MS4Mines[$@MS4N] == 2) debugmes "Victory Total "+$@MS4Total+"/"+(162-$@MS4Amount)+", tile : "+$@MS4N;
+	if ($@MS4NW != 0 && $@MS4Mines[$@MS4NW] == 2) set $@MS4Mines[$@MS4NW],3;
+	if ($@MS4W != 0 && $@MS4Mines[$@MS4W] == 2) set $@MS4Mines[$@MS4W],3;
+	if ($@MS4SW != 0 && $@MS4Mines[$@MS4SW] == 2) set $@MS4Mines[$@MS4SW],3;
+	if ($@MS4S != 0 && $@MS4Mines[$@MS4S] == 2) set $@MS4Mines[$@MS4S],3;
+	if ($@MS4SE != 0 && $@MS4Mines[$@MS4SE] == 2) set $@MS4Mines[$@MS4SE],3;
+	if ($@MS4E != 0 && $@MS4Mines[$@MS4E] == 2) set $@MS4Mines[$@MS4E],3;
+	if ($@MS4NE != 0 && $@MS4Mines[$@MS4NE] == 2) set $@MS4Mines[$@MS4NE],3;
+	if ($@MS4N != 0 && $@MS4Mines[$@MS4N] == 2) set $@MS4Mines[$@MS4N],3;
+	if ($@MS4NW != 0 && $@MS4Mines[$@MS4NW] == 1) donpcevent "Tile4_"+$@MS4NW+"::OnReaction";
+	if ($@MS4W != 0 && $@MS4Mines[$@MS4W] == 1) donpcevent "Tile4_"+$@MS4W+"::OnReaction";
+	if ($@MS4SW != 0 && $@MS4Mines[$@MS4SW] == 1) donpcevent "Tile4_"+$@MS4SW+"::OnReaction";
+	if ($@MS4S != 0 && $@MS4Mines[$@MS4S] == 1) donpcevent "Tile4_"+$@MS4S+"::OnReaction";
+	if ($@MS4SE != 0 && $@MS4Mines[$@MS4SE] == 1) donpcevent "Tile4_"+$@MS4SE+"::OnReaction";
+	if ($@MS4E != 0 && $@MS4Mines[$@MS4E] == 1) donpcevent "Tile4_"+$@MS4E+"::OnReaction";
+	if ($@MS4NE != 0 && $@MS4Mines[$@MS4NE] == 1) donpcevent "Tile4_"+$@MS4NE+"::OnReaction";
+	if ($@MS4N != 0 && $@MS4Mines[$@MS4N] == 1) donpcevent "Tile4_"+$@MS4N+"::OnReaction";
+	if ($@MS4Debug == 1) debugmes "Fission cycle completed by tile "+getarg(0)+".";	
+	disablenpc "Tile4_"+getarg(0);
+	end;
+}
+
+//---Chain Reaction Display Maker----------------------------------------------------------------------------------
+function	script	F_M4Subchain	{
+	if ($@MS4Debug == 1) debugmes "Tile "+getarg(0)+" / Point Value "+$@MS4Field[getarg(0)];
+	if ($MS4Window == 0) setnpcdisplay "Tile4_"+getarg(0)," ",1002;
+	if ($MS4Window == 1) setnpcdisplay "Tile4_"+getarg(0),""+$@MS4Field[getarg(0)]+"",1002;
+	if ($MS4Window == 0) waitingroom "----- "+$@MS4Field[getarg(0)]+" -----",0;
+	if ($MS4Window == 2) setnpcdisplay "Tile4_"+getarg(0),""+$@MS4Field[getarg(0)]+"",1002;
+	if ($MS4Window == 2) waitingroom "----- "+$@MS4Field[getarg(0)]+" -----",0;
+	if ($MS4State[getarg(0)] == 0) set $@MS4State[getarg(0)],2;
+	donpcevent "Tile4_"+getarg(0)+"::OnFlip";
+	end;
+}
+
+//---Tile Dialogue----------------------------------------------------------------------------------
+function	script	F_M4Tile	{
+	set $@MS4NAME$,strcharinfo(0);
+	if ($@MS4State[getarg(0)] == 2) end;
+	if ($@MS4State[getarg(0)] == 0) goto L_Flag;
+	if ($@MS4State[getarg(0)] < 2) set $@MS4State[getarg(0)],2;
+	if ($@MS4Field[getarg(0)] == 0) goto L_Chain;
+	if ($@MS4Field[getarg(0)] == 9) goto L_Lose;
+	if ($@MS4Debug == 1) debugmes "Tile "+getarg(0)+" / Point Value "+$@MS4Field[getarg(0)];
+	if ($MS4Window == 0) setnpcdisplay "Tile4_"+getarg(0)," ",1002;
+	if ($MS4Window == 1) setnpcdisplay "Tile4_"+getarg(0),""+$@MS4Field[getarg(0)]+"",1002;
+	if ($MS4Window == 0) waitingroom "----- "+$@MS4Field[getarg(0)]+" -----",0;
+	if ($MS4Window == 2) setnpcdisplay "Tile4_"+getarg(0),""+$@MS4Field[getarg(0)]+"",1002;
+	if ($MS4Window == 2) waitingroom "----- "+$@MS4Field[getarg(0)]+" -----",0;
+	if ($MS4State[getarg(0)] == 0) set $@MS4State[getarg(0)],2;
+	set $@MS4Total,$@MS4Total + 1;
+	if ($@MS4Debug == 1) debugmes "Victory Total "+$@MS4Total+"/"+(162-$@MS4Amount)+", tile : "+getarg(0);
+	donpcevent "Tile4_"+getarg(0)+"::OnFlip";
+	set @MSpt,@MSpt + $@MS4Field[getarg(0)];
+	dispbottom "[Points : "+@MSpt+"]";
+	if ($@MS4Total == (162 - $@MS4Amount)) donpcevent "Mine4Control::OnWin";
+	end;
+L_Flag:
+	set $@MS4Total,$@MS4Total + 1;
+	if ($@MS4Debug == 1) debugmes "Victory Total "+$@MS4Total+"/"+(162-$@MS4Amount)+", tile : "+getarg(0);
+	set $@MS4State[getarg(0)],1;
+	setnpcdisplay "Tile4_"+getarg(0),"?",1242;
+	donpcevent "Tile4_"+getarg(0)+"::OnFlip";
+	if ($@MS4Total == (162 - $@MS4Amount)) donpcevent "Mine4Control::OnWin";
+	end;
+L_Lose:
+	if ($@MS4Debug == 1) debugmes strcharinfo(0)+" triggered mine "+getarg(0);
+	mapannounce "minesweep4","You have hit a mine!! Game over!  You will be returned to the station automatically in one minute.",1;
+	set $@MS4Ready,1;
+	set $@MS4Total,0;
+	set $@MS4Lose,1;
+	set @MSpt,0;
+	specialeffect 183;
+	specialeffect 107;
+	specialeffect 17;
+	specialeffect 8;
+	specialeffect 8;
+	if ($MS4Hurts == 1) percentheal $MS4Ow,0;
+	if ($MS4Hurts == 2) heal $MS4Ow,0;
+	donpcevent "Mine4Control::OnBoom";
+	donpcevent "Tile4_"+getarg(0)+"::OnFlip";
+	if ($@MS4Debug == 1) debugmes "Tile "+getarg(0)+" exploded!";
+	set $@MS4CYCLE,0;
+L_BoomCycle:
+	if ($@MS4CYCLE == 81) goto L_BoomStop;
+	set $@MS4CYCLE,$@MS4CYCLE + 1;
+	donpcevent "Tile4_"+$@MS4CYCLE+"::OnFlip";
+	disablenpc "Tile4_"+$@MS4CYCLE;
+	goto L_BoomCycle;
+L_BoomStop:
+	set $@MS4CYCLE,0;
+	end;
+L_Chain:
+	set $@MS4Total,$@MS4Total - 1;
+	if ($@MS4Debug == 1) debugmes "Victory Total "+$@MS4Total+"/"+(162-$@MS4Amount)+", tile : "+getarg(0);
+	set $@MS4Sequence,0;
+	donpcevent "Tile4_"+getarg(0)+"::OnReaction";
+	end;
+}
+
+//---Tile Animation----------------------------------------------------------------------------------
+function	script	F_M4Flip	{
+	if ($@MS4Lose == 1) specialeffect 150;
+	if ($@MS4Lose == 0 && $@Ready == 1) specialeffect 70;
+	if ($@MS4Lose == 0 && $@Ready == 0) specialeffect 423;
+	end;
+}
+
+//---Tile NPC List----------------------------------------------------------------------------------
+minesweep4,132,44,5	script	Tile4_1	139,{
+	callfunc "F_M4Tile",1;
+OnReaction:
+	callfunc "F_M4Fission",1;
+OnDisplay:
+	callfunc "F_M4Subchain",1;
+OnFlip:
+	callfunc "F_M4Flip",1;
+}
+minesweep4,135,44,5	script	Tile4_2	139,{
+	callfunc "F_M4Tile",2;
+OnReaction:
+	callfunc "F_M4Fission",2;
+OnDisplay:
+	callfunc "F_M4Subchain",2;
+OnFlip:
+	callfunc "F_M4Flip",2;
+}
+minesweep4,138,44,5	script	Tile4_3	139,{
+	callfunc "F_M4Tile",3;
+OnReaction:
+	callfunc "F_M4Fission",3;
+OnDisplay:
+	callfunc "F_M4Subchain",3;
+OnFlip:
+	callfunc "F_M4Flip",3;
+}
+minesweep4,141,44,5	script	Tile4_4	139,{
+	callfunc "F_M4Tile",4;
+OnReaction:
+	callfunc "F_M4Fission",4;
+OnDisplay:
+	callfunc "F_M4Subchain",4;
+OnFlip:
+	callfunc "F_M4Flip",4;
+}
+minesweep4,144,44,5	script	Tile4_5	139,{
+	callfunc "F_M4Tile",5;
+OnReaction:
+	callfunc "F_M4Fission",5;
+OnDisplay:
+	callfunc "F_M4Subchain",5;
+OnFlip:
+	callfunc "F_M4Flip",5;
+}
+minesweep4,147,44,5	script	Tile4_6	139,{
+	callfunc "F_M4Tile",6;
+OnReaction:
+	callfunc "F_M4Fission",6;
+OnDisplay:
+	callfunc "F_M4Subchain",6;
+OnFlip:
+	callfunc "F_M4Flip",6;
+}
+minesweep4,150,44,5	script	Tile4_7	139,{
+	callfunc "F_M4Tile",7;
+OnReaction:
+	callfunc "F_M4Fission",7;
+OnDisplay:
+	callfunc "F_M4Subchain",7;
+OnFlip:
+	callfunc "F_M4Flip",7;
+}
+minesweep4,153,44,5	script	Tile4_8	139,{
+	callfunc "F_M4Tile",8;
+OnReaction:
+	callfunc "F_M4Fission",8;
+OnDisplay:
+	callfunc "F_M4Subchain",8;
+OnFlip:
+	callfunc "F_M4Flip",8;
+}
+minesweep4,156,44,5	script	Tile4_9	139,{
+	callfunc "F_M4Tile",9;
+OnReaction:
+	callfunc "F_M4Fission",9;
+OnDisplay:
+	callfunc "F_M4Subchain",9;
+OnFlip:
+	callfunc "F_M4Flip",9;
+}
+minesweep4,132,47,5	script	Tile4_10	139,{
+	callfunc "F_M4Tile",10;
+OnReaction:
+	callfunc "F_M4Fission",10;
+OnDisplay:
+	callfunc "F_M4Subchain",10;
+OnFlip:
+	callfunc "F_M4Flip",10;
+}
+minesweep4,135,47,5	script	Tile4_11	139,{
+	callfunc "F_M4Tile",11;
+OnReaction:
+	callfunc "F_M4Fission",11;
+OnDisplay:
+	callfunc "F_M4Subchain",11;
+OnFlip:
+	callfunc "F_M4Flip",11;
+}
+minesweep4,138,47,5	script	Tile4_12	139,{
+	callfunc "F_M4Tile",12;
+OnReaction:
+	callfunc "F_M4Fission",12;
+OnDisplay:
+	callfunc "F_M4Subchain",12;
+OnFlip:
+	callfunc "F_M4Flip",12;
+}
+minesweep4,141,47,5	script	Tile4_13	139,{
+	callfunc "F_M4Tile",13;
+OnReaction:
+	callfunc "F_M4Fission",13;
+OnDisplay:
+	callfunc "F_M4Subchain",13;
+OnFlip:
+	callfunc "F_M4Flip",13;
+}
+minesweep4,144,47,5	script	Tile4_14	139,{
+	callfunc "F_M4Tile",14;
+OnReaction:
+	callfunc "F_M4Fission",14;
+OnDisplay:
+	callfunc "F_M4Subchain",14;
+OnFlip:
+	callfunc "F_M4Flip",14;
+}
+minesweep4,147,47,5	script	Tile4_15	139,{
+	callfunc "F_M4Tile",15;
+OnReaction:
+	callfunc "F_M4Fission",15;
+OnDisplay:
+	callfunc "F_M4Subchain",15;
+OnFlip:
+	callfunc "F_M4Flip",15;
+}
+minesweep4,150,47,5	script	Tile4_16	139,{
+	callfunc "F_M4Tile",16;
+OnReaction:
+	callfunc "F_M4Fission",16;
+OnDisplay:
+	callfunc "F_M4Subchain",16;
+OnFlip:
+	callfunc "F_M4Flip",16;
+}
+minesweep4,153,47,5	script	Tile4_17	139,{
+	callfunc "F_M4Tile",17;
+OnReaction:
+	callfunc "F_M4Fission",17;
+OnDisplay:
+	callfunc "F_M4Subchain",17;
+OnFlip:
+	callfunc "F_M4Flip",17;
+}
+minesweep4,156,47,5	script	Tile4_18	139,{
+	callfunc "F_M4Tile",18;
+OnReaction:
+	callfunc "F_M4Fission",18;
+OnDisplay:
+	callfunc "F_M4Subchain",18;
+OnFlip:
+	callfunc "F_M4Flip",18;
+}
+minesweep4,132,50,5	script	Tile4_19	139,{
+	callfunc "F_M4Tile",19;
+OnReaction:
+	callfunc "F_M4Fission",19;
+OnDisplay:
+	callfunc "F_M4Subchain",19;
+OnFlip:
+	callfunc "F_M4Flip",19;
+}
+minesweep4,135,50,5	script	Tile4_20	139,{
+	callfunc "F_M4Tile",20;
+OnReaction:
+	callfunc "F_M4Fission",20;
+OnDisplay:
+	callfunc "F_M4Subchain",20;
+OnFlip:
+	callfunc "F_M4Flip",20;
+}
+minesweep4,138,50,5	script	Tile4_21	139,{
+	callfunc "F_M4Tile",21;
+OnReaction:
+	callfunc "F_M4Fission",21;
+OnDisplay:
+	callfunc "F_M4Subchain",21;
+OnFlip:
+	callfunc "F_M4Flip",21;
+}
+minesweep4,141,50,5	script	Tile4_22	139,{
+	callfunc "F_M4Tile",22;
+OnReaction:
+	callfunc "F_M4Fission",22;
+OnDisplay:
+	callfunc "F_M4Subchain",22;
+OnFlip:
+	callfunc "F_M4Flip",22;
+}
+minesweep4,144,50,5	script	Tile4_23	139,{
+	callfunc "F_M4Tile",23;
+OnReaction:
+	callfunc "F_M4Fission",23;
+OnDisplay:
+	callfunc "F_M4Subchain",23;
+OnFlip:
+	callfunc "F_M4Flip",23;
+}
+minesweep4,147,50,5	script	Tile4_24	139,{
+	callfunc "F_M4Tile",24;
+OnReaction:
+	callfunc "F_M4Fission",24;
+OnDisplay:
+	callfunc "F_M4Subchain",24;
+OnFlip:
+	callfunc "F_M4Flip",24;
+}
+minesweep4,150,50,5	script	Tile4_25	139,{
+	callfunc "F_M4Tile",25;
+OnReaction:
+	callfunc "F_M4Fission",25;
+OnDisplay:
+	callfunc "F_M4Subchain",25;
+OnFlip:
+	callfunc "F_M4Flip",25;
+}
+minesweep4,153,50,5	script	Tile4_26	139,{
+	callfunc "F_M4Tile",26;
+OnReaction:
+	callfunc "F_M4Fission",26;
+OnDisplay:
+	callfunc "F_M4Subchain",26;
+OnFlip:
+	callfunc "F_M4Flip",26;
+}
+minesweep4,156,50,5	script	Tile4_27	139,{
+	callfunc "F_M4Tile",27;
+OnReaction:
+	callfunc "F_M4Fission",27;
+OnDisplay:
+	callfunc "F_M4Subchain",27;
+OnFlip:
+	callfunc "F_M4Flip",27;
+}
+minesweep4,132,53,5	script	Tile4_28	139,{
+	callfunc "F_M4Tile",28;
+OnReaction:
+	callfunc "F_M4Fission",28;
+OnDisplay:
+	callfunc "F_M4Subchain",28;
+OnFlip:
+	callfunc "F_M4Flip",28;
+}
+minesweep4,135,53,5	script	Tile4_29	139,{
+	callfunc "F_M4Tile",29;
+OnReaction:
+	callfunc "F_M4Fission",29;
+OnDisplay:
+	callfunc "F_M4Subchain",29;
+OnFlip:
+	callfunc "F_M4Flip",29;
+}
+minesweep4,138,53,5	script	Tile4_30	139,{
+	callfunc "F_M4Tile",30;
+OnReaction:
+	callfunc "F_M4Fission",30;
+OnDisplay:
+	callfunc "F_M4Subchain",30;
+OnFlip:
+	callfunc "F_M4Flip",30;
+}
+minesweep4,141,53,5	script	Tile4_31	139,{
+	callfunc "F_M4Tile",31;
+OnReaction:
+	callfunc "F_M4Fission",31;
+OnDisplay:
+	callfunc "F_M4Subchain",31;
+OnFlip:
+	callfunc "F_M4Flip",31;
+}
+minesweep4,144,53,5	script	Tile4_32	139,{
+	callfunc "F_M4Tile",32;
+OnReaction:
+	callfunc "F_M4Fission",32;
+OnDisplay:
+	callfunc "F_M4Subchain",32;
+OnFlip:
+	callfunc "F_M4Flip",32;
+}
+minesweep4,147,53,5	script	Tile4_33	139,{
+	callfunc "F_M4Tile",33;
+OnReaction:
+	callfunc "F_M4Fission",33;
+OnDisplay:
+	callfunc "F_M4Subchain",33;
+OnFlip:
+	callfunc "F_M4Flip",33;
+}
+minesweep4,150,53,5	script	Tile4_34	139,{
+	callfunc "F_M4Tile",34;
+OnReaction:
+	callfunc "F_M4Fission",34;
+OnDisplay:
+	callfunc "F_M4Subchain",34;
+OnFlip:
+	callfunc "F_M4Flip",34;
+}
+minesweep4,153,53,5	script	Tile4_35	139,{
+	callfunc "F_M4Tile",35;
+OnReaction:
+	callfunc "F_M4Fission",35;
+OnDisplay:
+	callfunc "F_M4Subchain",35;
+OnFlip:
+	callfunc "F_M4Flip",35;
+}
+minesweep4,156,53,5	script	Tile4_36	139,{
+	callfunc "F_M4Tile",36;
+OnReaction:
+	callfunc "F_M4Fission",36;
+OnDisplay:
+	callfunc "F_M4Subchain",36;
+OnFlip:
+	callfunc "F_M4Flip",36;
+}
+minesweep4,132,56,5	script	Tile4_37	139,{
+	callfunc "F_M4Tile",37;
+OnReaction:
+	callfunc "F_M4Fission",37;
+OnDisplay:
+	callfunc "F_M4Subchain",37;
+OnFlip:
+	callfunc "F_M4Flip",37;
+}
+minesweep4,135,56,5	script	Tile4_38	139,{
+	callfunc "F_M4Tile",38;
+OnReaction:
+	callfunc "F_M4Fission",38;
+OnDisplay:
+	callfunc "F_M4Subchain",38;
+OnFlip:
+	callfunc "F_M4Flip",38;
+}
+minesweep4,138,56,5	script	Tile4_39	139,{
+	callfunc "F_M4Tile",39;
+OnReaction:
+	callfunc "F_M4Fission",39;
+OnDisplay:
+	callfunc "F_M4Subchain",39;
+OnFlip:
+	callfunc "F_M4Flip",39;
+}
+minesweep4,141,56,5	script	Tile4_40	139,{
+	callfunc "F_M4Tile",40;
+OnReaction:
+	callfunc "F_M4Fission",40;
+OnDisplay:
+	callfunc "F_M4Subchain",40;
+OnFlip:
+	callfunc "F_M4Flip",40;
+}
+minesweep4,144,56,5	script	Tile4_41	139,{
+	callfunc "F_M4Tile",41;
+OnReaction:
+	callfunc "F_M4Fission",41;
+OnDisplay:
+	callfunc "F_M4Subchain",41;
+OnFlip:
+	callfunc "F_M4Flip",41;
+}
+minesweep4,147,56,5	script	Tile4_42	139,{
+	callfunc "F_M4Tile",42;
+OnReaction:
+	callfunc "F_M4Fission",42;
+OnDisplay:
+	callfunc "F_M4Subchain",42;
+OnFlip:
+	callfunc "F_M4Flip",42;
+}
+minesweep4,150,56,5	script	Tile4_43	139,{
+	callfunc "F_M4Tile",43;
+OnReaction:
+	callfunc "F_M4Fission",43;
+OnDisplay:
+	callfunc "F_M4Subchain",43;
+OnFlip:
+	callfunc "F_M4Flip",43;
+}
+minesweep4,153,56,5	script	Tile4_44	139,{
+	callfunc "F_M4Tile",44;
+OnReaction:
+	callfunc "F_M4Fission",44;
+OnDisplay:
+	callfunc "F_M4Subchain",44;
+OnFlip:
+	callfunc "F_M4Flip",44;
+}
+minesweep4,156,56,5	script	Tile4_45	139,{
+	callfunc "F_M4Tile",45;
+OnReaction:
+	callfunc "F_M4Fission",45;
+OnDisplay:
+	callfunc "F_M4Subchain",45;
+OnFlip:
+	callfunc "F_M4Flip",45;
+}
+minesweep4,132,59,5	script	Tile4_46	139,{
+	callfunc "F_M4Tile",46;
+OnReaction:
+	callfunc "F_M4Fission",46;
+OnDisplay:
+	callfunc "F_M4Subchain",46;
+OnFlip:
+	callfunc "F_M4Flip",46;
+}
+minesweep4,135,59,5	script	Tile4_47	139,{
+	callfunc "F_M4Tile",47;
+OnReaction:
+	callfunc "F_M4Fission",47;
+OnDisplay:
+	callfunc "F_M4Subchain",47;
+OnFlip:
+	callfunc "F_M4Flip",47;
+}
+minesweep4,138,59,5	script	Tile4_48	139,{
+	callfunc "F_M4Tile",48;
+OnReaction:
+	callfunc "F_M4Fission",48;
+OnDisplay:
+	callfunc "F_M4Subchain",48;
+OnFlip:
+	callfunc "F_M4Flip",48;
+}
+minesweep4,141,59,5	script	Tile4_49	139,{
+	callfunc "F_M4Tile",49;
+OnReaction:
+	callfunc "F_M4Fission",49;
+OnDisplay:
+	callfunc "F_M4Subchain",49;
+OnFlip:
+	callfunc "F_M4Flip",49;
+}
+minesweep4,144,59,5	script	Tile4_50	139,{
+	callfunc "F_M4Tile",50;
+OnReaction:
+	callfunc "F_M4Fission",50;
+OnDisplay:
+	callfunc "F_M4Subchain",50;
+OnFlip:
+	callfunc "F_M4Flip",50;
+}
+minesweep4,147,59,5	script	Tile4_51	139,{
+	callfunc "F_M4Tile",51;
+OnReaction:
+	callfunc "F_M4Fission",51;
+OnDisplay:
+	callfunc "F_M4Subchain",51;
+OnFlip:
+	callfunc "F_M4Flip",51;
+}
+minesweep4,150,59,5	script	Tile4_52	139,{
+	callfunc "F_M4Tile",52;
+OnReaction:
+	callfunc "F_M4Fission",52;
+OnDisplay:
+	callfunc "F_M4Subchain",52;
+OnFlip:
+	callfunc "F_M4Flip",52;
+}
+minesweep4,153,59,5	script	Tile4_53	139,{
+	callfunc "F_M4Tile",53;
+OnReaction:
+	callfunc "F_M4Fission",53;
+OnDisplay:
+	callfunc "F_M4Subchain",53;
+OnFlip:
+	callfunc "F_M4Flip",53;
+}
+minesweep4,156,59,5	script	Tile4_54	139,{
+	callfunc "F_M4Tile",54;
+OnReaction:
+	callfunc "F_M4Fission",54;
+OnDisplay:
+	callfunc "F_M4Subchain",54;
+OnFlip:
+	callfunc "F_M4Flip",54;
+}
+minesweep4,132,62,5	script	Tile4_55	139,{
+	callfunc "F_M4Tile",55;
+OnReaction:
+	callfunc "F_M4Fission",55;
+OnDisplay:
+	callfunc "F_M4Subchain",55;
+OnFlip:
+	callfunc "F_M4Flip",55;
+}
+minesweep4,135,62,5	script	Tile4_56	139,{
+	callfunc "F_M4Tile",56;
+OnReaction:
+	callfunc "F_M4Fission",56;
+OnDisplay:
+	callfunc "F_M4Subchain",56;
+OnFlip:
+	callfunc "F_M4Flip",56;
+}
+minesweep4,138,62,5	script	Tile4_57	139,{
+	callfunc "F_M4Tile",57;
+OnReaction:
+	callfunc "F_M4Fission",57;
+OnDisplay:
+	callfunc "F_M4Subchain",57;
+OnFlip:
+	callfunc "F_M4Flip",57;
+}
+minesweep4,141,62,5	script	Tile4_58	139,{
+	callfunc "F_M4Tile",58;
+OnReaction:
+	callfunc "F_M4Fission",58;
+OnDisplay:
+	callfunc "F_M4Subchain",58;
+OnFlip:
+	callfunc "F_M4Flip",58;
+}
+minesweep4,144,62,5	script	Tile4_59	139,{
+	callfunc "F_M4Tile",59;
+OnReaction:
+	callfunc "F_M4Fission",59;
+OnDisplay:
+	callfunc "F_M4Subchain",59;
+OnFlip:
+	callfunc "F_M4Flip",59;
+}
+minesweep4,147,62,5	script	Tile4_60	139,{
+	callfunc "F_M4Tile",60;
+OnReaction:
+	callfunc "F_M4Fission",60;
+OnDisplay:
+	callfunc "F_M4Subchain",60;
+OnFlip:
+	callfunc "F_M4Flip",60;
+}
+minesweep4,150,62,5	script	Tile4_61	139,{
+	callfunc "F_M4Tile",61;
+OnReaction:
+	callfunc "F_M4Fission",61;
+OnDisplay:
+	callfunc "F_M4Subchain",61;
+OnFlip:
+	callfunc "F_M4Flip",61;
+}
+minesweep4,153,62,5	script	Tile4_62	139,{
+	callfunc "F_M4Tile",62;
+OnReaction:
+	callfunc "F_M4Fission",62;
+OnDisplay:
+	callfunc "F_M4Subchain",62;
+OnFlip:
+	callfunc "F_M4Flip",62;
+}
+minesweep4,156,62,5	script	Tile4_63	139,{
+	callfunc "F_M4Tile",63;
+OnReaction:
+	callfunc "F_M4Fission",63;
+OnDisplay:
+	callfunc "F_M4Subchain",63;
+OnFlip:
+	callfunc "F_M4Flip",63;
+}
+minesweep4,132,65,5	script	Tile4_64	139,{
+	callfunc "F_M4Tile",64;
+OnReaction:
+	callfunc "F_M4Fission",64;
+OnDisplay:
+	callfunc "F_M4Subchain",64;
+OnFlip:
+	callfunc "F_M4Flip",64;
+}
+minesweep4,135,65,5	script	Tile4_65	139,{
+	callfunc "F_M4Tile",65;
+OnReaction:
+	callfunc "F_M4Fission",65;
+OnDisplay:
+	callfunc "F_M4Subchain",65;
+OnFlip:
+	callfunc "F_M4Flip",65;
+}
+minesweep4,138,65,5	script	Tile4_66	139,{
+	callfunc "F_M4Tile",66;
+OnReaction:
+	callfunc "F_M4Fission",66;
+OnDisplay:
+	callfunc "F_M4Subchain",66;
+OnFlip:
+	callfunc "F_M4Flip",66;
+}
+minesweep4,141,65,5	script	Tile4_67	139,{
+	callfunc "F_M4Tile",67;
+OnReaction:
+	callfunc "F_M4Fission",67;
+OnDisplay:
+	callfunc "F_M4Subchain",67;
+OnFlip:
+	callfunc "F_M4Flip",67;
+}
+minesweep4,144,65,5	script	Tile4_68	139,{
+	callfunc "F_M4Tile",68;
+OnReaction:
+	callfunc "F_M4Fission",68;
+OnDisplay:
+	callfunc "F_M4Subchain",68;
+OnFlip:
+	callfunc "F_M4Flip",68;
+}
+minesweep4,147,65,5	script	Tile4_69	139,{
+	callfunc "F_M4Tile",69;
+OnReaction:
+	callfunc "F_M4Fission",69;
+OnDisplay:
+	callfunc "F_M4Subchain",69;
+OnFlip:
+	callfunc "F_M4Flip",69;
+}
+minesweep4,150,65,5	script	Tile4_70	139,{
+	callfunc "F_M4Tile",70;
+OnReaction:
+	callfunc "F_M4Fission",70;
+OnDisplay:
+	callfunc "F_M4Subchain",70;
+OnFlip:
+	callfunc "F_M4Flip",70;
+}
+minesweep4,153,65,5	script	Tile4_71	139,{
+	callfunc "F_M4Tile",71;
+OnReaction:
+	callfunc "F_M4Fission",71;
+OnDisplay:
+	callfunc "F_M4Subchain",71;
+OnFlip:
+	callfunc "F_M4Flip",71;
+}
+minesweep4,156,65,5	script	Tile4_72	139,{
+	callfunc "F_M4Tile",72;
+OnReaction:
+	callfunc "F_M4Fission",72;
+OnDisplay:
+	callfunc "F_M4Subchain",72;
+OnFlip:
+	callfunc "F_M4Flip",72;
+}
+minesweep4,132,68,5	script	Tile4_73	139,{
+	callfunc "F_M4Tile",73;
+OnReaction:
+	callfunc "F_M4Fission",73;
+OnDisplay:
+	callfunc "F_M4Subchain",73;
+OnFlip:
+	callfunc "F_M4Flip",73;
+}
+minesweep4,135,68,5	script	Tile4_74	139,{
+	callfunc "F_M4Tile",74;
+OnReaction:
+	callfunc "F_M4Fission",74;
+OnDisplay:
+	callfunc "F_M4Subchain",74;
+OnFlip:
+	callfunc "F_M4Flip",74;
+}
+minesweep4,138,68,5	script	Tile4_75	139,{
+	callfunc "F_M4Tile",75;
+OnReaction:
+	callfunc "F_M4Fission",75;
+OnDisplay:
+	callfunc "F_M4Subchain",75;
+OnFlip:
+	callfunc "F_M4Flip",75;
+}
+minesweep4,141,68,5	script	Tile4_76	139,{
+	callfunc "F_M4Tile",76;
+OnReaction:
+	callfunc "F_M4Fission",76;
+OnDisplay:
+	callfunc "F_M4Subchain",76;
+OnFlip:
+	callfunc "F_M4Flip",76;
+}
+minesweep4,144,68,5	script	Tile4_77	139,{
+	callfunc "F_M4Tile",77;
+OnReaction:
+	callfunc "F_M4Fission",77;
+OnDisplay:
+	callfunc "F_M4Subchain",77;
+OnFlip:
+	callfunc "F_M4Flip",77;
+}
+minesweep4,147,68,5	script	Tile4_78	139,{
+	callfunc "F_M4Tile",78;
+OnReaction:
+	callfunc "F_M4Fission",78;
+OnDisplay:
+	callfunc "F_M4Subchain",78;
+OnFlip:
+	callfunc "F_M4Flip",78;
+}
+minesweep4,150,68,5	script	Tile4_79	139,{
+	callfunc "F_M4Tile",79;
+OnReaction:
+	callfunc "F_M4Fission",79;
+OnDisplay:
+	callfunc "F_M4Subchain",79;
+OnFlip:
+	callfunc "F_M4Flip",79;
+}
+minesweep4,153,68,5	script	Tile4_80	139,{
+	callfunc "F_M4Tile",80;
+OnReaction:
+	callfunc "F_M4Fission",80;
+OnDisplay:
+	callfunc "F_M4Subchain",80;
+OnFlip:
+	callfunc "F_M4Flip",80;
+}
+minesweep4,156,68,5	script	Tile4_81	139,{
+	callfunc "F_M4Tile",81;
+OnReaction:
+	callfunc "F_M4Fission",81;
+OnDisplay:
+	callfunc "F_M4Subchain",81;
+OnFlip:
+	callfunc "F_M4Flip",81;
+}

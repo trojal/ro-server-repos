@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<!-- write your own search engine keywords -->
+<title>nexonsamonkey</title>
+
+<style type="text/css" media="screen">
+html {height:100%;}
+body {height:100%; margin:0; padding:0;}
+
+	.stretch { position:absolute; overflow:hidden; width:100%; height:100%; left:0;}
+	#backdrop {	position:fixed; }
+	/* specy only the img dimensions you do NOT want to stretch */
+	#img_header {	top:0; 				height:50px;}
+	#img_logo { 	left:0; top:14px; 	width:500px; height:22px;}	
+	#img_footer {	bottom:0; 			height:140px;}
+	#img_kafra {	bottom:140px; 		width:140px; height:153px;}
+	#cright	{ 	position:absolute; float:right; right:0; bottom:140px; text-align:right;color:#FFF; 
+				font: italic 100 8px Arial, Helvetica, sans-serif; border:0; padding:0; margin:0; }
+	#con_footer { 
+		position:absolute;
+		margin:0;
+		border:0;
+		display:table;
+		float:left;
+		height:120px; 
+		bottom:10px; 
+		font:normal 12px Arial, Helvetica, sans-serif; 
+		padding-right:15%;
+		padding-left:10px;
+		}
+	#con_menu { 
+		position:absolute; 
+		top:50px; left:5px;
+		font:small-caps 16px Arial,Helvetica, sans-serif;
+		}
+		/* structure */
+		.nav { 
+			border-color:#723134; 
+			border-style:solid; 
+			border-width:0 2px 2px 2px;
+			}
+		ul.nav,	.nav ul { 
+			position:fixed; 
+			margin:0; 
+			padding:0; 
+			cursor:default; 
+			list-style-type:none; 
+			display:inline;
+			}
+		/* hierarchy */
+		ul.nav { 
+			display:table; 
+			width:auto; 
+			table-layout:fixed;
+			}
+		ul.nav h2 { 
+			padding:0 5px 0 5px;
+			font:inherit; 
+			margin:0 0 -2px 0;
+			}
+		ul.nav>li { 
+			display:table-cell;	
+			position:relative; 
+			border-right:#723134 solid 0.1em;
+			}
+		ul.nav li>ul { 
+			display:none; 
+			position:absolute; 
+			width:5em; 
+			max-width:20em;
+			}
+		ul.nav li:hover>ul { 
+			display:block; 
+			border-color:#723134; 
+			border-style:solid; 
+			border-width:0 1px 1px 1px;
+			}
+		.nav ul li a { 
+			display:block;
+			padding:0.2em 0 0.1em 1em;
+			border-top:#723134 solid 1px;
+			}
+		/* colors */
+		ul.nav, .nav ul, .nav ul li a { 
+			background-color:#e0ddd3; 
+			color:#000;
+			}
+		ul.nav ul li a:hover { 
+			background-color:#c1bcad;
+			color:#FFF;
+			}
+		ul.nav li:hover { 
+			background-color:#c1bcad; 
+			color:#000;
+			}
+		ul.nav li:hover h1 {
+			color:#FFF
+			}
+		.nav a { 
+			text-decoration: none;
+			font-size:10px;
+			font-variant:normal;
+			}
+</style>
+
+<!--[if IE]>
+	<style type="text/css" media="all">
+	/* because IE sucks, and we all know that it sucks. but there are still idiots who use it - quite a few. */
+	body, html { overflow:hidden; position:fixed; }
+	ul.nav h2 { font-weight:normal; font-variance:normal; }
+	ul.nav>li { display:table; border-bottom:#723134 solid 1px; }
+	ul.nav li>ul { position:absolute; left:100%; top:-25%; }
+	ul.nav li ul>li {  border:#723134 solid 1px;  }
+	</style>
+<![endif]-->
+
+</head>
+<body>
+<!-- background images, specify img height & width in css -->
+<div class="stretch"><img src="img/backdrop.jpg" width="100%" height="100%" alt="" /></div>
+<div id="img_header" class="stretch"><img src="img/header.png" width="100%" height="100%" alt="" /></div>
+<div id="img_logo" class="stretch"><img src="img/logo.png" width="100%" height="100%" alt="" /></div>
+<div id="img_footer" class="stretch"><img src="img/footer.png" width="100%" height="100%" alt="" /></div>
+<div id="img_kafra" class="stretch"><img src="img/kafra.png" width="100%" height="100%" alt="" /></div>
+
+<!-- server status -->
+	<!-- put your server status here. images are in /img. use javascript to set it on or off. -->
+
+<!-- menu -->
+	<div id="con_menu"> <!-- displays vertically in IE, and horizontally in everything else -->
+	<ul class="nav">
+		<li>		<h2>Download</h2>
+			<ul>
+			<li><a href="" target="_blank">frosted butts</a></li>
+			<li><a href="" target="_blank">frosted butts</a></li>
+			</ul>
+		</li>
+		<li>		<h2>Forum</h2>
+			<ul>
+			<li><a href="" target="_blank">frosted butts</a></li>
+			<li><a href="" target="_blank">frosted butts</a></li>
+			<li><a href="" target="_blank">frosted butts</a></li>
+			<li><a href="" target="_blank">frosted butts</a></li>			
+			</ul>
+		</li>
+		<li>		<h2>Database</h2>
+			<ul>
+			<li><a href="" target="_blank">frosted butts</a></li>
+			<li><a href="" target="_blank">frosted butts</a></li>
+			</ul>
+		</li>
+		<li>		<h2>Contact</h2>
+			<ul>
+			<li><a href="" target="_blank">frosted butts</a></li>
+			<li><a href="" target="_blank">frosted butts</a></li>
+			<li><a href="" target="_blank">frosted butts</a></li>
+			<li><a href="" target="_blank">frosted butts</a></li>			
+			</ul>
+		</li>
+		<li>		<h2>Records</h2>
+			<ul>
+			<li><a href="" target="_blank">frosted butts</a></li>
+			<li><a href="" target="_blank">frosted butts</a></li>
+			<li><a href="" target="_blank">frosted butts</a></li>
+			<li><a href="" target="_blank">frosted butts</a></li>	
+			<li><a href="" target="_blank">frosted butts</a></li>
+			<li><a href="" target="_blank">frosted butts</a></li>
+			<li><a href="" target="_blank">frosted butts</a></li>
+			<li><a href="" target="_blank">frosted butts</a></li>	
+			<li><a href="" target="_blank">frosted butts</a></li>
+			<li><a href="" target="_blank">frosted butts</a></li>
+			<li><a href="" target="_blank">frosted butts</a></li>
+			<li><a href="" target="_blank">frosted butts</a></li>									
+			</ul>
+		</li>		
+	</ul>
+	</div>
+
+<!-- footer -->
+
+	<table id="con_footer" cellspacing="0" cellpadding="0"><tr><td>
+		frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts frosted butts 
+	</td></tr></table>
+
+<!-- do not remove this from this page -->
+<div id="cright">
+		Ragnarok Online & related artwork &copy;2007 Gravity, All rights reserved.<br />
+		Site Design &copy;2007 Dubby Design & Marc Taylor Design, Inc. All rights reserved.
+</div>
+
+</body>
+</html>

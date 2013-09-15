@@ -1,0 +1,40 @@
+//===== eAthena Script ======================================= 
+//= Monk Job Quest
+//===== By: ==================================================
+//= Dino9021, Edited / Translated by Celest
+//===== Current Version: ===================================== 
+//= 2.1
+//===== Compatible With: ===================================== 
+//= eAthena 1.0 +
+//===== Description: ========================================= 
+//= Monk Job Quests for Athena 2004.12.30
+//===== Additional Comments: ================================= 
+//= 1.1 Fixed missing '";'. Now it's loading fine [Lupus]
+//= 1.1+ Edited/Translated 5% [Celest]
+//= 1.2 Made Poetry Quiz passable, Fixed Marathon Part [Lupus]
+//= 1.3 Added Baby Class Support [Lupus]
+//= 1.5 Fixed possible EXP abuse [Lupus]
+//= 1.6 Added a func which prevent advanced classes passing
+//= 2nd Job Quests again. It also guides adv classes where
+//= to go. [Lupus] 1.7 Fixed warps19/20 [Yor]
+//= 1.8 Fixed bugs. Fixed Green Potion exploit. Getting rid of Jfunc mess [Lupus]
+//= 1.9 Added a missing check in Fuhai and fixed a LOT of Engrish. [Zephiris]
+//= 1.9b Fixed another bug in Fuhai. [Zephiris]
+//= 2.0 Changed numbers to constants. [Vicious]
+//= 2.1 Removed Duplicates [Silent]
+//============================================================
+
+prt_monk,192,172,0	warp	monk15	1,1,monk_test,329,50
+monk_test,329,47,0	warp	monk16	1,1,prt_monk,193,166
+monk_test,329,76,0	warp	monk17	1,1,monk_test,259,118
+monk_test,259,115,0	warp	monk18	1,1,monk_test,329,71
+monk_test,271,126,0	warp	monk19	1,1,monk_test,301,127
+monk_test,298,127,0	warp	monk20	1,1,monk_test,268,126
+
+//==============================================================================
+// mapflag
+//==============================================================================
+monk_test	mapflag	nomemo
+monk_test	mapflag	nopenalty
+prt_monk	mapflag	nomemo
+prt_monk	mapflag	nopenalty

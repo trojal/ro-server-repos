@@ -1,0 +1,40 @@
+// Gamemaster password, used with the @gm command to obtain GM commands (level of gm set with level_new_gm parameter).
+// NOTICE: You should also change this one.
+gm_pass: gskldjfgh8338228
+
+// Can you use _M/_F to make new accounts on the server?
+new_account: no
+
+// Check The clientversion set in the clientinfo ?
+check_client_version: yes
+
+// What version we would allow to connect? (if the options above is enabled..)
+client_version_to_connect: 4691
+
+// Passwords in Login DB are MD5 - <passwordencrypt> cannot b used on client with this on
+use_MD5_passwords: yes
+
+// Ipban features (SQL only)
+ipban: yes
+dynamic_pass_failure_ban: yes
+dynamic_pass_failure_ban_interval: 5
+dynamic_pass_failure_ban_limit: 7
+dynamic_pass_failure_ban_duration: 5
+
+// Ipban features (SQL only)
+ipban.enable: yes
+ipban.sql.db_username: gemini
+ipban.sql.db_password: EaCUmS357
+ipban.sql.db_database: gemini
+
+// Which account engine to use.
+// 'auto' selects the first engine available (txt, sql, then others)
+// (defaults to auto)
+account.engine: sql
+// Account data storage configuration
+// SQL
+account.sql.db_username: gemini
+account.sql.db_password: EaCUmS357
+account.sql.db_database: gemini
+account.sql.case_sensitive: yes
+account.sql.account_db: login

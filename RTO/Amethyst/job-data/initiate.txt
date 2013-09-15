@@ -1,0 +1,143 @@
+					Necromancer	[nothing further]
+Novice ----------> INITIATE ---------------|
+					Shaman		[nothing further]
+
+skill name - usage - max level - required skills (if)
+type	skill description, includes calculations
+of
+skill
+
+-------------------------------------------------------------------------------------------------------------
+Initiate [ 72 total skill levels ] Max Job Lv 50					17 / 17 skills	
+
+Martial Training - Passive - 10 Lv
+n/a	Gain a [ Skill Lv + 5 ] point bonus to your Hit and Flee, and a [ Skill Lv * 5 ] point bonus to 
+	your Base Atk as long as you are not using a weapon and are not 50% over burdened or 
+	more.
+
+Blood Siphon - Passive - 5 Lv's
+n/a	Every [ 10 - Skill lv ] second(s), 2% of your mana is used automatically to heal 1% of your 
+	health.  This healing is not affected by HP Recovery bonuses.
+
+Toughness - Passive - 1 Lv
+n/a	Gain one extra maximum health point for every Vit point, per base level. [ Vit * Base Lv = 
+	extra max hp ]
+
+Vile Touch - Offensive - 5 Lv's
+skill	SP : 0		Cast : Instant	Recharge : 1 s.
+	Sacrifice 5% of maximum health to deal [ sacrificed health * Skill Lv ] dark damage to 
+	touched enemy. Will heal undead and ghost property targets.  
+	>> This skill attacks at a -15 Hit penalty.
+		note:
+		use a dark attack visual
+
+Bloodrust - Offensive - 5 Lv's - Requires : Vile Touch Lv 3
+skill	SP : 0		Cast : Instant	Recharge : 4 s.		Duration : 12 s.
+	Sacrifice 10% of maximum health to cause target touched enemy's weapons and armor to 
+	lose effectiveness.  Victim suffers a [ Vit / 5 + Skill Lv ]% penalty to their Def, MDef, and 
+	weapon-provided Atk.
+	>> This skill attacks at a -25 Hit penalty.
+		note:
+		use the broken equip/weapon animation visuals
+
+Hexing - Offensive - 5 Lv's
+spell	SP : 20		Cast : 1 s.	Recharge : 3 s.
+	Target enemy is afflicted with one of the following ailments, selected at random : Blind, 
+	Poison, Curse, or Sleep.  At Skill Lv 1, there is a 35% chance the hex will be successful.  
+	This increases by 10% each Skill Lv there after, to a maximum of 75% at Skill Lv 5.  The 
+	target's Vit can be used to resist an effect, even if the hex is successful.
+		note:
+		use the death 'angel' animation, or something similar, on the target when the spell is cast
+
+Summon Ghost - Defensive  - 5 Lv's
+spell	SP : 25		Cast : 2 s.	Recharge : 15 s.	Duration : <><>
+	Sacrifice 25% of maximum health to summon a ghostly spirit equal to half your current job 
+	level.  At Skill Lv 1, only a single spirit may be summoned at a time.  At Skill Lv 3, this 
+	increases to two spirits.  At Skill Lv 5, this increases again to three spirits.  The spirits will 
+	exist and support their master faithfully until they are destroyed, exposed to daylight, or if 
+	their master dies.
+		note:
+		these minions look like whispers, but are plastered with a visual to make them see-through,
+		and leave behind split-second fading images of themselves when they move.
+
+Phantasm - Offensive - 5 Lv's - Requires : Summon Ghost Lv 5, Malice Lv 5
+spell	SP : 80		Cast : 6 s.	Recharge : n/a		Duration : 5 s.
+	Sacrifice 15% of maximum health and attack target enemy with their worst nightmares.  This 
+	attack does [ ( Skill lv * 20 + Vit ) * 8 ] ghost property damage to the victim each second for 
+	five seconds, and afflicts the victim with Curse for 5 seconds.
+		note:
+		create an ethereal visual of a monster (selected at random) that hovers above the target.
+		if this doesn't work or can't be done, do the same but instead of hovering, have it follow
+		the target closely.  ie: autofollow + super speed
+
+Blood Bridge - Restorative - 1 Lv - Requires : Blood Siphon Lv 3
+spell	SP : [none]	Cast : 0.8 s.	Recharge : 2.5 s.
+	Sacrifice 10% health to heal selected ally twice the amount sacrificed.
+		note:
+		use hp drain visual several times that goes from the caster to the target, and soul strike visuals
+		that go from the target to the caster. use healing visual on target after hp drain gets to them.
+
+Decay - Offensive - 5 Lv's - Requires : Hexing Lv 5
+spell	SP : 25		Cast : 0.5 s.	Recharge : 8 s.		Duration : 5...15 s.
+	Target enemy suffers a strength penalty equal to [ Skill Lv * Vit / 10 ]. This effect lasts for
+	5 seconds at Skill Lv 1, and 15 seconds at Skill Lv 5.
+		note:
+		use stonecurse's darkening visual effect, and any kind of blood splatter visual every second
+		during the duration
+
+Malice - Defensive - 5 Lv's - Requires : Decay Lv 5, Vile Touch Lv 1
+spell	SP : 15		Cast : 1.8 s.	Recharge : 2 s.		Duration : 15 s.
+	For 15 seconds, any enemy who attempts an attack on you will suffer a [ Skill Lv * 8 ]% 
+	penalty on their Base Atk and Magic Atk for 5 seconds.  This penalty is not cumulative with 
+	itself, or other penalties to Base Atk or Magic Atk.
+		note:
+		use one of the soul-linker's aura type effects.  it should hug the edges of the sprite with
+		ripples.
+
+Life Steal - Offensive - 5 Lv's - Requires : Blood Bridge Lv 1
+skill	SP : 5		Cast : 0.7 s.	Recharge : 0.8 s.
+	Does not work on Undead or Ghost race targets.  Deal [ Skill Lv * Vit * 5 ] dark damage to 
+	target enemy and restore your own health by [ Skill Lv * 2 ]% of the damage the target 
+	receives.  Any status ailments the victim was suffering from will be transfered to you.  
+	>> Considered a ranged attack, and attacks at a -25 Hit penalty
+		note:
+		use the hp drain visual (one) and the dark soul strike visual (one).  the dark soul strike is
+		something I believe a couple bosses use, im not sure what it's called however, but it should
+		be there somewhere.  the dark soul strike ball starts at the caster, goes to the target, and then
+		the hp drain ball starts at the target and goes to the caster, resulting in a heal animation on
+		the caster.
+
+Torment - Offensive - 5 Lv's - Requires : Life Steal Lv 10, Blood Siphon Lv 5, Malice Lv 5
+skill	SP : 0		Cast : Instant	Recharge : 2 s.
+	Sacrifice 2%...20% of maximum health to deal [ ( Skill Lv * 10 + 100 ) * sacrificed health / 
+	100 ] dark damage to all enemies within a 4 cell radius circle, centered on you.  If any target 
+	dies from this damage, your health is healed by 10% of their maximum health.
+		note:
+		use the dark grand cross visual-set, but make it appropriately larger cell-by-cell for Torment.
+
+Shivers - Offensive - 5 Lv's - Requires : Malice Lv 3
+spell	SP : 30		Cast : 3 s.	Recharge : 3.2 s.	Duration : 3...8 s.
+	For [ 3 + Skill Lv ] seconds, target enemy begins shivering uncontrollably, slowing movement, 
+	casting speed, and attack speed by 30%.
+		note:
+		there may be a rumbling visual effect somewhere. i'm not sure, but it's worth looking for.
+
+Exposure - Offensive - 5 Lv's - Requires : Malice Lv 7
+spell	SP : 30		Cast : 3 s.	Recharge : n/a		Duration : <><>*
+	Whenever target enemy next takes damage from a spell, that damage is increased by [ Skill 
+	Lv * 3 ]% and Exposure ends.
+		note:
+		target is effected by the berserk visuals, and an aura visual that surrounds their sprite - i believe
+		it's a soul linker spell effect, but i don't know which one.
+
+Bloodrush - Defensive - 1 Lv - <QUEST SKILL>
+skill	SP : 30		Cast : 1.5 s.	Recharge : 4 s.		Duration : 30 s.
+	Can only be used if current health is higher than 75% of maximum health.  For 30 
+	seconds you gain a defense, flee, and movement speed bonus equal to 1/4th of your total 
+	Vit.
+		note:
+		use the monk's fury visuals, combined with stonecurse's darkening visual.
+
+Ghostblood - Passive - 1 Lv - <QUEST SKILL>
+n/a	Once learned, sacrificing health from a skill is no longer able to kill you if your health is too 
+	low.

@@ -1,0 +1,16 @@
+monk_test,304,93,4	script	CastleReset	113,{
+	if(getgmlevel() < 80) end;
+	setarray .@castleMaps$[0], "prtg_cas01", "prtg_cas02", "prtg_cas03", "prtg_cas04", "prtg_cas05","aldeg_cas01","aldeg_cas02","aldeg_cas03","aldeg_cas04","aldeg_cas05","gefg_cas01","gefg_cas02","gefg_cas03","gefg_cas04","gefg_cas05","payg_cas01","payg_cas02","payg_cas03","payg_cas04","payg_cas05";
+	setarray .@castle$[0], "Pt01","Pt02","Pt03","Pt04","Pt05","A01","A02","A03","A04","A05","G01","G02","G03","G04","G05","Py01","Py02","Py03","Py04","Py05";
+	mes "Please pick a castle to reset.";
+	next;
+	set .@choice, select(.@castleMaps$[0],.@castleMaps$[1],.@castleMaps$[2],.@castleMaps$[3],.@castleMaps$[4],.@castleMaps$[5],.@castleMaps$[6],.@castleMaps$[7],.@castleMaps$[8],.@castleMaps$[9],.@castleMaps$[10],.@castleMaps$[11],.@castleMaps$[12],.@castleMaps$[13],.@castleMaps$[14],.@castleMaps$[15],.@castleMaps$[16],.@castleMaps$[17],.@castleMaps$[18],.@castleMaps$[19],"Cancel")-1;
+	if(.@choice == 20) goto L_End;
+	for(set .@i, 1; .@i < 26; set .@i, .@i + 1) {
+		setcastledata .@castleMaps$[.@choice],.@i,0;
+	}
+	getcastledata .@castleMaps$[.@choice],0,"::OnRecvCastle"+.@castle$[.@choice];
+	mes .@castleMaps$[.@choice] + " has been reset.";
+	L_End:
+	close;	
+}

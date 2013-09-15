@@ -1,0 +1,261 @@
+//Comodo slot machines.
+//Written by Dubby
+//v1.0
+
+cmd_in02,1,1,1	script	SlotMachine	-1,0,1,{
+	message strcharinfo(0),"Sit in the chair to play.";
+	end;
+OnTouch:
+	callfunc "F_SlotScript";
+	end;
+}
+//row 1
+cmd_in02,187,106,1	duplicate(SlotMachine)	Slot Machine#1	111,0,1
+cmd_in02,185,106,1	duplicate(SlotMachine)	Slot Machine#2	111,0,1
+cmd_in02,183,106,1	duplicate(SlotMachine)	Slot Machine#3	111,0,1
+cmd_in02,181,106,1	duplicate(SlotMachine)	Slot Machine#4	111,0,1
+
+//row 2
+cmd_in02,184,100,1	duplicate(SlotMachine)	Slot Machine#5	111,0,1
+cmd_in02,186,100,1	duplicate(SlotMachine)	Slot Machine#6	111,0,1
+cmd_in02,188,100,1	duplicate(SlotMachine)	Slot Machine#7	111,0,1
+cmd_in02,190,100,1	duplicate(SlotMachine)	Slot Machine#8	111,0,1
+
+//row 3
+cmd_in02,167,106,1	duplicate(SlotMachine)	Slot Machine#9	111,0,1
+cmd_in02,169,106,1	duplicate(SlotMachine)	Slot Machine#10	111,0,1
+cmd_in02,171,106,1	duplicate(SlotMachine)	Slot Machine#11	111,0,1
+cmd_in02,173,106,1	duplicate(SlotMachine)	Slot Machine#12	111,0,1
+
+//row 4
+cmd_in02,165,100,1	duplicate(SlotMachine)	Slot Machine#13	111,0,1
+cmd_in02,167,100,1	duplicate(SlotMachine)	Slot Machine#14	111,0,1
+cmd_in02,169,100,1	duplicate(SlotMachine)	Slot Machine#15	111,0,1
+cmd_in02,171,100,1	duplicate(SlotMachine)	Slot Machine#16	111,0,1
+
+//row 5
+cmd_in02,163,87,1	duplicate(SlotMachine)	Slot Machine#17	111,1,0
+cmd_in02,164,85,1	duplicate(SlotMachine)	Slot Machine#18	111,1,0
+cmd_in02,166,83,1	duplicate(SlotMachine)	Slot Machine#19	111,0,1
+cmd_in02,168,82,1	duplicate(SlotMachine)	Slot Machine#20	111,0,1
+
+function	script	F_SlotScript	{
+L_Start:
+	mes "[Slot Machine]";
+	mes "Insert zeny to play.";
+	mes "- Icon Key -";
+	if($@SlotSkull) mes "[X] Skull";
+	mes "[-] Bar";
+	mes "[B] Berries";
+	mes "[#] Pounds";
+	mes "[@] Apples";
+	mes "[+] Crosses";
+	mes "[7] Lucky 7";
+	next;
+	if(getgmlevel()<80) menu "Start",-,"Cancel",L_Cancel;
+	if(getgmlevel()>79&&!$@SlotSkull) menu "Start",-,"Cancel",L_Cancel,"Turn on Skulls",L_SkullOn;
+	if(getgmlevel()>79&&$@SlotSkull) menu "Start",-,"Cancel",L_Cancel,"Turn off Skulls",L_SkullOff;
+	if(!Zeny) goto L_NoZeny;
+	mes "[Slot Machine]";
+	mes "Insert zeny, no more then 1000z.";
+	next;
+L_BetError:
+	input @bet;
+	next;
+	if(@bet<=0) message strcharinfo(0),"Bet is too low, input again.";
+	if(@bet>1000) message strcharinfo(0),"Bet is too high, input again.";
+	if(Zeny<@bet) message strcharinfo(0),"You don't have that much zeny...";
+	if(@bet<=0||@bet>1000||(Zeny<@bet)) goto L_BetError;
+	set Zeny,Zeny-@bet;
+	mes "[Slot Machine]";
+	mes "Pick a lucky number, 1 - 7 only!";
+	next;
+L_LuckyError:
+	input @lucky;
+	next;
+	if(@lucky<1||@lucky>7) message strcharinfo(0),"Improper lucky number, pick again!";
+	if(@lucky<1||@lucky>7) goto L_LuckyError;
+	mes "[Slot Machine]";
+	mes @bet+"z bet, "+@lucky+" is lucky!";
+	next;
+	callsub sF_SlotMachine,0;
+	mes "[Slot Machine]";
+	mes "["+@slot$[0]+"]";
+	next;
+	callsub sF_SlotMachine,1;
+	mes "[Slot Machine]";
+	mes "["+@slot$[0]+"] ["+@slot$[1]+"]";
+	next;
+	callsub sF_SlotMachine,2;
+	mes "[Slot Machine]";
+	mes "["+@slot$[0]+"] ["+@slot$[1]+"] ["+@slot$[2]+"]";
+	next;
+	if(@slot$[0]=="X"||@slot$[1]=="X"||@slot$[2]=="X") goto L_LoseAll;
+	if(rand(1,7)!=@lucky) set @lucky,0;
+	if(@lucky) set @lucky,2;
+	if(@slot$[0]=="-"&&@slot$[1]=="-"&&@slot$[2]=="-") goto L_AllBar;
+	if(@slot$[0]=="7"&&@slot$[1]=="7"&&@slot$[2]=="7") goto L_All7;
+	if(@slot$[0]=="B"&&@slot$[1]=="B"&&@slot$[2]=="B") goto L_AllBerries;
+	if(@slot$[0]=="#"&&@slot$[1]=="#"&&@slot$[2]=="#") goto L_AllPound;
+	if(@slot$[0]=="@"&&@slot$[1]=="@"&&@slot$[2]=="@") goto L_AllApples;
+	if(@slot$[0]=="+"&&@slot$[1]=="+"&&@slot$[2]=="+") goto L_AllPlus;
+	set @bar,0;
+
+	if(@slot$[0]=="-") set @bar,@bar+1;
+	if(@slot$[1]=="-") set @bar,@bar+1;
+	if(@slot$[2]=="-") set @bar,@bar+1;
+
+	set @total,0;
+	if(@slot$[0]=="B") set @total,@total+1;
+	if(@slot$[0]=="#") set @total,@total+2;
+	if(@slot$[0]=="@") set @total,@total+3;
+	if(@slot$[0]=="+") set @total,@total+4;
+	if(@slot$[0]=="7") set @total,@total+5;
+
+	if(@slot$[1]=="B") set @total,@total+1;
+	if(@slot$[1]=="#") set @total,@total+2;
+	if(@slot$[1]=="@") set @total,@total+3;
+	if(@slot$[1]=="+") set @total,@total+4;
+	if(@slot$[1]=="7") set @total,@total+5;
+
+	if(@slot$[2]=="B") set @total,@total+1;
+	if(@slot$[2]=="#") set @total,@total+2;
+	if(@slot$[2]=="@") set @total,@total+3;
+	if(@slot$[2]=="+") set @total,@total+4;
+	if(@slot$[2]=="7") set @total,@total+5;
+
+	if(@bar>0) goto L_BarLose;
+
+	mes "[Slot Machine]";
+	if(@lucky) mes "Lucky Safe!";
+	if(!@lucky) mes "Safe!";
+	if(@total==4) set @bet,((@bet/5)+(@bet/5));
+	if(@total==5) set @bet,(@bet/2);
+	if(@total==6) set @bet,((@bet/2)+(@bet/10));
+	if(@total==7) set @bet,((@bet/2)+(@bet/5));
+	if(@total==8) set @bet,((@bet/2)+(@bet/5)+(@bet/10));
+	if(@total==9) set @bet,((@bet/2)+(@bet/5)+(@bet/5));
+	if(@total==11) set @bet,(@bet+(@bet/10));
+	if(@total==12) set @bet,(@bet+(@bet/5));
+	if(@total==13) set @bet,(@bet+(@bet/5)+(@bet/10));
+	if(@total==14) set @bet,(@bet+(@bet/5)+(@bet/5));
+	if(@lucky) set @bet,@bet*2;
+	mes "Winnings : "+@bet+"z";
+	set Zeny,Zeny+@bet;
+	set @total,0;
+	goto L_Wipe;
+L_BarLose:
+	set @total,0;
+	mes "[Slot Machine]";
+	if(@bar==1) mes "Bar, you lose...";
+	if(@bar==1) mes "Winnings : "+(@bet/3)+"z";
+	if(@bar==2) mes "Double Bar, you lost...";
+	if(@bar==2) mes "Winnings : "+(@bet/10)+"z";
+	set @bar,0;
+	set Zeny,Zeny+(@bet/10);
+	goto L_Wipe;
+L_SkullLose:
+	set @total,0;
+	mes "[Slot Machine]";
+	mes "Skull, you lose...";
+	mes "Winnings : 0z";
+	goto L_Wipe;
+L_AllBar:
+	mes "[Slot Machine]";
+	mes "Strikeout...";
+	mes "Winnings : 0z";
+	goto L_Wipe;
+L_AllBerries:
+	mes "[Slot Machine]";
+	if(@lucky) mes "Lucky Berries!";
+	if(!@lucky) mes "Berries!";
+	set @bet,(@bet*3)+(@bet/4);
+	if(@lucky) set @bet,@bet*2;
+	mes "Winnings : "+@bet+"z";
+	set Zeny,Zeny+@bet;
+	goto L_Wipe;
+L_AllPound:
+	mes "[Slot Machine]";
+	if(@lucky) mes "Lucky Pounds!";
+	if(!@lucky) mes "Pounds!";
+	set @bet,(@bet*6)+(@bet/2);
+	if(@lucky) set @bet,@bet*2;
+	mes "Winnings : "+@bet+"z";
+	set Zeny,Zeny+@bet;
+	goto L_Wipe;
+L_AllApples:
+	mes "[Slot Machine]";
+	if(@lucky) mes "Lucky Apples!";
+	if(!@lucky) mes "Apples!";
+	set @bet,(@bet*10)+(@bet/2)+(@bet/4);
+	if(@lucky) set @bet,@bet*2;
+	mes "Winnings : "+@bet+"z";
+	set Zeny,Zeny+@bet;
+	goto L_Wipe;
+L_AllPlus:
+	mes "[Slot Machine]";
+	if(@lucky) mes "Lucky Crosses!";
+	if(!@lucky) mes "Crosses!";
+	set @bet,@bet*15;
+	set @bet,@bet+(@bet*@lucky);
+	mes "Winnings : "+@bet+"z";
+	set Zeny,Zeny+@bet;
+	goto L_Wipe;
+L_All7:
+	mes "[Slot Machine]";
+	if(@lucky) mes "Lucky Jackpot!";
+	if(!@lucky) mes "Jackpot!";
+	set @bet,@bet*200;
+	if(@lucky) set @bet,@bet*2;
+	mes "Winnings : "+@bet+"z";
+	set Zeny,Zeny+@bet;
+	announce strcharinfo(0)+" hit the Jackpot at the slots and won "+@bet+" zeny!!",16;
+	goto L_Wipe;
+L_LoseAll:
+	mes "[Slot Machine]";
+	mes "Skulls! You lost...";
+	mes "Winnings : 0";
+L_Wipe:
+	set @bet,0;
+	set @lucky,0;
+	cleararray @slot$[0],"",3;
+	mes " ";
+	mes " ";
+	mes "Play again?";
+	next;
+	if(Select("Yes","No")==1) goto L_Start;
+	close;
+L_Cancel:
+	next;
+	close;
+L_NoZeny:
+	mes "[Slot Machine]";
+	mes "But you have no zeny at all...";
+	close;
+sF_SlotMachine:
+	set @rand,rand(1,6);
+	if(@rand==1) set @slot$[getarg(0)],"-";
+	if(@rand==2) set @slot$[getarg(0)],"B";
+	if(@rand==3) set @slot$[getarg(0)],"#";
+	if(@rand==4) set @slot$[getarg(0)],"@";
+	if(@rand==5) set @slot$[getarg(0)],"+";
+	if(@rand==6) set @slot$[getarg(0)],"7";
+	if(rand(1,7)==1&&$@SlotSkull) set @slot$[getarg(0)],"X";
+	return;
+L_SkullOn:
+	mes "Turning skulls on will make the game much harder, are you sure?";
+	menu "Yes",-,"No",L_Cancel;
+	set $@SlotSkull,1;
+	next;
+	mes "Skulls are now on.";
+	next;
+	goto L_Start;
+L_SkullOff:
+	mes "Turning skulls off will make the game easier (This is recommended), are you sure?";
+	menu "Yes",-,"No",L_Cancel;
+	set $@SlotSkull,0;
+	next;
+	mes "Skulls are now off.";
+	next;
+	goto L_Start;
+}

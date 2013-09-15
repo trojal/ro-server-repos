@@ -1,0 +1,118 @@
+
+payo1.gat,85,134,5	script	Bot Report NPC	47,{
+	if(getgmlevel()>=40){
+	goto L_GMops;
+	}
+	goto L_NonGMops;
+
+// Options for NON GMs (Reporting Bots)
+
+L_NonGMops:
+	mes "[Bot Report NPC]";
+	mes "Would you like to report a Bot?";
+	menu "No, I don't.",L_No,"Yes, I do.",L_Botreport;
+
+L_No:
+	next;
+	mes "[Bot Report NPC]";
+	mes "Alright, come back whenever you can :D.";
+	next;
+	mes "Bot Report NPC v. 0.8";
+	mes "Made by Nate for DuskRO.";
+	close;
+
+L_Botreport:
+	next;
+	mes "[Bot Report NPC]";
+	mes "Please write the name of the bot in the box:";
+	set botname$,"";
+	input botname$;
+	set .bot$[.counter],botname$;
+	set .counter,.counter+1;
+	goto L_Finish;
+
+L_Finish:
+	mes "[Bot Report NPC]";
+	mes "Thanks :P, you have successfully reported:";
+	mes getd("botname$");
+	next;
+	mes "Bot Report NPC v. 0.8";
+	mes "Made by Nate for DuskRO.";
+	close;
+
+// Options for GMs (Checking Bots)
+
+L_GMops:
+	mes "[Bot Report NPC]";
+	mes "Welcome to the GM Control Panel";
+	mes "How may I help you?";
+	menu "Nothing",L_No,"Check for bots",L_Botcheck,"Clear Bot List",L_Clear;
+
+L_Botcheck:
+	next;
+	mes "[Bot Report NPC]";
+	mes "Please select what you would like to do.";
+	menu "Nothing",L_No,"Online Reported Bots",L_Onlinebots;
+
+L_Onlinebots:
+	next;
+	set i,0;
+	set o,0;
+	while(i<128){
+	if (getmapxy (.mapname$,.x,.y,0,.bot$[i])==0){
+		set .onlinebot$[o],.bot$[i];
+		set o,o+1;
+		}
+	set i,i+1;
+	}
+	goto L_Onlinebotmssg;
+	
+L_Onlinebotmssg:
+	mes "[Bot Report NPC]";
+	mes "Search finalized";
+	mes getd("o");
+	mes "Online bots were found";
+	next;
+	mes "Online Bot List";
+	set i,0;
+	while (i<128){
+	if (.onlinebot$[i]==""){
+		set .onlinebot$[i],0;
+		}
+	set i,i+1;
+	}
+	set i,0;
+	while (i<128){
+	if (.onlinebot$[i]!="0"){
+		set .botx$,.onlinebot$[i];
+		mes getd(".botx$");
+		}
+	set i,i+1;
+	}
+	next;
+	mes "Bot Report NPC v. 0.8";
+	mes "Made by Nate for DuskRO";
+	set i,0;
+	while(i<128){
+	set .onlinebot$[i],0;
+	set i,i+1;
+	}
+	close;
+	
+L_Clear:
+	set i,0;
+	while(i<128){
+	set .bot$[i],0;
+	set i,i+1;
+	}
+	next;
+	mes "[Bot Report NPC]";
+	mes "The bot list has been cleared";
+	next;
+	mes "Bot Report NPC v. 0.8";
+	mes "Made by Nate for DuskRO";
+	close;
+}
+
+//thanx in advanced
+//-Nate

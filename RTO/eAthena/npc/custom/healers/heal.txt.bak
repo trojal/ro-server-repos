@@ -1,0 +1,131 @@
+//===== eAthena Script =======================================
+//= Heal Npc
+//===== By: ==================================================
+//= Lotsa People (1.x)
+//===== Current Version: =====================================
+//= 3.0
+//===== Compatible With: =====================================
+//= eAthena 0.1+;
+//===== Description: =========================================
+//= Healer NPC Which Heals For Free
+//===== Additional Comments: =================================
+//= 3.0 By massdriller, Changed and edited the script
+//= added other warp points of maps.
+//= 2.0 By Darkchild, Duplicates And Changed A Bit
+//= you can replace this script file by heal_payment.txt
+//= if you want that players have to pay their healings.
+//============================================================
+
+prontera,150,184,5	script	Healer#h1-1::Healer	936,{
+
+	mes "[Healer]";
+		percentheal 100,100;
+	mes "I have amazing healing powers!!";
+	mes "You look like a person who needs them! Have fun!";
+	close;
+
+}
+
+morocc,159,96,5	duplicate(Healer)	Healer#h1-2	936
+ayothaya,155,111,5	duplicate(Healer)	Healer#h1-3	915
+geffen,121,61,5	duplicate(Healer)	Healer#h1-4	936
+umbala,94,162,5	duplicate(Healer)	Healer#h1-5	915
+payo1,98,121,4	duplicate(Healer)	Healer#h1-6	936
+alberta,185,144,5	duplicate(Healer)	Healer#h1-7	915
+aldebaran,134,123,5	duplicate(Healer)	Healer#h1-8	936
+izlude,125,118,5	duplicate(Healer)	Healer#h1-9	915
+xmas,149,136,5	duplicate(Healer)	Healer#h1-10	936
+comodo,188,162,5	duplicate(Healer)	Healer#h1-11	915
+amatsu,200,80,5	duplicate(Healer)	Healer#h1-12	936
+gonryun,164,130,5	duplicate(Healer)	Healer#h1-13	915
+yuno,152,186,5	duplicate(Healer)	Healer#h1-14	936
+niflheim,188,180,5	duplicate(Healer)	Healer#h1-15	915
+louyang,225,103,5	duplicate(Healer)	Healer#h1-16	936
+
+//===== eAthena Script ======================================= 
+//= Custom Free Breeder aka Universal Renter (not reccomended)
+//===== By: ================================================== 
+//= eAthena Team
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena 1.0 Final +
+//===== Description: ========================================= 
+//= A Free PecoPeco and Falcon Breeder
+//===== Additional Comments: ================================= 
+//FIXED checkriding/cart/falcon funcs [Lupus]
+//Added Rebirth/Advanced Class support [Mass Zero]
+//Simplified the checks of job [Silentdragon]
+//============================================================ 
+
+
+payo1,105,137,1	script	Universal Rental Npc	934,{
+	mes "[Universal Rental Npc]";
+	mes "Hi, here you can rent Carts, Falcons or Pecopecos.";
+	next;
+
+L_Menu:
+	menu "Rent a Cart",L_Cart,"Rent a Falcon",L_Falcon,"Rent a Pecopeco",L_Peco,"Quit",L_Quit;
+	close;
+
+L_Cart:
+	if((BaseClass == Job_Merchant || BaseJob == Job_SuperNovice) && checkcart() == 0) goto L_Cart_Ok;
+	if(getskilllv(39)<1) goto L_Need_Skill;
+
+	mes "[Universal Rental Npc]";
+	mes "Sorry " + strcharinfo(0) + ", but I only rent carts to people with the Merchant job root, who have enough skills to handle a cart.";
+	close;
+
+L_Cart_Ok:
+	setcart;
+	goto L_Quit2;
+
+L_Need_Skill:
+	mes "[Universal Rental Npc]";
+	mes "Sorry you don't have the required skill to rent a cart.";
+	close;
+
+L_Falcon:
+	if(BaseJob != Job_Archer && BaseClass == Job_Archer && checkfalcon() == 0) goto L_Falc;
+	if(getskilllv(127)<1) goto L_Need_Skill2;
+
+	mes "[Universal Rental Npc]";
+	mes "Sorry " + strcharinfo(0) + ", but I only rent falcons to Hunters and Snipers who the ability to handle 'em.";
+	close;
+
+L_Falc:
+	setfalcon;
+	goto L_Quit2;
+
+L_Need_Skill2:
+	mes "[Universal Rental Npc]";
+	mes "Sorry you don't have the required skill to own a Falcon.";
+	close;
+
+L_Peco:
+	if (BaseJob != Job_Swordman && BaseClass == Job_Swordman && checkriding() == 0) goto L_Peco_Ok;
+	if(getskilllv(63)<1) goto L_Need_Skill3;
+
+	mes "[Universal Rental Npc]";
+	mes "Sorry " + strcharinfo(0) + ", but I only rent Pecopecos to Knights and Crusaders who have the ability to handle 'em.";
+	close;
+
+L_Peco_Ok:
+	setriding;
+	goto L_Quit2;
+
+L_Need_Skill3:
+	mes "[Universal Rental Npc]";
+	mes "Sorry you don't have the required skill to ride a Peco Peco.";
+	close;
+
+L_Quit:
+	mes "[Universal Rental Npc]";
+	mes strcharinfo(0) + ", please come back when you are ready to rent something.";
+	close;
+
+L_Quit2:
+	mes "[Universal Rental Npc]";
+	mes strcharinfo(0) + ", please come again when you want another...";
+	close;
+}

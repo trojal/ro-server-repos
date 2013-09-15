@@ -1,0 +1,102 @@
+// for mobs
+// mob_id,sprite_id,equip #
+// Use another mob's sprite for a monster.  0 for sprite will disable mob.
+// Mob must have an equipment it's pet counterpart can use or it will cause problems.  If no equip use 0.
+// The following if a player sprite is used
+// MobID,SpriteID,Sex,Hair,Hair_Color,Weapon,Shield,Head_Top,Head_Middle,Head_Bottom,Option,Dye_Color
+// Use Item ID for weapons and shields, not View ID.
+
+//1002,1039	//Poring,Baphomet (Make Porings look like Baphomet)
+//1970,1002,10013	// new mob that looks like a Poring with a backpack
+
+// Easter Event Monsters
+1920,1047,0
+1921,1093,0
+
+// eAthena Dev Team
+// Valaris
+1900,4013,1,1,1,1254,0,67,12,54,16,1
+// Valaris Worshiper
+1901,6,1,1,1,1219,2101,67,12,54,0,1
+// MC Cameri
+1902,14,1,6,6,1101,2105,0,0,0,32,3
+// Poki#3
+1903,4012,1,21,0,1720,0,102,184,57,16,0
+// Sentry
+1904,1286,0
+
+// Zombocorn custom
+2601,1163,0	//hollow sword [raydric]
+2998,1127,0	//massive hode [hode] *MB
+2997,1261,0	//scarlet [wild rose] *MB
+2602,1031,0	//stinky [poporing] *MB
+2603,1276,0	//hollow bow [raydric archer]
+2604,1305,0	//pincer leech [ancient worm]
+2605,1174,0	//feeder [stainer]
+2606,1494,0	//roller beetle [antler beetle]
+2607,1034,0	//hypno toad [thara frog] *MB
+2608,1622,0	//diego [teddy bear] *MB
+2609,1142,0	//atomic [marine sphere]
+2610,1064,0	//curmudgeon [megalodon]
+2611,1129,0	//wisp [horong]
+2612,1309,0	//haunt [gajomart]
+2613,1619,0	//trilomite [porcellio]
+2614,1156,0	//kraken [sky petit]
+2615,1212,0	//grumbler [iron fist]
+2616,1278,0	//bulwark [stalactic golem]
+2617,1187,0	//shadow [switch]
+2618,1366,0	//ignus [lava golem]
+2619,1382,0	//menace [diabolic]
+2620,1111,0	//qisling [drainliar]
+2621,1383,0	//firebat [explosion]
+2622,1387,0	//grouser [gig]
+2623,1099,0	//coruscatite [argiope]
+2624,1072,0	//pharos [kaho]
+2625,1309,0	//phlogiston [gajomart]
+2626,1367,0	//bomb [blazer]
+//3028,1007,0	//munchinator [fabre]
+2627,1384,0	//wyvern [sky deleter]
+2628,1385,0	//whelp [deleter]
+2629,1093,0	//rabid [eclipse]
+2630,1015,0	//defiler [zombie]
+2631,1036,0	//cadaver [ghoul]
+//3034,1621,0	//miasma [venomous]
+2633,1011,0	//corpsefly [chonchon]
+2634,1076,0	//graveman [skeleton]
+2635,1028,0	//jaggler [skeleton soldier]
+2996,1290,0	//atropos [skeleton general]
+//2587,1011,0	//angry corpsefly [chonchon]
+2637,1166,0	//cave boar [savage]
+2638,1167,0	//cave pig [savage babe]
+2639,1014,0	//fungoid [spore]
+2600,1002,0	//red [poring] *SP
+2599,1031,0	//green [poporing] *SP
+2598,1113,0	//yellow [drops] *SP
+2597,1242,0	//blue [marin] *SP
+2596,1090,0	//jumbo [mastering] *SP
+2595,1388,0	//white [archangeling]
+2594,1582,0	//black [deviling]
+2593,1093,0	//widget [eclipse] *SP
+2592,1093,0	//widget [eclipse] *SP
+2591,1093,0	//widget [eclipse] *SP
+2590,1093,0	//widget [eclipse] *SP
+2589,1118,0	//flytrap [flora] *SP
+2588,1011,0	//fly	[chonchon] *SP
+2587,1011,0	//angry fly [chonchon] *SP
+2586,1011,0	//super fly [chonchon] *SP
+2585,1397,0	//red gem [fire crystal] *SP
+2584,1396,0	//green gem [earth crystal] *SP
+2583,1395,0	//yellow gem [wind crystal] *SP
+2582,1398,0	//blue gem [water crystal] *SP
+//3062,1665,0	//thunder orb [ws skill] *SP
+//3063,1664,0	//fire orb [ws skill] *SP
+//3064,1667,0	//ice orb [ws skill] *SP
+//3065,1666,0	//earth orb [ws skill] *SP
+2642,1090,0	//nuking [mastering]
+//3067,1615,0	//drone 1 [exp]
+2999,1615,0	//drone 2 [tank]
+2643,1198,0	//cynic [dark priest]
+2644,1132,0	//riot [khalitzburg]
+2992,1022,0	//windigo [werewolf]
+2640,1618,0	//ankheg [ungoliant]
+2641,1177,0	//mudwight [zenorc]

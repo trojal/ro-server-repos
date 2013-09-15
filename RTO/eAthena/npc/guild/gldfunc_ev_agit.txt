@@ -1,0 +1,366 @@
+//===== eAthena Script =======================================
+//= War of Emperium Guild Event AgitStart/AgitBreak Functions
+//===== By: ==================================================
+//= jAthena - kalen (1.0)
+//= 1.1 by Akaru, ho|yAnge|X, and Valaris
+//===== Current Version: =====================================
+//= 1.8
+//===== Compatible With: =====================================
+//= eAthena SVN; RO Episode 4+
+//===== Description: =========================================
+//= F_AgitStart is in charge of spawning Emperium and mobs in castles
+//=   when WoE is started.
+//= F_AgitBreak resets guild castle data when a castle has been taken over.
+//=   It then sets the data for the new guild master if there is one.
+//=======================================
+//= Break down of arguments used in F_AgitStart:
+//=   arg(0): name of specific guild castle.
+//=   arg(1): name of specific agit castle script.
+//=   arg(2): x1 for Emperium coordinates.
+//=   arg(3): y1 for Emperium coordinates.
+//= Break down of arguments used in F_AgitBreak:
+//=   arg(0): name of specific guild castle.
+//=   arg(1): name of specific OnRevCastle label.
+//===== Additional Comments: =================================
+//= v1.2: All OnAgitStart and OnAgitBreak calls will use these functions.[kobra_k88]
+//= v1.2a: Added OnAgitEnd function.[kobra_k88]
+//= 1.3 Added code for abandoning captured castles on /breakguild [Lupus]
+//= 1.3a fixed Defence / Economy underflow [Lupus] thanks2 kyoki
+//= 1.4 updated a couple mapannounces in OnAgitBreak. [L0ne_W0lf]
+//= 1.5 Changed the names of the Kafra from "Service" to "Staff" [L0ne_W0lf]
+//= 1.6 Fixed the OnAgitBreak message being map-only and not global. (Lil DomX) [L0ne_W0lf]
+//= 1.7 Updated functions, got rid of the various gotos. [L0ne_W0lf]
+//=	Castles can be conquered as long as they un-owned.
+//= 1.8 Fixed Guardian data being overwritten when castle ownership changes. [L0ne_W0lf]
+//	Data will only be saved for guardians if you have the Guaridan Research.
+//	It works this way to deal with a bug on ownership change.
+//============================================================
+
+
+// Function for OnAgitStart =========================================
+function	script	F_AgitStart	{
+	set .@map$, getarg(0);
+	set .@castle$, getarg(1);
+	set .@empx, getarg(2);
+	set .@empy, getarg(3);
+
+	MapRespawnGuildID .@map$,GetCastleData(.@map$,1),2;
+	monster .@map$,.@empx,.@empy,"Emperium",1288,1,"Agit_"+.@castle$+"::OnAgitBreak";
+	GvgOn .@map$;
+	if (GetCastleData(.@map$,1) != 0) return;
+	if (compare(.@map$,"aldeg_cas")) {
+		areamonster .@map$,0,0,300,300,"--ja--",1117,10;
+		areamonster .@map$,0,0,300,300,"--ja--",1132,4;
+		areamonster .@map$,0,0,300,300,"--ja--",1219,2;
+		areamonster .@map$,0,0,300,300,"--ja--",1205,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1216,10;
+		areamonster .@map$,0,0,300,300,"--ja--",1193,17;
+		areamonster .@map$,0,0,300,300,"--ja--",1269,9;
+		areamonster .@map$,0,0,300,300,"--ja--",1276,7;
+		areamonster .@map$,0,0,300,300,"--ja--",1208,3;
+		areamonster .@map$,0,0,300,300,"--ja--",1275,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1268,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1272,1;
+		monster .@map$,.@empx+1,.@empy,"--ja--",1272,1;
+		monster .@map$,.@empx-1,.@empy,"--ja--",1270,4;
+		monster .@map$,.@empx,.@empy+1,"--ja--",1268,1;
+		monster .@map$,.@empx,.@empy-1,"--ja--",1219,1;
+		monster .@map$,.@empx,.@empy,"--ja--",1276,5;
+		return;
+	}
+	else if (compare(.@map$,"gefg_cas")) {
+		areamonster .@map$,0,0,300,300,"--ja--",1117,10;
+		areamonster .@map$,0,0,300,300,"--ja--",1263,11;
+		areamonster .@map$,0,0,300,300,"--ja--",1102,10;
+		areamonster .@map$,0,0,300,300,"--ja--",1130,10;
+		areamonster .@map$,0,0,300,300,"--ja--",1140,20;
+		areamonster .@map$,0,0,300,300,"--ja--",1163,9;
+		areamonster .@map$,0,0,300,300,"--ja--",1275,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1219,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1150,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1159,1;
+		monster .@map$,.@empx+1,.@empy,"--ja--",1203,1;
+		monster .@map$,.@empx-1,.@empy,"--ja--",1087,1;
+		monster .@map$,.@empx,.@empy+1,"--ja--",1213,7;
+		monster .@map$,.@empx,.@empy-1,"--ja--",1189,7;
+		return;
+	}
+	else if (compare(.@map$,"payg_cas")) {
+		areamonster .@map$,0,0,300,300,"--ja--",1277,10;
+		areamonster .@map$,0,0,300,300,"--ja--",1208,10;
+		areamonster .@map$,0,0,300,300,"--ja--",1262,5;
+		areamonster .@map$,0,0,300,300,"--ja--",1102,5;
+		areamonster .@map$,0,0,300,300,"--ja--",1150,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1115,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1129,11;
+		areamonster .@map$,0,0,300,300,"--ja--",1276,5;
+		areamonster .@map$,0,0,300,300,"--ja--",1282,4;
+		areamonster .@map$,0,0,300,300,"--ja--",1253,5;
+		monster .@map$,.@empx,.@empy,"--ja--",1150,1;
+		monster .@map$,.@empx,.@empy,"--ja--",1115,1;
+		monster .@map$,.@empx,.@empy+1,"--ja--",1208,6;
+		monster .@map$,.@empx,.@empy-1,"--ja--",1276,5;
+		return;
+	}
+	else if (compare(.@map$,"prtg_cas")) {
+		areamonster .@map$,0,0,300,300,"--ja--",1163,15;
+		areamonster .@map$,0,0,300,300,"--ja--",1132,10;
+		areamonster .@map$,0,0,300,300,"--ja--",1219,5;
+		areamonster .@map$,0,0,300,300,"--ja--",1268,5;
+		areamonster .@map$,0,0,300,300,"--ja--",1251,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1252,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1276,5;
+		areamonster .@map$,0,0,300,300,"--ja--",1259,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1283,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1275,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1200,1;
+		monster .@map$,.@empx+1,.@empy,"--ja--",1268,1;
+		monster .@map$,.@empx-1,.@empy,"--ja--",1251,1;
+		monster .@map$,.@empx,.@empy+1,"--ja--",1252,1;
+		monster .@map$,.@empx,.@empy-1,"--ja--",1219,2;
+		monster .@map$,.@empx,.@empy,"--ja--",1276,5;
+		return;
+	}
+}
+
+// Function for OnGuildBreak ======================================
+function	script	F_GuildBreak	{
+	set .@map$, getarg(0);
+	set .@castle$, getarg(1);
+
+	killmonsterall .@map$;
+
+	Announce "Guild Base [" + GetCastleName(.@map$) + "] has been abandoned.",0;
+	disablenpc "Kafra Staff#"+.@castle$;
+
+	SetCastleData .@map$,0,0;
+	return;
+}
+
+// Function for OnAgitBreak ======================================
+function	script	F_AgitBreak	{
+	set .@map$, getarg(0);
+	set .@castle$, getarg(1);
+
+	set .@GID,getcharid(2);
+	if (.@GID <= 0) return;
+
+	set .@Economy,GetCastleData(.@map$,2) - 5;
+	if (.@Economy < 0) set .@Economy, 0;
+	SetCastleData .@map$, 2, .@Economy;
+
+	set .@Defence,GetCastleData(.@map$,3) - 5;
+	if (.@Defence < 0) set .@Defence, 0;
+	SetCastleData .@map$, 3, .@Defence;
+
+	SetCastleData .@map$,1, .@GID;
+	MapAnnounce .@map$,"The emperium has been destroyed.",bc_map,0x00CCFF;
+	Announce "The [" + GetCastleName(.@map$) + "] castle has been conquered by the [" + GetGuildName(.@GID) + "] guild.",bc_all;
+	GetCastleData .@map$,0,"::OnRecvCastle"+.@castle$;
+
+	disablenpc "Kafra Staff#"+.@castle$;
+
+	// Set data to be cleared from the castle
+	// If the new owning guild doesn't have have 
+	// Guardian Research erase all guardian data.
+	// Otherwise remove investment data and kafra.
+	if (getgdskilllv(.@GID,10002) == 0) set .@data,25;
+	else set .@data,9;
+
+	for( set .@i, 4; .@i <= .@data; set .@i, .@i+1 )
+		SetCastleData .@map$, .@i, 0;
+
+	return;
+}
+
+
+// Function for OnAgitEnd ======================================
+function	script	F_AgitEnd	{
+	set .@map$, getarg(0);
+	set .@castle$, getarg(1);
+
+	GvgOff .@map$;
+	// Disable the following if statment to keep empty
+	// castles from being aquired after after WoE ends.
+	if (GetCastleData(.@map$,1) == 0) return;
+	MapRespawnGuildID .@map$,GetCastleData(.@map$,1),4;
+	KillMonster .@map$,"Agit_"+.@castle$+"::OnAgitBreak";
+	end;
+}
+
+-	script	Agit_Portals	-1,{
+	end;
+
+//OnClock1800:	//start time for Tues(2), Thurs(4)
+//OnClock2000:	//end time for Tues(2), Thurs(4)
+OnClock1700:	//start time for Sat(6)
+OnClock1900:	//end time for Sat(6)
+
+//Saturday
+if((gettime(4)==6) && (gettime(3)>=17 && gettime(3)<19)) goto sat;
+if((gettime(4)==6) && (gettime(3)==19)) goto sat_end;
+
+//Tuesday
+if((gettime(4)==2) && (gettime(3)>=17 && gettime(3)<19)) goto tue;
+if((gettime(4)==2) && (gettime(3)==19)) goto tue_end;
+
+sat_end:
+//    enablenpc "payg01";
+    enablenpc "payg02";
+    enablenpc "payg03";
+    enablenpc "payg04";
+    enablenpc "payg05";
+//    enablenpc "payg01-1";
+    enablenpc "payg02-1";
+    enablenpc "payg03-1";
+    enablenpc "payg04-1";
+    enablenpc "payg05-1";
+    enablenpc "prtg01"; // NORMAL
+    enablenpc "prtg001";
+    enablenpc "prtg002";
+    enablenpc "prtg02-1";
+    enablenpc "prtg03-1";
+    enablenpc "prtg04-1";
+    enablenpc "prtg05-1";
+    enablenpc "aldg01";
+    enablenpc "aldg01-1";
+    enablenpc "aldg02";
+    enablenpc "aldg02-1";
+    enablenpc "aldg03";
+    enablenpc "aldg03-1";
+    enablenpc "aldg04";
+    enablenpc "aldg04-1";
+    enablenpc "aldg05";
+    enablenpc "aldg05-1";
+    enablenpc "gefg05";
+    enablenpc "gefg06";
+    enablenpc "gefg01";
+    enablenpc "gefg08";
+    enablenpc "gefg02";
+    enablenpc "gefg09";
+    enablenpc "gefg09-1";
+    enablenpc "gefg03";
+    enablenpc "gefg04";
+    enablenpc "gefg07";
+end;
+
+sat:
+//    disablenpc "payg01";
+    disablenpc "payg02";
+    disablenpc "payg03";
+    disablenpc "payg04";
+    disablenpc "payg05";
+//    disablenpc "payg01-1";
+    disablenpc "payg02-1";
+    disablenpc "payg03-1";
+    disablenpc "payg04-1";
+    disablenpc "payg05-1";
+    disablenpc "prtg01"; // NORMAL
+    disablenpc "prtg001";
+    disablenpc "prtg002";
+    disablenpc "prtg02-1";
+    disablenpc "prtg03-1";
+    disablenpc "prtg04-1";
+    disablenpc "prtg05-1";
+    disablenpc "aldg01";
+    disablenpc "aldg01-1";
+    disablenpc "aldg02";
+    disablenpc "aldg02-1";
+    disablenpc "aldg03";
+    disablenpc "aldg03-1";
+    disablenpc "aldg04";
+    disablenpc "aldg04-1";
+    disablenpc "aldg05";
+    disablenpc "aldg05-1";
+    disablenpc "gefg05";
+    disablenpc "gefg06";
+    disablenpc "gefg01";
+    disablenpc "gefg08";
+    disablenpc "gefg02";
+    disablenpc "gefg09";
+    disablenpc "gefg09-1";
+    disablenpc "gefg03";
+    disablenpc "gefg04";
+    disablenpc "gefg07";
+end;
+
+tue_end:
+    enablenpc "payg01";
+    enablenpc "payg02";
+    enablenpc "payg03";
+    enablenpc "payg04";
+    enablenpc "payg05";
+    enablenpc "payg01-1";
+    enablenpc "payg02-1";
+    enablenpc "payg03-1";
+    enablenpc "payg04-1";
+    enablenpc "payg05-1";
+    enablenpc "prtg01";
+    enablenpc "prtg001";
+    enablenpc "prtg002";
+    enablenpc "prtg02-1";
+    enablenpc "prtg03-1";
+    enablenpc "prtg04-1";
+    enablenpc "prtg05-1";
+    enablenpc "aldg01"; // NORMAL
+    enablenpc "aldg01-1"; // NORMAL
+    enablenpc "aldg02";
+    enablenpc "aldg02-1";
+    enablenpc "aldg03";
+    enablenpc "aldg03-1";
+    enablenpc "aldg04";
+    enablenpc "aldg04-1";
+    enablenpc "aldg05";
+    enablenpc "aldg05-1";
+    enablenpc "gefg05";
+    enablenpc "gefg06";
+//    enablenpc "gefg01";
+    enablenpc "gefg08";
+//    enablenpc "gefg02";
+    enablenpc "gefg09";
+    enablenpc "gefg09-1";
+    enablenpc "gefg03";
+    enablenpc "gefg04";
+    enablenpc "gefg07";
+end;
+
+tue:
+    disablenpc "payg01";
+    disablenpc "payg02";
+    disablenpc "payg03";
+    disablenpc "payg04";
+    disablenpc "payg05";
+    disablenpc "payg01-1";
+    disablenpc "payg02-1";
+    disablenpc "payg03-1";
+    disablenpc "payg04-1";
+    disablenpc "payg05-1";
+    disablenpc "prtg01";
+    disablenpc "prtg001";
+    disablenpc "prtg002";
+    disablenpc "prtg02-1";
+    disablenpc "prtg03-1";
+    disablenpc "prtg04-1";
+    disablenpc "prtg05-1";
+    disablenpc "aldg01"; // NORMAL
+    disablenpc "aldg01-1"; // NORMAL
+    disablenpc "aldg02";
+    disablenpc "aldg02-1";
+    disablenpc "aldg03";
+    disablenpc "aldg03-1";
+    disablenpc "aldg04";
+    disablenpc "aldg04-1";
+    disablenpc "aldg05";
+    disablenpc "aldg05-1";
+    disablenpc "gefg05";
+    disablenpc "gefg06";
+//    disablenpc "gefg01";
+    disablenpc "gefg08";
+//    disablenpc "gefg02";
+    disablenpc "gefg09";
+    disablenpc "gefg09-1";
+    disablenpc "gefg03";
+    disablenpc "gefg04";
+    disablenpc "gefg07";
+end;
+}

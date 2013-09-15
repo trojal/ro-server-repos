@@ -1,0 +1,396 @@
+//Izlude Arena Warper (Main map)
+prt_are_in,101,20,5	script	Warper Amethyst#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Amethyst",0;
+}
+
+//Start Town NPCs
+aldebaran,145,111,3	script	Warper Freya#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Freya",0;
+}
+alberta,114,62,5	script	Warper Vanessa#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Vanessa",0;
+}
+amatsu,102,153,5	script	Warper Mary Lou#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Mary Lou",0;
+}
+comodo,198,149,5	script	Warper Dante#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Dante",0;
+}
+geffen,126,64,4	script	Warper Laura#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Laura",0;
+}
+gonryun,153,120,5	script	Warper Whitney#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Whitney",0;
+}
+izlude,136,92,3	script	Warper Wyn#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Wyn",0;
+}
+jawaii,162,131,3	script	Warper Becca#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Becca",0;
+}
+yuno,163,189,3	script	Warper Paige#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Paige",0;
+}
+louyang,207,102,5	script	Warper Rachael#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Rachael",0;
+}
+xmas,142,137,3	script	Warper Faye#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Faye",0;
+}
+morocc,168,107,3	script	Warper Tamera#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Tamera",0;
+}
+niflheim,205,179,3	script	Warper Caitlyn#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Caitlyn",0;
+}
+payon,189,104,5	script	Warper Candi#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Candi",0;
+}
+prontera,160,190,5	script	Warper Jade#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Jade",0;
+}
+umbala,130,133,5	script	Warper Meriam#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Merium",0;
+}
+lighthalzen,163,103,3	script	Warper Leandra#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Leandra",0;
+}
+einbroch,57,203,5	script	Warper Salena#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Salena",0;
+}
+einbech,179,131,3	script	Warper Anita#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Anita",0;
+}
+hugel,97,168,3	script	Warper Jenna#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Jenna",0;
+}
+rachel,120,146,3	script	Warper Anastasia#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Anastasia",0;
+}
+veins,205,129,5	script	Warper Crystal#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Crystal",0;
+}
+ayothaya,208,169,5	script	Warper Linda#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Linda",0;
+}
+moscovia,213,217,5	script	Warper Mindy#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	setarray @dungeonCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,1100,1700,1300,2100,1000,2000,2100,1900,2000,1700;
+	callfunc "F_DynWarp","Mindy",0;
+}
+
+//Start Dungeon NPCs
+alb2trea,85,111,5	script	Warper Wilma#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	callfunc "F_DynWarp","Wilma",1;
+}
+moc_fild04,207,331,3	script	Warper Teresa#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	callfunc "F_DynWarp","Teresa",1;
+}
+izlu2dun,103,90,5	script	Warper Mona#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	callfunc "F_DynWarp","Mona",1;
+}
+pay_arche,42,137,5	script	Warper Robbin#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	callfunc "F_DynWarp","Robbin",1;
+}
+moc_ruins,63,166,5	script	Warper Jessica#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	callfunc "F_DynWarp","Jessica",1;
+}
+moc_fild19,109,101,5	script	Warper Julia#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	callfunc "F_DynWarp","Julia",1;
+}
+yuno_fild03,39,145,5	script	Warper Melissa#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	callfunc "F_DynWarp","Melissa",1;
+}
+mjolnir_02,86,361,3	script	Warper Alice#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	callfunc "F_DynWarp","Alice",1;
+}
+in_orcs01,34,165,5	script	Warper Cynthia#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	callfunc "F_DynWarp","Cynthia",1;
+}
+gefenia01,56,169,5	script	Warper Taylor#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	callfunc "F_DynWarp","Taylor",1;
+}
+glast_01,367,308,3	script	Warper Tara#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	callfunc "F_DynWarp","Tara",1;
+}
+gef_tower,156,33,3	script	Warper Eve#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	callfunc "F_DynWarp","Eve",1;
+}
+yuno_fild07,214,179,5	script	Warper Monica#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	callfunc "F_DynWarp","Monica",1;
+}
+ra_san01,142,137,5	script	Warper Jamie#warper	112,{
+	setarray @townCost[0],1200,1000,1500,1600,900,1900,900,1800,1100,1700,1400,1000,2000,900,900,1600,2100,1900,2000,2100,2300,1900,2200,2300;
+	callfunc "F_DynWarp","Jamie",1;
+}
+
+//callfunc "F_DynWarp","NPC Name",townsonly;
+//"NPC Name" = Freya(default)
+//townsonly: 0=Towns and Dungeon warps (default), 1=Towns only
+function	script	F_DynWarp	{
+	set @npcname$, "[" + getarg(0,"Freya") + "]";
+	getmapxy(.@currentmap$, .@currentx, .@currenty, 0);
+	
+	//Town Info
+	setarray .@locationTownName$[0], "Al De Baran", "Alberta", "Amatsu",  "Comodo","Geffen",      "Gonryun",
+									"Izlude",     "Jawaii",  "Juno",    "Louyang","Lutie",       "Morroc",
+									"Niflheim",    "Payon",  "Prontera", "Umbala", "Lighthalzen", "Einbroch",
+									"Einbech",    "Hugel",   "Rachel",  "Veins",   "Ayothaya",  "Moscovia";//24
+	set .@townCount, getarraysize(.@locationTownName$);
+	setarray .@townMap$[0],"aldebaran","alberta","amatsu","comodo","geffen","gonryun","izlude","jawaii","yuno","louyang","xmas","morocc","niflheim","payon","prontera","umbala","lighthalzen","einbroch","einbech","hugel","rachel","veins","ayothaya","moscovia";
+	setarray .@townX[0],140,117,105,193,119,157,130,160,160,213,149,160,198,179,156,125,161,59,180,93,124,207,207,216;
+	setarray .@townY[0],111,58,151,148,67,121,88,125,186,100,133,94,184,102,183,134,99,198,128,153,143,125,167,215;
+	if(getarraysize(.@townMap$) != .@townCount || getarraysize(.@townX) != .@townCount || getarraysize(.@townY) != .@townCount)
+		debugmes "F_DynWarp (warper.txt): Mismatched townCount.";
+	if(getarraysize(@townCost) != .@townCount)
+		debugmes "F_DynWarp (warper.txt#"+@npcname$+"): Town price doesn't match amount of towns.";
+	
+	//Dungeon Info
+	setarray .@locationDungeonName$[0],"Sunken Ship",       "Anthell", "Byalan Island", "Culvert Sewers", "Payon Dungeon",   "Pyramids","Labyrinth Forest",
+									"Sphinx","Magma Cavern","Coal Mine",     "Louyang Dungeon", "Orc Camp","Turtle Dungeon",
+									"Geffenia",            "Glastheim",      "Toy Factory",      "Abyss Lake",    "Amatsu Dungeon",
+									"Ayotha Dungeon",     "Beach Dungeon",  "Clock Tower",     "Einbech Dungeon",  "Geffen Dungeon",
+									"Gonryun Dungeon",    "Juperos",        "Kiel Dungeon",             "Ice Dungeon",     "Rachel Sanctuary",
+									"Umbala Dungeon";
+	set .@dungeonCount, getarraysize(.@locationDungeonName$);
+	setarray .@dungeonMap$[0],"alb2trea","moc_fild04","izlu2dun","prt_sewb1","pay_arche","moc_ruins","prt_fild01","moc_fild19","yuno_fild03","mjolnir_02","louyang","in_orcs01","tur_dun01","gefenia01","glast_01","xmas","abyss_01","ama_dun01","ayo_dun01","comodo","c_tower1","einbech","gef_tower","gonryun","yuno_fild07","kh_dun01","ra_fild01","ra_san01","umbala";
+	setarray .@dungeonX[0],86,209,108,124,42,63,136,108,38,80,42,30,157,58,366,143,262,229,273,31,200,138,153,161,212,3,233,139,112;
+	setarray .@dungeonY[0],106,328,87,247,131,160,367,99,140,358,274,167,37,169,304,311,269,11,20,215,165,246,35,195,175,230,327,134,238;
+	if(getarraysize(.@dungeonMap$) != .@dungeonCount || getarraysize(.@dungeonX) != .@dungeonCount || getarraysize(.@dungeonY) != .@dungeonCount)
+		debugmes "F_DynWarp (warper.txt): Mismatched dungeonCount.";
+	if(getarraysize(@dungeonCost) != .@dungeonCount && getarg(1))
+		debugmes "F_DynWarp (warper.txt#"+@npcname$+"): Dungeon price doesn't match amount of dungeons.";
+		
+		
+	//Visited Info
+	setarray .@townsVisited[0], visitTowns & 1, visitTowns & 2, visitTowns & 4, visitTowns & 8, visitTowns & 16, visitTowns & 32, visitTowns & 64, visitTowns & 128, visitTowns & 256, visitTowns & 512, visitTowns & 1024, visitTowns & 2048, visitTowns & 4096, visitTowns & 8192, visitTowns & 16384, visitTowns & 32768, visitTowns & 65536, visitTowns & 131072, visitTowns & 262144, visitTowns & 524288, visitTowns & 1048576, visitTowns & 2097152, visitTowns & 4194304, visitTowns & 8388608;
+	setarray .@dungeonsVisited[0], visitDungeons & 1, visitDungeons & 2, visitDungeons & 4, visitDungeons & 8, visitDungeons & 16, visitDungeons & 32, visitDungeons & 64, visitDungeons & 128, visitDungeons & 256, visitDungeons & 512, visitDungeons & 1024, visitDungeons & 2048, visitDungeons & 4096, visitDungeons & 8192, visitDungeons & 16384, visitDungeons & 32768, visitDungeons & 65536, visitDungeons & 131072, visitDungeons & 262144, visitDungeons & 524288 ,visitDungeons & 1048576, visitDungeons & 2097152, visitDungeons & 4194304, visitDungeons & 8388608, visitDungeons & 16777216, visitDungeons & 33554432, visitDungeons & 67108864, visitDungeons & 134217728, visitDungeons & 268435456;
+	
+	set .@partywarp, 0;
+	
+	//Level Tax
+	set .@costRate, 0;
+	set .@levelTax, 0;
+		if(Class < Job_Knight) set .@costRate, -400;
+	else if(Class >= Job_Knight && Upper != 1) set .@costRate, -200;
+	
+	if(Class < Job_Knight) {
+		if(BaseLevel >= 15) set .@levelTax, (BaseLevel-14) * 5;
+	} else if (Class >= Job_Knight && Upper != 1) {
+		if(BaseLevel >= 15  && BaseLevel < 50) set .@levelTax, (BaseLevel-14) * 5;
+		if(BaseLevel >= 50) set .@levelTax, (BaseLevel-49) * 5;
+	} else if (Upper == 1) {
+		if(BaseLevel >= 15  && BaseLevel < 50) set .@levelTax, (BaseLevel-14) * 5;
+		if(BaseLevel >= 50 && BaseLevel <100) set .@levelTax, (BaseLevel-49) * 5;
+		if(BaseLevel >= 100) set .@levelTax,(BaseLevel-99) * 10;
+	}
+	set .@costRate, .@costRate + .@levelTax;
+	if(Class < Job_Knight && .@costRate > -200) set .@costRate, -200;
+	if(Class >= Job_Knight && Upper != 1 && .@costRate > 0) set .@costRate, 0;
+	
+	
+	//Begin Warper
+L_beginwarper:
+	mes @npcname$;
+	percentheal 100,100;
+	mes "Where would you like to go?";
+	next;
+	if(getarg(1,0) == 1) goto L_Towns;
+	menu "Towns",L_Towns,"Dungeons",L_Dungeons,"Warper Information",L_Infoz,"Cancel",L_Quit;
+	
+	L_Towns:
+		mes @npcname$;
+		mes "Which town would you like to visit?";
+		next;
+		for(set .@i, 0; .@i < .@townCount; set .@i, .@i + 1) {
+			set .@cost, @townCost[.@i] + .@costRate;
+			if(.@townsVisited[.@i] != 0 && .@townMap$[.@i] != .@currentmap$) { 
+				if(.@cost > 0 && Class != Job_Novice) {
+					if(Zeny < .@cost)
+						set .@locationTownName$[.@i], .@locationTownName$[.@i] + " -> ^FF0000" + .@cost + "z^000000"; //Red text if you can't afford it.
+					else
+						set .@locationTownName$[.@i], .@locationTownName$[.@i] + " -> ^00CC00" + .@cost + "z^000000"; //Green if you can.
+				} else {
+					set .@locationTownName$[.@i], .@locationTownName$[.@i] + " -> ^00CC00Free^000000"; //Free if it's free.
+				}
+			} else {
+				set .@locationTownName$[.@i], ""; //Null it 
+			}
+		}
+		set .@choice, select(.@locationTownName$[0],.@locationTownName$[1],.@locationTownName$[2],.@locationTownName$[3],.@locationTownName$[4],.@locationTownName$[5],.@locationTownName$[6],.@locationTownName$[7],.@locationTownName$[8],.@locationTownName$[9],.@locationTownName$[10],.@locationTownName$[11],.@locationTownName$[12],.@locationTownName$[13],.@locationTownName$[14],.@locationTownName$[15],.@locationTownName$[16],.@locationTownName$[17],.@locationTownName$[18],.@locationTownName$[19],.@locationTownName$[20],.@locationTownName$[21],.@locationTownName$[22],.@locationTownName$[23],"Cancel") - 1;
+		if(.@choice == .@townCount) goto L_Quit;
+		set .@cost, @townCost[.@choice] + .@costRate;
+		if(Zeny < .@cost && Class != Job_Novice) goto ER_Zeny;
+		if(Class != Job_Novice) set Zeny, Zeny - .@cost;
+		warp .@townMap$[.@choice],.@townX[.@choice],.@townY[.@choice];
+		close;
+
+	L_Dungeons:
+		set .@partyid, getcharid(1);
+		if(getpartyleader(.@partyid) == strcharinfo(0)) {
+			mes @npcname$;
+			mes "As a party leader, you can warp your entire party to certain dungeons.";
+			mes "Would you like to use this feature?";
+			next;
+			if(select("Yes","No") == 2) goto L_NoParty;
+			getpartymember .@partyid;
+			set .@costRateP, ($@partymembercount * 300) + 4000;
+			mes @npcname$;
+			mes "It will be " + .@costRateP + "z in addition to the normal fee for warping.";
+			next;
+			mes @npcname$;
+			mes "Do you still want to party warp?";
+			next;
+			if(select("Yes","No") == 2) goto L_NoParty;
+			set .@costRate, .@costRateP;
+			set .@partywarp, 1;
+		} else if(.@partyid > 0) {
+			mes @npcname$;
+			mes "Your party leader has the option to warp your entire party at once.";
+			next;
+		}
+		L_NoParty:
+			mes @npcname$;
+			mes "Which dungeon would you like to visit?";
+			next;
+			for(set .@i, 0; .@i < .@dungeonCount; set .@i, .@i + 1) {
+				set .@cost, @dungeonCost[.@i] + .@costRate;
+				if(.@dungeonsVisited[.@i] != 0) { 
+					if(.@cost > 0) {
+						if(Zeny < .@cost)
+							set .@locationDungeonName$[.@i], .@locationDungeonName$[.@i] + " -> ^FF0000" + .@cost + "z^000000";
+						else
+							set .@locationDungeonName$[.@i], .@locationDungeonName$[.@i] + " -> ^00CC00" + .@cost + "z^000000";
+					} else {
+						set .@locationDungeonName$[.@i], .@locationDungeonName$[.@i] + " -> ^00CC00Free^000000";
+					}
+				} else {
+					set .@locationDungeonName$[.@i], "";
+				}
+			}
+			set .@choice, select(.@locationDungeonName$[0],.@locationDungeonName$[1],.@locationDungeonName$[2],.@locationDungeonName$[3],.@locationDungeonName$[4],.@locationDungeonName$[5],.@locationDungeonName$[6],.@locationDungeonName$[7],.@locationDungeonName$[8],.@locationDungeonName$[9],.@locationDungeonName$[10],.@locationDungeonName$[11],.@locationDungeonName$[12],.@locationDungeonName$[13],.@locationDungeonName$[14],.@locationDungeonName$[15],.@locationDungeonName$[16],.@locationDungeonName$[17],.@locationDungeonName$[18],.@locationDungeonName$[19],.@locationDungeonName$[20],.@locationDungeonName$[21],.@locationDungeonName$[22],.@locationDungeonName$[23],.@locationDungeonName$[24],.@locationDungeonName$[25],.@locationDungeonName$[26],.@locationDungeonName$[27],.@locationDungeonName$[28],"Cancel") - 1;
+			if(.@choice == .@dungeonCount) goto L_Quit;
+			
+			if(.@dungeonMap$[.@choice] == "prt_sewb1" || .@dungeonMap$[.@choice] == "tur_dun01" || .@dungeonMap$[.@choice] == "louyang" || .@dungeonMap$[.@choice] == "prt_fild01" || .@dungeonMap$[.@choice] == "ra_tempin" || .@dungeonMap$[.@choice] == "ama_dun01" || .@dungeonMap$[.@choice] == "umbala" || .@dungeonMap$[.@choice] == "gonryun" || .@dungeonMap$[.@choice] == "comodo" || .@dungeonMap$[.@choice] == "xmas" || .@dungeonMap$[.@choice] == "abyss_01" || .@dungeonMap$[.@choice] == "ayo_dun01" || .@dungeonMap$[.@choice] == "c_tower1" || .@dungeonMap$[.@choice] == "einbech" || .@dungeonMap$[.@choice] == "kh_dun01") {
+				mes @npcname$;
+				mes "The map you are warping to does not have a warper for a return trip.";
+				mes "You'll need to find another way home.";
+				next;
+			}
+			
+			if(.@dungeonMap$[.@choice] == "gefenia01")
+				if(countitem(7025) < 1) goto ER_Geffenia;
+			
+			set .@cost, @dungeonCost[.@choice] + .@costRate;
+			if(Zeny < .@cost) goto ER_Zeny;
+			set Zeny, Zeny - .@cost;
+			if(.@partywarp)
+				warpparty .@dungeonMap$[.@choice],.@dungeonX[.@choice],.@dungeonY[.@choice],.@partyid;
+			else
+				warp .@dungeonMap$[.@choice],.@dungeonX[.@choice],.@dungeonY[.@choice];
+			close;
+	
+	ER_Geffenia:
+		mes @npcname$;
+		mes "You need ^3355FFLucifer's Lament^000000 to warp to Geffenia.";
+		close;
+	
+	ER_Zeny:
+		mes @npcname$;
+		mes "You don't have enough zeny to go there.";
+		close;
+	
+	L_Infoz:
+		mes @npcname$;
+		mes "Welcome to Amethyst's Premium Warping Service.";
+		mes "Our duty is to provide you with a warping service unlike any other.";
+		next;
+		mes @npcname$;
+		mes "Our system works like this:";
+		mes "- You can only warp to a place that you have been to before.";
+		mes " ";
+		mes "- All you need to do is walk into the dungeon/town to enable it in our system.";
+		mes " ";
+		mes "- Kafra's teleportation service experienced a major decrease in usage, so they removed their service.";
+		next;
+		mes @npcname$;
+		mes "- We offer a party warping system that works like this: (((PartyMembers*300) + 4000) + OriginalPrice) Zeny.";
+		mes " ";
+		mes "- Some areas do not offer a warper representative for a return trip home.";
+		mes " ";
+		mes "- Novice's always will have free warping anywhere.";
+		mes " ";
+		mes "- All players have the six main towns already enabled from the very beginning.";
+		next;
+		mes @npcname$;
+		mes "That about sums up the system.";
+		mes "We're always expanding, so make sure to check back for news in the near future.";
+		next;
+		goto L_beginwarper;
+	
+	L_Quit:
+		mes @npcname$;
+		mes "Bye.";
+		close;
+}

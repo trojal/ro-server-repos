@@ -1,0 +1,40 @@
+payo1,83,145,5	script	Reset Camel	938,{
+	mes "[Reset Camel]";
+	mes "I am a Reset Camel.";
+	mes "I'll reset your stats or your";
+	mes "skills.";
+	next;
+	mes "Please select the service you want:";
+	menu "^FF3355-Reset Skills - 60k",L0,"-Reset Stats - 60k",L1,"-Reset Both - 100k^000000",L2,"Quit",LEnd;
+	
+	L0:
+		if (Zeny < 60000) goto NO_ZENY_RESET;
+		mes "[Reset Camel]";
+		mes "Alright, here we go now.. ";
+		set zeny,zeny - 60000;
+		ResetSkill;
+		close;
+	L1:
+		if (Zeny < 60000) goto NO_ZENY_RESET;
+		mes "[Reset Camel]";
+		mes "Alright, here we go now..";
+		set zeny,zeny - 60000;
+		ResetStatus;
+		close;
+	L2:
+		if (Zeny < 100000) goto NO_ZENY_RESET;
+		mes "[Reset Camel]";
+		mes "Alright, here we go now..";
+		set zeny,zeny - 100000;
+		ResetSkill;
+		ResetStatus;
+		close;
+
+	NO_ZENY_RESET:
+		mes "[Reset Camel]";
+		mes "Begone! Come back when you can actually afford my services!";
+		close;
+
+	LEnd:
+		close;	
+}

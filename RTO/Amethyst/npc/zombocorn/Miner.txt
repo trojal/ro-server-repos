@@ -1,0 +1,363 @@
+// o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o \\
+//                     Miner System                      \\
+//                Version 1.1 for eAthena                \\
+//                  (c) 2007 by Myzter                   \\
+//   Ensure MaxGotoCount (script_athena.conf) > 100000   \\
+// o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o \\
+-	script	MinerSpot	-1,{
+	if (!getarraysize($@CommonMinerals)) goto OnInit;
+	if (countitem(7318) < 1) {
+		mes "[^0000FF" + strcharinfo(0) + "^000000]";
+		mes "What a beautiful mineral vein, but I can't seen to work on it...";
+		mes " ";
+		mes ">> Required item: ^FF0000" + getitemname(7318) + " ^000000<<";
+		close;
+	}
+	// * Remove 1 Old Pick
+	delitem 7318,1;
+	
+	// Game Startup (don't change)
+	set @HRock,rand(10,25);	// How strong is the rock
+	set @HPick,rand(10,21);	// How strong is the Old Pick
+	set @HWeak,rand(9);	// Weak spot in the rock
+	set @HWP,0;		// Flag for Weak Point Found
+	
+	// ** Resistence
+	set @RESIST,0;
+	// Headgear
+	if (isequipped(5031) || isequipped(5009))
+		set @RESIST, @RESIST + 50 + getequiprefinerycnt(1);
+	else {
+		if (getequipisequiped(1)) set @RESIST, @RESIST + 15 + getequiprefinerycnt(1);
+		if (getequipisequiped(9)) set @RESIST, @RESIST + 10;
+		if (getequipisequiped(10)) set @RESIST, @RESIST + 5;
+	}
+	
+	// * Shoes
+	if (isequipped(2401) || isequipped(2402) || isequipped(2403) || isequipped(2404) || isequipped(2407) || isequipped(2416))
+		set @RESIST, @RESIST + 10 + getequiprefinerycnt(6);
+	else if (getequipisequiped(6))
+		set @RESIST, @RESIST + 20 + getequiprefinerycnt(6);
+		
+	// * Hand protectors
+	if (getequipid(7) == 2604 || getequipid(7) == 2615  || getequipid(7) == 2624 || getequipid(7) == 2667 || getequipid(7) == 2692 || getequipid(7) == 2701)
+		set @RESIST, @RESIST + 10;
+	if (getequipid(8) == 2604 || getequipid(8) == 2615  || getequipid(8) == 2624 || getequipid(8) == 2667 || getequipid(8) == 2692 || getequipid(8) == 2701)
+		set @RESIST, @RESIST + 10;
+	
+	// * Armor
+	if (getequipisequiped(2)) set @RESIST, @RESIST + 10 + getequiprefinerycnt(2);
+	if (@RESIST > 100) set @RESIST, 100;
+	
+	// * Chance to get minerals - (10 = 10%) - (20 = 5%) - (100 = 1%)
+	set @HLuck,rand(10);
+	mes "[^0000FF" + strcharinfo(0) + "^000000]";
+	mes "I need to discover a weak point in this mineral vein as soon as posible.";
+	mes " ";
+	mes ">> Equip Resistance: ^FF0000" + @RESIST + "%^000000";
+	next;
+L_BrkRock:
+
+	if (@HRock > 20)
+		set @RockSt$,"^0EAE1B";
+	else if (@HRock > 15)
+		set @RockSt$,"^7CAE0E";
+	else if (@HRock > 10)
+		set @RockSt$,"^E3C521";
+	else if (@HRock > 5)
+		set @RockSt$,"^D86112";
+	else
+		set @RockSt$,"^D82412";
+	
+	if (@HPick > 20)
+		set @PickSt$,"^0EAE1B";
+	else if (@HPick > 15)
+		set @PickSt$,"^7CAE0E";
+	else if (@HPick > 10)
+		set @PickSt$,"^E3C521";
+	else if (@HPick > 5)
+		set @PickSt$,"^D86112";
+	else
+		set @PickSt$,"^D82412";
+	for (set @x, 0; @x < 25; set @x, @x + 1) {
+		if (@HRock > @x)
+			set @RockSt$, @RockSt$ + "¤";
+		else
+			set @RockSt$, @RockSt$ + "^E0E0E0¤";
+		if (@HPick > @x)
+			set @PickSt$, @PickSt$ + "¤";
+		else
+			set @PickSt$, @PickSt$ + "^E0E0E0¤";
+	}
+	mes "[^0000FF" + strcharinfo(0) + "^000000]";
+	if (@HWP)
+		mes "Weak Point: ^0000FF" + $@PickLocation$[@HWeak] + "^000000";
+	else
+		mes "Searching Weak Point...";
+	mes "> Rock: ";
+	mes " [" + @RockSt$ + "^000000]";
+	mes "> " + getitemname(7318) + ": ";
+	mes " [" + @PickSt$ + "^000000]";
+	next;
+	deletearray @KPos,127;
+	deletearray @KNm$,127;
+	setarray @KPos[0],50,50,50,50,50,50,50,50,50;
+	set @i, 0;
+	while(@i < 9) {
+		set @Wrd, rand(9);
+		set @Repeated,0;
+		if (@i > 0) {
+			for (set @x, 0; @x < @i; set @x, @x + 1) {
+				if (@Wrd == @KPos[@x]) set @Repeated,1;
+			}
+		}
+		if (!@Repeated) {
+			// Set the position in the array
+			set @KPos[@i],@Wrd;
+			set @i, @i + 1;
+		}
+	}
+	set @tmpMenu$,"";
+	for (set @x, 0; @x < 9; set @x, @x + 1) {
+		set @tmpMenu$, @tmpMenu$ + $@PickLocation$[@KPos[@x]] + ":";
+	}
+	set @tmpMenu$, @tmpMenu$ + "Exit";
+
+	// Select the location to break the rock
+	set @opc, select(@tmpMenu$) - 1;
+
+	if (@opc == 9) goto L_Exit;
+
+	// Weak side found!
+	if (@KPos[@opc] == @HWeak) {
+		soundeffect "chepet_attack.wav",0;
+		set @HWP,1;
+		set @HPower1, rand(3,4);
+		set @HPower2, rand(2);
+	} else {
+		soundeffect "apocalips_h_move.wav",0;
+		set @HPower1, rand(2);
+		set @HPower2, rand(1,3);
+	}
+	set @HRock, @HRock - @HPower1;
+	set @HPick, @HPick - @HPower2;
+	if (!rand(10)) {
+		// Accident!!!
+		mes "[^0000FF" + strcharinfo(0) + "^000000]";
+		if (@RESIST < 100 || !rand(10)) {
+			if (sex)
+				soundeffect "die_male.wav",0;
+			else
+				soundeffect "die_merchant_female.wav",0;
+			percentheal -rand(1,rand(100-@RESIST)),0;
+			mes "^FF0000" + $@MNAccidents$[rand(getarraysize($@MNAccidents$))] + "^000000";
+		} else {
+			mes "^FF0000" + $@MNAccidents2$[rand(getarraysize($@MNAccidents2$))] + "^000000";
+		}
+		if (HP < 1) close;
+		next;
+	} else if (!rand(500)) {
+		// Earth Quake!!!
+		soundeffect "earth_quake.wav",0;
+		percentheal -100,-100;
+		announce "The mine is colapsing, you are dead!",3;
+		end;
+	}
+	if (@HPick < 1) {
+		// Old Pick is broken!
+		specialeffect2 155;
+		mes "[^0000FF" + strcharinfo(0) + "^000000]";
+		mes "Damn it, I broke my " + getitemname(7318) + "!";
+		mes " ";
+		mes ">> ^FF0000" + countitem(7318) + "^000000 " + getitemname(7318) + " left";
+		close;
+	}
+	// Give another chance while @HRock is > 0
+	if (@HRock > 0) goto L_BrkRock;
+	soundeffect "tming_success.wav",0;
+	specialeffect 266;
+	mes "[^0000FF" + strcharinfo(0) + "^000000]";
+	mes "Yeahh!!! The stone wall is history!";
+	next;
+	soundeffect "ice_titan_die.wav",0;
+L_GetMinerals:
+	if (@HPick > 20)
+		set @PickSt$,"^0EAE1B";
+	else if (@HPick > 15)
+		set @PickSt$,"^7CAE0E";
+	else if (@HPick > 10)
+		set @PickSt$,"^E3C521";
+	else if (@HPick > 5)
+		set @PickSt$,"^D86112";
+	else
+		set @PickSt$,"^D82412";
+	for (set @x, 0; @x < 25; set @x, @x + 1) {
+		if (@HPick > @x)
+			set @PickSt$, @PickSt$ + "¤";
+		else
+			set @PickSt$, @PickSt$ + "^E0E0E0¤";
+	}
+	mes "[^0000FF" + strcharinfo(0) + "^000000]";
+	mes "> " + getitemname(7318) + ": ";
+	mes " [" + @PickSt$ + "^000000]";
+	next;
+	select("Mine it!");
+	// Clang!!!
+	soundeffect "green_iguana_damage.wav",0;	
+	set @Points, rand(@HLuck);
+	if (@Points < 3) { // 30%
+		set @IType, rand(1000);
+		if (@IType < 2) { // 0.2%
+			set @Mineral, $@BonusItems[rand(getarraysize($@BonusItems))];
+			set @Message$, "Awesome! I found 1 " + getitemname(@Mineral) + "!";
+		} else if (@IType < 50) { // 5%
+			set @Mineral, $@SpecialMinerals[rand(getarraysize($@SpecialMinerals))];
+			set @Message$, "Yeah! This is useful!";
+		} else { // 94.8%
+			set @Mineral, $@NormalMinerals[rand(getarraysize($@NormalMinerals))];
+			set @Message$, "This is a good item. I can use it to my advantage.";
+		}
+	} else { // 70%
+		set @Mineral, $@CommonMinerals[rand(getarraysize($@CommonMinerals))];
+		set @Message$, "I know these veins have better items than this...";
+	}
+	if (@Mineral > 500) {
+		// Check weight
+		if (checkweight(@Mineral,1) == 0) {
+			mes "[^0000FF" + strcharinfo(0) + "^000000]";
+			mes "Damn!!!... I need more space to get this...";
+			mes "(You Lose: ^FF00001 " + getitemname(@Mineral) + "^000000)";
+			close;
+		}
+		getitem @Mineral,1;
+		dispbottom "Mining Vein: You get 1 " + getitemname(@Mineral);
+		mes "[^0000FF" + strcharinfo(0) + "^000000]";
+		mes @Message$;
+		next;
+	} else {
+		mes "[^0000FF" + strcharinfo(0) + "^000000]";
+		mes ">> Oh crap.. nothing on that mine. <<";
+		next;
+	}
+	// Calculate the Old Pick
+	set @HPick, @HPick - rand(3);
+	if (@HPick < 1) {
+		// Old Pick is broken!
+		specialeffect2 155;
+		mes "[^0000FF" + strcharinfo(0) + "^000000]";
+		mes "Damn, I broke my " + getitemname(7318) + ".";
+		mes " ";
+		mes ">> ^FF0000" + countitem(7318) + "^000000 " + getitemname(7318) + " left";
+		close;
+	}
+	goto L_GetMinerals;
+L_Exit:
+	mes "[^0000FF" + strcharinfo(0) + "^000000]";
+	mes "I'll try again later.";
+	close;
+OnInit:
+	setarray $@CommonMinerals[0],	909,715,716,717,1,1,1,1,1,1,1,1,1;
+	setarray $@NormalMinerals[0],	7067,7300,733,910,911,912,984,985,990,991,992,993,994,995,996,997,998,
+					999,1002,1010,1011,7053,7054,7096,7220,7321;
+	setarray $@SpecialMinerals[0],	714,718,719,720,721,722,723,724,725,726,727,728,729,730,731,
+					732,1000,1003,7224,7231,
+					7232,7233,7289,7290,7291,7292,7293,7294,7295,7296,969;
+	setarray $@BonusItems[0],	616,2622,2605,2616,2621,2624,2626,2665,2666,2667,2670,2673,
+					2682,2683,2684,2685; // OCA & RINGS
+	setarray $@PickLocation$[0],	"[O] Center","[/\\] Up","[\\/] Down","[<] Left","[>] Right","[<\\] Top Left",
+					"[/>] Top Right","[</] Bottom Left","[\\>] Bottom Right";
+	setarray $@MNAccidents$[0],	"Ouchhh!!! My eye *tear*",
+					"Arghh!!!!... My finger!",
+					"Ouch!... A stone fell on my head...";
+	setarray $@MNAccidents2$[0],	"Oh my lord, that was lucky!",
+					"He he he... I'm protected!";
+}
+
+-	script	MiningTools	-1,{
+	mes "[Miner]";
+	mes "Hello " + strcharinfo(0) + ", I sell verious mining equipment and items.";
+	mes "What would you like to do?";
+	next;
+l_MainMenu:
+	switch (select("Buy Mining Tools","About Mining","Mine Locations","Bye")) {
+		case 1:
+			mes "[Miner]";
+			mes "I have " + getitemname(7318) + " and some potions to heal you in case you have an accident.";
+			close2;
+			callshop "MinerShop",1;
+			end;
+		case 2:
+			mes "[Miner]";
+			mes "The art of mining is how to obtain good quality mineral from mineral veins.";
+			next;
+			mes "[Miner]";
+			mes "The veins are usually hidden under a large rock wall that you must break.";
+			next;
+			mes "[Miner]";
+			mes "The rock wall is very strong, but a good miner always discovers the weakness point of the vein before breaking thier weapon.";
+			next;
+			mes "[Miner]";
+			mes "The mines are full of secrets. Some miners says that you can find valuable minerals and even treasures from the mineral veins.";
+			next;
+			mes "[Miner]";
+			mes "Even though everything I said sounded wonderful, there are several catches and uncontrollable factors involved in mining.";
+			next;
+			mes "[Miner]";
+			mes "The mines are dangerous, so go exploring fully equiped and pack first aid to protect you.";
+			next;
+			mes "[Miner]";
+			mes "I have noticed that most miners prefer ^FF0000" + getitemname(5009) + "^000000 and ^FF0000" + getitemname(5031) + "^000000";
+			next;
+			goto l_MainMenu;
+		case 3:
+			mes "[Miner]";
+			mes "Mineral veins are everywhere. Currently the only known locations of then are in the Mograt Desert and Coal Mine.";
+			next;
+			goto l_MainMenu;
+	}
+	mes "[Miner]";
+	mes "It was nice talking to you, " + strcharinfo(0) + ".";
+	close;
+}
+
+// o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o \\
+// Mines #001 - #999
+// o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o \\
+anthell01,265,156,5	duplicate(MinerSpot)	Minerals#001	111
+anthell01,247,194,5	duplicate(MinerSpot)	Minerals#002	111
+anthell01,264,206,5	duplicate(MinerSpot)	Minerals#003	111
+anthell01,264,197,5	duplicate(MinerSpot)	Minerals#004	111
+anthell01,265,261,5	duplicate(MinerSpot)	Minerals#005	111
+
+anthell02,195,267,5	duplicate(MinerSpot)	Minerals#006	111
+anthell02,217,260,5	duplicate(MinerSpot)	Minerals#007	111
+anthell02,250,228,5	duplicate(MinerSpot)	Minerals#008	111
+anthell02,251,204,5	duplicate(MinerSpot)	Minerals#009	111
+anthell02,213,69,5	duplicate(MinerSpot)	Minerals#010	111
+
+mjo_dun01,91,211,5	duplicate(MinerSpot)	Minerals#011	111
+mjo_dun01,108,210,5	duplicate(MinerSpot)	Minerals#012	111
+mjo_dun01,131,217,5	duplicate(MinerSpot)	Minerals#013	111
+mjo_dun01,142,220,5	duplicate(MinerSpot)	Minerals#014	111
+mjo_dun01,204,243,5	duplicate(MinerSpot)	Minerals#015	111
+
+// Add your own mines
+
+// o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o \\
+// Merchants
+// o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o \\
+prt_in,161,140,5	duplicate(MiningTools)	Mining Tools#1	813
+morocc,165,113,4	duplicate(MiningTools)	Mining Tools#2	813
+geffen,74,193,4	duplicate(MiningTools)	Mining Tools#3	813
+pay_arche,123,141,4	duplicate(MiningTools)	Mining Tools#4	813
+alberta,204,74,4	duplicate(MiningTools)	Mining Tools#5	813
+izlude_in,72,123,3	duplicate(MiningTools)	Mining Tools#6	813
+yuno_fild01,199,160,2	duplicate(MiningTools)	Mining Tools#7	813
+comodo,125,194,3	duplicate(MiningTools)	Mining Tools#8	813
+gonryun,135,96,4	duplicate(MiningTools)	Mining Tools#9	813
+einbroch,237,169,4	duplicate(MiningTools)	Mining Tools#10	813
+
+// o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o \\
+// Shop
+// o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o \\
+-	shop	MinerShop	-1,7318:2700,501:-1,502:-1,503:-1,504:-1,517:-1,539:-1

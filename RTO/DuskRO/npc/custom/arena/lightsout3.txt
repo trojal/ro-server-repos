@@ -1,0 +1,1650 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//  Lightsout!  ////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//=========== Written by =========================================================================//
+// Dubby                                                                                          //
+//=========== Compatible with ====================================================================//
+// Tested with SVN 2555 Version                                                                   //
+//                                                                                                //
+//=========== Description ========================================================================//
+// Remember an old school game called Lights Out?  Well this is an RO poring version.             //
+//                                                                                                //
+//=========== Comments ===========================================================================//
+// The following are mapflags that are stamped on the lightsout3 map :                        //
+// nomemo, nowarp, nowarpto, nobranch, noicewall, noteleport, nosave, noreturn, pvp	off             //
+// ["job_wiz" is lightsout3]                                                              //
+//                                                                                                //
+// This minigame includes a GM Control Panel to change the game settings and rewards.  Usable     //
+// only by players with a GM level of 80 or higher.  I don't want to change this.  If you want    //
+// then you'll need to add a GM 99 settable variable, or change the number manually.  :D          //
+//                                                                                                //
+// You'll find the entrance NPC in prontera, in the center of town.  Since I'm not going to       //
+// publicly release my arena anytime soon, I'll start dumping my npcs in pron for convienence.    //
+//                                                                                                //
+////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+lightsout3	mapflag	nosave	SavePoint
+lightsout3	mapflag	noreturn
+lightsout3	mapflag	pvp	off
+lightsout3	mapflag	nomemo
+lightsout3	mapflag	nobranch
+lightsout3	mapflag	noteleport
+lightsout3	mapflag	nowarp
+lightsout3	mapflag	nowarpto
+
+//This is the Room Controller npc, she houses the dialogue, activation script, and timer.
+lightsout3,42,177,5	script	lightsout3	770,{
+		if ($@LO3Ready == 1) goto M_NotReady;
+	M_Menu:
+		if ($@LO3On == 1) goto M_Menu2;
+		mes "[Room Controller]";
+		mes "Hello "+strcharinfo(0)+", welcome to Lightsout!  This is room 1.";
+		next;
+		if (getgmlevel() == 0) menu "Information",M_Info,"Start Game",-,"Leave Room",M_Exit;
+		if (getgmlevel() > 79) menu "Information",M_Info,"Start Game",-,"Control Panel",M_Control,"Leave Room",M_Exit;
+	M_Start:
+		next;
+		mes "[Room Controller]";
+		mes "Alright, the room will activate shortly!  The board will begin randomized!";
+		close2;
+		set $@LO3On,1;
+		goto L_Timer;
+	M_Menu2:
+		if ($@LO3CD == 1) end;
+		mes "[Room Controller]";
+		mes "The game is in progress.  What would you like to do?";
+		mes " ";
+		mes " ";
+		set $@LO3MNTM,(((getnpctimer(0,"lightsout3") / 2000) / 60) %60);
+		set $@LO3SETM,((getnpctimer(0,"lightsout3") / 2000) % 60);
+		if ($@LO3SETM == 0 ) goto M_NewMin1;
+		if ($@LO3SETM >= 51 ) goto M_Addzero1;
+		mes "[Time remaining: " + (19-$@LO3MNTM) + ":" + (60-$@LO3SETM) + "]";
+		goto M_Menu2a;
+	M_NewMin1:
+		mes "[Time remaining: " + (20-$@LO3MNTM) + ":00]";
+		goto M_Menu2a;
+	M_Addzero1:
+		mes "[Time remaining: " + (19-$@LO3MNTM) + ":0" + (60-$@LO3SETM) + "]";
+		goto M_Menu2a;
+	M_Menu2a:
+		next;
+		if (getgmlevel() == 0) menu "Cancel",-,"Information and Rules",M_Info,"Leave Room",M_Warpout;
+		if (getgmlevel() > 79) menu "Cancel",-,"Information and Rules",M_Info,"Control Panel",M_Control,"Leave Room",M_Warpout;
+		close;
+	M_Info:
+		mes "[Room Controller]";
+		if ($LO3Board == 0) mes "This game is very simple.  There are 49 porings that will appear in a 7x7 grid.  They can be either red, or green.";
+		if ($LO3Board == 1) mes "This game is very simple.  There are 25 porings that will appear in a 5x5 grid.  They can be either red, or green.";
+		next;
+		mes "[Room Controller]";
+		mes "Click on one, and their color will change, and so will the colors of the ones west, north, east, and south of it.";
+		next;
+		mes "[Room Controller]";
+		mes "The objective is to make all the porings red, or OFF.  Do this, and you win the game and can cash in!  But if you make the entire board green, or ON... it's game over for you!";
+		next;
+		mes "[Room Controller]";
+		mes "Each time you click on a poring, you will get one point added to your score.  The more points you have, the bigger your prize when you cash in.";
+		next;
+		mes "[Room Controller]";
+		mes "But don't be click hastey!  The more points you have, the more likely another poring elsewhere on the board will randomize!  So be careful!";
+		next;
+		mes "[Room Controller]";
+		mes "The game has a timelimit as well.  Twenty minutes.  If everyone here cannot solve the puzzle within twenty minutes, the board resets and nobody wins.";
+		next;
+		mes "[Room Controller]";
+		mes "This is also a minigame you can play by yourself.  And that's about it!";
+		next;
+		mes "[Room Controller]";
+		mes "What would you like to do?";
+		next;
+		goto M_Menu;
+	M_Wait:
+		mes "[Room Controller]";
+		mes "Alright.";
+		close;
+	M_Warpout:
+		mes "[Room Controller]";
+		mes "The game is in progress, are you sure you want to leave?";
+		next;
+		menu "No, I'll stay",M_Wait,"Yes.",M_Exit;
+	M_Exit:
+		mes "[Room Controller]";
+		mes "Please enjoy your stay in the Arena!";
+		if (@LOpt > 0) set @LOpt,0;
+		if (@LOBonus > 0) set @LOBonus,0;
+		close2;
+	warp "pvp_m_room", 51, 38;
+		end;
+	M_NotReady:
+		mes "[Room Controller]";
+		mes "Hello "+strcharinfo(0)+", this room has ended and is in a cooldown phase.  The room will be open again in a short while.";
+		mes " ";
+		set $@LO3MNTM,(((getnpctimer(0,"lightsout3") / 2000) / 60) %60);
+		set $@LO3SETM,((getnpctimer(0,"lightsout3") / 2000) % 60);
+		if ($@LO3SETM == 0 ) goto M_NewMin2;
+		if ($@LO3SETM >= 51 ) goto M_Addzero2;
+		mes "[Time remaining: " + (4-$@LO3MNTM) + ":" + (60-$@LO3SETM) + "]"; // Counts down, this is the base timer
+		goto M_NotReady2;
+	M_NewMin2:
+		mes "[Time remaining: " + (5-$@LO3MNTM) + ":00]"; // Keeps the second from starting at 60
+		goto M_NotReady2;
+	M_Addzero2:
+		mes "[Time remaining: " + (4-$@LO3MNTM) + ":0" + (60-$@LO3SETM) + "]"; // Adds a 0 infront of 1-9
+		goto M_NotReady2;
+	M_NotReady2:
+		next;
+		if ($@LO3LOSE == 1) goto M_NotReady4;
+		if (@LOpt > 0) goto M_NotReady3;
+	M_NotReady4:
+		if (getgmlevel() > 79) menu "Wait in room.",M_Wait,"Control Panel",M_Control,"Leave Room",M_Exit;
+		if (getgmlevel() < 80) menu "Wait in room.",M_Wait,"Leave Room",M_Exit;
+	M_NotReady3:
+		if (getgmlevel() > 79) menu "Wait in room.",M_Wait,"Control Panel",M_Control,"Cash in",M_Cashin;
+		if (getgmlevel() < 80) menu "Wait in room.",M_Wait,"Cash in",M_Cashin;
+	M_Cashin:
+		mes "[Room Controller]";
+		mes "Alright.... lets see how you did.";
+		mes " ";
+		mes " ";
+		if (@LOBonus == 0) mes " ";
+		mes "Total Points : "+@LOpt;
+		if (@LOBonus == 1) mes "Plus Bonus!!";
+		if ($LO3RewType == 0) mes "Kafra Points Earned : "+((@LOpt/$LO3Reward)*(@LOBonus+1)*(@LOBonus+1))+" KP";
+		if ($LO3RewType == 1) mes "Zeny Earned : "+(((@LOpt/$LO3Reward)*50)*(@LOBonus+1)*(@LOBonus+1))+"z";
+
+		next;
+		mes "[Room Controller]";
+		mes "Thank you for playing.";
+		if ($LO3RewType == 0) set RESRVPTS,RESRVPTS + ((@LOpt/$LO3Reward)*(@LOBonus+1)*(@LOBonus+1));
+		if ($LO3RewType == 1) set Zeny,Zeny + (((@LOpt/$LO3Reward)*50)*(@LOBonus+1)*(@LOBonus+1));
+		if ($LO3RewType == 0) dispbottom "[You have "+RESRVPTS+" Kafra Reserve Points]";
+		set @LOpt,0;
+		if (@LOBonus > 0) set @LOBonus,0;
+		next;
+		mes "[Room Controller]";
+		mes "Do you wish to stay here and wait for the room to become available, or return to the station?";
+		next;
+		menu "Wait in room.",M_Wait,"Leave Room",M_Exit;
+	L_Timer:
+		set $@LO3CD,1;
+		setnpctimer 0; //safeguard
+		StartNPCTimer "lightsout3";
+		set $@LO3On,1;
+		set $@LO3Title$,"- Game in Progress";
+		mapannounce "lightsout3",strcharinfo(0) + " has started the countdown!  You have a 20 minute time limit!  The finishing player gains a bonus!",1;
+		set $@LO3Count,1;
+		end;
+	OnTimer1000:
+		if ($@LO3Count == 0) end;
+		mapannounce "lightsout3","[10]",1;
+		end;
+	OnTimer2000:
+		if ($@LO3Count == 0) end;
+		mapannounce "lightsout3","[9]",1;
+		end;
+	OnTimer3000:
+		if ($@LO3Count == 0) end;
+		mapannounce "lightsout3","[8]",1;
+		end;
+	OnTimer4000:
+		if ($@LO3Count == 0) end;
+		mapannounce "lightsout3","[7]",1;
+		end;
+	OnTimer5000:
+		if ($@LO3Ready == 1 && $@LO3LOSE == 0) mapannounce "lightsout3","The game is over, please redeem your earned points by talking to the Room Controller.",1;
+		if ($@LO3Count == 0) end;
+		mapannounce "lightsout3","[6]",1;
+		end;
+	OnTimer6000:
+		if ($@LO3Count == 0) end;
+		mapannounce "lightsout3","[5]",1;
+		end;
+	OnTimer7000:
+		if ($@LO3Count == 0) end;
+		mapannounce "lightsout3","[4]",1;
+		end;
+	OnTimer8000:
+		if ($@LO3Count == 0) end;
+		mapannounce "lightsout3","[3]",1;
+		end;
+	OnTimer9000:
+		if ($@LO3Count == 0) end;
+		mapannounce "lightsout3","[2]",1;
+		end;
+	OnTimer10000:
+		if ($@LO3Count == 0) end;
+		mapannounce "lightsout3","[1]",1;
+		end;
+	OnTimer11000:
+		if ($@LO3Count == 0) end;
+		emotion 27;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		mapannounce "lightsout3","[GO!]",1;
+		set $@LO3CD,0;
+		set $@LO3Count,0;
+		setnpctimer 0;
+		if ($LO3Board == 1) setarray $@LO3[0],0,0,0,0,0,0,0,0,0,9,10,11,12,13,0,0,16,17,18,19,20,0,0,23,24,25,26,27,0,0,30,31,32,33,34,0,0,37,38,39,40,41,0,0,0,0,0,0,0,0;
+		if ($LO3Board == 0) setarray $@LO3[0],0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49;
+		goto L_TurnOn;
+	OnTimer30000:
+		if ($@LO3Ready == 1 && $@LO3LOSE == 0) mapannounce "lightsout3","Please redeem your points with the Room Controller, you will be returned to the station automatically in ninety seconds.",1;
+		end;
+	OnTimer60000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		if ($@LO3Ready == 0) mapannounce "lightsout3","Nineteen minutes remaining.",1;
+		if ($@LO3Ready == 1 && $@LO3LOSE == 0) mapannounce "lightsout3","Please redeem your points with the Room Controller, you will be returned to the station automatically in one minute.",1;
+		if ($@LO3LOSE == 1) mapannounce "lightsout3","The game is over, you will be returned to the station automatically in one minute.",1;
+		end;
+	OnTimer90000:
+		if ($@LO3Ready == 1 && $@LO3LOSE == 0) mapannounce "lightsout3","Please redeem your points with the Room Controller, you will be returned to the station automatically in thirty seconds.",1;
+		if ($@LO3LOSE == 1) mapannounce "lightsout3","You will be returned to the station automatically in thirty seconds.",1;
+		end;
+	OnTimer100000:
+		if ($@LO3Ready == 1 && $@LO3LOSE == 0) mapannounce "lightsout3","Please redeem your points with the Room Controller, you will be returned to the station automatically in twenty seconds.",1;
+		if ($@LO3LOSE == 1) mapannounce "lightsout3","You will be returned to the station automatically in twenty seconds!",1;
+		end;
+	OnTimer110000:
+		if ($@LO3Ready == 1 && $@LO3LOSE == 0) mapannounce "lightsout3","Please redeem your points with the Room Controller, you will be returned to the station automatically in ten seconds!",1;
+		if ($@LO3LOSE == 1) mapannounce "lightsout3","You will be returned to the station automatically in ten seconds!",1;
+		end;
+	OnTimer115000:
+		if ($@LO3Ready == 1 && $@LO3LOSE == 0) mapannounce "lightsout3","Please redeem your points with the Room Controller, you will be returned to the station automatically in five seconds!.",1;
+		if ($@LO3LOSE == 1) mapannounce "lightsout3","You will be returned to the station automatically in five seconds!",1;
+		end;
+	OnTimer116000:
+		if ($@LO3Ready == 1) mapannounce "lightsout3","Four!",1;
+		end;
+	OnTimer117000:
+		if ($@LO3Ready == 1) mapannounce "lightsout3","Three!",1;
+		end;
+	OnTimer118000:
+		if ($@LO3Ready == 1) mapannounce "lightsout3","Two!",1;
+		end;
+	OnTimer119000:
+		if ($@LO3Ready == 1) mapannounce "lightsout3","One!!",1;
+		end;
+	OnTimer120000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		if ($@LO3Ready == 1) goto L_ResetPC;
+		mapannounce "lightsout3","Eighteen minutes remaining.",1;
+		end;
+	OnTimer180000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		if ($@LO3Ready == 0) mapannounce "lightsout3","Seventeen minutes remaining.",1;
+		end;
+	OnTimer240000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		if ($@LO3Ready == 0) mapannounce "lightsout3","Sixteen minutes remaining.",1;
+		end;
+	OnTimer300000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		if ($@LO3Ready == 1) goto L_Reset;
+		mapannounce "lightsout3","Fifteen minutes remaining.",1;
+		end;
+	OnTimer360000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		mapannounce "lightsout3","Fourteen minutes remaining.",1;
+		end;
+	OnTimer420000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		mapannounce "lightsout3","Thirteen minutes remaining.",1;
+		end;
+	OnTimer480000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		mapannounce "lightsout3","Twelve minutes remaining.",1;
+		end;
+	OnTimer540000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		mapannounce "lightsout3","Eleven minutes remaining.",1;
+		end;
+	OnTimer600000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		mapannounce "lightsout3","Ten minutes remaining.",1;
+		end;
+	OnTimer660000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		mapannounce "lightsout3","Nine minutes remaining.",1;
+		end;
+	OnTimer720000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		mapannounce "lightsout3","Eight minutes remaining.",1;
+		end;
+	OnTimer780000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		mapannounce "lightsout3","Seven minutes remaining.",1;
+		end;
+	OnTimer840000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		mapannounce "lightsout3","Six minutes remaining.",1;
+		end;
+	OnTimer900000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		mapannounce "lightsout3","Five minutes remaining.",1;
+		end;
+	OnTimer960000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		mapannounce "lightsout3","Four minutes remaining.",1;
+		end;
+	OnTimer1020000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		mapannounce "lightsout3","Three minutes remaining.",1;
+		end;
+	OnTimer1080000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		mapannounce "lightsout3","Two minutes remaining.",1;
+		end;
+	OnTimer1140000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		mapannounce "lightsout3","One minute remaining.",1;
+		end;
+	OnTimer1170000:
+		mapannounce "lightsout3","Thirty seconds remaining.",1;
+		end;
+	OnTimer1180000:
+		mapannounce "lightsout3","Twenty seconds remaining.",1;
+		end;
+	OnTimer1190000:
+		mapannounce "lightsout3","Ten seconds remaining.",1;
+		end;
+	OnTimer1195000:
+		mapannounce "lightsout3","Five!",1;
+		end;
+	OnTimer1196000:
+		mapannounce "lightsout3","Four!",1;
+		end;
+	OnTimer1197000:
+		mapannounce "lightsout3","Three!!",1;
+		end;
+	OnTimer1198000:
+		mapannounce "lightsout3","Two!!",1;
+		end;
+	OnTimer1199000:
+		mapannounce "lightsout3","One!!!",1;
+		end;
+	OnTimer1200000:
+		if ($LO3AutoRst == 0 && getmapusers("lightsout3") == 0) goto L_GMReset;
+		mapannounce "lightsout3","You have FAILED!!  Twenty minutes have elapsed and the game is over, the room will be able to start another game in 5 minutes.  You will be returned to the station automatically in two minutes.",1;
+		set $@LO3Ready,1;
+		set $@LO3LOSE,1;
+		setnpctimer 0;
+		goto L_TurnOff;
+	L_ResetPC:
+		set $@LO3On,0;
+		set $@LO3LOSE,0;
+		set $@LO3Title$,"- Room in Cooldown";
+		mapannounce "lightsout3","Thank you for playing.",1;
+		areawarp "lightsout3",1,1,400,400,"pvp_m_room",51,38;
+		end;
+	L_Reset:
+		set $@LO3Ready,0;
+		set $@LO3Title$,"";
+		StopNPCTimer "lightsout3";
+		setnpctimer 0;
+		mapannounce "lightsout3","This room is now ready to start a game.",1;
+		end;
+	L_GMReset:
+		set $@LO3On,0;
+		set $@LO3LOSE,0;
+		set $@LO3Ready,0;
+		set $@LO3Title$,"";
+		StopNPCTimer "lightsout3";
+		setnpctimer 0;
+		areawarp "lightsout3",1,1,400,400,"pvp_m_room",51,38;
+		goto L_TurnOff;
+	L_TurnOn:
+		if ($@LO3CYCLE == 49) goto L_Activate1;
+		set $@LO3CYCLE,$@LO3CYCLE + 1;
+		if ($LO3Board == 1 && (($@LO3CYCLE >= 1 && $@LO3CYCLE < 9) || $@LO3CYCLE == 14 || $@LO3CYCLE == 15 || $@LO3CYCLE == 21 || $@LO3CYCLE == 22 || $@LO3CYCLE == 28 || $@LO3CYCLE == 29 || $@LO3CYCLE == 35 || $@LO3CYCLE == 36 || $@LO3CYCLE > 41)) goto L_TurnOn;
+		enablenpc "Light3_"+$@LO3CYCLE+"";
+		goto L_TurnOn;
+	L_Activate1:
+		set $@LO3CYCLE,0;
+	L_Activate:
+		if ($@LO3CYCLE == 49) goto L_Randomize1;
+		set $@LO3CYCLE,$@LO3CYCLE + 1;
+		if ($LO3Board == 1 && (($@LO3CYCLE >= 1 && $@LO3CYCLE < 9) || $@LO3CYCLE == 14 || $@LO3CYCLE == 15 || $@LO3CYCLE == 21 || $@LO3CYCLE == 22 || $@LO3CYCLE == 28 || $@LO3CYCLE == 29 || $@LO3CYCLE == 35 || $@LO3CYCLE == 36 || $@LO3CYCLE > 41)) goto L_Activate;
+		setnpcdisplay "Light3_"+$@LO3CYCLE,"Off",1002;
+		donpcevent "Light3_"+$@LO3CYCLE+"::OnFlip";
+		goto L_Activate;
+	L_Randomize1:
+		set $@LO3CYCLE,0;
+	L_Rand:
+		if ($@LO3CYCLE >= $LO3Random) goto L_End1;
+		set $@LO3Rand,rand(1,49);
+		if ($LO3Board == 1 && (($@LO3Rand >= 1 && $@LO3Rand < 9) || $@LO3Rand == 14 || $@LO3Rand == 15 || $@LO3Rand == 21 || $@LO3Rand == 22 || $@LO3Rand == 28 || $@LO3Rand == 29 || $@LO3Rand == 35 || $@LO3Rand == 36 || $@LO3Rand > 41)) goto L_Rand;
+		if ($@LO3_0 == 0 && $@LO3[$@LO3Rand] < 50) goto sL_Randa;
+		if ($@LO3_0 == 0 && $@LO3[$@LO3Rand] > 49) goto sL_Randb;
+		set $@LO3_0,0;
+		goto L_Rand;
+	sL_Randa:
+		set $@LO3[$@LO3Rand],($@LO3[$@LO3Rand] + 49);
+		setnpcdisplay "Light3_"+$@LO3Rand,"On",1031;
+		donpcevent "Light3_"+$@LO3Rand+"::OnFlip";
+		set $@LO3CYCLE,$@LO3CYCLE + 1;
+//CYCLECHECK	debugmes "[Lightsout Cyclecount : "+$@LO3CYCLE+"]";
+		set $@LO3_0,1;
+		goto L_Rand;
+	sL_Randb:
+		set $@LO3[$@LO3Rand],($@LO3[$@LO3Rand] - 49);
+		setnpcdisplay "Light3_"+$@LO3Rand,"Off",1002;
+		donpcevent "Light3_"+$@LO3Rand+"::OnFlip";
+		set $@LO3CYCLE,$@LO3CYCLE + 1;
+//CYCLECHECK	debugmes "[Lightsout Cyclecount : "+$@LO3CYCLE+"]";
+		set $@LO3_0,1;
+		goto L_Rand;
+	L_TurnOff:
+		cleararray $@LO3[1],0,49;
+	L_TurnOff1:
+		if ($@LO3CYCLE == 49) goto L_End;
+		set $@LO3CYCLE,$@LO3CYCLE + 1;
+		donpcevent "Light3_"+$@LO3CYCLE+"::OnEnd";
+		goto L_TurnOff1;
+	L_End1:
+		npctalk "-";
+		npctalk "--";
+		npctalk "---";
+		npctalk "----";
+		npctalk "-----";
+		npctalk "You have 20 Minutes!  The person who flips the winning light wins a bonus!";
+		set $@LO3Rand1,0;
+	L_End:
+		set $@LO3CYCLE,0;
+		end;
+//These is the GM control panel. GM Level 80+ required to access the panel.
+M_Control:
+	next;
+	mes "[Room Controller]";
+	mes "What would you like to do?";
+	next;
+	if ($LO3NT == 0 && $@LO3On == 1 || $LO3NT == 0 && $@LO3On == 1) menu "Change Auto Reset",M_AutoReset,"Change Board",M_Board,"Change Difficulty",M_Diff,"Change Reward",M_Reward,"Bring back Lightsout!",M_DingDong,"Reset Room",M_RmReset,"Return to Menu",M_Menu;
+	if ($LO3NT == 1 && $@LO3On == 1 || $LO3NT == 1 && $@LO3On == 1) menu "Change Auto Reset",M_AutoReset,"Change Board",M_Board,"Change Difficulty",M_Diff,"Change Reward",M_Reward,"No more Lightsout!",M_DingDong2,"Reset Room",M_RmReset,"Return to Menu",M_Menu;
+	if ($LO3NT == 0 && $@LO3LOSE == 1 || $LO3NT == 0 && $@LO3Ready == 1) menu "Change Auto Reset",M_AutoReset,"Change Board",M_Board,"Change Difficulty",M_Diff,"Change Reward",M_Reward,"Bring back Lightsout!",M_DingDong,"Reset Room",M_RmReset,"Return to Menu",M_Menu;
+	if ($LO3NT == 1 && $@LO3LOSE == 1 || $LO3NT == 1 && $@LO3Ready == 1) menu "Change Auto Reset",M_AutoReset,"Change Board",M_Board,"Change Difficulty",M_Diff,"Change Reward",M_Reward,"No more Lightsout!",M_DingDong2,"Reset Room",M_RmReset,"Return to Menu",M_Menu;
+	if ($LO3NT == 0) menu "Change Auto Reset",M_AutoReset,"Change Board",M_Board,"Change Difficulty",M_Diff,"Change Reward",M_Reward,"Bring back Lightsout!",M_DingDong,"Return to Menu",M_Menu;
+	if ($LO3NT == 1) menu "Change Auto Reset",M_AutoReset,"Change Board",M_Board,"Change Difficulty",M_Diff,"Change Reward",M_Reward,"No more Lightsout!",M_DingDong2,"Return to Menu",M_Menu;
+M_AutoReset:
+	mes "[Room Controller]";
+	if ($LO3AutoRst == 0) mes "The room is set to automatically reset if the room is empty.  The room checks this once every minute while the timer is active.  Do you wish to turn this feature off?";
+	if ($LO3AutoRst == 1) mes "The room is set to wait the full 20 minutes before reseting, even if the room is empty.  Do you wish to turn the automatic reset feature on?";
+	next;
+	if ($LO3AutoRst == 0) menu "Yes",M_AutOff,"No",M_Control;
+	if ($LO3AutoRst == 1) menu "Yes",-,"No",M_Control;
+	set $LO3AutoRst,0;
+	goto M_Control;
+M_AutOff:
+	set $LO3AutoRst,1;
+	goto M_Control;
+M_Board:
+	mes "[Room Controller]";
+	if ($LO3Board == 1) mes "The board is currently a 5x5 grid.  Would you like to change it to a 7x7 grid?  (Initial Randomization setting will also be changed to 1)";
+	if ($LO3Board == 0) mes "The board is currently a 7x7 grid.  Would you like to change it to a 5x5 grid?  (Initial Randomization setting will also be changed to 1)";
+	next;
+	if ($LO3Board == 1) menu "Yes",M_7x7,"No",M_Control;
+	if ($LO3Board == 0) menu "Yes",-,"No",M_Control;
+	set $LO3Board,1;
+	set $LO3Random,1;
+	goto M_Control;
+M_7x7:
+	set $LO3Board,0;
+	set $LO3Random,1;
+	goto M_Control;
+M_Diff:
+	mes "[Room Controller]";
+	mes "There are two ways to change the difficulty of the room.";
+	next;
+	mes "[Room Controller]";
+	mes "You may change the intial randomization amount, or you may change point based randomization, or turn point based randomization off.";
+	next;
+	menu "Change Initial Rand",-,"Change Point Based Rand",M_RandPoint,"Return",M_Control;
+	mes "[Room Controller]";
+	if ($LO3Board == 0) mes "This number controls how many times the lights are randomized when the game begins.  The number must be atleast 1 and cannot be 49 or higher.";
+	if ($LO3Board == 1) mes "This number controls how many times the lights are randomized when the game begins.  The number must be atleast 1 and cannot be 25 or higher.";
+	mes "Current Setting is ["+$LO3Random+"]";
+	next;
+M_RInRepeat:
+	input $LO3Random;
+	next;
+	if ($LO3Board == 0 && ($LO3Random >= 49 || $LO3Random < 1)) goto M_RInError;
+	if ($LO3Board == 1 && ($LO3Random >= 25 || $LO3Random < 1)) goto M_RInError;
+M_Diff2:
+	mes "[Room Controller]";
+	mes "Thank you.  The porings will now randomize "+$LO3Random+" times at the start of the game.";
+	next;
+	goto M_Control;
+M_RInError:
+	mes "[Room Controller]";
+	if ($LO3Board == 0) mes "The number must be atleast 1 and cannot be 49 or higher!";
+	if ($LO3Board == 1) mes "The number must be atleast 1 and cannot be 25 or higher!";
+	next;
+	goto M_RInRepeat;
+M_RandPoint:
+	mes "[Room Controller]";
+	mes "Point randomization works like this.  After the player has collected, say, 50 points, there is a 1 in 100 chance that another poring on the board will flip on/off.";
+	next;
+	mes "[Room Controller]";
+	mes "There are five 'Levels' of this, this is the equation, where [var] is the number you input.  Each rand has a 1 in <total> chance of happening.  The variable is used to determine the limitations.  Recommended value is 5-10.";
+	next;
+	mes "[Room Controller]";
+	mes "[Pts > [Var] & 1/60]";
+	mes "[Pts > [Var]*2 & 1/50]";
+	mes "[Pts > [Var]*5 & 1/40]";
+	mes "[Pts > [Var]*10 & 1/30]";
+	mes "[Pts > [Var]*16 & 1/20]";
+	next;
+	mes "[Room Controller]";
+	mes "Please set the variable.  You may not set the variable below 5.  Set the variable to 0 to turn this option off.";
+	if ($LO3Var > 0) mes "Current Setting is ["+$LO3Var+"]";
+	if ($LO3Var == 0) mes "Current setting is [OFF]";
+	next;
+M_RandPIn:
+	input $LO3Var;
+	next;
+	if ($LO3Var == 0) goto M_RandPoint2;
+	if ($LO3Var < 5) goto M_RandPError;
+M_RandPoint2:
+	mes "[Room Controller]";
+	if ($LO3Var > 0) mes "The variable has been changed to "+$LO3Var+".";
+	if ($LO3Var == 0) mes "Randomization of lights based on points is now off.";
+	goto M_Control;
+M_RandPError:
+	mes "[Room Controller]";
+	mes "You cannot set the variable below 25.";
+	next;
+	goto M_RandPIn;
+M_Reward:
+	mes "[Room Controller]";
+	mes "How would you like to setup the reward?";
+	next;
+	menu "Change Modifier",-,"Change Type",M_RewType,"Return",M_Control;
+	mes "[Room Controller]";
+	mes "This modifier controls how the player's points are divided when they complete the game.";
+	next;
+	mes "[Room Controller]";
+	mes "The player's points is divided by this modifier.  If the reward type is set to zeny, then a multiplier is added to the equation to give reasonable amounts of zeny.";
+	next;
+	mes "[Room Controller]";
+	mes "The variable cannot be 0, and cannot be more then 10.";
+	mes "Current Setting is ["+$LO3Reward+"]";
+M_RewReSelect:
+	next;
+	input $LO3Reward;
+	next;
+	if ($LO3Reward == 0 || $LO3Reward > 10) goto M_RewInError;
+	mes "[Room Controller]";
+	mes "The reward modifier has been set to "+$LO3Reward+".";
+	goto M_Control;
+M_RewInError:
+	mes "[Room Controller]";
+	mes "Invalid modifier was selected. The modifier cannot be less than or equal to 0, or greater than 10.";
+	set $LO3Reward,1;
+	goto M_RewReSelect;
+M_RewType:
+	mes "[Room Controller]";	
+	mes "Do you want the players do receive a KP (Kafra Point) reward, or a Zeny reward?";
+	if ($LO3RewType == 1) mes "[Reward currently set to Zeny]";
+	if ($LO3RewType == 0) mes "[Reward currently set to Kafra Points]";
+	next;
+	menu "Zeny",-,"Kafra Point",M_RewKP;
+	set $LO3RewType,1;
+M_RewInf:
+	mes "[Room Controller]";
+	if ($LO3RewType == 1) mes "Thank you, the reward is now set to Zeny.";
+	if ($LO3RewType == 0) mes "Thank you, the reward is now set to Kafra Points.";
+	goto M_Control;
+M_RewKP:
+	set $LO3RewType,0;
+	goto M_RewInf;
+M_DingDong:
+	next;
+	set $LO3NT,1;
+	mes "[Room Controller]";
+	mes "The Lightsout is back!";
+	goto M_Control;
+M_DingDong2:
+	next;
+	set $LO3NT,0;
+	mes "[Room Controller]";
+	mes "No more Lightsout...";
+	goto M_Control;
+M_RmReset:
+	mes "[Room Controller]";
+	mes "Resetting room...";
+	next;
+	goto L_GMReset;
+//These default important settings on a first install, do not touch.
+OnInit:
+	setnpcdisplay "lightsout3","Room Controller",770;
+	if ($LO3Random == 0 && $LO3Var == 0) set $LO3Var,50;
+	if ($LO3Random == 0) set $LO3Random,11;
+	if ($LO3Reward == 0) set $LO3Reward,2;
+	L_Disable:
+		disablenpc "Light3_"+$@LO3CYCLE+"";
+		if ($@LO3CYCLE == 49) goto L_DisEnd;
+		set $@LO3CYCLE,$@LO3CYCLE + 1;
+		goto L_Disable;
+	L_DisEnd:
+		set $@LO3CYCLE,0;
+		end;
+}
+
+//This is the master function that powers the entire minigame.
+//DO NOT touch this.
+function	script	F_LO3LightFlip	{
+	set $@LO3_0,0;
+	set $@LO3_1,0;
+	set $@LO3_2,0;
+	set $@LO3_3,0;
+	set $@LO3_4,0;
+L_C:
+	if ($@LO3_0 == 0 && getarg(0) != 0 && $@LO3[getarg(0)] < 50) goto sL_Ca;
+	if ($@LO3_0 == 0 && getarg(0) != 0 && $@LO3[getarg(0)] > 49) goto sL_Cb;
+	goto L_L;
+sL_Ca:
+	set $@LO3[getarg(0)],($@LO3[getarg(0)] + 49);
+	setnpcdisplay "Light3_"+getarg(0),"On",1031;
+	set $@LO3_0,1;
+	goto L_C;
+sL_Cb:
+	set $@LO3[getarg(0)],($@LO3[getarg(0)] - 49);
+	setnpcdisplay "Light3_"+getarg(0),"Off",1002;
+	set $@LO3_0,1;
+	goto L_C;
+L_L:
+	if ($@LO3_1 == 0 && getarg(1) != 0 && $@LO3[getarg(1)] < 50) goto sL_La;
+	if ($@LO3_1 == 0 && getarg(1) != 0 && $@LO3[getarg(1)] > 49) goto sL_Lb;
+	goto L_T;
+sL_La:
+	set $@LO3[getarg(1)],($@LO3[getarg(1)] + 49);
+	setnpcdisplay "Light3_"+getarg(1),"On",1031;
+	set $@LO3_1,1;
+	goto L_L;
+sL_Lb:
+	set $@LO3[getarg(1)],($@LO3[getarg(1)] - 49);
+	setnpcdisplay "Light3_"+getarg(1),"Off",1002;
+	set $@LO3_1,1;
+	goto L_L;
+L_T:
+	if ($@LO3_2 == 0 && getarg(2) != 0 && $@LO3[getarg(2)] < 50) goto sL_Ta;
+	if ($@LO3_2 == 0 && getarg(2) != 0 && $@LO3[getarg(2)] > 49) goto sL_Tb;
+	goto L_R;
+sL_Ta:
+	set $@LO3[getarg(2)],($@LO3[getarg(2)] + 49);
+	setnpcdisplay "Light3_"+getarg(2),"On",1031;
+	set $@LO3_2,1;
+	goto L_T;
+sL_Tb:
+	set $@LO3[getarg(2)],($@LO3[getarg(2)] - 49);
+	setnpcdisplay "Light3_"+getarg(2),"Off",1002;
+	set $@LO3_2,1;
+	goto L_T;
+L_R:
+	if ($@LO3_3 == 0 && getarg(3) != 0 && $@LO3[getarg(3)] < 50) goto sL_Ra;
+	if ($@LO3_3 == 0 && getarg(3) != 0 && $@LO3[getarg(3)] > 49) goto sL_Rb;
+	goto L_B;
+sL_Ra:
+	set $@LO3[getarg(3)],($@LO3[getarg(3)] + 49);
+	setnpcdisplay "Light3_"+getarg(3),"On",1031;
+	set $@LO3_3,1;
+	goto L_R;
+sL_Rb:
+	set $@LO3[getarg(3)],($@LO3[getarg(3)] - 49);
+	setnpcdisplay "Light3_"+getarg(3),"Off",1002;
+	set $@LO3_3,1;
+	goto L_R;
+L_B:
+	if ($@LO3_4 == 0 && getarg(4) != 0 && $@LO3[getarg(4)] < 50) goto sL_Ba;
+	if ($@LO3_4 == 0 && getarg(4) != 0 && $@LO3[getarg(4)] > 49) goto sL_Bb;
+	goto L_Engine;
+sL_Ba:
+	set $@LO3[getarg(4)],($@LO3[getarg(4)] + 49);
+	setnpcdisplay "Light3_"+getarg(4),"On",1031;
+	set $@LO3_4,1;
+	goto L_B;
+sL_Bb:
+	set $@LO3[getarg(4)],($@LO3[getarg(4)] - 49);
+	setnpcdisplay "Light3_"+getarg(4),"Off",1002;
+	set $@LO3_4,1;
+	goto L_B;
+L_Engine:
+	if (getarg(0) != 0) donpcevent "Light3_"+getarg(0)+"::OnFlip";
+	if (getarg(1) != 0) donpcevent "Light3_"+getarg(1)+"::OnFlip";
+	if (getarg(2) != 0) donpcevent "Light3_"+getarg(2)+"::OnFlip";
+	if (getarg(3) != 0) donpcevent "Light3_"+getarg(3)+"::OnFlip";
+	if (getarg(4) != 0) donpcevent "Light3_"+getarg(4)+"::OnFlip";
+	if (getarg(0) != 0 && (rand(1,4) == 4)) donpcevent "Light3_"+getarg(0)+"::OnAni";
+	if (getarg(1) != 0 && (rand(1,4) == 4)) donpcevent "Light3_"+getarg(1)+"::OnAni";
+	if (getarg(2) != 0 && (rand(1,4) == 4)) donpcevent "Light3_"+getarg(2)+"::OnAni";
+	if (getarg(3) != 0 && (rand(1,4) == 4)) donpcevent "Light3_"+getarg(3)+"::OnAni";
+	if (getarg(4) != 0 && (rand(1,4) == 4)) donpcevent "Light3_"+getarg(4)+"::OnAni";
+	if (rand(1,4) == 4) donpcevent "Light3_"+(rand(1,49))+"::OnAni";
+	if (rand(1,4) == 4) donpcevent "Light3_"+(rand(1,49))+"::OnAni";
+	if (rand(1,4) == 4) donpcevent "Light3_"+(rand(1,49))+"::OnAni";
+	if (rand(1,4) == 4) donpcevent "Light3_"+(rand(1,49))+"::OnAni";
+	set @LOpt,@LOpt + 1;
+	set $@LO3_0,0;
+	set $@LO3_1,0;
+	set $@LO3_2,0;
+	set $@LO3_3,0;
+	set $@LO3_4,0;
+	if ($LO3NT == 1 && $@LO3[getarg(0)] < 50) npctalk "Dong!";
+	if ($LO3NT == 1 && $@LO3[getarg(0)] > 49) npctalk "Ding!";
+if ($LO3Board == 1 && ($@LO3[1]+$@LO3[2]+$@LO3[3]+$@LO3[4]+$@LO3[5]+$@LO3[6]+$@LO3[7]+$@LO3[8]+
+	$@LO3[9]+$@LO3[10]+$@LO3[11]+$@LO3[12]+$@LO3[13]+$@LO3[14]+$@LO3[15]+$@LO3[16]+
+	$@LO3[17]+$@LO3[18]+$@LO3[19]+$@LO3[20]+$@LO3[21]+$@LO3[22]+$@LO3[23]+$@LO3[24]+
+	$@LO3[25]+$@LO3[26]+$@LO3[27]+$@LO3[28]+$@LO3[29]+$@LO3[30]+$@LO3[31]+$@LO3[32]+
+	$@LO3[33]+$@LO3[34]+$@LO3[35]+$@LO3[36]+$@LO3[37]+$@LO3[38]+$@LO3[39]+$@LO3[40]+
+	$@LO3[41]+$@LO3[42]+$@LO3[43]+$@LO3[44]+$@LO3[45]+$@LO3[46]+$@LO3[47]+$@LO3[48]+
+	$@LO3[49]) == 625) goto L_AllOff;
+if ($LO3Board == 1 && ($@LO3[1]+$@LO3[2]+$@LO3[3]+$@LO3[4]+$@LO3[5]+$@LO3[6]+$@LO3[7]+$@LO3[8]+
+	$@LO3[9]+$@LO3[10]+$@LO3[11]+$@LO3[12]+$@LO3[13]+$@LO3[14]+$@LO3[15]+$@LO3[16]+
+	$@LO3[17]+$@LO3[18]+$@LO3[19]+$@LO3[20]+$@LO3[21]+$@LO3[22]+$@LO3[23]+$@LO3[24]+
+	$@LO3[25]+$@LO3[26]+$@LO3[27]+$@LO3[28]+$@LO3[29]+$@LO3[30]+$@LO3[31]+$@LO3[32]+
+	$@LO3[33]+$@LO3[34]+$@LO3[35]+$@LO3[36]+$@LO3[37]+$@LO3[38]+$@LO3[39]+$@LO3[40]+
+	$@LO3[41]+$@LO3[42]+$@LO3[43]+$@LO3[44]+$@LO3[45]+$@LO3[46]+$@LO3[47]+$@LO3[48]+
+	$@LO3[49]) == 1850) goto L_AllOn;
+if ($LO3Board == 0 && ($@LO3[1]+$@LO3[2]+$@LO3[3]+$@LO3[4]+$@LO3[5]+$@LO3[6]+$@LO3[7]+$@LO3[8]+
+	$@LO3[9]+$@LO3[10]+$@LO3[11]+$@LO3[12]+$@LO3[13]+$@LO3[14]+$@LO3[15]+$@LO3[16]+
+	$@LO3[17]+$@LO3[18]+$@LO3[19]+$@LO3[20]+$@LO3[21]+$@LO3[22]+$@LO3[23]+$@LO3[24]+
+	$@LO3[25]+$@LO3[26]+$@LO3[27]+$@LO3[28]+$@LO3[29]+$@LO3[30]+$@LO3[31]+$@LO3[32]+
+	$@LO3[33]+$@LO3[34]+$@LO3[35]+$@LO3[36]+$@LO3[37]+$@LO3[38]+$@LO3[39]+$@LO3[40]+
+	$@LO3[41]+$@LO3[42]+$@LO3[43]+$@LO3[44]+$@LO3[45]+$@LO3[46]+$@LO3[47]+$@LO3[48]+
+	$@LO3[49]) == 1225) goto L_AllOff;
+if ($LO3Board == 0 && ($@LO3[1]+$@LO3[2]+$@LO3[3]+$@LO3[4]+$@LO3[5]+$@LO3[6]+$@LO3[7]+$@LO3[8]+
+	$@LO3[9]+$@LO3[10]+$@LO3[11]+$@LO3[12]+$@LO3[13]+$@LO3[14]+$@LO3[15]+$@LO3[16]+
+	$@LO3[17]+$@LO3[18]+$@LO3[19]+$@LO3[20]+$@LO3[21]+$@LO3[22]+$@LO3[23]+$@LO3[24]+
+	$@LO3[25]+$@LO3[26]+$@LO3[27]+$@LO3[28]+$@LO3[29]+$@LO3[30]+$@LO3[31]+$@LO3[32]+
+	$@LO3[33]+$@LO3[34]+$@LO3[35]+$@LO3[36]+$@LO3[37]+$@LO3[38]+$@LO3[39]+$@LO3[40]+
+	$@LO3[41]+$@LO3[42]+$@LO3[43]+$@LO3[44]+$@LO3[45]+$@LO3[46]+$@LO3[47]+$@LO3[48]+
+	$@LO3[49]) == 3626) goto L_AllOn;
+	if ($LO3Var > 0) goto L_PointRand;
+	end;
+L_PointRand:
+	if (@LOpt > ($LO3Var*16) && rand(1,20) == 20) goto L_Randomize;
+	if (@LOpt > ($LO3Var*10) && rand(1,30) == 30) goto L_Randomize;
+	if (@LOpt > ($LO3Var*5) && rand(1,40) == 40) goto L_Randomize;
+	if (@LOpt > ($LO3Var*2) && rand(1,50) == 50) goto L_Randomize;
+	if (@LOpt > $LO3Var && rand(1,60) == 60) goto L_Randomize;
+	end;
+L_Randomize:
+	set $@LO3Rand,rand(1,49);
+	if ($LO3Board == 1 && (($@LO3Rand >= 1 && $@LO3Rand < 9) || $@LO3Rand == 14 || $@LO3Rand == 15 || $@LO3Rand == 21 || $@LO3Rand == 22 || $@LO3Rand == 28 || $@LO3Rand == 29 || $@LO3Rand == 35 || $@LO3Rand == 36 || $@LO3Rand > 41)) goto L_Randomize;
+L_Rand:
+	if ($@LO3_0 == 0 && $@LO3[$@LO3Rand] < 50) goto sL_Randa;
+	if ($@LO3_0 == 0 && $@LO3[$@LO3Rand] > 49) goto sL_Randb;
+	goto sL_Randc;
+sL_Randa:
+	set $@LO3[$@LO3Rand],($@LO3[$@LO3Rand] + 49);
+	setnpcdisplay "Light3_"+$@LO3Rand,"On",1031;
+	donpcevent "Light3_"+$@LO3Rand+"::OnFlip";
+	set $@LO3_0,1;
+	goto L_Rand;
+sL_Randb:
+	set $@LO3[$@LO3Rand],($@LO3[$@LO3Rand] - 49);
+	setnpcdisplay "Light3_"+$@LO3Rand,"Off",1002;
+	donpcevent "Light3_"+$@LO3Rand+"::OnFlip";
+	set $@LO3_0,1;
+	goto L_Rand;
+sL_Randc:
+	donpcevent "Light3_"+$@LO3Rand+"::OnAni";
+	set $@LO3Rand,0;
+	set $@LO3_0,0;
+	end;
+L_AllOff:
+	mapannounce "lightsout3","Victory!  Congratulations!",1;
+	set @LOBonus,1;
+L_LoseCycle:
+	if ($@LO3CYCLE == 49) goto L_End;
+	set $@LO3CYCLE,$@LO3CYCLE + 1;
+	if ($LO3Board == 1 && (($@LO3CYCLE >= 1 && $@LO3CYCLE < 9) || $@LO3CYCLE == 14 || $@LO3CYCLE == 15 || $@LO3CYCLE == 21 || $@LO3CYCLE == 22 || $@LO3CYCLE == 28 || $@LO3CYCLE == 29 || $@LO3CYCLE == 35 || $@LO3CYCLE == 36 || $@LO3CYCLE > 41)) goto L_LoseCycle;
+	donpcevent "Light3_"+$@LO3CYCLE+"::OnEnd";
+	goto L_LoseCycle;
+	end;
+L_AllOn:
+	set $@LO3LOSE,1;
+	mapannounce "lightsout3","Defeat!  Game over for you!",1;
+L_WinCycle:
+	if ($@LO3CYCLE == 49) goto L_End;
+	set $@LO3CYCLE,$@LO3CYCLE + 1;
+	if ($LO3Board == 1 && (($@LO3CYCLE >= 1 && $@LO3CYCLE < 9) || $@LO3CYCLE == 14 || $@LO3CYCLE == 15 || $@LO3CYCLE == 21 || $@LO3CYCLE == 22 || $@LO3CYCLE == 28 || $@LO3CYCLE == 29 || $@LO3CYCLE == 35 || $@LO3CYCLE == 36 || $@LO3CYCLE > 41)) goto L_WinCycle;
+	donpcevent "Light3_"+$@LO3CYCLE+"::OnEnd";
+	goto L_WinCycle;
+	end;
+L_End:
+	set $@LO3CYCLE,0;
+	set $@LO3Ready,1;
+	setnpctimer 0,"lightsout3";
+	end;
+}
+
+//This function powers the endgame animation of the lights.
+//This is called by each lights' "OnEnd" label
+function	script	F_LO3LightEnd	{
+	if ($@LO3LOSE == 1) goto L_GameOver;
+	specialeffect 70;
+	disablenpc "Light3_"+getarg(0);
+	end;
+L_GameOver:
+	specialeffect 183;
+// these two are loud as hell but still look cool together
+//	specialeffect 380;
+//	specialeffect 409;
+	disablenpc "Light3_"+getarg(0);
+	end;
+}
+
+//This function makes the lights do strange things randomly.  (this one is entirely for fun and amusement)
+function	script	F_LO3LightAni	{
+	set $@LO3Rand,rand(1,13);
+// these two are the only ones that make noise, so i decided to turn them off.
+//	if ($@LO3Rand == 1) specialeffect 363;
+//	if ($@LO3Rand == 2) specialeffect 364;
+	if ($@LO3Rand == 3) specialeffect 458;
+	if ($@LO3Rand == 4) specialeffect 426;
+	if ($@LO3Rand == 5) specialeffect 413;
+	if ($@LO3Rand == 6) specialeffect 414;
+	if ($@LO3Rand == 7) specialeffect 417;
+	if ($@LO3Rand == 8) specialeffect 449;
+	if ($@LO3Rand == 9) specialeffect 435;
+	if ($@LO3Rand == 10) specialeffect 466;
+	set $@LO3Rand,rand(1,13);
+	if ($@LO3Rand == 1) emotion 0;
+	if ($@LO3Rand == 2) emotion 1;
+	if ($@LO3Rand == 3) emotion 3;
+	if ($@LO3Rand == 4) emotion 4;
+	if ($@LO3Rand == 5) emotion 7;
+	if ($@LO3Rand == 6) emotion 19;
+	if ($@LO3Rand == 7) emotion 18;
+	if ($@LO3Rand == 8) emotion 23;
+	if ($@LO3Rand == 9) emotion 26;
+	if ($@LO3Rand == 10) emotion 28;
+	if ($@LO3Rand == 11) emotion 40;
+	if ($@LO3Rand == 12) emotion 39;
+	if ($@LO3Rand == 13) emotion 45;
+	set $@LO3Rand,0;
+	end;
+}
+//guide to what the above effects are.
+//  specialeffect ???;
+//	363 = heart with wings
+//	364 = heart no wings
+//	458 = long jiggle
+//	426 = short jiggle
+//	413 = squat
+//	414 = spin fast
+//	415 = pounce
+//	417 = blink white
+//	449 = blink blue
+//	435 = twirl slowly
+//	466 = spin slowly
+//  emotion ??;
+//	0 = !
+//	1 = ?
+//	3 = heart 1
+//	4 = sweat
+//	7 = smoke cloud
+//	19= sweating
+//	18= laughing
+//	23= omg!!
+//	26= help!
+//	28= sobbing
+//	40= tsk tsk tsk
+//	39= tongue
+//	45= yawn
+
+//This is a list of all 49 lights.
+lightsout3,40,156,5	script	Light3_1	139,{
+	callfunc "F_LO3LightFlip",1,0,8,2,0;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",1;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,43,156,5	script	Light3_2	139,{
+	callfunc "F_LO3LightFlip",2,1,9,3,0;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",2;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,46,156,5	script	Light3_3	139,{
+	callfunc "F_LO3LightFlip",3,2,10,4,0;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",3;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,49,156,5	script	Light3_4	139,{
+	callfunc "F_LO3LightFlip",4,3,11,5,0;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",4;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,52,156,5	script	Light3_5	139,{
+	callfunc "F_LO3LightFlip",5,4,12,6,0;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",5;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,55,156,5	script	Light3_6	139,{
+	callfunc "F_LO3LightFlip",6,5,13,7,0;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",6;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,58,156,5	script	Light3_7	139,{
+	callfunc "F_LO3LightFlip",7,6,14,0,0;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",7;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,40,159,5	script	Light3_8	139,{
+	callfunc "F_LO3LightFlip",8,0,15,9,1;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",8;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,43,159,5	script	Light3_9	139,{
+	if ($LO3Board == 1) goto L_5x5;
+	callfunc "F_LO3LightFlip",9,8,16,10,2;
+	end;
+L_5x5:
+	callfunc "F_LO3LightFlip",9,0,16,10,0;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",9;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,46,159,5	script	Light3_10	139,{
+	if ($LO3Board == 1) goto L_5x5;
+	callfunc "F_LO3LightFlip",10,9,17,11,3;
+	end;
+L_5x5:
+	callfunc "F_LO3LightFlip",10,9,17,11,0;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",10;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,49,159,5	script	Light3_11	139,{
+	if ($LO3Board == 1) goto L_5x5;
+	callfunc "F_LO3LightFlip",11,10,18,12,4;
+	end;
+L_5x5:
+	callfunc "F_LO3LightFlip",11,10,18,12,0;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",11;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,52,159,5	script	Light3_12	139,{
+	if ($LO3Board == 1) goto L_5x5;
+	callfunc "F_LO3LightFlip",12,11,19,13,5;
+	end;
+L_5x5:
+	callfunc "F_LO3LightFlip",12,11,19,13,0;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",12;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,55,159,5	script	Light3_13	139,{
+	if ($LO3Board == 1) goto L_5x5;
+	callfunc "F_LO3LightFlip",13,12,20,14,6;
+	end;
+L_5x5:
+	callfunc "F_LO3LightFlip",13,12,20,0,0;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",13;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,58,159,5	script	Light3_14	139,{
+	callfunc "F_LO3LightFlip",14,13,21,0,7;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",14;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,40,162,5	script	Light3_15	139,{
+	callfunc "F_LO3LightFlip",15,0,22,16,8;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",15;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,43,162,5	script	Light3_16	139,{
+	if ($LO3Board == 1) goto L_5x5;
+	callfunc "F_LO3LightFlip",16,15,23,17,9;
+	end;
+L_5x5:
+	callfunc "F_LO3LightFlip",16,0,23,17,9;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",16;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,46,162,5	script	Light3_17	139,{
+	callfunc "F_LO3LightFlip",17,16,24,18,10;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",17;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,49,162,5	script	Light3_18	139,{
+	callfunc "F_LO3LightFlip",18,17,25,19,11;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",18;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,52,162,5	script	Light3_19	139,{
+	callfunc "F_LO3LightFlip",19,18,26,20,12;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",19;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,55,162,5	script	Light3_20	139,{
+	if ($LO3Board == 1) goto L_5x5;
+	callfunc "F_LO3LightFlip",20,19,27,21,13;
+	end;
+L_5x5:
+	callfunc "F_LO3LightFlip",20,19,27,0,13;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",20;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,58,162,5	script	Light3_21	139,{
+	callfunc "F_LO3LightFlip",21,20,28,0,14;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",21;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,40,165,5	script	Light3_22	139,{
+	callfunc "F_LO3LightFlip",22,0,29,23,15;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",22;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,43,165,5	script	Light3_23	139,{
+	if ($LO3Board == 1) goto L_5x5;
+	callfunc "F_LO3LightFlip",23,22,30,24,16;
+	end;
+L_5x5:
+	callfunc "F_LO3LightFlip",23,0,30,24,16;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",23;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,46,165,5	script	Light3_24	139,{
+	callfunc "F_LO3LightFlip",24,23,31,25,17;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",24;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,49,165,5	script	Light3_25	139,{
+	callfunc "F_LO3LightFlip",25,24,32,26,18;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",25;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,52,165,5	script	Light3_26	139,{
+	callfunc "F_LO3LightFlip",26,25,33,27,19;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",26;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,55,165,5	script	Light3_27	139,{
+	if ($LO3Board == 1) goto L_5x5;
+	callfunc "F_LO3LightFlip",27,26,34,28,20;
+	end;
+L_5x5:
+	callfunc "F_LO3LightFlip",27,26,34,0,20;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",27;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,58,165,5	script	Light3_28	139,{
+	callfunc "F_LO3LightFlip",28,27,35,0,21;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",28;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,40,168,5	script	Light3_29	139,{
+	callfunc "F_LO3LightFlip",29,0,36,30,22;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",29;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,43,168,5	script	Light3_30	139,{
+	if ($LO3Board == 1) goto L_5x5;
+	callfunc "F_LO3LightFlip",30,29,37,31,23;
+	end;
+L_5x5:
+	callfunc "F_LO3LightFlip",30,0,37,31,23;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",30;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,46,168,5	script	Light3_31	139,{
+	callfunc "F_LO3LightFlip",31,30,38,32,24;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",31;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,49,168,5	script	Light3_32	139,{
+	callfunc "F_LO3LightFlip",32,31,39,33,25;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",32;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,52,168,5	script	Light3_33	139,{
+	callfunc "F_LO3LightFlip",33,32,40,34,26;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",33;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,55,168,5	script	Light3_34	139,{
+	if ($LO3Board == 1) goto L_5x5;
+	callfunc "F_LO3LightFlip",34,33,41,35,27;
+	end;
+L_5x5:
+	callfunc "F_LO3LightFlip",34,33,41,0,27;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",34;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,58,168,5	script	Light3_35	139,{
+	callfunc "F_LO3LightFlip",35,34,42,0,28;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",35;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,40,171,5	script	Light3_36	139,{
+	callfunc "F_LO3LightFlip",36,0,43,37,29;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",36;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,43,171,5	script	Light3_37	139,{
+	if ($LO3Board == 1) goto L_5x5;
+	callfunc "F_LO3LightFlip",37,36,44,38,30;
+	end;
+L_5x5:
+	callfunc "F_LO3LightFlip",37,0,0,38,30;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",37;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,46,171,5	script	Light3_38	139,{
+	if ($LO3Board == 1) goto L_5x5;
+	callfunc "F_LO3LightFlip",38,37,45,39,31;
+	end;
+L_5x5:
+	callfunc "F_LO3LightFlip",38,37,0,39,31;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",38;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,49,171,5	script	Light3_39	139,{
+	if ($LO3Board == 1) goto L_5x5;
+	callfunc "F_LO3LightFlip",39,38,46,40,32;
+	end;
+L_5x5:
+	callfunc "F_LO3LightFlip",39,38,0,40,32;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",39;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,52,171,5	script	Light3_40	139,{
+	if ($LO3Board == 1) goto L_5x5;
+	callfunc "F_LO3LightFlip",40,39,47,41,33;
+	end;
+L_5x5:
+	callfunc "F_LO3LightFlip",40,39,0,41,33;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",40;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,55,171,5	script	Light3_41	139,{
+	if ($LO3Board == 1) goto L_5x5;
+	callfunc "F_LO3LightFlip",41,40,48,42,34;
+	end;
+L_5x5:
+	callfunc "F_LO3LightFlip",41,40,0,0,34;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",41;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,58,171,5	script	Light3_42	139,{
+	callfunc "F_LO3LightFlip",42,41,49,0,35;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",42;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,40,174,5	script	Light3_43	139,{
+	callfunc "F_LO3LightFlip",43,0,0,44,36;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",43;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,43,174,5	script	Light3_44	139,{
+	callfunc "F_LO3LightFlip",44,43,0,45,37;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",44;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,46,174,5	script	Light3_45	139,{
+	callfunc "F_LO3LightFlip",45,44,0,46,38;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",45;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,49,174,5	script	Light3_46	139,{
+	callfunc "F_LO3LightFlip",46,45,0,47,39;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",46;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,52,174,5	script	Light3_47	139,{
+	callfunc "F_LO3LightFlip",47,46,0,48,40;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",47;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,55,174,5	script	Light3_48	139,{
+	callfunc "F_LO3LightFlip",48,47,0,49,41;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",48;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}
+lightsout3,58,174,5	script	Light3_49	139,{
+	callfunc "F_LO3LightFlip",49,48,0,0,42;
+	end;
+OnFlip:
+//	specialeffect 427;
+	specialeffect 423;
+	end;
+OnEnd:
+	callfunc "F_LO3LightEnd",49;
+	end;
+OnAni:
+	callfunc "F_LO3LightAni";
+	end;
+}

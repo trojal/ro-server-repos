@@ -1,0 +1,104 @@
+// Displays a list of @ commands available to the player.
+commands: 0
+
+// Displays the server rates.
+rates: 0
+
+// Show server uptime
+uptime: 0
+
+// Shows/Hides the "there is a delay after a skill" message.
+showdelay: 0
+
+// Displays/Hides Experience gained
+showexp: 0
+
+// Displays/Hides Zeny gained
+showzeny: 0
+
+// Displays current levels and % progress.
+exp: 0
+
+// Show Monster info (rates, stats, drops, MVP stuff)
+mobinfo: 0
+monsterinfo: 0
+mi: 0
+
+// Show Item info (type, price, etc)
+iteminfo: 0
+ii: 0
+
+// Show who drops an item (mobs with highest drop rate)
+whodrops: 0
+
+// Syncs the player's position on the client with the one stored on the server.
+refresh: 0
+
+// Give server time. (6 same commands)
+time: 0
+date: 0
+serverdate: 0
+servertime: 0
+
+// Opens your mailbox.
+mail: 0
+
+// Away messsage
+away: 0
+aw: 0
+
+// Main chat
+main: 0
+
+// Enables/disables autolooting from killed mobs.
+autoloot: 0
+
+// Allows you continue vending offline.
+autotrade: 0
+at: 0
+
+// Change Guild Master of your Guild
+changegm: 0
+
+// Sends a request to all connected GMs (via the gm whisper system)
+request: 0
+
+// Returns list of logged in characters with their position (2 same commands).
+who: 0
+whois: 0
+
+// Displays the text as a normal message with the format "*name message*" 
+// instead of "name : message" (Like the /me command in IRC)
+me: 0
+
+// Homunculus commands for players
+hominfo: 0
+homstats: 0
+
+// Kill Steal Protection
+noks: 0
+
+// -------- GM -----------
+
+// Kill all monsters in map (with drops)
+killmonster: 80
+
+// Refines all weapons in your items list.
+refine: 80
+
+// Warps all online character of a guild to you. (at least one member of that guild must be on.)
+guildrecall: 80
+
+// Gives you money (zeny) of desired amount.
+zeny: 80
+
+// To unblock a player (2 same commands)
+unblock: 80
+charunblock: 80
+
+// Creates a complet item (card, etc...) of your choosing, either Item ID or Name.
+item2: 80
+
+// Changes the GM level of another character
+// (lasts until reboot, or gm list reload)
+adjgmlvl: 97

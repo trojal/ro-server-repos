@@ -1,0 +1,2717 @@
+//===== eAthena Script ======================================= 
+//= PvP
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 1.2a
+//===== Compatible With: ===================================== 
+//= eAthena 0.5.2 +
+//===== Description: ========================================= 
+//=
+//===== Additional Comments: ================================= 
+//= v1.1 Fixed arena names for Nightmare mode.  Added room limit
+//= check.[kobra_k88]
+//= v1.2 Fixed the bug that you aways savepoint in geffen.[shadowlady]
+//= v1.2a Added PvP Station Handler function. Using args for Fight
+//= Square Helpers. [kobra_k88]
+//============================================================ 
+
+izlude,128,226,0	warp	welcome_arena	1,1,prt_are_in,98,10
+prt_are_in,98,6,1	script	entrancewarp	45,1,1,{
+	savepoint "izlude",137,85;
+	warp "izlude",127,221;
+	end;
+}
+prt_are_in,143,14,0	warp	beginnerroom1	1,1,prt_are_in,74,78
+prt_are_in,74,74,0	warp	beginnerroom2	1,1,prt_are_in,138,14
+pvp_y_room,52,16,0	warp	beginnerroom3	1,1,prt_are_in,68,83
+prt_are_in,54,14,0	script	veteransroom1	45,1,1,{
+	//warp "prt_are_in",178,130;
+	message strcharinfo(0),"The Veterans PVP area is temporary closed.";
+	end;
+}
+prt_are_in,178,126,0	warp	veteransroom2	1,1,prt_are_in,58,14
+pvp_n_room,52,16,0	warp	veteransroom3	1,1,prt_are_in,172,135
+prt_are_in,104,33,0	warp	realmgate1	1,1,prt_are_in,126,130
+prt_are_in,126,126,0	warp	realmgate2	1,1,prt_are_in,104,29
+prt_are_in,91,33,0	warp	minigames1	1,1,prt_are_in,22,182
+prt_are_in,22,178,0	warp	minigames2	1,1,prt_are_in,92,29
+pvp_m_room,52,16,0	warp	minigames3	1,1,prt_are_in,16,187
+
+//--------------------------------------------------------------------------
+prt_are_in,16,187,1	script	OnTouchMinigame	139,2,2,{
+		set @PSpt,0;
+		set @PSKill,0;
+		set @PSBonus,0;
+		set @01np_char1place,0;
+		set @01np_char2place,0;
+		set @01np_char3place,0;
+		set @01np_char0place,0;
+		set @01np_mypos,0;
+		set @02np_char1place,0;
+		set @02np_char2place,0;
+		set @02np_char3place,0;
+		set @02np_char0place,0;
+		set @02np_mypos,0;
+		set @03np_char1place,0;
+		set @03np_char2place,0;
+		set @03np_char3place,0;
+		set @03np_char0place,0;
+		set @03np_mypos,0;
+		set @04np_char1place,0;
+		set @04np_char2place,0;
+		set @04np_char3place,0;
+		set @04np_char0place,0;
+		set @04np_mypos,0;
+		savepoint "prt_are_in",97,14;
+}
+prt_are_in,172,135,1	script	OnTouchVeteran	139,2,2,{
+		savepoint "prt_are_in",97,14;
+}
+prt_are_in,68,83,1	script	OnTouchBeginners	139,2,2,{
+		savepoint "prt_are_in",97,14;
+}
+//--------------------------------------------------------------------------
+
+//==========================================================================
+//			Main Room
+//==========================================================================
+
+prt_are_in,98,19,5	script	Arena Floorman	84,{
+	mes "[Floorman]";
+	mes "Hello and welcome to the Izlude Arena!  Here you will find chances to prove your worth in man to man fights and games!";
+	M_Menu:
+	next;
+	menu "What is this?",M_0, "Tell me more.",M_1, "Are there rules?",M_2, "Eeh, bye.",M_3;
+
+	M_0:
+		mes "[Floorman]";
+		mes "This is a place where players can come to fight one another, risk or no risk involved- its up to them!  This is also known as PvP.  As well as PvP, we also have an enormous PvP Dungeon!  To get there though, you need to go to the PvP Realm.  You can do this through the Realm Gate room.  And minigames if non-violence happens to be your fancy.";
+		next;
+		mes "[Floorman]";
+		mes "If you're interested in participating, then just proceed to one of the four rooms in the area.";
+		next;
+		mes "[Floorman]";
+		mes "You'll find the Beginner's Room down the right hallway, and the Veteran's Room down the left hallway.  The Realm Gate room is behind me to the right, and the Minigame room is behind me and to the left.";
+		next;
+		mes "[Floorman]";
+		mes "Each has requirements, however.  For PvP you must be atleast lv 25 to participate.  There is also a fee you must pay to participate.  For minigames, you must be atleast level 10, and a small monetary wager is required.";
+		mes "The money goes towards the arena of course, and is put towards your Kafra Reserve Points too!  The Realm Gate room requires a Realm Pass to enter, you can purchase one inside the gate room.";
+		next;
+		goto M_4;
+	M_1:
+		mes "[Floorman]";
+		mes "Glad you asked!  I can tell you're an intrepid adventurer looking for that extra thrill.";
+		next;
+		mes "[Floorman]";
+		mes "The Izlude Arena has four rooms you can participate in.  A Beginner's room for players new to PvP, and a Veteran's room for advanced and skilled individuals interested in PvP, a Realm Gate for traveling too and from the PvP and RP Realms, and a Minigame room for those who just want to have fun!";
+		mes "There is risk involved, however!";
+		next;
+		mes "[Floorman]";
+		mes "You see, in the Beginner's room, there is no risk involved.  It is quite safe, and there are no real hazards to you.";
+		mes "The Veteran's room however, has risk involved.  If you lose, you will lose some of your exp, and may even drop an item.";
+		mes "The Realm Gate room is used to access the PvP Realm, and the RP Realm.  You can buy a Realm Ticket inside the gate room.  But the Minigame room is risk free, you can still die though.";
+		mes "Keep in mind though, the arena is not for new players.  You must be atleast base level 25 to participate in PvP, and level 10 to participate in Minigames.";
+		next;
+		mes "[Floorman]";
+		mes "So take care which one you attempt, and bring a friend (or enemy!).  The Beginner's room is down the hall on the right, and the Veteran's room is down the hall on the left.  The Realm Gate room is behind me on the right, and the Minigames room is behind me on the left.";
+		next;
+		goto M_4;
+	M_2:
+		mes "[Floorman]";
+		mes "Yes, there are rules, and fees too.  The fees are based on your base level.  It's 50per Lv for the beginners room, 75per Lv for the minigame room, and  150per Lv for the veterans room.";
+		next;
+		mes "[Floorman]";
+		mes "You'll find the Beginner's to your right down the hallway, and the Veteran's to your left down the hallway.  You can find the Minigame room behind me on the left, and the Realm Gate room also behind me, and on the right.";
+		next;
+		mes "[Floorman]";
+		mes "The rules for the minigames are explained by the Station Handler of each minigame.  You'll find them in the Minigame Station Square.";
+		mes "The Realm Gate is used to travel between the PvP and RP Realms.  The PvP Realm is a massive player versus player dungeon, with special rules and prizes!";
+		mes "Now then, about our PvP rooms...";
+		next;
+		mes "[Floorman]";
+		mes "Before you enter any actual PvP arena, you must first choose your level of ability based on your base level.";
+		mes "In otherwords, if you're level 35, you have to play in the 25-40 room.  There is a row of Station Handlers with the room levels posted above them.";
+		next;
+		mes "[Floorman]";
+		mes "Speak to the Station Handler that represents your base level.  You will then be asked to choose from five different fight maps.";
+		mes "You will be able to see how many people are currently participating in any given map.  Choose carefully.";
+		next;
+		mes "[Floorman]";
+		mes "This will be represented by the 'Attendee/Total' figure in the corner of the screen.  There is a limit to how many can play on a map.";
+		mes "There is a hidden EXP value in PvP mode.  This EXP will only apply inside of the PvP zone and not outside.";
+		next;
+		mes "[Floorman]";
+		mes "Every one will receive a base EXP of 5 points when they first start.  If you win a match your EXP with increase by 1 point.";
+		mes "If you loose your EXP will drop by 5 points, so be careful!";
+		next;
+		mes "[Floorman]";
+		mes "If you are defeated and your EXP is equal to or less than 0, you will be removed from the PvP arena.";
+		mes "If your EXP is more than 0 than you may continue fighting and even get help from healers.";
+		next;
+		mes "[Floorman]";
+		mes "The fighting commands inside of PvP are the same as outside.  Just remember that you won't be able to save inside a PvP arena.";
+		mes "In the event of your death, you will reappear inside the room you started in.  This being either the Beginner's room, or the Veteran's room.";
+		next;
+		mes "[Floorman]";
+		mes "Remember these rules well as they can help to ensure your victory.  Fight, fight, fight!";
+		next;
+		goto M_4;
+	M_3:
+		mes "[Floorman]";
+		mes "If you ever want to know more about the arena, just ask me!  Enjoy your stay!";
+		close;
+	M_4:
+		mes "[Floorman]";
+		mes "Enjoy your stay at the Izlude Arena, and I wish you the best of luck!";
+		close;
+}
+
+// Kafra Representative -----------------------------
+
+prt_are_in,95,20,4	script	Kafra Representative	117,{
+	cutin "kafra_01",2;
+	mes "[Kafra]";
+	mes "Hello "+strcharinfo(0)+"!  Please, enjoy your stay at the Izlude Arena, and take part in the activities. *smile*";
+	next;
+		menu "What's Kafra doing here",M_1, "I'd like to use your services",M_2, "I will, goodbye",M_End;
+	M_1:
+		mes "[Kafra]";
+		mes "Kafra is in cooperation with the Izlude Entertainment Association, and are here to help sponsor the Arena.  So please, take your time and enjoy the activities.";
+		next;
+		menu "I'd like to use your services then",M_2, "Goodbye",M_End;
+	M_2:
+		mes "[Kafra]";
+		mes "Alright "+strcharinfo(0)+"!  Do you wish to use the standard Kafra services, or do you need to cash in reserve points?";
+		next;
+		menu "Cash in Reserve points",M_3,"Standard Kafra Services",-;
+		callfunc "F_Kafra",0,1,0;
+	M_Save:
+		savepoint "prt_are_in",98,29;
+		callfunc "F_KafEnd",0,1;
+		
+	M_3:
+		mes "[Kafra]";
+		mes "I'm so sorry, but we're still working on Kafra Reserve Point prizes at the moment. Please come back again at another time!";
+		next;
+		goto M_2;
+
+	M_3DISABLED:
+		mes "[Kafra]";
+		mes "Very well, ^6666FF" + strcharinfo(0) + "^000000.  Which prize will you take?  Remember you can only have ^2222FF10 pts up to 10000 pts^000000.";
+		next;
+		mes "[Kafra]";
+		mes "You have: ^FF0000"+RESRVPTS+"^000000 Reserve Points.  Please make a choice based on your point total.";
+		mes "Currently we offer the same lineup that Kafra HQ does.  However in the future we will begin to carry special items only found here.";
+	M_BMenu:
+		next;
+	menu 	"10- Novice Starter Kit",M_B1a, "25- Herb Kit",M_B1b, "60- Gift box",M_BGift, "50- Starter's Card Set",M_B1c, "75- Novice Equipment Kit",M_B1d, "100- Ore Box",M_B1e, "110- Panties!",M_B1q, "120- Purification Satchet",M_B1t, "120- Exorcize Sachet",M_B1u, "150- Santa's Hat",M_B1p, 
+		"200- Kafra Ring & Band",M_B1f, "250- Novice Armlet",M_B1g, "330- Running Shoes",M_B1g2, "400- Doll Set",M_B1h, "500- Elven Ears",M_B1i, "560- Red Bandana",M_B1n, "600- Bunny Slippers",M_B1j, "700- Kitty Band",M_B1o, 
+		"777- Four Leaf Clover",M_B1m, "800- Mineral Box",M_B1k, "900- Manteau of Life",M_B1v, "1000- Gaia Sword",M_B1l, "1100- Safety Shoes",M_B1s, "1300- Robe of Casting",M_B1r, "1400- Critical Ring",M_B1x, "1600- Safety Ring",M_B1y, "1800- Princess Knife",M_B1z, "2000- Story Card Set",M_B1w, "Medium Items List",M_B2, "Cancel",M_BEnd;
+
+	M_B1a:
+		if(RESRVPTS < 10) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "The Novice Starter Kit is a collection of various starter items and equipment, enjoy!";
+		getitem 501, 50;
+		getitem 502, 10;
+		getitem 505, 5;
+		getitem 1010, 5;
+		getitem 1202, 1;
+		set RESRVPTS, RESRVPTS - 10;
+		goto M_BEnd;
+	M_B1b:
+		if(RESRVPTS < 25) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "This kit has a wide assortment of herbs for all your alchemical needs!";
+		getitem 507, 30;
+		getitem 508, 15;
+		getitem 509, 10;
+		getitem 510, 10;
+		getitem 511, 10;
+		set RESRVPTS, RESRVPTS - 25;
+		goto M_BEnd;
+	M_B1c:
+		if(RESRVPTS < 50) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "This is a set of 6 cards!  Enjoy and use them well!";
+		getitem 4001, 1;
+		getitem 4002, 1;
+		getitem 4004, 1;
+		getitem 4006, 1;
+		getitem 4008, 1;
+		getitem 4009, 1;
+		set RESRVPTS, RESRVPTS - 50;
+		goto M_BEnd;
+	M_B1d:
+		if(RESRVPTS < 75) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "This equipment is made especially for novices!";
+		getitem 2340, 1;
+		getitem 2414, 1;
+		getitem 2510, 1;
+		getitem 2112, 1;
+		getitem 1243, 1;
+		getitem 5055, 1;
+		set RESRVPTS, RESRVPTS - 75;
+		goto M_BEnd;
+	M_B1e:
+		if(RESRVPTS < 100) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "Ah, planning on doing some refining?  Well these are certain to help!";
+		getitem 756, 12;
+		getitem 757, 12;
+		set RESRVPTS, RESRVPTS - 100;
+		goto M_BEnd;
+	M_B1f:
+		if(RESRVPTS < 200) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "Our coveted ring, now, you have one too! As well, have a complimentary Kafra headband!  Hurray!";
+		getitem 2640, 1;
+		getitem 5020, 1;
+		set RESRVPTS, RESRVPTS - 200;
+		goto M_BEnd;
+	M_B1g:
+		if(RESRVPTS < 250) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "A specially made armlet for the special class, novice!";
+		getitem 2628, 1;
+		set RESRVPTS, RESRVPTS - 250;
+		goto M_BEnd;
+	M_B1g2:
+		if(RESRVPTS < 330) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "These shoes are designed just for running!";
+		getitem 15103, 1;
+		set RESRVPTS, RESRVPTS - 330;
+		goto M_BEnd;
+	M_B1h:
+		if(RESRVPTS < 400) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "Ooh, are they for your girlfriend or boyfriend?? Heehee!";
+		getitem 741, 2;
+		getitem 742, 2;
+		getitem 743, 2;
+		getitem 752, 2;
+		getitem 753, 2;
+		getitem 754, 2;
+		set RESRVPTS, RESRVPTS - 400;
+		goto M_BEnd;
+	M_B1i:
+		if(RESRVPTS < 500) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "Hey I bet you'd look cute with these on!";
+		getitem 2286, 1;
+		set RESRVPTS, RESRVPTS - 500;
+		goto M_BEnd;
+	M_B1j:
+		if(RESRVPTS < 600) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "Aww these things are just so CUTE!  I hope you love them as much as I do mine!";
+		getitem 516, 100;
+		set RESRVPTS, RESRVPTS - 600;
+		goto M_BEnd;
+	M_B1k:
+		if(RESRVPTS < 800) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "This box contains an assortment of high quality minerals, even an emperium for you!";
+		getitem 985, 5;
+		getitem 984, 5;
+		getitem 990, 10;
+		getitem 991, 10;
+		getitem 992, 10;
+		getitem 993, 10;
+		getitem 994, 10;
+		getitem 995, 10;
+		getitem 996, 10;
+		getitem 997, 10;
+		getitem 714, 1;
+		set RESRVPTS, RESRVPTS - 800;
+		goto M_BEnd;
+	M_B1l:
+		if(RESRVPTS < 1000) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "This thing is neat!  I was told it can make anything you fight drop ore, and stuff!";
+		getitem 1150, 1;
+		set RESRVPTS, RESRVPTS - 1000;
+		goto M_BEnd;
+	M_B1m:
+		if(RESRVPTS < 777) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "I remember when I was a little girl, I used to spend hours searching through clover fields to find one of these, but now you can just buy one!  Where's the luck in that?";
+		getitem 706, 1;
+		set RESRVPTS, RESRVPTS - 777;
+		goto M_BEnd;
+	M_B1n:
+		if(RESRVPTS < 560) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "You're going to look so cool in this bandana!  Try it on, right now!";
+		getitem 2275, 1;
+		set RESRVPTS, RESRVPTS - 560;
+		goto M_BEnd;
+	M_B1o:
+		if(RESRVPTS < 700) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "Awwww, I want to try them on too! Hee!";
+		getitem 2213, 1;
+		set RESRVPTS, RESRVPTS - 700;
+		goto M_BEnd;
+	M_B1p:
+		if(RESRVPTS < 150) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "Tis the season... for red! Enjoy the hat.";
+		getitem 2236, 1;
+		set RESRVPTS, RESRVPTS - 150;
+		goto M_BEnd;
+	M_B1q:
+		if(RESRVPTS < 110) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "Well... it's not MINE.  ...  Uh, here.";
+		getitem 2339, 1;
+		set RESRVPTS, RESRVPTS - 110;
+		goto M_BEnd;
+	M_B1r:
+		if(RESRVPTS < 1300) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "This robe is only for sages and wizards!  But, it decreases your casting time!";
+		getitem 2343, 1;
+		set RESRVPTS, RESRVPTS - 1300;
+		goto M_BEnd;
+	M_B1s:
+		if(RESRVPTS < 1100) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "These designer shoes have added protection and mobility, they're fantastic!  Just wish I was the right job to wear them, humph.  You think they'd go with my dress?";
+		getitem 2413, 1;
+		set RESRVPTS, RESRVPTS - 1100;
+		goto M_BEnd;
+	M_B1t:
+		if(RESRVPTS < 120) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "Holy satchet!  Amen!";
+		getitem 2639, 1;
+		set RESRVPTS, RESRVPTS - 120;
+		goto M_BEnd;
+	M_B1u:
+		if(RESRVPTS < 120) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes ".... BE HEALED!";
+		getitem 2638, 1;
+		set RESRVPTS, RESRVPTS - 120;
+		goto M_BEnd;
+	M_B1v:
+		if(RESRVPTS < 900) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "This manteau is coated in wonderful herbs, seasoning, and magic!  It'll keep healthy and strong all day long.";
+		getitem 2509, 1;
+		set RESRVPTS, RESRVPTS - 900;
+		goto M_BEnd;
+	M_B1w:
+		if(RESRVPTS < 2000) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "This is a set of nine special 'story' cards.  They're pretty hard to get!";
+		getitem 4608, 1;
+		getitem 4607, 1;
+		getitem 4606, 1;
+		getitem 4605, 1;
+		getitem 4604, 1;
+		getitem 4603, 1;
+		getitem 4602, 1;
+		getitem 4601, 1;
+		getitem 4600, 1;
+		set RESRVPTS, RESRVPTS - 2000;
+		goto M_BEnd;
+	M_B1x:
+		if(RESRVPTS < 1400) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "This fiesty little accessory will make you hit better!  ... Sometimes!";
+		getitem 2616, 1;
+		set RESRVPTS, RESRVPTS - 1400;
+		goto M_BEnd;
+	M_B1y:
+		if(RESRVPTS < 1600) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "This ring mysteriously increases your defense!  Your magic defense too!  And vit as well!";
+		getitem 2615, 1;
+		set RESRVPTS, RESRVPTS - 1600;
+		goto M_BEnd;
+	M_B1z:
+		if(RESRVPTS < 1800) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "Possibly the finest knife I've ever seen!  It's so well balanced and light, and it's so beautiful too!  Take it and use it well, or... maybe don't use it.  It's too pretty for blood!";
+		getitem 1240, 1;
+		set RESRVPTS, RESRVPTS - 1800;
+		goto M_BEnd;
+	M_BGift:
+		if(RESRVPTS < 60) goto sL_LowPts1;
+		mes "[Kafra]";
+		mes "A giftbox for you!";
+		getitem 644, 1;
+		set RESRVPTS, RESRVPTS - 60;
+		goto M_BEnd;
+
+	sL_LowPts1:
+		mes "[Kafra]";
+		mes "I'm sorry but you do not have enough reserve points for that selection.";
+		goto M_BMenu;
+
+	M_B2:
+		menu 	"2100- Haste Card",M_B2a, "2200- Long Mace",M_B2p, "2300- Rogue's Treasure",M_B2b, "2500- Hunter's Bow Thimble",M_B2c, "2650- Muramasa",M_B2v, "2800- Immaterial Sword",M_B2d, "3000- Cutlass",M_B2e, 
+			"3100- Army Cap",M_B2f,"3300- Nagan",M_B2g, "3500- Firebrand",M_B2h, "3500- Ice Falchion",M_B2i,"3500- Schweizersabel",M_B2j, "3600- Tomahawk",M_B2n, 
+			"3700- Sashimi",M_B2k, "3700- Meat Cleaver",M_B2y, "3750- Counter Knife",M_B2q, "3850- Poison Knife",M_B2l, "4000- Azoth",M_B2m, "4100- Light Epsilon",M_B2r, "4200- Masamune",M_B2w, "4300- Automatic Crossbow",M_B2s, 
+			"4500- Gold!!",M_B2t, "4800- Infiltrator",M_B2x, "4900- Advanced Card Set",M_B2u, "5000- Zeny Knife",M_B2z, "Low Items List",M_BMenu, "High Items List",M_B3, "Cancel",M_BEnd;
+		
+		M_B2a:
+			if(RESRVPTS < 2100) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "This is a special card that will increase your speed!  Kafra warehouse has a huge stockpile of them for some reason...";
+			getitem 4610, 1;
+			set RESRVPTS, RESRVPTS - 2100;
+			goto M_BEnd;
+		M_B2b:
+			if(RESRVPTS < 2300) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "This thing will make stealing a synch!  Just... stay away from my purse!!";
+			getitem 2620, 1;
+			set RESRVPTS, RESRVPTS - 2300;
+			goto M_BEnd;
+		M_B2c:
+			if(RESRVPTS < 2500) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "This is a master's bow thimble!  Use it with care!";
+			getitem 12101, 1;
+			set RESRVPTS, RESRVPTS - 2500;
+			goto M_BEnd;
+		M_B2d:
+			if(RESRVPTS < 2800) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "I hear some people call these things 'Light sabres'.  How odd!";
+			getitem 1141, 1;
+			set RESRVPTS, RESRVPTS - 2800;
+			goto M_BEnd;
+		M_B2e:
+			if(RESRVPTS < 3000) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "The bashing sword!  A staple of the Kafra Garrison.  (Psst, jasmine never really knew bash, she just had one of these! But don't tell her I told you that!)";
+			getitem 1135, 1;
+			set RESRVPTS, RESRVPTS - 3000;
+			goto M_BEnd;
+		M_B2f:
+			if(RESRVPTS < 3100) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "Serve Rune-Midgard!  For our country!  Erm... here!";
+			getitem 2261, 1;
+			set RESRVPTS, RESRVPTS - 3100;
+			goto M_BEnd;
+		M_B2g:
+			if(RESRVPTS < 3300) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "This is a very interesting sword, its quick and easy to swing too.";
+			getitem 1130, 1;
+			set RESRVPTS, RESRVPTS - 3300;
+			goto M_BEnd;
+		M_B2h:
+			if(RESRVPTS < 3500) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "This one handed sword is enchanted with firebolt, use it well!";
+			getitem 1133, 1;
+			set RESRVPTS, RESRVPTS - 3500;
+			goto M_BEnd;
+		M_B2i:
+			if(RESRVPTS < 3500) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "This sword is enchanted with coldbolt!  I hate the cold!";
+			getitem 1131, 1;
+			set RESRVPTS, RESRVPTS - 3500;
+			goto M_BEnd;
+		M_B2j:
+			if(RESRVPTS < 3500) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "This great sword is enchanted with lightning bolt, be careful with it.";
+			getitem 1167, 1;
+			set RESRVPTS, RESRVPTS - 3500;
+			goto M_BEnd;
+		M_B2k:
+			if(RESRVPTS < 3700) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "Fine culinary knife used to carve only the tastiest of meat slices from fish!";
+			getitem 1144, 1;
+			set RESRVPTS, RESRVPTS - 3700;
+			goto M_BEnd;
+		M_B2l:
+			if(RESRVPTS < 3850) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "This blade is toxic to the body, so much that it can cause poisonous reactions!";
+			getitem 1239, 1;
+			set RESRVPTS, RESRVPTS - 3850;
+			goto M_BEnd;
+		M_B2m:
+			if(RESRVPTS < 4000) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "This alchemist's knife has the power to change appearances.  It must be amazing on prom night!";
+			getitem 1235, 1;
+			set RESRVPTS, RESRVPTS - 4000;
+			goto M_BEnd;
+		M_B2n:
+			if(RESRVPTS < 3600) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "Hyai yung yung yung hyai yung yung yung!  Oh hehe, don't mind me.  I like Indians.";
+			getitem 1368, 1;
+			set RESRVPTS, RESRVPTS - 3600;
+			goto M_BEnd;
+		M_B2o:
+			if(RESRVPTS < 4200) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "This mighty halberd is endowed with the spirit of fire!";
+			getitem 1368, 1;
+			set RESRVPTS, RESRVPTS - 4200;
+			goto M_BEnd;
+		M_B2p:
+			if(RESRVPTS < 2200) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "This special mace has an extended shaft, and a lightweight but effective head, perfect for reaching further!";
+			getitem 1525, 1;
+			set RESRVPTS, RESRVPTS - 2200;
+			goto M_BEnd;
+		M_B2q:
+			if(RESRVPTS < 3750) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "Well, here you go.  Be careful, its really, really, -really- sharp.";
+			getitem 1242, 1;
+			set RESRVPTS, RESRVPTS - 3750;
+			goto M_BEnd;
+		M_B2r:
+			if(RESRVPTS < 4100) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "This is a holy axe, so it must be good!  I have to say though, it sure is odd looking.";
+			getitem 1336, 1;
+			set RESRVPTS, RESRVPTS - 4100;
+			goto M_BEnd;
+		M_B2s:
+			if(RESRVPTS < 4300) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "The repeating self autonomatic firing crossbow nine, or Automatic Crossbow, fires really fast!";
+			getitem 1721, 1;
+			set RESRVPTS, RESRVPTS - 4300;
+			goto M_BEnd;
+		M_B2t:
+			if(RESRVPTS < 4500) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "Yes well, gold!  Everyone likes gold right?  Gold shoes, gold crowns, gold earrings, gold back implants!!";
+			getitem 969, 10;
+			set RESRVPTS, RESRVPTS - 4500;
+			goto M_BEnd;
+		M_B2u:
+			if(RESRVPTS < 4900) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "This is an expert collection of cards!  And as per Kafra courtesy, we have also included five card albums for you!";
+			getitem 616, 5;
+			getitem 4045, 1; // horn card
+			getitem 4051, 1; // yoyo card
+			getitem 4087, 1; // giearth card
+			getitem 4102, 1; // whisper card
+			getitem 4117, 1; // sidewinder card
+			set RESRVPTS, RESRVPTS - 4900;
+			goto M_BEnd;
+		M_B2v:
+			if(RESRVPTS < 3650) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "An excellent sword!  It was folded many many times to make it stronger, and sharper.";
+			getitem 1164, 1;
+			set RESRVPTS, RESRVPTS - 3650;
+			goto M_BEnd;
+		M_B2w:
+			if(RESRVPTS < 4200) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "A superb sword bearing the hallmark of a master swordsmith, may this sword bring you swift joy er justice!  No, your foes justice!  Or I mean well... ah just take it!";
+			getitem 1165, 1;
+			set RESRVPTS, RESRVPTS - 4200;
+			goto M_BEnd;
+		M_B2x:
+			if(RESRVPTS < 4800) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "The infiltrator is a frightening katar, designed specifically for man to man combat...";
+			getitem 1261, 1;
+			set RESRVPTS, RESRVPTS - 4800;
+			goto M_BEnd;
+		M_B2y:
+			if(RESRVPTS < 3700) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "This dandy axe is ideal for carving meat from your prey!";
+			getitem 1261, 1;
+			set RESRVPTS, RESRVPTS - 3700;
+			goto M_BEnd;
+		M_B2z:
+			if(RESRVPTS < 5000) goto sL_LowPts2;
+			mes "[Kafra]";
+			mes "This wondrous knife bestows wealth upon the user!  But I heard it only works for players... too bad, if it worked for anyone, I'd be out the slapping porings left and right with one!  Boohoo.";
+			getitem 1238, 1;
+			set RESRVPTS, RESRVPTS - 5000;
+			goto M_BEnd;
+
+		sL_LowPts2:
+			mes "[Kafra]";
+			mes "I like serving the public, but I can't just give them away!  Sorry, you need more points!";
+			next;
+			goto M_B2;
+
+		M_B3: 
+
+		menu 	"Sorry, nothing here yet!",M_B3a, "Medium Items List",M_B2, "Low Items List",M_BMenu, "Cancel",M_BEnd;
+		
+			M_B3a:
+				if(RESRVPTS < 0) goto sL_LowPts3;
+				mes "[Kafra]";
+				mes "Sorry, but the high quality items are not available yet.";
+				goto M_BEnd;
+		sL_LowPts3:
+			mes "[Kafra]";
+			mes "I'm sorry, but you do not have enough reserve points to get that prize.";
+			next;
+			goto M_B2;
+	M_BEnd:
+		next;
+		mes "[Kafra]";
+		mes "Please come back anytime when you have more reserve points.";
+		close2;
+		cutin "kafra_01",255;
+		end;
+	M_End:
+		mes "[Kafra]";
+		mes "I am glad to hear that "+strcharinfo(0)+", I wish you good luck in your ventures.";
+		close2;
+		cutin "kafra_01",255;		
+		end;
+		
+
+}
+
+
+// Guards -------------------------------------------
+prt_are_in,111,10,2	script	Guard#a	105,{
+	cutin "prt_soldier",2;
+	mes "[Arena Guard]";
+	mes "Hey!  Welcome to the Arena.  Have a good time.";
+	close2;
+	cutin "prt_soldier",255;
+	end;
+}
+
+prt_are_in,88,31,4	script	Guard#b	105,{
+	cutin "prt_soldier",2;
+	mes "[Arena Guard]";
+	mes "Hey, if you didn't come here to kill, maim, injure, bleed, or otherwise incur serious wounds to one another, then try this room out.  It's the minigames room.";
+	close2;
+	cutin "prt_soldier",255;
+	end;
+}
+
+prt_are_in,107,31,4	script	Guard#c	105,{
+	cutin "prt_soldier",2;
+	mes "[Arena Guard]";
+	mes "Through here you will find the Realm Gate room.";
+	mes "You can use this room to move between the PvP Realm, and our realm the RP Realm.  You'll need to buy an expensive ticket though.";
+	close2;
+	cutin "prt_soldier",255;
+	end;
+}
+
+// The talky bastard --------------------------------
+prt_are_in,111,17,2	script	Guard#d	105,{
+	cutin "prt_soldier",2;
+	mes "[Arena Guard]";
+	mes "That guy over there has been standing there for like, forever.  He hasn't said anything or stuff, y'know?";
+	next;
+		menu "Which one?",M_1, "End Conversation.",M_End;
+	M_1:
+		mes "[Arena Guard]";
+		mes "That one over there, down there!  Every now and then he turns around and looks at the woman fighter on the other side of the room.  Weirdo.";
+		next;
+		menu "Wait what?",M_2, "Oh really...",M_3, "I don't care, bye.",M_End2;
+	M_2:
+		mes "[Arena Guard]";
+		mes "I think he likes her.  But you know, he's probably just too shy to do anything about it.  Maybe you should talk to him?  Cause... you know.  I can't move from this spot.";
+		next;
+		menu "Maybe",M_4, "None of my business",M_5, "*Push him*",M_8, "I don't care, bye.",M_End2;
+	M_3:
+		mes "[Arena Guard]";
+		mes "Yeah!  You think he likes her?  He just keeps looking at her.  Maybe she's someone he knows?  Ask her about it!";
+		next;
+		menu "She looks dangerous",M_6, "Uh, no.",M_7b, "Look... I want to fight",M_Fight;
+	M_4:
+		mes "[Arena Guard]";
+		mes "Yeah that's it!  Go encourage the guy, he needs it!";
+		next;
+		mes "[Arena Guard]";
+		mes "Makes me think back when I used to be little... there... was this novice...";
+		mes "She was the darndest thing!  Me and her used to run around outside Geffen.";
+		next;
+		mes "[Arena Guard]";
+		mes "But then one day, she met this... merchant.";
+		mes "We all got to be good friends and stuff, you know?  And he started buying things for her.";
+		next;
+		mes "[Arena Guard]";
+		mes "Me, being the great, and wonderful swordsman I was, was always there to fight by her side when she became an archer!";
+		mes "But porings are mean, you know?";
+		next;
+		mes "[Arena Guard]";
+		mes "[Blah blah blah blah]";
+		next;
+		menu "Snore",M_9, "Will you shut up!!",M_10;
+	M_5:
+		mes "[Arena Guard]";
+		mes "Oh, right.  You're here to fight then?  Talk to the Floorman over there.  Rather nice person, a little full of his own voice though...";
+		mes "But heh!  What do I know!  If you're here to fight, hop to it!  I'll try and spot you in the infirmary.";
+		next;
+		menu "Walk away",M_End, "Yeah right!",M_End8;
+	M_6:
+		mes "[Arena Guard]";
+		mes "You think so?  I thought she was kinda pretty looking myself.  But dangerous?  Nahh... experienced, yeah, but she wouldn't hurt a fly!";
+		mes "Kinda... makes me think...";
+		next;
+		mes "[Arena Guard]";
+		mes "A long time ago, when I was little... there... was this novice...";
+		mes "She was the darndest thing!  Me and her used to run around outside Geffen.";
+		next;
+		mes "[Arena Guard]";
+		mes "But then one day, she met this... merchant.  The guy was a charmer!";
+		mes "We all got to be good friends and stuff, you know?  And he started buying things for her.";
+		next;
+		mes "[Arena Guard]";
+		mes "Me, being the great, and wonderful swordsman I was, was always there to fight by her side when she became an archer!";
+		mes "But porings are mean, you know?  And fabres too, those guys are monsters.";
+		next;
+		mes "[Arena Guard]";
+		mes "[Blah blah blah blah]";
+		next;
+		menu "Snore",M_9, "Will you shut up!!",M_10;
+	M_7:
+		mes "[Arena Guard]";
+		mes ".... So it's not your business, so what?  Talk to him!  Or not, it's up to you I guess.";
+		mes "But you know just looking at him, he's so helpless... someone has to do something!";
+		next;
+		menu "FINE.  I'll do it.",M_11, "I just want to fight.",M_Fight;
+	M_7b:
+		mes "[Arena Guard]";
+		mes "Okay, so you're shy of girls.  I understand.  How about talking to him then?  Really!";
+		mes "Just look at him, he's so helpless... someone has to do something!";
+		next;
+		menu "FINE.  I'll do it.",M_11, "I just want to fight.",M_Fight;
+	M_8:
+		mes "[Arena Guard]";
+		mes "AH!  What are you doing?  Don't touch me there!";
+		mes " ";
+		mes "......";
+		next;
+		mes "[Arena Guard]";
+		mes "Wait... were you trying to see if I'd fall over, or something?";
+		mes "Hahaha!  Won't work, we are glued to the ground with a special adhesive compound!";
+		next;
+		menu "Wow, really?",M_12, "Run off giggling",M_End3;
+	M_9:
+		mes "[Arena Guard]";
+		mes "[blah blah blah, blah blah, blah blah! BLAH! blah!]";
+		next;
+		mes "[Arena Guard]";
+		mes "[blah blah, blah! b... blah...?]";
+		next;
+		mes "[Arena Guard]";
+		mes "... Hey!  You fell asleep on me, I'm not done!";
+		next;
+		menu "Aaahhh",M_13, "SHUT UP SHUT UP SHUT UP!",M_10, "Run away",M_End;
+	M_10:
+		mes "[Arena Guard]";
+		mes ".......";
+		next;
+		mes "[Arena Guard]";
+		mes "I'm sorry I offended you with my USEFUL INFORMATION.";
+		next;
+		menu "Useful my ass!!",M_End4, "Um... sorry.",M_14;
+	M_11:
+		mes "[Arena Guard]";
+		mes "Good luck!  Give him some flowers to help him too!";
+		mes "Heehee!";
+		next;
+		goto M_End;
+	M_12:
+		mes "[Arena Guard]";
+		mes "I'm... I'm not kidding!  These boots are stuck to the floor.  We get out of them at night, and someone else gets into them.";
+		next;
+		mes "[Arena Guard]";
+		mes "I think there's some gum in the left boot... ugh.";
+		next;
+		menu ".....",M_15, "Yeah, whatever. Bye",M_End2;
+	M_13:
+		mes "[Arena Guard]";
+		mes "Aaah what?  I'm not your dentist!  Though...";
+		next;
+		mes "[Arena Guard]";
+		mes "Maybe I could take a look for you!  My mother always told me I should of been a dentist.";
+		next;
+		menu "Stay out of my mouth!",M_16, "ENOUGH. GOD. BYE.",M_End2;
+	M_14:
+		mes "[Arena Guard]";
+		mes "That's okay.  I'm glad you apologized.  Maybe you just don't like to chat?";
+		next;
+		mes "[Arena Guard]";
+		mes "Or... Ooooh... You came here to fight didn't you?  Talk to the Floorman for that!  Over there!  That guy with the blonde hair in the middle, that's all you know, greetly and stuff.";
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	M_15:
+		mes "[Arena Guard]";
+		mes ".... What?  You've never had gum in your shoe before?  It's nasty!  Why this one time...";
+		next;
+		menu "God! I'm leaving!",M_End2, "I like gum though.",M_17;
+	M_16:
+		mes "[Arena Guard]";
+		mes "I wouldn't really!  Honest!  I was just, um...";
+		next;
+		menu "You would to!",M_18, "I've had enough, bye.",M_End2;
+	M_17:
+		mes "[Arena Guard]";
+		mes "Yeah!  Gum is nice, great really.  But it's hard to talk while you're chewing.  And you know, gum in the shoe is bad, it's not even good for chewing.";
+		next;
+		mes "[Arena Guard]";
+		mes "I tried it once, oh god... it was...";
+		next;
+		menu "YOU DID WHAT?",M_19, "What flavor?",M_20, "Uhhh... *Walk away*",M_End2;
+	M_18:
+		mes "[Arena Guard]";
+		mes "Oh fine, yeah sure.  Open wide, let me dive in.  Fah!  Go fight in your arena, humph.";
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	M_19:
+		mes "[Arena Guard]";
+		mes "UM!  N-nothing!  You uh, nevermind!  Move along...";
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	M_20:
+		mes "[Arena Guard]";
+		mes "Oh, cherry... I think.  I couldn't tell, there were um other 'flavors' there too.";
+		mes "Eeehh... Yeah.";
+		next;
+		menu "Eew, sick.",M_21, "I like cherry.",M_22;
+	M_21:
+		mes "[Arena Guard]";
+		mes "Whatever!  Cherry is good!";
+		next;
+		menu "Sicko, bye.",M_End2, "Ever tried pineapple?",M_23;
+	M_22:
+		mes "[Arena Guard]";
+		mes "Oh, you do?  Cherry is nice, it's a nice flavor.";
+		next;
+		menu "Goes well with Strawberry",M_24, "Goes well with Blueberry",M_25, "Goes well with Lime",M_26, "Goodbye",M_End5;
+	M_23:
+		mes "[Arena Guard]";
+		mes "Um... once.  I was down in Comodo on vacation leave!  You should visit there sometime, it's nice during late spring.";	
+		next;
+		menu "Maybe I will...",M_27, "Um, okay.  Goodbye.",M_End5;
+	M_24:
+		mes "[Arena Guard]";
+		mes "It does?  Hum, I'll have to try that sometime.  Not my fancy really, but you know whatever floats your boat.";
+		next;
+		mes "[Arena Guard]";
+		mes "Say... you should check out the arena here too!  That is what this place is, an Arena!  That Floorman guy over there is the one to ask about it though, I'm just your easy going chatterly guard!";
+		next;
+		menu "Thanks, I will do that",M_End6, "You talk too much, bye.",M_End2;
+	M_25:
+		mes "[Arena Guard]";
+		mes "Eww, blueberry does NOT go well with cherry!  Sure maybe if you're odd, but seriously!  No way, just, it's just wrong.";
+		next;
+		menu "But I like it...",M_28, "You're right",M_29;
+	M_26:
+		mes "[Arena Guard]";
+		mes "Yes! Yes it does!  I love it with lime.  Wow, that was just, so out there.  Who'd think I'd meet someone else that likes cherry-lime gum?  Cool!";
+		next;
+		mes "[Arena Guard]";
+		mes "Say, I happen to know that Kafra lady over there pretty well.  You've been really nice to sit through and talk with me.  Most people just run away screaming, I don't know why!  My breath doesn't smell bad or anything.";
+		next;
+		mes "[Arena Guard]";
+		mes "So...  I'll put a good word through for you, okay?  With the Kafra, that is!";
+		next;
+		menu "Great, thanks!",M_30, "Sure you will.",M_31;
+	M_27:
+		mes "[Arena Guard]";
+		mes "I hope you do, it's a nice place, really it is.  A bit annoying with the crabs and monsters and fish and what not all trying to bite your toes and fly up your rectum!  But hey, aside from that it's a great place!";
+		next;
+		mes "[Arena Guard]";
+		mes "I would just sit back, you know?  Relax, and take a breather.  Standing takes it toll if like, that's your job, you know?";
+		next;
+		mes "[Arena Guard]";
+		mes "Why... heh, this one time.....";
+		next;
+		menu "Look I've got to go",M_32, "You never shut up, I'm leaving.",M_End2;
+	M_28:
+		mes "[Arena Guard]";
+		mes "HOW can you like that?  I mean, what the heck!  You are one strange person, really.  Cherry and blueberry?  What's wrong with you.  I've had enough, I can't stand to be around you now.  Please leave.";
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	M_29:
+		mes "[Arena Guard]";
+		mes "Yeah!  Stay away from the darkside, or it will consume your entire being!!  I've seen it happen to.";
+		next;
+		mes "[Arena Guard]";
+		mes "Like, this one girl I knew.  She used to like strawberry.  It was good, she'd get a strawberry float every Sunday.  Then this carriage sporting exotic flavors wheeled into town.";
+		next;
+		mes "[Arena Guard]";
+		mes "They had bizarre things like Chocolate Ice and Oregano Yam Pie!!  How wrong!  I told her not to go but... *he starts mumbling*";
+		next;
+		menu "Leave, quickly.",M_End, "*start crying, and walk away*",M_End7;
+	M_30:
+		mes "[Arena Guard]";
+		mes "Yeah!  Hey, if you're interested this here's an arena building.  Just go and talk to that Floorman guy over there, he'll tell you all about the arena.";
+		next;
+		goto M_End6;
+	M_31:
+		mes "[Arena Guard]";
+		mes "I said I would... but... okay if you don't want me to.  Oh well, nice talking to you.";
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	M_32:
+		mes "*He didn't notice you*";
+		mes " ";
+		mes "[Arena Guard]";
+		mes "Yeah and this waitress was all like, [blah blah, blah...]";
+		next;
+		menu "Walk away, quickly",M_End;
+	M_Fight:
+		mes "[Arena Guard]";
+		mes "Oh, you came here to fight?  Aww, I was hoping for a nice conversation";
+		next;
+		mes "[Arena Guard]";
+		mes "Alright, let me think... Beginner's room is over here on the east end, aaaand, the Veteran's room is down there on the west end, and the Minigame and Realm Gate room are in the middle.  If you have questions about the Arena, ask the Floorman over there.  Blonde hair.";
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	M_End:
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	M_End2:
+		mes "[Arena Guard]";
+		mes "Well that was rude.  Yeah, see you.";
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	M_End3:
+		mes "[Arena Guard]";
+		mes "Wha!... Did you steal my watch?? HEY!";	
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	M_End4:
+		mes "[Arena Guard]";
+		mes "It is TOO useful!  Well see where you end up if a giant monster ever comes up to you and asks about Lolaine and Robert!!";	
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	M_End5:
+		mes "[Arena Guard]";
+		mes "Nice talking with you, good bye to you too!  Safe journey on your travels!  Watch out for the porings, and try out the arena here too!  Just go speak to the Floorman, but I assure you he is far less interesting then *I* am.  Heeh.";	
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	M_End6:
+		mes "[Arena Guard]";
+		mes "I'll cheer for you if I see you.  Stay out of the infirmary, okay?  Good luck!";	
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	M_End7:
+		mes "[Arena Guard]";
+		mes "*He looks up*  ... What?  What'd I say?";	
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	M_End8:
+		mes "[Arena Guard]";
+		mes "Yeah okay, go get yourself killed.  Have a nice day!";
+		close2;
+		cutin "prt_soldier",255;
+		end;
+}
+
+prt_are_in,85,10,6	script	Guard#e	105,{
+	cutin "prt_soldier",2;
+	mes "[Arena Guard]";
+	mes "Jeeze would he just shut up!";
+	next;
+		menu "Who?",M_1, "What, ME?",M_2, "End Conversation",M_End;
+	M_1:
+		mes "[Arena Guard]";
+		mes "That guard over there, on the other side of the room.";
+		next;
+		mes "[Arena Guard]";
+		mes "The bastard never shuts up, it's really annoying.";
+		next;
+		menu "Yeah, it is.",M_3, "He's nice.",M_4;
+	M_2:
+		mes "[Arena Guard]";
+		mes "Oh, no no not you.  You just got here, right?  That guard on the other side of the room is never quiet.  EVER.";
+		next;
+		mes "[Arena Guard]";
+		mes "Half the talking in this place belongs to him.  He loves his voice too much. *Sigh*";
+		next;
+		goto M_End;
+	M_3:
+		mes "[Arena Guard]";
+		mes "Even if you try and ask him, he just keeps on going.  I think I'll hit the arena after break, I could use the stress management.";
+		next;
+		goto M_End;
+	M_4:
+		mes "[Arena Guard]";
+		mes "Uh, you think so?  Look, if you're the talkative type, I'm not.  So bug off.";
+		next;
+		goto M_End;
+	M_End:
+		close2;
+		cutin "prt_soldier",255;
+		end;
+}
+
+prt_are_in,85,17,6	script	Guard#f	105,{
+	cutin "prt_soldier",2;
+	mes "[Arena Guard]";
+	mes "Hello "+strcharinfo(0)+", enjoy your stay.";
+	mes "If you are here for the thrill of the fight, then please pick one of the four rooms.";
+	next;
+	mes "[Arena Guard]";
+	mes "The east hallway leads to the Beginner's Room, Sheryl there can take you to the Beginner's Station Square where you may sign up and enter PvP rooms.";
+	next;
+	mes "[Arena Guard]";
+	mes "On the opposite side, on the west end, is the Veteran's room.  Ragu can take you to the Veteran's Station Square.  Please, be nice to him.  He is a little slow.";
+	next;
+	mes "[Arena Guard]";
+	mes "And right over there in the middle are the Realm Gate room and Minigames room.  The Minigames are on the left, and the Realm Gate room is on the right.  Enjoy your stay in the Izlude Arena.";
+	close2;
+	cutin "prt_soldier",255;
+	end;
+}
+
+// Granny & Child -----------------------------------
+
+prt_are_in,88,21,5	script	Old Lady#a	103,{
+	mes "[Granny]";
+	mes "Why, hello there!  Decided to talk to an old woman have you?  How nice.";
+	next;
+	mes "[Granny]";
+	mes "Here, this is my granddaughter!  I have seven grandchildren.  I am grateful to be blessed with them.";
+	next;
+		menu "Why are you here?",M_1, "Wow, seven?",M_6, "Goodbye",M_End;
+	M_1:
+		mes "[Granny]";
+		mes "I've brought my granddaughter to watch the arena fights today.";
+		next;
+		menu "But she's just a kid!",M_2, "Good idea, nice one!",M_3;
+	M_2:
+		mes "[Granny]";
+		mes "Oh goodness, it's not like she is watching the Veteran matches you know!  We go to see the Beginner matches.  She enjoys coming here so much, you know.";
+		next;
+		mes "[Granny]";
+		mes "I'm sure you could be a grand fighter.  Just take care of yourself young one!";
+		next;
+		close;
+	M_3:
+		mes "[Granny]";
+		mes "Ho, ohoho.  It was my granddaughter's idea, not mine.  She just loves this place.  Fight for her, will you?  She would love it!";
+		next;
+		menu "Okay!",M_4, "I fight for myself",M_5;
+	M_4:
+		mes "[Granny]";
+		mes "Wonderful, did you hear that Belle?  This nice stranger is going to fight for you!";
+		next;
+		if (gotitemthx == 1) goto M_7;
+		mes "[Belle]";
+		mes "Hurray!  Fight hard for us!  Here, this is for you~";
+		getitem 712, 1;
+		set gotitemthx, 1;
+		next;
+	M_7:	
+		mes "[Granny]";
+		mes "It was wonderful meeting you stranger, I wish you the best of luck.";
+		close;
+	M_5:
+		mes "[Granny]";
+		mes "You do, do you?  Well, I wish you the best of luck young one.  Take care.";
+		next;
+		close;
+	M_6:
+		mes "[Granny]";
+		mes "Oh, yes!  Seven wonderful grandchildren.  Four granddaughters, and three grandsons.";
+		next;
+		mes "[Granny]";
+		mes "Perhaps one day, you can find a wonderful person who will make your life full, and you can grow old together and have many children.";
+		next;
+		mes "[Granny]";
+		mes "*Smile*";
+		next;
+		close;
+
+	M_End:
+		mes "[Granny]";
+		mes "Oh... it was nice meeting you.";
+		next;
+		close;
+}
+
+prt_are_in,88,20,4	script	Belle	96,{
+	if(sex==1) goto M;
+	mes "[Belle]";
+	mes "Hmm?  Hello lady!  Are you here to fight?  I'll cheer for you!  Hee hee~";
+	next;
+	close;
+	
+	M:
+	mes "[Belle]";
+	mes "Oh, hi there mister!  You look big and strong!, are you here to fight?  Fight hard and win mister!";
+	next;
+	close;
+}
+
+// Fighters -----------------------------------------
+
+prt_are_in,110,27,2	script	Napping Fighter	107,{
+	mes "[Sleepyhead]";
+	mes "*snore* *mumble* two... sword... *snore*";
+	next;
+	mes "[Sleepyhead]";
+	mes "... apple... zzZz... *snore* ...knife... axe...";
+	next;
+	menu "Leave him alone for now",M_End, "Poke him",M_1;
+
+	M_1:
+		mes "["+strcharinfo(0)+"]";
+		mes "*Your hand stops just short of touching him, and his eyebrows start twitching uncontrollably.  You recall your hand immediately.*";
+		next;
+		menu "Woah, freaky.",M_End, "Try it again",M_2;
+	M_2:
+		mes "["+strcharinfo(0)+"]";
+		mes "*As you reach forwards a second time, he twitches and snorts then stops abruptly - making no noise what so ever.  You think he can sense your presence, it would be best to leave at this point.*";
+		next;
+		close;
+	M_End:
+		mes "["+strcharinfo(0)+"]";
+		mes "I think I'll just leave the guy alone...";
+		next;
+		close;
+}
+
+prt_are_in,92,8,8	script	Soldier	56,{
+	mes "[Soldier]";
+	mes "Aah, hello there.  Are you here for the fighting?";
+	next;
+		menu "Yes I am",M_1, "Just here to watch",M_2, "End Conversation",M_End;
+	M_1:
+		mes "[Soldier]";
+		mes "Glad to hear.  Perhaps we'll get to match one another in the arena.";
+		next;
+		mes "[Soldier]";
+		mes "If we do... you should know.  I am called the Great Gonzales.  I have never lost.";
+		next;
+		menu "Maybe we will fight.",M_3, "Hah! I can beat you!",M_4, "Oh, I've heard of you!",M_5, "......who?",M_6;
+	M_2:
+		mes "[Soldier]";
+		mes "Oh, just a spectator then?  Well I am known as the Great Gonzales!  If you see me out there, cheer me on!";
+		next;
+		mes "[Soldier]";
+		mes "Okay?  Okay.  Good day.";
+		next;
+		close;
+	M_3:
+		mes "[Soldier]";
+		mes "Hmmm... yes... maybe,";
+		mes "*He takes a good look at you*";
+		next;
+		if(BaseLevel<=40) goto M_Low;
+		if(BaseLevel>=120) goto M_VHigh;
+		if(BaseLevel>=70) goto M_High;
+		mes "[Soldier]";
+		mes "You may need some luck though.  May lady luck shine on you then, and you grow stronger.  Good day.";
+		next;
+		goto M_End;
+	M_4:
+		mes "[Soldier]";
+		mes "Aahahahaha!  Sure, sure!  I haven't lost a single match for nothing, you know!";
+		next;
+		mes "[Soldier]";
+		mes "Just one taste of my super jump smash would leave you crying!";
+		next;
+		mes "[Soldier]";
+		mes "Why I once bested the King's High Guard, all of them in less then 3 minutes!  Just in a show of arms.  Run along now, hahaha.";
+		next;
+		goto M_End;
+	M_5:
+		mes "[Soldier]";
+		mes "Ooh?  It would seem then my fame has extended past my reach!  You see, I only just arrived here.";
+		next;
+		mes "[Soldier]";
+		mes "I most certainly did not expect anyone to recognize me.  Splendid!  *he seems giddy with this*";
+		next;
+		menu "Yup, great and famous.  Bye.",M_End2, "Uh, actually I lied.",M_7;
+	M_6:
+		mes "[Soldier]";
+		mes "Whaat?  ... Well, it doesn't surprise me.  You see I only recently arrived in this area.  I honestly did not expect anyone to recognize me anyway.";
+		next;
+		mes "[Soldier]";
+		mes "However, once you see me in the arena... You shall know the greatness of the Great Gonzales!!";
+		next;
+		menu "Oh yes, I hope so!",M_8, "Yeah, whatever- See ya",M_End3;
+	M_7:
+		mes "[Soldier]";
+		mes "... Oh.  Well atleast you were a good sport.  Thanks anyway.";
+		next;
+		goto M_End;
+	M_8:
+		mes "[Soldier]";
+		mes "*he assuringly pats you on the shoulder a few times*";
+		next;
+		mes "[Soldier]";
+		mes "Glad to hear it!  Perhaps I could give you some tips and advice too!  But for a later time.  You work hard, and train hard too.  May victory shine on your battles!";
+		next;
+		goto M_End;
+	M_Low:
+		mes "[Soldier]";
+		mes "Hah!  Don't make me laugh.  You're just a child.  Train hard, and maybe one day.  Till then.";
+		next;
+		goto M_End;
+	M_High:
+		mes "[Soldier]";
+		mes "Hmmmm... You seem well experienced.  An entertaining fight it would be.  I look forward to seeing you in the arena one day.  Till then.";
+		next;
+		goto M_End;
+	M_VHigh:
+		mes "[Soldier]";
+		mes "Well well well, you are quite the... capable one.  It would be a true challenge to fight you!  You are strong and powerful, I can tell.  It would be no match for those weak of heart I can say!  One day!  Till then, I bid you a glad farewell, my comrade in arms!";
+		next;
+		goto M_End;
+	M_End:
+		close;
+	M_End2:
+		mes "[Soldier]";
+		mes "Aah.. yes, yes.  Don't forget to tell your comrades about the Great Gonzales!";
+		next;
+		close;
+	M_End3:
+		mes "[Soldier]";
+		mes "Tsk, a bad attitude for a warrior.";
+		next;
+		close;
+}
+
+prt_are_in,111,19,2	script	Warrior	106,{
+	if (gotitemthxx == 2) goto M_12;
+	mes "[Warrior]";
+	mes ".....";
+	next;
+		menu "Hello?",M_1, ".....",M_2, "End Conversation",M_End;
+	M_1:
+		mes "[Warrior]";
+		mes "*He says nothing, and doesn't even move to look at you.*";
+		next;
+		menu "Bastard.",M_3, "Uh... HI??",M_4, ".....",M_2, "End Conversation",M_End;
+	M_2:
+		mes "[Warrior]";
+		mes ".....";
+		next;
+		mes "[Warrior]";
+		mes ".....";
+		next;
+		mes "[Quiet Warrior]";
+		mes ".....";
+		next;
+		mes "[Quiet Warrior]";
+		mes ".....";
+		next;
+		mes "[Quiet Warrior]";
+		mes ".....";
+		next;
+		mes "[VERY Quiet Warrior]";
+		mes ".........";
+		next;
+		menu "Say something damnit!",M_3b, ".....",M_5, "Walk away",M_End;
+	M_3:
+		mes "[Warrior]";
+		mes "*His eyes shift to look at yours, you feel very uneasy*";
+		next;
+		menu "Walk away, quickly",M_End, "Oh, got your attention huh?",M_6;
+	M_3b:
+		mes "[VERY Quiet Warrior]";
+		mes "*His eyes shift to look at yours, you feel very uneasy*";
+		next;
+		menu "Walk away, quickly",M_End, "Oh, got your attention huh?",M_6b;
+	M_4:
+		mes "[Warrior]";
+		mes ".....";
+		next;
+		menu "Hello?  Anyone in there?",M_7, "Okay, quiet type.  Bye.",M_End;
+	M_5:
+		mes "[VERY Quiet Warrior]";
+		mes "........";
+		next;
+		mes "[VERY Quiet Warrior]";
+		mes "........";
+		next;
+		mes "[A *TOO* Quiet Warrior]";
+		mes "........";
+		next; 
+		menu "Are you dead?",M_8, ".....",M_9, "Walk away",M_End;
+	M_6:
+		mes "[Warrior]";
+		mes "*He stares at you, you feel you should walk away now.  Fast.*";
+		next;
+		close;
+	M_6b:
+		mes "[VERY Quiet Warrior]";
+		mes "*He stares at you, you feel uneasy.*";
+		next;
+		mes "[VERY Quiet Warrior]";
+		mes "Go away.";
+		next;
+		menu "Omigawd, he spoke!",M_10, "Walk away",M_End;
+		close;
+	M_7:
+		mes "[Warrior]";
+		mes "*He continues to say nothing, and completely ignore you.";
+		next;
+		menu "Fah fine, I'll leave.",M_End;
+	M_8:
+		mes "[A *TOO* Quiet Warrior]";
+		mes "..........";
+		next;
+		mes "[A *TOO* Quiet Warrior]";
+		mes "No.  Go away.";
+		next;
+		goto M_End;
+	M_9:
+		mes "[A *TOO* Quiet Warrior]";
+		mes "............";
+		next;
+		mes "[A *TOO* Quiet Warrior]";
+		mes "You are patient, I respect that.  May patience reward you.";
+		set gotitemthxx, 1;
+		set RESRVPTS, RESRVPTS + 10;
+	M_12:	
+		next;
+		mes "[A Respectfully Silent Warrior]";
+		mes "May fortune shine on your travels.  Goodbye.";
+		next;
+		close;
+	M_10:
+		mes "[VERY Quiet Warrior]";
+		mes ".....";
+		next;
+		mes "[VERY Quiet Warrior]";
+		mes "*He has resumed ignoring you, it doesn't look like he's going to talk to you further.*";
+		next;
+		goto M_End;
+	M_End:
+		close;
+}
+
+prt_are_in,87,27,1	script	Woman#amarena	90,{
+	mes "[Woman]";
+	mes "*She seems to be busy in thought*";
+	next;
+		menu "Excuse me?",M_1, "Leave",M_End;
+	M_1:
+		mes "[Woman]";
+		mes "Oh, I-I'm sorry I didn't notice you there.";
+		next;
+		mes "[Woman]";
+		mes "Please, if you would... do not bother me.  I am trying to concentrate.";
+		next;
+		goto M_End;
+	M_End:
+		close;
+}
+
+// Flirty and Flirtette -----------------------------
+
+prt_are_in,107,8,4	script	Nervous Guy	50,{
+	mes "[Nervous Guy]";
+	mes "*he seems consumed in his thoughts*";
+	next;
+		menu "Er, hello?",M_1, "Laugh, then leave",M_End1, "End Conversation",M_End;
+	M_1:
+		mes "[Nervous Guy]";
+		mes "*He is talking to himself*";
+		next;
+		mes "[Nervous Guy]";
+		mes "But... eh maybe... no no she bit me that time... what about trying it... oh that wouldn't work... no no no...";
+		next;
+		menu "Woah! I don't want to know!",M_End, "*lean in closer*",M_2;
+	M_2:
+		mes "[Nervous Guy]";
+		mes "Maybe I can pickup more leather at the store... hmm...  She liked that, that one time.  But the mess! Augh, she's bad at that.  *He taps his chin*  And she never cleans up afterwards... of course...";
+		next;
+		close;
+	M_End1:
+		mes "[Nervous Guy]";
+		mes "That time with the turnips though... and shovel!  Oh go-...... Aah! Stop spying on me!";
+		next;
+		close;
+	M_End:
+		close;
+}
+
+prt_are_in,105,23,2	script	Female Fighter	101,{
+
+	mes "[Fighter]";
+	mes "Oh, hello there.";
+	next;
+		menu "Hi.",M_1, "....",M_2, "End Conversation",M_End;
+	M_1:
+		mes "[Fighter]";
+		mes "Are you here to fight too?  If you are, watch out for that new guy over there in the corner.  I saw him tear a lot of people down.  It was pretty scary.";
+		next;
+		menu "Wow, thanks for the heads up",M_3, "No, I'm not here to fight.",M_4;
+	M_2:
+		mes "[Fighter]";
+		mes "....well, good... bye.  *she mutters something about you being odd*";
+		next;
+		goto M_End;
+	M_3:
+		mes "[Fighter]";
+		mes "Oh hehe, no problem. Keep your chin up, maybe I'll get to see you down there too!";
+		next;
+		goto M_End;
+	M_4:
+		mes "[Fighter]";
+		mes "Oh you aren't?  I'm sorry I thought you were, from the look of you, you know.";
+	M_End:
+		close;
+
+}
+
+//==========================================================================
+//			Beginner's Room
+//==========================================================================
+
+// Entrance NPC -----------------------------------
+prt_are_in,74,88,6	script	Sheryl	66,{
+	mes "[Sheryl]";
+	mes "Hi!  I'm the register for the Beginner's Room participants.  Are you here to sign up?";
+	mes "If you have any questions about the Arena, or its rules, please ask the Floorman in the main room.";
+	next;
+	menu	"Sign up",M_0, 
+		"End Conversation.",M_End;
+	M_0:
+		set @players1, 128;
+		set @players2, 128;
+		set @room1$, "Prontera";
+		set @room2$, "Izlude";
+		set @room3$, "Payon";
+		set @room4$, "Alberta";
+		set @room5$, "Morroc";
+		callsub sF_Move;
+		warp "pvp_y_room", 51, 38;
+		end;
+
+	M_End:
+		mes "[Sheryl]";
+		mes "Oh, changed your mind?  Well then, come again anytime.  We welcome your challenge!";
+		close;
+
+sF_Move:
+	mes "[Sheryl]";
+	mes "The admission fee is "+(50*BaseLevel)+"z.  Do you want to move to the Beginner's Station Square?";
+	next;
+	menu "Yes",-, "Station Square?",M_1, "No",M_End;
+
+		if(BaseLevel < 25) goto sL_LowLvl;
+		if(Zeny < (50*BaseLevel)) goto sL_NdZeny;
+		set Zeny, Zeny - (50*BaseLevel);
+		savepoint "pvp_y_room",83,39;
+		mes "[Sheryl]";
+		mes "Ripe and ready!  Good luck in there!";
+		next;
+		return;
+
+		sL_LowLvl:
+			mes "[Sheryl]";
+			mes "Eh?  You seem a little young...  Didn't the floorman tell you?  You have to be atleast level 25 to participate, I'm sorry.  Go level more!  It won't take that long.";
+			close;
+		sL_NdZeny:
+			mes "[Sheryl]";
+			mes "Hey... I told you, the admission fee is "+(50*BaseLevel)+"z.  You seem to be short on Zeny.";
+			close;
+		M_1:
+		mes "[Sheryl]";
+		mes "The Station Square is a big waiting room.  There will be many helpers in there that can guide you to the room you want to join.  Didn't the Floorman tell you all this?  Augh that guy!";
+		next;
+		goto sF_Move;
+
+}
+
+// Beginner Room Guard 1 -----------------------------------
+prt_are_in,76,81,2	script	Guard#g	105,{
+	cutin "prt_soldier",2;
+	mes "[Arena Guard]";
+	mes ".....";
+	next;
+	menu	"Hello?",M_0, 
+		"End Conversation.",M_End2;
+	M_0:
+		mes "[Arena Guard]";
+		mes "I'm sorry, the one you need to talk to is Sheryl over there, she's the register.  Not me.";
+		next;
+		goto M_End;
+
+	M_End2:
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	M_End:
+		mes "[Arena Guard]";
+		mes "..... They pay us more to be quiet.";
+		close2;
+		cutin "prt_soldier",255;
+		end;
+}
+
+
+// Beginner Room Guard 2 -----------------------------------
+prt_are_in,71,81,6	script	Guard#h	105,{
+	cutin "prt_soldier",2;
+	mes "[Arena Guard]";
+	mes ".......";
+	next;
+	menu	"Hello?",M_0, 
+		"End Conversation.",M_End2;
+	M_0:
+		mes "[Arena Guard]";
+		mes "........*snore*....";
+		next;
+		menu "Poke him.",M_1, "Leave the snooze alone",M_End2;
+	M_1:
+		mes "[Arena Guard]";
+		mes "Huwa-WHAT? WHO? ENEMY? ATTACK!!!";
+		next;		
+		menu "Aiieee!!",M_2, "Run away",M_End3;
+	M_2:	
+		mes "[Arena Guard]";
+		mes "HUAH HAH! HAAaa... Hey.  You're not an orc.  What are you doing here?";
+		next;
+		mes "[Arena Guard]";
+		mes "OOOHH!! That's right.  I work at an arena now.  Aah, I'm sorry about that.  Look if you're interested in participating in the uh...";
+		mes "*He thinks for a moment*";
+		next;
+		mes "[Arena Guard]";
+		mes "Beginner's... yes I think that's right.  Beginner's thing, then you need to talk to that lass over there with the red hair.";
+		next;
+		mes "[Arena Guard]";
+		mes "Now... if you don't mind me, I've got some orcs to handle.  *Yawn* .....zzzZz";
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	M_End3:
+		mes "[Arena Guard]";
+		mes "Ahh... gone... humm. *yawn* .....zzzZz";
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	M_End2:
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	M_End:
+		mes "[Arena Guard]";
+		mes "..... They pay us more to be quiet.";
+		close2;
+		cutin "prt_soldier",255;
+		end;
+}
+
+//==========================================================================
+//			Veteran's Room
+//==========================================================================
+
+// Entrance NPC -----------------------------------
+prt_are_in,178,139,5	script	Ragu	52,{
+	mes "[Ragu]";
+	mes "Aah... You... you here for fight?";
+	next;
+	menu	"Yes",M_0, 
+		"What?",M_1,
+		"End Conversation.",M_End;
+
+	M_0:
+		set @players1,50;
+		set @players2,25;
+		set @players3,20;
+		set @players4,15;
+		set @players5,30;
+		set @room1$, "Cliff & Bridge";
+		set @room2$, "Sewer Cage";
+		set @room3$, "Haunted Tree";
+		set @room4$, "Zombie Cross";
+		set @room5$, "The Pit";
+		callsub sF_Move;
+		warp "pvp_n_room", 51, 38;
+		end;
+	M_1:
+		mes "[Ragu]";
+		mes "This great fight hall!  You join?  Fight FUN!  FUN!!  GOOD!";
+		next;
+		menu "Fight? Sure!",M_0, "Eh, no thanks.",M_End, "You scare me.",M_2;
+	M_2:
+		mes "[Ragu]";
+		mes "Ra... r-ragu scary?  Nooo... *whimper*";
+		next;
+		menu "Leave him alone",M_End2, "Apologize",M_3;
+	M_3:
+		mes "[Ragu]";
+		mes "*sniffle* ...guhh... you still fight?";
+		next;
+		menu "Yes, I will.",M_0, "Run away",M_End;
+	M_End2:
+		close;
+	M_End:
+		mes "[Ragu]";
+		mes "Uuuu... Grroouuu.... (You think by the noise he's making, he's not happy with your decision to leave)";
+		close;
+
+sF_Move:
+	mes "[Ragu]";
+	mes "Uuhhh... Need thing... *He holds out a piece of paper and shows it to you*";
+	next;
+	mes "[Piece of Paper]";
+	mes "The admission fee for the Veteran's Station Square is 150z per Base Level.  You must pay this fee if you wish to participate. - Floorman";
+	next;
+	mes "[Ragu]";
+	mes "*He is smiling at you*";
+	mes "Shiny?";
+	next;
+	mes "(You count, and that comes to a total of "+(150*BaseLevel)+"z.)";
+	menu "Pay him "+(150*BaseLevel)+"z",-, "Run away.",M_End;
+
+		if(BaseLevel < 25) goto sL_LowLvl;
+		if(Zeny < (150*BaseLevel)) goto sL_NdZeny;
+		set Zeny, Zeny - (150*BaseLevel);
+		savepoint "pvp_n_room", 83,39;
+		mes "[Ragu]";
+		mes "Fight! FIGHT! RAAHAHAHA!!";
+		next;
+		return;
+
+		sL_LowLvl:
+			mes "[Ragu]";
+			mes "Youu....... *sniff*";
+			next;
+			mes "[Ragu]";
+			mes "TINY!";
+			close;
+		sL_NdZeny:
+			mes "[Ragu]";
+			mes "No shiny no fight!";
+			mes " ";
+			mes "(You are amazed he was able to tell you didn't have enough.)";
+			close;
+
+}
+
+// Veteran Room Guard 1 -----------------------------------
+prt_are_in,180,133,2	script	Guard#i	105,{
+	cutin "prt_soldier",2;
+	mes "[Arena Guard]";
+	mes ".....";
+	next;
+	menu	"Hello?",M_0, 
+		"End Conversation.",M_End2;
+	M_0:
+		mes "[Arena Guard]";
+		mes "Oh hmm?  Hi there.  Wait, you're here to fight aren't you?  If you are you need to talk to that big oaf, Ragu, not me.";
+		next;
+		goto M_End;
+
+	M_End2:
+		cutin "prt_soldier",255;
+		close;
+	M_End:
+		mes "[Arena Guard]";
+		mes "Good luck.";
+		close2;
+		cutin "prt_soldier",255;
+		end;
+}
+
+// Veteran Room Guard 2 -----------------------------------
+prt_are_in,175,133,6	script	Guard#j	105,{
+	cutin "prt_soldier",2;
+	mes "[Arena Guard]";
+	mes "Y-yeah, hello.";
+	next;
+	menu	"You seem scared.",M_0, 
+		"End Conversation.",M_End2;
+	M_0:
+		mes "[Arena Guard]";
+		mes "Oh hell yes I am!  Do you see the size of that guy?  He's huge!  And... he just keeps LOOKING at me.  *Shudder*";
+		next;
+		mes "[Arena Guard]";
+		mes "Um well... yeah... if you're here to fight I'm not the one to talk to about that.  I just stand here and look pretty.";
+		next;
+		goto M_End;
+
+	M_End2:
+		cutin "prt_soldier",255;
+		close;
+	M_End:
+		mes "[Arena Guard]";
+		mes "And... Don't look him in the eyes!";
+		close2;
+		cutin "prt_soldier",255;
+		end;
+}
+
+//==========================================================================
+//			Minigame Room
+//==========================================================================
+
+prt_are_in,22,192,4	script	Bollomon	810,{
+	mes "[Bollomon]";
+	mes "Yo.  I'm the handler for all the minigames.";
+	next;
+	menu	"Send me there",M_0, 
+		"Handler?",M_1,
+		"End Conversation.",M_End;
+	M_0:
+		callsub sF_Move;
+		warp "pvp_m_room", 51, 38;
+		end;
+	M_1:
+		mes "[Bollomon]";
+		mes "Yeah.  Or well, they call me a 'rejisteer' or somethin'.  Anyways you wanna go or what?";
+		next;
+		menu "Yeah, I'm up for fun!",M_0, "Maybe another time.",M_End;
+	M_End:
+		mes "[Bollomon]";
+		mes "Yeah whatever... you be comin' back, uh huh.";
+		close;
+
+sF_Move:
+	mes "[Bollomon]";
+	mes "You know I ain't standin here for charity.  Gotta pay.  75z per BaseLevel.  Looks like you're level "+BaseLevel+", so that's "+(75*BaseLevel)+"z.";
+	next;
+	menu "Here you go.",-, "No way.",M_End;
+
+		if(BaseLevel < 10) goto sL_LowLvl;
+		if(Zeny < (75*BaseLevel)) goto sL_NdZeny;
+		set Zeny, Zeny - (75*BaseLevel);
+		savepoint "pvp_m_room",83,39;
+		mes "[Bollomon]";
+		mes "A'ight.  Enjoy.";
+		next;
+		return;
+
+		sL_LowLvl:
+			mes "[Bollomon]";
+			mes "No pipsqueaks.  Come back when you're level 10.";
+			close;
+		sL_NdZeny:
+			if(sex==1) goto sL_NdZenyM;
+			mes "[Bollomon]";
+			mes "Look, I'm nice to chicks and all.  But you're broke.  So get lost.";
+			close;
+		sL_NdZenyM:
+			mes "[Bollomon]";
+			mes "What the hell man, you don't even have that kind of money?  Pfft, get outta my face.";
+			close;
+			
+}
+
+prt_are_in,24,185,2	script	Guard#k	105,{
+	cutin "prt_soldier",2;
+	mes "[Arena Guard]";
+	mes "Hi.  This is the minigame room.  You'll want to talk to that big guy over there, Bollomon.";
+	close2;
+	cutin "prt_soldier",255;
+	end;
+}
+
+prt_are_in,19,185,6	script	Guard#l	105,{
+	cutin "prt_soldier",2;
+	mes "[Arena Guard]";
+	mes "Minigames are fuuunn.  Well.  I think they are.";
+	close2;
+	cutin "prt_soldier",255;
+	end;
+}
+
+//==========================================================================
+//			Realm Gate Room
+//==========================================================================
+
+prt_are_in,126,139,4	script	Bonizier	872,{
+	mes "[Bonizier]";
+	if (countitem(15201)==0) mes "Hail!  Do you need to buy a Realm Ticket?";
+	if (countitem(15201)>0) mes "Ah, I see you have a Realm Ticket.  Do you wish to travel to the PvP Realm?";
+	next;
+	if (countitem(15201)==0) menu "Yes.",L_BuyTicket,"No thank you.",-;
+	if (countitem(15201)>0) menu "Yes please.",L_Travel,"No thank you.",-;
+L_Leave:
+	mes "[Bonizier]";
+	mes "Ah, very well.  Good day to you then.";
+	close;
+L_BuyTicket:
+	mes "[Bonizier]";
+	mes "A Realm Pass is 1,000z.  Shall you purchase one?";
+	next;
+	if (Select("No, I shan't","Yes I shall!")==1) goto L_Leave;
+	if (Zeny<1000) goto L_NotEnough;
+	set Zeny,Zeny-1000;
+	getitem 15201,1;
+	mes "[Bonizier]";
+	mes "Here you are then!  Would you also care to use the pass now, and travel to the PvP Realm?";
+	next;
+	if (Select("No thanks.","Hmm, sure.")==1) goto L_Leave;
+	mes "[Bonizier]";
+	mes "Alright then, hold onto your hats!";
+	next;
+	goto L_Teleport;
+L_Travel:
+	mes "[Bonizier]";
+	mes "Ah yes, lets see... Good, your ticket is authentic!  Very well, off you go!";
+	next;
+L_Teleport:
+	warp "pvplobby",63,68;
+	savepoint "pvplobby",69,66;
+	end;
+L_NotEnough: 
+     mes "[Bonizier]"; 
+     mes "Indeed?  Pity then!  Why do they even allow paupers such as you in here?  Guards!"; 
+     close2; 
+     warp "prt_are_in",98,14; 
+     end;
+}
+
+prt_are_in,123,133,6	script	Guard#m	105,{
+	cutin "prt_soldier",2;
+	mes "[Arena Guard]";
+	mes "Heyy!  Yo watch where you're standing, I just had my shoes cleaned.";
+	close2;
+	cutin "prt_soldier",255;
+	end;
+}
+
+prt_are_in,128,133,2	script	Guard#n	105,{
+	cutin "prt_soldier",2;
+	mes "[Arena Guard]";
+	mes "Why... hello there.  Are, are you talking to me?";
+	next;
+	mes "[Arena Guard]";
+	mes "Oh!  You are!  It's nice in here, isn't it?";
+	close2;
+	cutin "prt_soldier",255;
+	end;
+}
+
+//==========================================================================//
+// 		PvP Beginner's Station Handlers
+//==========================================================================//
+
+// LV25 ~ 40 ---------------------------------
+pvp_y_room,30,85,4	script	Station Handler#East1	105,{
+	callfunc "F_PvPRoom", "y_1", 25, 40;
+OnInit:
+	waitingroom "LV25 ~ LV40",0;
+	end;
+}
+
+// LV40 ~ 55 --------------------------------
+pvp_y_room,38,85,4	script	Station Handler#East2	105,{
+	callfunc "F_PvPRoom", "y_2", 40, 55;
+OnInit:
+	waitingroom "LV40 ~ LV55",0;
+	end;
+}
+
+// LV55 ~ 70 ---------------------------------
+pvp_y_room,46,85,4	script	Station Handler#East3	105,{
+	callfunc "F_PvPRoom", "y_3", 55, 70;
+OnInit:
+	waitingroom "LV55 ~ LV70", 0;
+	end;
+}
+
+// LV70 ~ 85 ------------------------------------
+pvp_y_room,54,85,4	script	Station Handler#East4	105,{
+	callfunc "F_PvPRoom", "y_4", 70, 85;
+OnInit:
+	waitingroom "LV70 ~ LV85", 0;
+	end;
+}
+
+// LV85 ~ 100 ------------------------------------
+pvp_y_room,62,85,4	script	Station Handler#East5	105,{
+	callfunc "F_PvPRoom", "y_5", 85, 100;
+OnInit:
+	waitingroom "LV85 ~ LV100", 0;
+	end;
+}
+
+// LV100 ~ 120 --------------------------------------
+pvp_y_room,70,85,4	script	Station Handler#East6	105,{
+	callfunc "F_PvPRoom", "y_6", 100, 120;
+OnInit:
+	waitingroom "LV100 ~ LV120", 0;
+	end;
+}
+
+// LV121 + --------------------------------------------
+pvp_y_room,78,85,4	script	Station Handler#East7	105,{
+	callfunc "F_PvPRoom", "y_7", 121, 255;
+OnInit:
+	waitingroom "LV121 +", 0;
+	end;
+}
+
+// No Limit  -----------------------------------------
+pvp_y_room,86,85,4	script	Station Handler#East8	105,{
+	callfunc "F_PvPRoom", "y_8", 25, 255;
+OnInit:
+	waitingroom "No Limit", 0;
+	end;
+}
+
+
+//==========================================================================//
+// 		PvP Veteran's Station Handlers
+//==========================================================================//
+// LV25 ~ 40 -------------------------------------
+pvp_n_room,30,85,4	script	Station Handler#West1	105,{
+	callfunc "F_PvPRoom", "n_1", 25, 40;
+OnInit:
+	waitingroom "LV25 ~ LV40",0;
+	end;
+}
+
+// LV40 ~ 55 --------------------------------------
+pvp_n_room,38,85,4	script	Station Handler#West2	105,{
+	callfunc "F_PvPRoom", "n_2", 40, 55;
+OnInit:
+	waitingroom "LV40 ~ LV55",0;
+	end;
+}
+
+// LV55 ~ 70 -------------------------------------
+pvp_n_room,46,85,4	script	Station Handler#West3	105,{
+	callfunc "F_PvPRoom", "n_3", 55, 70;
+OnInit:
+	waitingroom "LV55 ~ LV70",0;
+	end;
+}
+
+// LV70 ~ 85 ------------------------------------
+pvp_n_room,54,85,4	script	Station Handler#West4	105,{
+	callfunc "F_PvPRoom", "n_4", 70, 85;
+OnInit:
+	waitingroom "LV70 ~ LV85",0;
+	end;
+}
+
+// LV85 ~ 100 -----------------------------------
+pvp_n_room,62,85,4	script	Station Handler#West5	105,{
+	callfunc "F_PvPRoom", "n_5", 85, 100;
+OnInit:
+	waitingroom "LV85 ~ LV100", 0;
+	end;
+}
+
+// LV100 ~ 120 ------------------------------------
+pvp_n_room,70,85,4	script	Station Handler#West6	105,{
+	callfunc "F_PvPRoom", "n_6", 100, 120;
+OnInit:
+	waitingroom "LV100 ~ LV120", 0;
+	end;
+}
+
+// LV121 + ---------------------------------------
+pvp_n_room,78,85,4	script	Station Handler#West7	105,{
+	callfunc "F_PvPRoom", "n_7", 121, 255;
+OnInit:
+	waitingroom "LV121 +", 0;
+	end;
+}
+
+// No Limit ----------------------------------
+pvp_n_room,86,85,4	script	Station Handler#West8	105,{
+	callfunc "F_PvPRoom", "n_8", 25, 255;
+OnInit:
+	waitingroom "No Limit", 0;
+	end;
+}
+
+
+//==========================================================================//
+// 		Minigame's Station Handlers & NPCs
+//==========================================================================//
+
+// This guy does nothing, really.
+pvp_m_room,83,33,8	script	Wierd man	107,{
+	if (rand(1-100) == 69) goto M_Wierd;
+	mes "[Wierdo]";
+	mes "... Haha. ... *snort*";
+	close;
+M_Wierd:
+	mes "[A Real Cutie!]";
+	mes "You're cute, I like you~";
+	close;
+}
+
+// Poring Smash -------------------------------------
+pvp_m_room,30,85,4	script	Station Handler#Mini1	105,{
+	callfunc "F_PorSmash";
+OnInit:
+	waitingroom "Poring Smasher!",0;
+	end;
+}
+
+// PvP Poring Smash --------------------------------------
+pvp_m_room,38,85,4	script	Station Handler#Mini2	105,{
+	callfunc "F_Puzzles";
+OnInit:
+	waitingroom "Puzzle Games",0;
+	end;
+}
+
+// No-PvP Racetracks----------------------------------
+pvp_m_room,46,85,4	script	Station Handler#Mini3	105,{
+	callfunc "F_Raceway", "np";
+OnInit:
+	waitingroom "Raceway | Non PvP", 0;
+	end;
+}
+
+// PvP Racetracks------------------------------------
+// Not done with these yet!!  Or rather, havent started...
+//pvp_m_room,54,85,4	script	Raceway Handler#2	105,{
+//	callfunc "F_Raceway", "pp";
+//OnInit:
+//	waitingroom "Raceway | PvP Only", 0;
+//	end;
+//}
+
+// Minesweeper -----------------------------------
+//pvp_m_room,62,85,4	script	Station Handler#N5	105,{
+//	callfunc "F_Minesweeper";
+//OnInit:
+//	waitingroom "Minesweeper", 0;
+//	end;
+//}
+
+// LV100 ~ 120 ------------------------------------
+//pvp_m_room,70,85,4	script	Station Handler#N6	105,{
+//	callfunc "F_PvPRoom", "n_6";
+//OnInit:
+//	waitingroom "LV100 ~ LV120", 0;
+//	end;
+//}
+
+// LV121 + ---------------------------------------
+//pvp_m_room,78,85,4	script	Station Handler#N7	105,{
+//	callfunc "F_PvPRoom", "n_7";
+//OnInit:
+//	waitingroom "LV121 +", 0;
+//	end;
+//}
+
+// No Limit ----------------------------------
+//pvp_m_room,86,85,4	script	Station Handler#N8	105,{
+//	callfunc "F_PvPRoom", "n_8";
+//OnInit:
+//	waitingroom "No Limit", 0;
+//	end;
+//}
+
+//***************************************************************//
+//	Function: PvP Station Handler
+//***************************************************************//
+// arg(0): pvp room name
+// arg(1): minimum base lvl to enter arena
+// arg(2): maximum base lvl allowed to enter arena
+//===============================================
+function	script	F_PvPRoom	{
+
+	percentheal 100,100;
+	mes "[Station Handler]";
+	if(BaseLevel < getarg(1)) goto L_LowLvl;
+	if(BaseLevel > getarg(2)) goto L_HiLvl;
+	mes "Please choose an arena to fight in...";
+	M_Menu:
+	next;
+	menu 	@room1$ + " [" + getmapusers("pvp_" + getarg(0) + "-1") + "/" +@players1+ "]",M_Rm1, 
+		@room2$ + " [" + getmapusers("pvp_" + getarg(0) + "-2") + "/" +@players2+ "]",M_Rm2, 
+		@room3$ + " [" + getmapusers("pvp_" + getarg(0) + "-3") + "/" +@players3+ "]",M_Rm3, 
+		@room4$ + " [" + getmapusers("pvp_" + getarg(0) + "-4") + "/" +@players4+ "]",M_Rm4, 
+		@room5$ + " [" + getmapusers("pvp_" + getarg(0) + "-5") + "/" +@players5+ "]",M_Rm5, "Cancel",M_End;
+	M_Rm1:
+		if (getmapusers("pvp_" + getarg(0) + "-1") == @players1) goto L_Full;
+		warp "pvp_" + getarg(0) + "-1",0,0;
+		end;
+	M_Rm2:
+		if (getmapusers("pvp_" + getarg(0) + "-2") == @players2) goto L_Full;
+		warp "pvp_" + getarg(0) + "-2",0,0;
+		end;
+	M_Rm3:
+		if (getmapusers("pvp_" + getarg(0) + "-3") == @players3) goto L_Full;
+		warp "pvp_" + getarg(0) + "-3",0,0;
+		end;
+	M_Rm4:
+		if (getmapusers("pvp_" + getarg(0) + "-4") == @players4) goto L_Full;
+		warp "pvp_" + getarg(0) + "-4",0,0;
+		end;
+	M_Rm5:
+		if (getmapusers("pvp_" + getarg(0) + "-5") == @players5) goto L_Full;
+		warp "pvp_" + getarg(0) + "-5",0,0;
+		end;
+	M_End:
+		close;
+
+	L_LowLvl:
+		mes "I'm sorry but you do not meet the Base Level requirements to enter.  Please try a lower level room.";
+		close;
+	L_HiLvl:
+		mes "I'm sorry but you exceed the Base Level requirements to enter.  Please try a higher level room.";
+		close;
+	L_Full:
+		mes "[Station Handler]";
+		mes "I'm sorry but this arena is full.  Please choose another one to participate in....";
+		goto M_Menu;
+}
+
+//***************************************************************//
+//	Function: Minigames Raceway Station Handler
+//***************************************************************//
+function	script	F_Raceway	{
+	percentheal 100,100;
+	mes "[Station Handler]";
+	mes "Please choose a racetrack you would like to participate in.";
+	M_Menu:
+	next;
+
+	menu 	"Easy Track" + " [" + getmapusers("race01_" + getarg(0) + "") + "/16] " + $@01np_station$,M_Rm1, 
+		"Normal Track" + " [" + getmapusers("race02_" + getarg(0) + "") + "/32] " + $@02np_station$,M_Rm2, 
+		"Hard Track" + " [" + getmapusers("race03_" + getarg(0) + "") + "/32] " + $@03np_station$,M_Rm3, 
+		"Expert Track" + " [" + getmapusers("force_3-3") + "/20] " + $@04np_station$,M_Rm4, 
+		"Cancel",M_End;
+	M_Rm1:
+		set @01np_char1place,0;
+		set @01np_char2place,0;
+		set @01np_char3place,0;
+		set @01np_char0place,0;
+		if (getmapusers("race01_" + getarg(0) + "") == 16) goto L_Full;
+		if (@01np_race == 5) goto M_Rm1b;
+		if ($@01np_inprogress == 1) goto M_Rm1a;
+		warp "race01_" + getarg(0) + "",389,349;
+		end;
+	M_Rm1a:
+		set @01np_mypos,0;
+		set @01np_race,6;
+		warp "race01_" + getarg(0) + "",389,349;
+		end;
+	M_Rm1b:
+		warp "race01_" + getarg(0) + "",389,349;
+		end;
+	M_Rm2:
+		set @02np_char1place,0;
+		set @02np_char2place,0;
+		set @02np_char3place,0;
+		set @02np_char0place,0;
+		if (getmapusers("race02_" + getarg(0) + "") == 32) goto L_Full;
+		if (@02np_race == 11) goto M_Rm2b;
+		if ($@02np_inprogress == 1) goto M_Rm2a;
+		warp "race02_" + getarg(0) + "",105,304;
+		end;
+	M_Rm2a:
+		set @02np_mypos,0;
+		set @02np_race,12;
+		warp "race02_" + getarg(0) + "",105,304;
+		end;
+	M_Rm2b:
+		warp "race02_" + getarg(0) + "",105,304;
+		end;
+	M_Rm3:
+		set @03np_char1place,0;
+		set @03np_char2place,0;
+		set @03np_char3place,0;
+		set @03np_char0place,0;
+		if (getmapusers("race03_" + getarg(0) + "") == 32) goto L_Full;
+		if (@03np_race == 17) goto M_Rm3b;
+		if ($@03np_inprogress == 1) goto M_Rm3a;
+		warp "race03_" + getarg(0) + "",92,20;
+		end;
+	M_Rm3a:
+		set @03np_mypos,0;
+		set @03np_race,18;
+		warp "race03_" + getarg(0) + "",92,20;
+		end;
+	M_Rm3b:
+		warp "race03_" + getarg(0) + "",92,20;
+		end;
+	M_Rm4:
+		set @04np_char1place,0;
+		set @04np_char2place,0;
+		set @04np_char3place,0;
+		set @04np_char0place,0;
+		if (getmapusers("force_3-3") == 20) goto L_Full;
+		if (@04np_race == 27) goto M_Rm4b;
+		if ($@04np_inprogress == 1) goto M_Rm4a;
+		warp "force_3-3",128,175;
+		end;
+	M_Rm4a:
+		set @04np_mypos,0;
+		set @04np_race,28;
+		warp "force_3-3",128,175;
+		end;
+	M_Rm4b:
+		warp "force_3-3",128,175;
+		end;
+	M_End:
+		close;
+	L_Full:
+		mes "[Station Handler]";
+		mes "I'm sorry but this racetrack is full.  Please choose another one to participate in....";
+		goto M_Menu;
+}
+
+//***************************************************************//
+//	Function: Minigames Poring Smash Station Handler
+//***************************************************************//
+function	script	F_PorSmash	{
+	percentheal 100,100;
+	mes "[Station Handler]";
+	mes "Please choose a room you would like to participate in.";
+	M_Menu:
+	next;
+
+	menu 	"[C] Room 1" + " [" + getmapusers("porsmash1") + "/10] " + $@PSR1Title$,M_Rm1, 
+		"[C] Room 2" + " [" + getmapusers("porsmash2") + "/10] " + $@PSR2Title$,M_Rm2, 
+		"[C] Room 3" + " [" + getmapusers("porsmash3") + "/10] " + $@PSR3Title$,M_Rm3, 
+		"[B] Room 4" + " [" + getmapusers("porsmash4") + "/20] " + $@PSR4Title$,M_Rm4, 
+		"[B] Room 5" + " [" + getmapusers("porsmash5") + "/20] " + $@PSR5Title$,M_Rm5, 
+		"[B] Room 6" + " [" + getmapusers("porsmash6") + "/20] " + $@PSR6Title$,M_Rm6, 
+		"[B] Room 7" + " [" + getmapusers("porsmash7") + "/20] " + $@PSR7Title$,M_Rm7, 
+		"[A] Room 8" + " [" + getmapusers("porsmash8") + "/30] " + $@PSR8Title$,M_Rm8, 
+		"[A] Room 9" + " [" + getmapusers("porsmash9") + "/30] " + $@PSR9Title$,M_Rm9, 
+		"[A] Room 10" + " [" + getmapusers("porsmash10") + "/30] " + $@PSR10Title$,M_Rm10, 
+		"[S] Room 11" + " [" + getmapusers("porsmash11") + "/40] " + $@PSR11Title$,M_Rm11, 
+		"[S] Room 12" + " [" + getmapusers("porsmash12") + "/40] " + $@PSR12Title$,M_Rm12, 
+		"Cancel",M_End;
+	M_Rm1:
+		if ($@PSR1On == 1) goto M_Rm1b;
+		if (getmapusers("porsmash1") == 10) goto L_Full;
+		set @PSpt,0;
+		set @PSKill,0;
+		warp "porsmash1",46,113;
+		end;
+	M_Rm1b:
+		mes "[Station Handler]";
+		mes "I'm sorry, but the game is in progress and the room is locked.  Please wait until the game is done.";
+		close;
+	M_Rm2:
+		if ($@PSR2On == 1) goto M_Rm2b;
+		if (getmapusers("porsmash2") == 10) goto L_Full;
+		set @PSpt,0;
+		set @PSKill,0;
+		warp "porsmash2",115,113;
+		end;
+	M_Rm2b:
+		mes "[Station Handler]";
+		mes "I'm sorry, but the game is in progress and the room is locked.  Please wait until the game is done.";
+		close;
+	M_Rm3:
+		if ($@PSR3On == 1) goto M_Rm3b;
+		if (getmapusers("porsmash3") == 10) goto L_Full;
+		set @PSpt,0;
+		set @PSKill,0;
+		warp "porsmash3",113,185;
+		end;
+	M_Rm3b:
+		mes "[Station Handler]";
+		mes "I'm sorry, but the game is in progress and the room is locked.  Please wait until the game is done.";
+		close;
+	M_Rm4:
+		if ($@PSR4On == 1) goto M_Rm4b;
+		if (getmapusers("porsmash4") == 20) goto L_Full;
+		set @PSpt,0;
+		set @PSKill,0;
+		warp "porsmash4",132,163;
+		end;
+	M_Rm4b:
+		mes "[Station Handler]";
+		mes "I'm sorry, but the game is in progress and the room is locked.  Please wait until the game is done.";
+		close;
+	M_Rm5:
+		if ($@PSR5On == 1) goto M_Rm5b;
+		if (getmapusers("porsmash5") == 20) goto L_Full;
+		set @PSpt,0;
+		set @PSKill,0;
+		warp "porsmash5",32,158;
+		end;
+	M_Rm5b:
+		mes "[Station Handler]";
+		mes "I'm sorry, but the game is in progress and the room is locked.  Please wait until the game is done.";
+		close;
+	M_Rm6:
+		if ($@PSR6On == 1) goto M_Rm6b;
+		if (getmapusers("porsmash6") == 20) goto L_Full;
+		set @PSpt,0;
+		set @PSKill,0;
+		warp "porsmash6",31,64;
+		end;
+	M_Rm6b:
+		mes "[Station Handler]";
+		mes "I'm sorry, but the game is in progress and the room is locked.  Please wait until the game is done.";
+		close;
+	M_Rm7:
+		if ($@PSR7On == 1) goto M_Rm7b;
+		if (getmapusers("porsmash7") == 20) goto L_Full;
+		set @PSpt,0;
+		set @PSKill,0;
+		warp "porsmash7",131,72;
+		end;
+	M_Rm7b:
+		mes "[Station Handler]";
+		mes "I'm sorry, but the game is in progress and the room is locked.  Please wait until the game is done.";
+		close;
+	M_Rm8:
+		if ($@PSR8On == 1) goto M_Rm8b;
+		if (getmapusers("porsmash8") == 30) goto L_Full;
+		set @PSpt,0;
+		set @PSKill,0;
+		set @PSBonus,0;
+		warp "porsmash8",51,72;
+		end;
+	M_Rm8b:
+		mes "[Station Handler]";
+		mes "I'm sorry, but the game is in progress and the room is locked.  Please wait until the game is done.";
+		close;
+	M_Rm9:
+		if ($@PSR9On == 1) goto M_Rm9b;
+		if (getmapusers("porsmash9") == 30) goto L_Full;
+		set @PSpt,0;
+		set @PSKill,0;
+		set @PSBonus,0;
+		warp "porsmash9",52,84;
+		end;
+	M_Rm9b:
+		mes "[Station Handler]";
+		mes "I'm sorry, but the game is in progress and the room is locked.  Please wait until the game is done.";
+		close;
+	M_Rm10:
+		if ($@PSR10On == 1) goto M_Rm10b;
+		if (getmapusers("porsmash10") == 30) goto L_Full;
+		set @PSpt,0;
+		set @PSKill,0;
+		set @PSBonus,0;
+		warp "porsmash10",52,92;
+		end;
+	M_Rm10b:
+		mes "[Station Handler]";
+		mes "I'm sorry, but the game is in progress and the room is locked.  Please wait until the game is done.";
+		close;
+	M_Rm11:
+		if ($@PSR11On == 1) goto M_Rm11b;
+		if (getmapusers("porsmash11") == 40) goto L_Full;
+		set @PSpt,0;
+		set @PSKill,0;
+		set @PSBonus,0;
+		warp "porsmash11",50,92;
+		end;
+	M_Rm11b:
+		mes "[Station Handler]";
+		mes "I'm sorry, but the game is in progress and the room is locked.  Please wait until the game is done.";
+		close;
+	M_Rm12:
+		if ($@PSR12On == 1) goto M_Rm12b;
+		if (getmapusers("porsmash12") == 40) goto L_Full;
+		set @PSpt,0;
+		set @PSKill,0;
+		set @PSBonus,0;
+		warp "porsmash12",17,62;
+		end;
+	M_Rm12b:
+		mes "[Station Handler]";
+		mes "I'm sorry, but the game is in progress and the room is locked.  Please wait until the game is done.";
+		close;
+	M_End:
+		close;
+	L_Full:
+		mes "[Station Handler]";
+		mes "I'm sorry but this room is full.  Please choose another one to participate in....";
+		goto M_Menu;
+}
+
+
+
+//***************************************************************//
+//	Function: Minigames Lights Out Station Handler
+//***************************************************************//
+function	script	F_Puzzles	{
+	if ($LO1Board == 1) set $@LO1Board$,"5x5";
+	if ($LO1Board == 0) set $@LO1Board$,"7x7";
+	if ($LO2Board == 1) set $@LO2Board$,"5x5";
+	if ($LO2Board == 0) set $@LO2Board$,"7x7";
+	if ($LO3Board == 1) set $@LO3Board$,"5x5";
+	if ($LO3Board == 0) set $@LO3Board$,"7x7";
+	if ($LO4Board == 1) set $@LO4Board$,"5x5";
+	if ($LO4Board == 0) set $@LO4Board$,"7x7";
+	if ($LO5Board == 1) set $@LO5Board$,"5x5";
+	if ($LO5Board == 0) set $@LO5Board$,"7x7";
+	percentheal 100,100;
+	mes "[Station Handler]";
+	mes "Please choose a room you would like to participate in.";
+	M_Menu:
+	next;
+
+	menu 	"[9x9] Minesweeper 1" + " [" + getmapusers("minesweep1") + "/1] " + $@MS1Title$,M_Rm1, 
+		"[9x9] Minesweeper 2" + " [" + getmapusers("minesweep2") + "/1] " + $@MS2Title$,M_Rm2, 
+		"[9x9] Minesweeper 3" + " [" + getmapusers("minesweep3") + "/1] " + $@MS3Title$,M_Rm3, 
+		"[9x9] Minesweeper 4" + " [" + getmapusers("minesweep4") + "/1] " + $@MS4Title$,M_Rm4, 
+		"[9x9] Minesweeper 5" + " [" + getmapusers("minesweep5") + "/1] " + $@MS5Title$,M_Rm5, 
+		"["+$@LO1Board$+"] Lightsout 1" + " [" + getmapusers("lightsout1") + "/5] " + $@LO1Title$,M_Rm6, 
+		"["+$@LO2Board$+"] Lightsout 2" + " [" + getmapusers("lightsout2") + "/5] " + $@LO2Title$,M_Rm7, 
+		"["+$@LO3Board$+"] Lightsout 3" + " [" + getmapusers("lightsout3") + "/5] " + $@LO3Title$,M_Rm8, 
+		"["+$@LO4Board$+"] Lightsout 4" + " [" + getmapusers("lightsout4") + "/5] " + $@LO4Title$,M_Rm9, 
+		"["+$@LO5Board$+"] Lightsout 5" + " [" + getmapusers("lightsout5") + "/5] " + $@LO5Title$,M_Rm10, 
+		"Cancel",M_End;
+	M_Rm1:
+		if ($@MS1On == 1) goto M_RmC;
+		if (getmapusers("minesweep1") == 1) goto L_Full;
+		if (@MSpt > 0) set @MSpt,0;
+		warp "minesweep1",132,72;
+		end;
+	M_Rm2:
+		if ($@MS2On == 1) goto M_RmC;
+		if (getmapusers("minesweep2") == 1) goto L_Full;
+		if (@MSpt > 0) set @MSpt,0;
+		warp "minesweep2",132,72;
+		end;
+	M_Rm3:
+		if ($@MS3On == 1) goto M_RmC;
+		if (getmapusers("minesweep3") == 1) goto L_Full;
+		if (@MSpt > 0) set @MSpt,0;
+		warp "minesweep3",132,72;
+		end;
+	M_Rm4:
+		if ($@MS4On == 1) goto M_RmC;
+		if (getmapusers("minesweep4") == 1) goto L_Full;
+		if (@MSpt > 0) set @MSpt,0;
+		warp "minesweep4",132,72;
+		end;
+	M_Rm5:
+		if ($@MS5On == 1) goto M_RmC;
+		if (getmapusers("minesweep5") == 1) goto L_Full;
+		if (@MSpt > 0) set @MSpt,0;
+		warp "minesweep5",132,72;
+		end;
+	M_Rm6:
+		if ($@LO1On == 1) goto M_RmC;
+		if (getmapusers("lightsout1") == 5) goto L_Full;
+		if (@LOpt > 0) set @LOpt,0;
+		if (@LOBonus > 0) set @LOBonus,0;
+		warp "lightsout1",50,177;
+		end;
+	M_Rm7:
+		if ($@LO2On == 1) goto M_RmC;
+		if (getmapusers("lightsout2") == 5) goto L_Full;
+		if (@LOpt > 0) set @LOpt,0;
+		if (@LOBonus > 0) set @LOBonus,0;
+		warp "lightsout2",50,177;
+		end;
+	M_Rm8:
+		if ($@LO3On == 1) goto M_RmC;
+		if (getmapusers("lightsout3") == 5) goto L_Full;
+		if (@LOpt > 0) set @LOpt,0;
+		if (@LOBonus > 0) set @LOBonus,0;
+		warp "lightsout3",50,177;
+		end;
+	M_Rm9:
+		if ($@LO4On == 1) goto M_RmC;
+		if (getmapusers("lightsout4") == 5) goto L_Full;
+		if (@LOpt > 0) set @LOpt,0;
+		if (@LOBonus > 0) set @LOBonus,0;
+		warp "lightsout4",50,177;
+		end;
+	M_Rm10:
+		if ($@LO5On == 1) goto M_RmC;
+		if (getmapusers("lightsout5") == 5) goto L_Full;
+		if (@LOpt > 0) set @LOpt,0;
+		if (@LOBonus > 0) set @LOBonus,0;
+		warp "lightsout5",50,177;
+		end;
+	M_RmC:
+		mes "[Station Handler]";
+		mes "I'm sorry, but the game is in progress and the room is locked.  Please wait until the game is done.";
+		close;
+	M_End:
+		close;
+	L_Full:
+		mes "[Station Handler]";
+		mes "I'm sorry but this room is full.  Please choose another one to participate in....";
+		goto M_Menu;
+}
+
+//***************************************************************//
+//	Function: Minigames Minesweeper Station Handler
+//***************************************************************//
+function	script	F_Minesweeper	{
+	percentheal 100,100;
+	mes "[Station Handler]";
+	mes "Please choose a room you would like to participate in.";
+	M_Menu:
+	next;
+
+	menu 	"[9x9] Room 1" + " [" + getmapusers("minesweep1") + "/1] " + $@MS1Title$,M_Rm1, 
+		"[9x9] Room 2" + " [" + getmapusers("minesweep2") + "/1] " + $@MS2Title$,M_Rm2, 
+		"[9x9] Room 3" + " [" + getmapusers("minesweep3") + "/1] " + $@MS3Title$,M_Rm3, 
+		"[9x9] Room 4" + " [" + getmapusers("minesweep4") + "/1] " + $@MS4Title$,M_Rm4, 
+		"[9x9] Room 5" + " [" + getmapusers("minesweep5") + "/1] " + $@MS5Title$,M_Rm5, 
+		"Cancel",M_End;
+	M_Rm1:
+		if ($@MS1On == 1) goto M_RmC;
+		if (getmapusers("minesweep1") == 1) goto L_Full;
+		if (@MSpt > 0) set @MSpt,0;
+		warp "minesweep1",132,72;
+		end;
+	M_Rm2:
+		if ($@MS2On == 1) goto M_RmC;
+		if (getmapusers("minesweep2") == 1) goto L_Full;
+		if (@MSpt > 0) set @MSpt,0;
+		warp "minesweep2",132,72;
+		end;
+	M_Rm3:
+		if ($@MS3On == 1) goto M_RmC;
+		if (getmapusers("minesweep3") == 1) goto L_Full;
+		if (@MSpt > 0) set @MSpt,0;
+		warp "minesweep3",132,72;
+		end;
+	M_Rm4:
+		if ($@MS4On == 1) goto M_RmC;
+		if (getmapusers("minesweep4") == 1) goto L_Full;
+		if (@MSpt > 0) set @MSpt,0;
+		warp "minesweep4",132,72;
+		end;
+	M_Rm5:
+		if ($@MS5On == 1) goto M_RmC;
+		if (getmapusers("minesweep5") == 1) goto L_Full;
+		if (@MSpt > 0) set @MSpt,0;
+		warp "minesweep5",132,72;
+		end;
+	M_RmC:
+		mes "[Station Handler]";
+		mes "I'm sorry, but the game is in progress and the room is locked.  Please wait until the game is done.";
+		close;
+	M_End:
+		close;
+	L_Full:
+		mes "[Station Handler]";
+		mes "I'm sorry but this room is full.  Please choose another one to participate in....";
+		goto M_Menu;
+}
+
+//Effect npc - I didn't know you could use '@effect i i i'  :c
+valkyrie,49,9,8	script	EPHECTZO	53,{
+
+	if (@noallow == 1) goto M_End;
+	if (getgmlevel() < 99) goto M_No;
+
+	M_Default:
+	if (@img == 0 || @img > 3) goto M_SetImg;
+
+	M_Start:
+	set @target,0;
+	cutin "katsua0"+@img+"",2;
+	mes "[EPHECTZO]";
+	mes "Effect?";
+
+	M_Menu:
+	menu "Input",M_Input,"Target you",M_NPC,"Target me",M_PC,"Change Image",M_Img,"Clear Effects",-;
+	close2;
+	cutin "katsua01",255;
+	cutin "katsua02",255;
+	cutin "katsua03",255;
+	set @target,0;
+	set @input,0;
+	set @img,0;
+	disablenpc "EPHECTZO";
+	enablenpc "EPHECTZO";
+	end;
+
+	M_NPC:
+	set @target,0;
+	goto M_Input;
+
+	M_PC:
+	set @target,1;
+	goto M_Input;
+
+	M_Input:
+	input @effect;
+	if (@target == 1) goto M_Effect;
+	specialeffect @effect;
+	goto M_Menu;
+
+	M_Effect:
+	specialeffect2 @effect;
+	goto M_Menu;
+
+	M_SetImg:
+	set @img,1;
+	goto M_Start;
+
+	M_Img:
+	next;
+
+	mes "[EPHECTZO]";
+	mes "What shall I look like?";
+	mes "1, 2, or 3";
+	input @img;
+	next;
+	cutin "katsua01",255;
+	cutin "katsua02",255;
+	cutin "katsua03",255;
+	next;
+	cutin "katsua0"+@img+"",2;
+	goto M_Default;
+
+	M_No:
+	mes "[EPHECTZO]";
+	mes "You are not allowed to use me.";
+	set @noallow,1;
+	close2;
+	cutin "katsua01",255;
+	cutin "katsua02",255;
+	cutin "katsua03",255;
+	end;
+
+	M_End:
+	mes "[EPHECTZO]";
+	mes "....";
+	close2;
+	cutin "katsua01",255;
+	cutin "katsua02",255;
+	cutin "katsua03",255;
+	end;
+}
+
+//=========== Storage things for the stations.
+pvp_y_room,92,49,5	script	Storage Assistant	770,{
+	mes "[Assistant]";
+	mes "Need into your storage?";
+	next;
+	menu "Yes",-,"Nah",L_No;
+	mes "[Assistant]";
+	mes "Okay here you go, just press close.";
+	close2;
+	openstorage;
+	end;
+L_No:
+	close;
+}
+pvp_n_room,92,49,5	duplicate(Storage Assistant)	Storage Assistant#1	770
+pvp_m_room,92,49,5	duplicate(Storage Assistant)	Storage Assistant#2	770

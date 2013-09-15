@@ -1,0 +1,23 @@
+//===== eAthena Script =======================================
+//= Jades Newbie Helper
+//===== By: ==================================================
+//= Jade (04/24/2007)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Athena Version SVN 10000+
+//===== Description: =========================================
+//= Retrieve:
+//= Nothing
+//=
+//= Reward:
+//=   Eggshell
+//=   Adventurers Suit
+//=   Sandals
+//=   Main Gauche
+//=   Guard
+//=   Hood
+//=   300 Novice Potions
+//=   20 Flywings
+//=   5 Butterfly Wings
+//============================================================

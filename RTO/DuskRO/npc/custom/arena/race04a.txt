@@ -1,0 +1,2268 @@
+// mapflags : nomemo, nowarp, nowarpto, nobranch, noicewall, noteleport, nosave, noreturn, nopvp, nopenalty
+//============================================================
+
+// Race Exiter -----------------------------------
+force_3-3,129,187,4	script	Race Assistant#4	770,{
+	mes "[Race Assistant]";
+	mes "Hello there.  If you want, I can provide you with information about this track or just take you back to the Station!";
+	next;
+		menu "Back to the station",M_1,"No thanks, I'll stay",M_2,"Show Checkpoints",M_Checkpoint,"Information",M_3,"End Conversation",M_End;
+	M_1:
+		if (@04np_race == 28) goto M_1done;
+		if (@04np_race == 27) goto M_1done;
+		if ($@04np_racestart != 0) goto M_1a;
+		if ($@04np_countdown == 1) goto M_1a;
+		set @04np_race,0;
+		set @04np_mypos,0;
+		set @04np_raceid,0;
+		set @04np_jumble,0;
+		set @04np_char1place,0;
+		set @04np_char2place,0;
+		set @04np_char3place,0;
+		set @04np_char0place,0;
+		mes "[Race Assistant]";
+		mes "Please come again!";
+		next;
+		warp "pvp_m_room", 51, 38;
+		end;
+	M_1done:
+		set @04np_mypos,0;
+		set @04np_raceid,0;
+		set @04np_jumble,0;
+		set @04np_char1place,0;
+		set @04np_char2place,0;
+		set @04np_char3place,0;
+		set @04np_char0place,0;
+		mes "[Race Assistant]";
+		mes "Please come again!";
+		next;
+		warp "pvp_m_room", 51, 38;
+		end;
+	M_1a:
+		if (@04np_race == 28) goto M_1done;
+		if (@04np_race == 27) goto M_1done;
+		mes "[Race Assistant]";
+		mes "Hey, the clock is still ticking... you sure you want to leave the race?  If you leave before you finish, you won't be able to participate in the race until it's over.";
+		next;
+		menu "No, I'll stay",M_1b,"Yes, I want to leave",M_1c;
+		goto M_1c;
+	M_1b:
+		mes "[Race Assistant]";
+		mes "Good luck.";
+		close;	
+	M_1c:
+		set @04np_race,28;
+		set @04np_mypos,0;
+		set @04np_raceid,0;
+		set @04np_jumble,0;
+		set @04np_char1place,0;
+		set @04np_char2place,0;
+		set @04np_char3place,0;
+		set @04np_char0place,0;
+		warp "pvp_m_room", 51, 38;
+		end;
+	M_2:
+		mes "[Race Assistant]";
+		mes "Alright.  Good luck.";
+		close;
+	M_3:
+		mes "[Race Assistant]";
+		mes "This is the Expert Track.  Uhh... are you *really* sure you want to go in there?  I mean, this place is evil.";
+		next;
+		mes "[Race Assistant]";
+		mes "I um... I was  curious once, when I started this job.  And uhhh, I got *SO* lost in there.  They had to shut everything down just to get me out... *sigh*";
+		next;
+		mes "[Race Assistant]";
+		mes "Well, I can explain it to you, and let you decide atleast.";
+		next;
+		mes "[Race Assistant]";
+		mes "This is a labyrinth maze of portals.  There are forty portals, but you don't see them.  They're on those gray stone circular slabs, just walk up to the wall and they take you away.";
+		next;
+		mes "[Race Assistant]";
+		mes "There are five checkpoints.  You'll find the first one in the same room we're in.  Oh, the portals won't always take you back the way you came either!";
+		next;
+		mes "[Race Assistant]";
+		mes "You need to pass checkpoints one through five, then come back and pass one, then through five again.  These are the laps, and you needa do five of them.  No I'm not joking, thats what the boss told me to tell you.";
+		next;
+		mes "[Race Assistant]";
+		mes "Oh... yes and uh there are some monsters in there too.  Some mean ones.  Be really careful okay!  Well, do you want to see the checkpoints?  They're kinda easy to point out.  One in each corner, and one in here.  Clockwise.";
+		next;
+		menu "Show me them anyway",M_Checkpoint,"End Conversation",M_End;
+
+	M_Checkpoint:
+		mes "[Race Assistant]";
+		mes "Okay, Like I said they're just in the corners.  Problem is getting there...  I can't help you with the portals you know.";
+		next;
+		viewpoint 1,116,179,1,0xFFFFFF;
+		mes "[Race Assistant]";
+		mes "This is the starting line, its right there infront of us so you can't miss it.";
+		next;
+		mes "[Race Assistant]";
+		mes "Aaand this is the finish line.  It's on the other side of this room.  Go say high to Melly for me!  She's the goalie here.";
+		viewpoint 1,83,179,2,0xFFFFFF;
+		next;
+		mes "[Race Assistant]";
+		mes "Checkpoint 1!  It's right over there, in the same room we're in.";
+		viewpoint 1,100,186,3,0xFF0000;
+		next;
+		mes "[Race Assistant]";
+		mes "Aand this is Checkpoint 2.  Top right corner, encase you can't see it.";
+		viewpoint 1,186,186,4,0xFF0000;
+		next;
+		mes "[Race Assistant]";
+		mes "This is Checkpoint 3.  It'sin the bottom right corner.";
+		viewpoint 1,186,13,5,0xFF0000;
+		next;
+		mes "[Race Assistant]";
+		mes "Checkpoint 4... bottom left.";
+		viewpoint 1,13,13,6,0xFF0000;
+		next;
+		mes "[Race Assistant]";
+		mes "Aand, Checkpoint 5.  Up there in top left.";
+		viewpoint 1,13,186,7,0xFF0000;
+		next;
+		mes "[Race Assistant]";
+		mes "See like I said, easy to remember where they are.  But really... have fun getting there.";
+		next;
+		viewpoint 2,116,179,1,0xFFFFFF;
+		viewpoint 2,83,179,2,0xFFFFFF;
+		viewpoint 2,100,186,3,0xFF0000;
+		viewpoint 2,186,186,4,0xFF0000;
+		viewpoint 2,186,13,5,0xFF0000;
+		viewpoint 2,13,13,6,0xFF0000;
+		viewpoint 2,13,186,7,0xFF0000;
+		next;
+		mes "[Race Assistant]";
+		mes "Have fun... *she gives you a funny puzzled look*";
+		close;
+	M_End:
+		end;
+}
+
+// Expert Starter ----------------------------------
+force_3-3,126,185,4	script	Expert Starter	770,{
+
+if ($@04np_racestart != 0) goto M_Started;
+if ($@04np_racecount == 1) goto M_Started;
+
+	M_Menu:
+		mes "[Expert Starter]";
+		mes "Welcome, " + strcharinfo(0) + ".  This is the Expert Racing Track.  If you're starting the race, please stay behind the flags.";
+		next;
+		menu "Information",M_1,"Show Checkpoints",M_Checkpoint,"Start the race!",L_Count,"Cancel",M_Cancel;
+	M_NotEnough:
+		mes "[Expert Starter]";
+		mes "There needs to be atleast ten people here to start the race, please get more people.";
+		next;
+		goto M_Menu;
+	M_Checkpoint:
+		mes "[Expert Starter]";
+		mes "Look... The checkpoints are really easy on this map.  There are five.  The first is in the middle of this room.  The other four are in the corners of the map, second in top right, and it goes clockwise so fifth is in top left.  Easy, huh?";
+		next;
+		mes "[Expert Starter]";
+		mes "Good luck getting there though.  This place is an uncomfy maze.";
+		next;
+		mes "[Expert Starter]";
+		mes "If you want to know exactly where they are, talk to the Assistant next to me, okay?  Talk to me if you want to start the race.";
+		close;
+	M_1:
+		mes "[Expert Starter]";
+		mes "This is the Expert Track.  It is a portal maze consisting of 40 individual portals, and you won't always be able to go through the one you came in to get back to where you were either.  There are five checkpoints, and you need to perform FIVE laps before getting to the finish line.";
+		next; 
+		mes "[Expert Starter]";
+		mes "You need atleast ten people to race, and the race has, like I said, five laps.  Try and remember where the portals go!  Knowing that will save you alot of time.";
+		next;
+		mes "[Expert Starter]";
+		mes "However, keep in mind you won't be able toa ctually see the portals, but they're there.  They're on every gray stone half-circle slab.  Just walk up, and goto the wall to walk through.";
+		next;
+		mes "[Expert Starter]";
+		mes "Also, do not forget you need to get within 4 cells of a Checkpoint to pass it.  So don't dilly dally.";
+		next;
+		mes "[Expert Starter]";
+		mes "And since this is the Expert Track, there are also some rather difficult monsters sitting out there waiting for you.  Be careful.  IF YOU GET LOST!! Or want to give up, don't forget you can use the @die command to leave the race track.  There are NO penalties for death here, so don't worry";
+		next;
+		mes "^FF0000* a message from the Administrator *^FF0000";
+		mes "^FF0000Until I create monsters for these maps that have no exp values, if I find people abusing the no penalty and respawn on this map you WILL be banned from the server.  I WILL NOT GIVE YOU A FIRST WARNING FOR THIS, YOU WILL BE BANNED OUTRIGHT.^FF0000";
+		close;
+	M_Cancel:
+		mes "[Expert Starter]";
+		mes "Okay.  If you need to start the race, talk to me.  Remember, I can't start it if there aren't atleast ten people here.";
+		close;
+	L_Count:
+		if (getmapusers("force_3-3") < 10) goto M_NotEnough;
+		stopnpctimer "Expert Starter";
+		setnpctimer 0;
+		set $@04np_timeup,1;
+		set $@04np_countdown,1;
+		set $@04np_rmintime,0;
+		set $@04np_rsectime,0;
+		set $@04np_position,0;
+		set $@04np_racestart,1;
+		set $@04np_raceid,rand(1,999999);
+		set $@04np_spawnonce,0;
+		mapannounce "force_3-3",strcharinfo(0) + " hast started the countdown!  So get ready to race and stay behind the Starting Line.",1;
+
+		startnpctimer "Expert Starter";
+		close;
+	OnTimer1000:
+		if ($@04np_countdown == 0) end;
+		goto L_Spawn;
+		end;
+	OnTimer2000:
+		if ($@04np_countdown == 0) end;
+		set $@02np_spawnonce,1;
+		mapannounce "force_3-3","[9]",1;
+		end;
+	OnTimer3000:
+		if ($@04np_countdown == 0) end;
+		mapannounce "force_3-3","[8]",1;
+		end;
+	OnTimer4000:
+		if ($@04np_countdown == 0) end;
+		mapannounce "force_3-3","[7]",1;
+		end;
+	OnTimer5000:
+		if ($@04np_countdown == 0) end;
+		mapannounce "force_3-3","[6]",1;
+		end;
+	OnTimer6000:
+		if ($@04np_countdown == 0) end;
+		mapannounce "force_3-3","[5]",1;
+		end;
+	OnTimer7000:
+		if ($@04np_countdown == 0) end;
+		mapannounce "force_3-3","[4]",1;
+		end;
+	OnTimer8000:
+		if ($@04np_countdown == 0) end;
+		mapannounce "force_3-3","[3]",1;
+		end;
+	OnTimer9000:
+		if ($@04np_countdown == 0) end;
+		mapannounce "force_3-3","[2]",1;
+		end;
+	OnTimer10000:
+		if ($@04np_countdown == 0) end;
+		mapannounce "force_3-3","[1]",1;
+		end;
+	OnTimer11000:
+		if ($@04np_countdown == 0) end;
+		emotion 27;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		mapannounce "force_3-3","[GO!]",1;
+		setnpctimer 0;
+		set $@04np_inprogress,1;
+		set $@04np_station$,"- Race in Progress";
+		set $@04np_countdown,0;
+		end;
+	OnTimer30000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer60000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer120000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer180000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer21000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer240000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer270000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer300000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Twenty five minutes remaining.",1;
+		end;
+	OnTimer330000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer360000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer390000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer420000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer450000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer480000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer510000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer540000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer570000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer600000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Twenty minutes remaining.",1;
+		end;
+	OnTimer630000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer660000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Nineteen minutes remaining.",1;
+		end;
+	OnTimer690000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer720000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Eighteen minutes remaining.",1;
+		end;
+	OnTimer750000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer780000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Seventeen minutes remaining.",1;
+		end;
+	OnTimer810000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer840000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Sixteen minutes remaining.",1;
+		end;
+	OnTimer870000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer900000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Fifteen minutes remaining.",1;
+		end;
+	OnTimer930000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer960000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Fourteen minutes remaining.",1;
+		end;
+	OnTimer990000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer1020000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Thirteen minutes remaining.",1;
+		end;
+	OnTimer1050000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer1080000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Twelve minutes remaining.",1;
+		end;
+	OnTimer1110000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer1140000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Eleven minutes remaining.",1;
+		end;
+	OnTimer1170000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer1200000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Ten minutes remaining.",1;
+		end;
+	OnTimer1230000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer1260000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Nine minutes remaining.",1;
+		end;
+	OnTimer1290000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer1320000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Eight minutes remaining.",1;
+		end;
+	OnTimer1350000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer1380000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Seven minutes remaining.",1;
+		end;
+	OnTimer1410000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer1440000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Six minutes remaining.",1;
+		end;
+	OnTimer1470000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer1500000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Five minutes remaining.",1;
+		end;
+	OnTimer1530000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer1560000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Four minutes remaining.",1;
+		end;
+	OnTimer1590000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer1620000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Three minutes remaining.",1;
+		end;
+	OnTimer1650000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer1680000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Two minutes remaining.",1;
+		end;
+	OnTimer1710000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+	OnTimer1740000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","One minute remaining.",1;
+		end;
+	OnTimer1770000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Thirty seconds remaining.",1;
+		end;
+	OnTimer1780000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Twenty seconds remaining.",1;
+		end;
+	OnTimer1790000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Ten seconds remaining.",1;
+		end;
+	OnTimer1795000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Five!",1;
+		end;
+	OnTimer1796000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Four!",1;
+		end;
+	OnTimer1797000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Three!!",1;
+		end;
+	OnTimer1798000:
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		mapannounce "force_3-3","Two!!",1;
+		end;
+	OnTimer1799000:
+		mapannounce "force_3-3","One!!!",1;
+		end;
+	OnTimer1800000:
+		Stopnpctimer "Expert Starter";
+		mapannounce "force_3-3","Thirty minutes have elapsed, and the race is over.  The Racetrack will now restart automatically.  If you are currently inside the maze and wish to leave, simply step into a portal to come back to the starting line.",1;
+		set $@04np_timeup,0;
+		set $@04np_raceid,0;
+		set $@04np_racestart,0;
+		set $@04np_racetime,0;
+		set $@04np_position,0;
+		set $@04np_rmintime,0;
+		set $@04np_rsectime,0;
+		set $@04np_station$,"";
+		set $@04np_inprogress,0;
+		killmonsterall "force_3-3";
+		set $@04np_spawnonce,0;
+		end;
+	L_Spawn:
+		if ($@04np_spawnonce == 1) end;
+		monster "force_3-3",159,138,"Arclouse",1194,1,59,59;
+		monster "force_3-3",139,80,"Arclouse",1194,1,59,59;
+		monster "force_3-3",139,79,"Arclouse",1194,1,59,59;
+		monster "force_3-3",160,20,"Arclouse",1194,1,59,59;
+		monster "force_3-3",99,39,"Arclouse",1194,1,59,59;
+		monster "force_3-3",39,60,"Arclouse",1194,1,59,59;
+		monster "force_3-3",20,119,"Arclouse",1194,1,59,59;
+		if (getmapusers("force_3-3") < 11) end;
+
+		monster "force_3-3",159,138,"Arclouse",1194,1,59,59;
+		monster "force_3-3",139,80,"Arclouse",1194,1,59,59;
+		monster "force_3-3",139,79,"Arclouse",1194,1,59,59;
+		monster "force_3-3",160,20,"Arclouse",1194,1,59,59;
+		monster "force_3-3",99,39,"Arclouse",1194,1,59,59;
+		monster "force_3-3",39,60,"Arclouse",1194,1,59,59;
+		monster "force_3-3",20,119,"Arclouse",1194,1,59,59;
+		if (getmapusers("force_3-3") < 12) end;
+
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		if (getmapusers("force_3-3") < 13) end;
+
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		if (getmapusers("force_3-3") < 14) end;
+
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		if (getmapusers("force_3-3") < 15) end;
+
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		if (getmapusers("force_3-3") < 16) end;
+
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		if (getmapusers("force_3-3") < 17) end;
+
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		if (getmapusers("force_3-3") < 18) end;
+
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		if (getmapusers("force_3-3") < 19) end;
+
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		if (getmapusers("force_3-3") < 20) end;
+
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		areamonster "force_3-3",11,13,187,145,"Arclouse",1194,1,59,59;
+		end;
+
+	M_Started:
+		set $@04np_rmintime,(((getnpctimer(0,"Expert Starter") / 2000) / 60) %60);
+		set $@04np_rsectime,((getnpctimer(0,"Expert Starter") / 2000) % 60);
+		if ($@04np_countdown == 1) goto M_Counting;
+		if ($@04np_rsectime == 0 ) goto M_NewMin;
+		if ($@04np_rsectime >= 51 ) goto M_Addzero;
+		mes "[Expert Starter]";
+		mes "The race is underway.  The racetrack will reset when the timer reaches zero.  Please be patient.";
+		mes "[Time remaining: " + (29-$@04np_rmintime) + ":" + (60-$@04np_rsectime) + "]"; // Counts down, this is the base timer
+		close;
+	M_NewMin:
+		mes "[Expert Starter]";
+		mes "The race is underway.  The racetrack will reset when the timer reaches zero.  Please be patient.";
+		mes "[Time remaining: " + (30-$@04np_rmintime) + ":00]"; // Keeps the second from starting at 60
+		close;
+	M_Addzero:
+		mes "[Expert Starter]";
+		mes "The race is underway.  The racetrack will reset when the timer reaches zero.  Please be patient.";
+		mes "[Time remaining: " + (29-$@04np_rmintime) + ":0" + (60-$@04np_rsectime) + "]"; // Adds a 0 infront of 1-9
+		close;
+	M_Counting:
+		mes "[Expert Starter]";
+		mes "The countdown has already started.";
+		close;
+}
+
+// Warps
+force_3-3,100,164,1	script	r4warp1	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 99, 143;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 19, 143;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,99,147,1	script	r4warp2	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 100, 168;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 180, 132;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,109,138,1	script	r4warp3	139,1,3,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 139, 105;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 174, 99;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,90,137,1	script	r4warp4	139,1,3,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 100, 132;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 59, 65;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,100,128,1	script	r4warp5	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 94, 137;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 180, 174;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,130,137,1	script	r4warp6	139,1,3,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 179, 25;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 180, 54;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,139,147,1	script	r4warp7	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 180, 174;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 59, 105;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,170,179,1	script	r4warp8	139,1,3,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 180, 94;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 134, 19;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,180,170,1	script	r4warp9	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 139, 143;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 100, 132;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,180,128,1	script	r4warp10	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 174, 59;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 99, 143;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,179,109,1	script	r4warp11	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 134, 99;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 180, 94;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,170,99,1	script	r4warp12	139,1,3,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 94, 59;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 105, 138;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,180,90,1	script	r4warp13	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 174, 179;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 179, 105;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,139,109,1	script	r4warp14	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 105, 138;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 179, 25;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,130,99,1	script	r4warp15	139,1,3,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 179, 105;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 94, 59;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,109,100,1	script	r4warp16	139,1,3,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 19, 25;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 60, 132;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,59,109,1	script	r4warp17	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 60, 94;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 100, 132;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,60,90,1	script	r4warp18	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 59, 105;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 100, 14;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,60,128,1	script	r4warp19	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 25, 100;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 105, 100;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,69,138,1	script	r4warp20	139,1,3,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 59, 65;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 20, 54;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,29,180,1	script	r4warp21	139,1,3,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 59, 25;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 65, 19;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,19,189,1	script	r4warp22	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 20, 54;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 20, 14;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,19,147,1	script	r4warp23	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 180, 54;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 100, 168;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,10,99,1	script	r4warp24	139,1,3,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 134, 19;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 174, 59;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,29,100,1	script	r4warp25	139,1,3,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 60, 132;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 140, 54;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,20,50,1	script	r4warp26	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 19, 185;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 65, 138;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,59,69,1	script	r4warp27	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 65, 138;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 94, 137;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,69,60,1	script	r4warp28	139,1,3,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 20, 14;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 59, 25;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,90,59,1	script	r4warp29	139,1,3,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 174, 99;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 134, 99;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,109,60,1	script	r4warp30	139,1,3,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 100, 14;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 19, 25;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,140,50,1	script	r4warp31	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 65, 19;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 25, 100;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,170,59,1	script	r4warp32	139,1,3,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 180, 132;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 14, 99;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,180,50,1	script	r4warp33	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 19, 143;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 134, 137;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,179,29,1	script	r4warp34	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 134, 137;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 139, 105;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,130,19,1	script	r4warp35	139,1,3,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 14, 99;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 174, 179;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,100,10,1	script	r4warp36	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 105, 60;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 60, 94;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,69,19,1	script	r4warp37	139,1,3,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 140, 54;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 25, 180;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,59,29,1	script	r4warp38	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 25, 180;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 65, 60;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,19,29,1	script	r4warp39	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 105, 100;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 105, 60;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+force_3-3,20,10,1	script	r4warp40	139,3,1,{
+	end;
+	OnTouch:
+		if (@04np_race == 28) goto L_Warphome;
+		if (@04np_raceid != $@04np_raceid) goto L_Warphome;
+		if ($@04np_timeup == 0) goto L_Warphome;
+		if (@04np_jumble == 0) goto L_Warp0;
+		if (@04np_jumble == 1) goto L_Warp1;
+	L_Warp0:
+		set @04np_jumble,1;
+		warp "force_3-3", 65, 60;
+		end;
+	L_Warp1:
+		set @04np_jumble,0;
+		warp "force_3-3", 19, 185;
+		end;
+	L_Warphome:
+		warp "force_3-3", 128, 175;
+		set @04np_jumble,0;
+		end;
+}
+
+// Starting Line
+force_3-3,116,178,1	script	ExpertStartline	139,0,8,{
+	OnTouch:
+		if (@04np_race == 28) goto L_WrongRace;
+		if ($@04np_racestart == 1) goto L_RunRace;
+		message strcharinfo(0),"The race has not started, please stay on the stone steps.";
+		end;
+	L_Race:
+		set @04np_race,0;
+		set @04np_jumble,0;
+		if ($@04np_countdown == 1) goto L_Counting;	
+		if ($@04np_racestart == 1) goto L_Started;
+		end;
+	L_RunRace:
+		if (@04np_raceid != $@04np_raceid) goto L_Race;
+		if (@04np_race == 0) goto L_Race;
+		if (@04np_race == 28) goto L_WrongRace;
+		if (@04np_race == 27) goto L_Finished;
+		end;
+	L_WrongRace:
+		message strcharinfo(0),"Hey, you're not in this race!";
+		end;
+	L_Counting:
+		message strcharinfo(0),"No headstarts! Get back there!";
+		end;
+	L_Started:
+		set @04np_goalie,2;
+		set @04np_race,1;
+		set @04np_raceid,$@04np_raceid;
+		end;
+	L_Finished:
+		dispbottom "You have already completed the race.";
+		end;
+	}
+
+
+// Starting Line Posts
+force_3-3,115,183,5	script	Starting Line#7	722,{
+end;
+}
+force_3-3,115,176,7	script	Starting Line#8	722,{
+end;
+}
+
+// First Checkpoint
+force_3-3,100,186,1	script	Expchkpt1	139,6,6,{
+	end;
+	OnTouch:
+		if (@04np_raceid != $@04np_raceid) goto L_Finished;
+		if (@04np_race == 0) goto L_Finished;
+		if (@04np_race == 1) goto L_Lap1;
+		if (@04np_race == 2) goto L_Finished;
+		if (@04np_race < 6) goto L_Miss;
+		if (@04np_race == 6) goto L_Lap2;
+		if (@04np_race == 7) goto L_Finished;
+		if (@04np_race < 11) goto L_Miss;
+		if (@04np_race == 11) goto L_Lap3;
+		if (@04np_race == 12) goto L_Finished;
+		if (@04np_race < 16) goto L_Miss;
+		if (@04np_race == 16) goto L_Lap4;
+		if (@04np_race == 17) goto L_Finished;
+		if (@04np_race < 21) goto L_Miss;
+		if (@04np_race == 21) goto L_Lap5;
+		if (@04np_race != 0) goto L_Finished;
+		end;
+	L_Lap1:
+		set @04np_race,2;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the First Checkpoint! [Lap 1]",1;
+		end;
+	L_Lap2:
+		set @04np_race,7;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the First Checkpoint! [Lap 2]",1;
+		end;
+	L_Lap3:
+		set @04np_race,12;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the First Checkpoint! [Lap 3]",1;
+		end;
+	L_Lap4:
+		set @04np_race,17;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the First Checkpoint! [Lap 4]",1;
+		end;
+	L_Lap5:
+		set @04np_race,22;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the First Checkpoint! [Lap 5]",1;
+		end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@04np_race;
+		end;
+	L_Finished:
+		end;
+}
+// First Checkpoint Post
+force_3-3,100,186,4	script	First Checkpoint#4	722,{
+end;
+}
+
+// Second Checkpoint
+force_3-3,186,186,1	script	Expchkpt2	139,4,4,{
+	end;
+	OnTouch:
+		if (@04np_raceid != $@04np_raceid) goto L_Finished;
+		if (@04np_race == 0) goto L_Finished;
+		if (@04np_race == 2) goto L_Lap1;
+		if (@04np_race == 3) goto L_Finished;
+		if (@04np_race < 7) goto L_Miss;
+		if (@04np_race == 7) goto L_Lap2;
+		if (@04np_race == 8) goto L_Finished;
+		if (@04np_race < 12) goto L_Miss;
+		if (@04np_race == 12) goto L_Lap3;
+		if (@04np_race == 13) goto L_Finished;
+		if (@04np_race < 17) goto L_Miss;
+		if (@04np_race == 17) goto L_Lap4;
+		if (@04np_race == 18) goto L_Finished;
+		if (@04np_race < 22) goto L_Miss;
+		if (@04np_race == 22) goto L_Lap5;
+		if (@04np_race != 0) goto L_Finished;
+		end;
+	L_Lap1:
+		set @04np_race,3;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Second Checkpoint! [Lap 1]",1;
+		end;
+	L_Lap2:
+		set @04np_race,8;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Second Checkpoint! [Lap 2]",1;
+		end;
+	L_Lap3:
+		set @04np_race,13;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Second Checkpoint! [Lap 3]",1;
+		end;
+	L_Lap4:
+		set @04np_race,18;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Second Checkpoint! [Lap 4]",1;
+		end;
+	L_Lap5:
+		set @04np_race,23;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Second Checkpoint! [Lap 5]",1;
+		end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@04np_race;
+		end;
+	L_Finished:
+		end;
+}
+// Second Checkpoint Post
+force_3-3,186,186,3	script	Second Checkpoint#4	722,{
+end;
+}
+
+// Third Checkpoint
+force_3-3,186,13,1	script	Expchkpt3	139,4,4,{
+	end;
+	OnTouch:
+		if (@04np_raceid != $@04np_raceid) goto L_Finished;
+		if (@04np_race == 0) goto L_Finished;
+		if (@04np_race == 3) goto L_Lap1;
+		if (@04np_race == 4) goto L_Finished;
+		if (@04np_race < 8) goto L_Miss;
+		if (@04np_race == 8) goto L_Lap2;
+		if (@04np_race == 9) goto L_Finished;
+		if (@04np_race < 13) goto L_Miss;
+		if (@04np_race == 13) goto L_Lap3;
+		if (@04np_race == 14) goto L_Finished;
+		if (@04np_race < 18) goto L_Miss;
+		if (@04np_race == 18) goto L_Lap4;
+		if (@04np_race == 19) goto L_Finished;
+		if (@04np_race < 23) goto L_Miss;
+		if (@04np_race == 23) goto L_Lap5;
+		if (@04np_race != 0) goto L_Finished;
+		end;
+	L_Lap1:
+		set @04np_race,4;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Third Checkpoint! [Lap 1]",1;
+		end;
+	L_Lap2:
+		set @04np_race,9;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Third Checkpoint! [Lap 2]",1;
+		end;
+	L_Lap3:
+		set @04np_race,14;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Third Checkpoint! [Lap 3]",1;
+		end;
+	L_Lap4:
+		set @04np_race,19;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Third Checkpoint! [Lap 4]",1;
+		end;
+	L_Lap5:
+		set @04np_race,24;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Third Checkpoint! [Lap 5]",1;
+		end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@04np_race;
+		end;
+	L_Finished:
+		end;
+}
+// Third Checkpoint Post
+force_3-3,186,13,1	script	Third Checkpoint#4	722,{
+end;
+}
+
+// Fourth Checkpoint
+force_3-3,13,13,1	script	Expchkpt4	139,4,4,{
+	end;
+	OnTouch:
+		if (@04np_raceid != $@04np_raceid) goto L_Finished;
+		if (@04np_race == 0) goto L_Finished;
+		if (@04np_race == 4) goto L_Lap1;
+		if (@04np_race == 5) goto L_Finished;
+		if (@04np_race < 9) goto L_Miss;
+		if (@04np_race == 9) goto L_Lap2;
+		if (@04np_race == 10) goto L_Finished;
+		if (@04np_race < 14) goto L_Miss;
+		if (@04np_race == 14) goto L_Lap3;
+		if (@04np_race == 15) goto L_Finished;
+		if (@04np_race < 19) goto L_Miss;
+		if (@04np_race == 19) goto L_Lap4;
+		if (@04np_race == 20) goto L_Finished;
+		if (@04np_race < 24) goto L_Miss;
+		if (@04np_race == 24) goto L_Lap5;
+		if (@04np_race != 0) goto L_Finished;
+		end;
+	L_Lap1:
+		set @04np_race,5;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Fourth Checkpoint! [Lap 1]",1;
+		end;
+	L_Lap2:
+		set @04np_race,10;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Fourth Checkpoint! [Lap 2]",1;
+		end;
+	L_Lap3:
+		set @04np_race,15;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Fourth Checkpoint! [Lap 3]",1;
+		end;
+	L_Lap4:
+		set @04np_race,20;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Fourth Checkpoint! [Lap 4]",1;
+		end;
+	L_Lap5:
+		set @04np_race,25;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Fourth Checkpoint! [Lap 5]",1;
+		end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@04np_race;
+		end;
+	L_Finished:
+		end;
+}
+// Fourth Checkpoint Post
+force_3-3,13,13,7	script	Fourth Checkpoint#4	722,{
+end;
+}
+
+// Fifth Checkpoint
+force_3-3,13,186,-1	script	Expchkpt5	139,4,4,{
+	end;
+	OnTouch:
+		if (@04np_raceid != $@04np_raceid) goto L_Finished;
+		if (@04np_race == 0) goto L_Finished;
+		if (@04np_race == 5) goto L_Lap1;
+		if (@04np_race == 6) goto L_Finished;
+		if (@04np_race < 10) goto L_Miss;
+		if (@04np_race == 10) goto L_Lap2;
+		if (@04np_race == 11) goto L_Finished;
+		if (@04np_race < 15) goto L_Miss;
+		if (@04np_race == 15) goto L_Lap3;
+		if (@04np_race == 16) goto L_Finished;
+		if (@04np_race < 20) goto L_Miss;
+		if (@04np_race == 20) goto L_Lap4;
+		if (@04np_race == 21) goto L_Finished;
+		if (@04np_race < 25) goto L_Miss;
+		if (@04np_race == 25) goto L_Lap5;
+		if (@04np_race != 0) goto L_Finished;
+		end;
+	L_Lap1:
+		set @04np_race,6;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Fifth Checkpoint! [Lap 1]",1;
+		end;
+	L_Lap2:
+		set @04np_race,11;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Fifth Checkpoint! [Lap 2]",1;
+		end;
+	L_Lap3:
+		set @04np_race,16;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Fifth Checkpoint! [Lap 3]",1;
+		end;
+	L_Lap4:
+		set @04np_race,21;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Fifth Checkpoint! [Lap 4]",1;
+		end;
+	L_Lap5:
+		set @04np_race,26;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached the Fifth Checkpoint! [Lap 5]",1;
+		end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@04np_race;
+		end;
+	L_Finished:
+		end;
+}
+// Fifth Checkpoint Post
+force_3-3,13,186,5	script	Fifth Checkpoint#4	722,{
+end;
+}
+
+
+// Finish Line
+force_3-3,83,179,1	script	ExpFinishline	139,0,8,{
+	end;
+	OnTouch:
+		if (@04np_raceid != $@04np_raceid) goto L_Finished;
+		if (@04np_race == 0) goto L_Finished;
+		if (@04np_race == 1) goto L_Finished;
+		if (@04np_race < 26) goto L_Miss;
+		if (@04np_race != 26) goto L_Finished;
+		if (@04np_goalie == 1) goto L_Finished;
+		set @04np_race,27;
+		set @04np_goalie,1;
+		set $@04np_rmintime,(((getnpctimer(0,"Expert Starter") / 2000) / 60) %60);
+		set $@04np_rsectime,((getnpctimer(0,"Expert Starter") / 2000) % 60);
+		if ($@04np_position == 0) goto L_Firstplace;
+		if ($@04np_position == 1) goto L_Secondplace;
+		if ($@04np_position == 2) goto L_Thirdplace;
+		if ($@04np_position >= 3) goto L_Loser;
+		end;
+	L_Firstplace:
+		set $@04np_position, $@04np_position + 1;
+		set @04np_char1place,1;
+		if ($@04np_rsectime == 0 ) goto sL_1PNewMin;
+		if ($@04np_rsectime < 10 ) goto sL_1PAddzero;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 1st] [Time: " + ($@04np_rmintime) + ":" + ($@04np_rsectime)+"]",1;
+		end;
+		sL_1PNewMin:
+			mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 1st] [Time: " + (1+$@04np_rmintime) + ":00]",1;
+			end;
+		sL_1PAddzero:
+			mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 1st] [Time: " + ($@04np_rmintime) + ":0" + ($@04np_rsectime)+"]",1;
+			end;
+	L_Secondplace:
+		set $@04np_position, $@04np_position + 1;
+		set @04np_char2place,1;
+		if ($@04np_rsectime == 0 ) goto sL_2PNewMin;
+		if ($@04np_rsectime < 10 ) goto sL_2PAddzero;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 2nd] [Time: " + ($@04np_rmintime) + ":" + ($@04np_rsectime)+"]",1;
+		end;
+		sL_2PNewMin:
+			mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 2nd] [Time: " + (1+$@04np_rmintime) + ":00]",1;
+			end;
+		sL_2PAddzero:
+			mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 2nd] [Time: " + ($@04np_rmintime) + ":0" + ($@04np_rsectime)+"]",1;
+			end;
+	L_Thirdplace:
+		set $@04np_position, $@04np_position + 1;
+		set @04np_char3place,1;
+		if ($@04np_rsectime == 0 ) goto sL_3PNewMin;
+		if ($@04np_rsectime < 10 ) goto sL_3PAddzero;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 3rd] [Time: " + ($@04np_rmintime) + ":" + ($@04np_rsectime)+"]",1;
+		end;
+		sL_3PNewMin:
+			mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 3rd] [Time: " + (1+$@04np_rmintime) + ":00]",1;
+			end;
+		sL_3PAddzero:
+			mapannounce "force_3-3","[" + strcharinfo(0) +"] has reached The Finish line! [Position: 3rd] [Time: " + ($@04np_rmintime) + ":0" + ($@04np_rsectime)+"]",1;
+			end;
+	L_Loser:
+		set $@04np_position, $@04np_position + 1;
+		set @04np_mypos,$@04np_position;
+		if ($@04np_rsectime == 0 ) goto sL_4PNewMin;
+		if ($@04np_rsectime < 10 ) goto sL_4PAddzero;
+		mapannounce "force_3-3","[" + strcharinfo(0) +"] has completed the race. [Position: "+@04np_mypos + "th] [Time: " + ($@04np_rmintime) + ":" + ($@04np_rsectime)+"]",1;
+		end;
+		sL_4PNewMin:
+			mapannounce "force_3-3","[" + strcharinfo(0) +"] has completed the race. [Position: "+@04np_mypos + "th] [Time: " + (1+$@04np_rmintime) + ":00]",1;
+			end;
+		sL_4PAddzero:
+			mapannounce "force_3-3","[" + strcharinfo(0) +"] has completed the race. [Position: "+@04np_mypos + "th] [Time: " + ($@04np_rmintime) + ":0" + ($@04np_rsectime)+"]",1;
+			end;
+	L_Miss:
+		dispbottom "You missed Checkpoint No."+@04np_race;
+		end;
+	L_Finished:
+		end;
+}
+
+// Finishing Line Posts
+force_3-3,84,183,6	script	Finish Line#7	722,{
+end;
+}
+force_3-3,84,176,6	script	Finish Line#8	722,{
+end;
+}
+
+// Goalie
+force_3-3,70,187,4	script	Expert Goalie	770,{
+
+	if (@04np_goalie == 2) goto M_End;
+	if (@04np_goalie == 0) goto M_Menu;
+	if (@04np_char1place == 1) goto M_First;
+	if (@04np_char2place == 1) goto M_Second;
+	if (@04np_char3place == 1) goto M_Third;
+	if (@04np_char0place == 1) goto M_Lost;
+
+	M_Menu:
+		mes "[Expert Goalie]";
+		mes "What would you like to do?  If you really want... I can send you back to the station.  But the assistant over there can do it too.";
+		next;
+		menu "No thanks.",M_1,"The Station please",M_2;
+	M_End:
+		end;
+	M_1:
+		mes "[Expert Goalie]";
+		mes "Alright, take care.";
+		close;
+	M_2:
+		mes "[Expert Goalie]";
+		mes "Alright then, off you go!";
+		next;
+		if (@04np_race == 28) goto M_2done;
+		if (@04np_race == 27) goto M_2done;
+		set @04np_mypos,0;
+		set @04np_raceid,0;
+		set @04np_jumble,0;
+		set @04np_char1place,0;
+		set @04np_char2place,0;
+		set @04np_char3place,0;
+		set @04np_char0place,0;
+		warp "pvp_m_room", 51, 38;
+		end;
+	M_2done:
+		set @04np_mypos,0;
+		set @04np_raceid,0;
+		set @04np_jumble,0;
+		set @04np_char1place,0;
+		set @04np_char2place,0;
+		set @04np_char3place,0;
+		set @04np_char0place,0;
+		warp "pvp_m_room", 51, 38;
+		end;
+	M_First:
+		emotion 46;
+		specialeffect 267;
+		mes "[Expert Goalie]";
+		mes "Congratulations "+strcharinfo(0)+", you won!!";
+		next;
+		mes "[Expert Goalie]";
+		mes "Here is the prize for being First Place, 5000 zeny and "+(200+(15*getmapusers("force_3-3")))+" Kafra Reserve Points!";
+		next;
+		set @04np_goalie,0;
+		set @04np_char1place,0;
+		set Zeny, Zeny + 5000;
+		set RESRVPTS, RESRVPTS + 200 + (15*getmapusers("force_3-3"));
+		dispbottom "[You have "+RESRVPTS+" Kafra Reserve Points]";
+		goto M_Menu;
+	M_Second:
+		mes "[Expert Goalie]";
+		mes "Way to go "+strcharinfo(0)+"!  You're the runner up!";
+		next;
+		mes "[Expert Goalie]";
+		mes "Congratulations "+strcharinfo(0)+", you are the runner up!  Here is your prize, 4000z and "+(100+(10*getmapusers("force_3-3")))+"Kafra Reserve Points!";
+		next;
+		set @04np_goalie,0;
+		set @04np_char2place,0;
+		set Zeny, Zeny + 4000;
+		set RESRVPTS, RESRVPTS + 100 + (10*getmapusers("force_3-3"));
+		dispbottom "[You have "+RESRVPTS+" Kafra Reserve Points]";
+		goto M_Menu;
+	M_Third:
+		mes "[Expert Goalie]";
+		mes "Great job "+strcharinfo(0)+"!  You got third place!";
+		next;
+		mes "[Expert Goalie]";
+		mes "Here is the prize for being Third Place, 2000 zeny and "+(80+(getmapusers("force_3-3")))+" Kafra Reserve Points!";
+		next;
+		set @04np_goalie,0;
+		set @04np_char3place,0;
+		set Zeny, Zeny + 2000;
+		set RESRVPTS, RESRVPTS + 80 + (6*getmapusers("force_3-3"));
+		dispbottom "[You have "+RESRVPTS+" Kafra Reserve Points]";
+		goto M_Menu;
+	M_Lost:
+		if (@04np_mypos == 0) goto M_Menu;
+		mes "[Expert Goalie]";
+		mes "Well, atleast you tried your Expertest!  ... Right??  Guess this course is just too much for you!";
+		mes "Here's 500 zeny, and "+(60+(2*getmapusers("force_3-3")))+" Kafra Reserve Points for completing the race.";
+		next;
+		set Zeny, Zeny + 500;
+		set RESRVPTS, RESRVPTS + 60 + (2*getmapusers("force_3-3"));
+		dispbottom "[You have "+RESRVPTS+" Kafra Reserve Points]";
+		set @04np_goalie,0;
+		set @04np_char0place,0;
+		goto M_Menu;
+}

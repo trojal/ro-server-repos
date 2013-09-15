@@ -1,0 +1,215 @@
+// ------------------ Client -------------------
+
+// valid range of dye's and styles on the client
+min_hair_style: 0
+max_hair_style: 25
+min_hair_color: 0
+max_hair_color: 8
+min_cloth_color: 0 
+max_cloth_color: 553
+
+// When set to yes, the damage field in packets sent from woe maps will be set
+// to -1, making it impossible for GMs, Bots and Hexed clients to know the
+// actual damage caused by attacks. (Note 1)
+hide_woe_damage: yes
+
+wedding_modifydisplay: yes
+wedding_ignorepalette: yes
+
+// Show eAthena version to users when the login?
+display_version: no
+
+// ------------------- Drops -------------------
+
+// Item drop rates
+
+// The rate the common items are dropped (Items that are in the ETC tab, besides card)
+item_rate_common: 3000
+item_rate_common_boss: 3000
+item_drop_common_min: 1
+item_drop_common_max: 10000
+
+// The rate healing items are dropped (items that restore HP or SP)
+item_rate_heal: 3000
+item_rate_heal_boss: 3000
+item_drop_heal_min: 1
+item_drop_heal_max: 10000
+
+// The rate at which usable items (in the item tab) other then healing items are dropped.
+item_rate_use: 3000
+item_rate_use_boss: 3000
+item_drop_use_min: 1
+item_drop_use_max: 10000
+
+// The rate at which equipment is dropped.
+item_rate_equip: 3000
+item_rate_equip_boss: 2000
+item_drop_equip_min: 1
+item_drop_equip_max: 10000
+
+// The rate at which cards are dropped
+item_rate_card: 3000
+item_rate_card_boss: 1000
+item_drop_card_min: 1
+item_drop_card_max: 10000
+
+// The rate adjustment for the MVP items that the MVP gets directly in their inventory
+item_rate_mvp: 2000
+item_drop_mvp_min: 1
+item_drop_mvp_max: 10000
+
+// The rate adjustment for card-granted item drops.
+item_rate_adddrop: 500
+item_drop_add_min: 1
+item_drop_add_max: 10000
+
+// Rate adjustment for Treasure Box drops (these override all other modifiers)
+item_rate_treasure: 400
+item_drop_treasure_min: 1
+item_drop_treasure_max: 10000
+
+alchemist_summon_reward: 0
+
+rare_drop_announce: 10
+
+// --------------------- Exp ----------------------
+
+// Rate at which exp. is given. (Note 2)
+base_exp_rate: 7000
+
+// Rate at which job exp. is given. (Note 2)
+job_exp_rate: 7000
+
+// MVP bonus exp rate. (Note 2)
+mvp_exp_rate: 3500
+
+// Rate of base/job exp given by NPCs. (Note 2)
+quest_exp_rate: 1000
+
+// Turn this on to allow a player to level up more than once from a kill. (Note 1)
+multi_level_up: yes
+
+// --------------------- GM ----------------------
+
+
+// [GM] Can use all skills? (No or mimimum GM level)
+gm_all_skill: 79
+
+// [GM] Can equip anything? (No or minimum GM level, can cause client errors.)
+gm_all_equipment: 98
+
+// [GM] Can use skills without meeting the required conditions (items, etc...)?
+// 'no' or minimum GM level to bypass requirements.
+gm_skill_unconditional: 98
+
+// [GM] Can join a password protected chat? (No or mimimum GM level)
+gm_join_chat: 98
+
+// [GM] Can't be kicked from a chat? (No or mimimum GM level)
+gm_kick_chat: 98
+
+gm_cant_drop_max_lv: 61
+
+// -------------------- Guild ---------------------
+
+// Maximum castles one guild can own (0 = unlimited)
+guild_max_castles: 2
+
+require_glory_guild: yes
+
+max_guild_alliance: 0
+
+// ------------------- Homunculus ------------------
+
+homunculus_autoloot: no
+
+// --------------------- Items ---------------------
+
+buyer_name: no
+
+// ---------------------- Misc ---------------------
+
+// Define duration in msec of the day (default: 7200000 = 2 hours)
+// Set to 0 to disable day cycle (but not @day GM command).
+// Except 0, minimum is 60000 (1 minute)
+day_duration: 21600000
+
+// Define duration in msec of the night (default: 1800000 = 30 min)
+// Set to 0 to disable night cycle (but not @night GM command).
+// Except 0, minimum is 60000 (1 minute)
+night_duration: 7200000
+
+// Set this to the amount of minutes autotrade chars will be kicked from the server.
+at_timeout: 2880
+
+// ---------------------- Monster -------------------
+
+// [MVP] Summoned monsters HP rate, that is, monsters summoned by an MVP will have this much HP. (Note 2)
+mvp_hp_rate: 110
+
+// The HP rate of normal monsters (that is monsters that are not MVP's) (Note 2)
+monster_hp_rate: 100
+
+// Display some mob info next to their name? (add as needed)
+// (does not works on guardian or emperium)
+// 1: Display mob HP (Hp/MaxHp format)
+// 2: Display mob HP (Percent of full life format)
+// 4: Display mob's level
+show_mob_info: 1
+
+// ---------------------- Party ----------------------
+
+// Interval before updating the party-member map mini-dots (milliseconds)
+party_update_interval: 100
+
+// Give additional experience bonus per party-member involved on even-share parties?
+// (eg: If set to 10, a even-share party of 5 people will receive +40% exp)
+party_even_share_bonus: 20
+
+// ------------------------- Pet -----------------------
+
+// Are pets disabled during Guild Wars?
+// If set to yes, pets are automatically returned to egg when entering castles during WoE times
+// and hatching is forbidden within as well.
+pet_disable_in_gvg: yes
+
+// ------------------------ Player ---------------------
+
+// The amount of HP a player will respawn with, 0 is default.
+// (Unit is in percentage of total HP, 100 is full heal of HP, 0 is respawn with 1HP total.)
+restart_hp_rate: 100
+
+// The amount of SP a player will respawn with, 0 is default.
+// (Unit is in percentage of total SP, 100 is full heal of SP, 0 is respawn with 1SP total.)
+restart_sp_rate: 100
+
+// Same as max_parameter, but for baby classes.
+max_baby_parameter: 99
+
+// Players' will drop a 'Skull' when killed?
+// 0 = Disabled
+// 1 = Dropped only in PvP maps
+// 2 = Dropped in all situations
+bone_drop: 1
+
+// Idle characters can receive autoloot?
+// Set to the time in seconds where an idle character will stop receiving
+// items from Autoloot (0: disabled).
+idle_no_autoloot: 300
+
+// ------------------------- Skill ------------------------
+
+// At what dex does the cast time become zero (instacast)?
+castrate_dex_scale: 150
+
+// Should ground placed skills be removed as soon as the caster dies? (Note 3)
+clear_skills_on_death: 15
+
+// Should traps (hunter traps + quagmire) change their target to "all" inside gvg/pvp grounds? (Note 3)
+// Default on official servers: yes for player-traps
+gvg_traps_target_all: 0
+
+// Some traps settings (add as necessary):
+// 1: Traps are invisible to those who come into view of it. When unset, all traps are visible at all times.
+//    (Invisible traps can be revealed through Hunter's Detecting skill)
+traps_setting: 1

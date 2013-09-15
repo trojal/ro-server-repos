@@ -1,0 +1,46 @@
+COMMON_OBJ = ../common/obj/core.o ../common/obj/socket.o ../common/obj/timer.o \
+	../common/obj/db.o ../common/obj/plugins.o ../common/obj/lock.o \
+	../common/obj/malloc.o ../common/obj/showmsg.o ../common/obj/utils.o \
+	../common/obj/strlib.o ../common/obj/grfio.o \
+	../common/obj/mapindex.o ../common/obj/ers.o
+COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h \
+	../common/version.h ../common/db.h ../common/plugins.h ../common/lock.h \
+	../common/malloc.h ../common/showmsg.h ../common/utils.h \
+	../common/strlib.h ../common/grfio.h \
+	../common/mapindex.h ../common/ers.h
+
+CHAR_OBJ = char.o inter.o int_party.o int_guild.o int_storage.o int_status.o int_pet.o int_homun.o
+
+#####################################################################
+.PHONY : all char-server clean help
+
+all: char-server
+
+char-server: $(CHAR_OBJ) $(COMMON_OBJ)
+	gcc  -L/usr/lib -o ../../char-server $(CHAR_OBJ) $(COMMON_OBJ) -lm -lz  -ldl
+
+clean:
+	rm -f *.o ../../char-server
+
+help:
+	@echo "possible targets are 'char-server' 'all' 'clean' 'help'"
+	@echo "'char-server'  - char server (TXT version)"
+	@echo "'all'          - builds all above targets"
+	@echo "'clean'        - cleans builds and objects"
+	@echo "'help'         - outputs this message"
+
+#####################################################################
+
+%.o: %.c
+	gcc -g -O2 -pipe -ffast-math -Wall -Wno-sign-compare -Wno-unused-parameter -Wno-pointer-sign -DTXT_ONLY  -I../common -I/usr/include -c $(OUTPUT_OPTION) $<
+
+# DO NOT DELETE
+
+char.o: char.c char.h inter.h int_pet.h $(COMMON_H)
+inter.o: inter.c inter.h int_party.h int_guild.h int_storage.h int_pet.h char.h $(COMMON_H)
+int_party.o: int_party.c int_party.h inter.h char.h $(COMMON_H)
+int_guild.o: int_guild.c int_guild.h int_storage.h inter.h char.h $(COMMON_H)
+int_storage.o: int_storage.c int_storage.h int_guild.h inter.h char.h $(COMMON_H)
+int_status.o: int_status.c int_status.h char.h $(COMMON_H)
+int_pet.o: int_pet.c int_pet.h inter.h char.h $(COMMON_H)
+int_homun.o: int_homun.c int_homun.h inter.h char.h $(COMMON_H)

@@ -1,0 +1,157 @@
+pay_fild08,146,349,5	script	Annie	716,{
+	if (xmas_quest >= 1) goto xmas_quest_girl;
+	mes "[ Annie ]";
+	mes "What do you want...?";
+	close;
+
+xmas_quest_girl:
+	mes "[ Annie ]";
+	mes "Hi! I'm a card collecter!";
+	next;
+	mes "[ Annie ]";
+	mes "I asked my mommy for the rare^9966CC Santa Poring Card^000000 for Christmas, but she doesn't have enough zeny!";
+	next;
+	mes "[ Annie ]";
+	mes "Say, you wouldn't happen to have the card would you?";
+	menu "Sure",xmas_quest_girl_card,"Nope",xmas_quest_girl_end;
+
+xmas_quest_girl_card:
+	mes "[ Annie ]";
+	mes "Wow! Would you trade it???";
+	next;
+	mes "[ Annie ]";
+	mes "I'll give you... An Old Card Album and a strange bag I found today for it!";
+	menu "Sure!",xmas_quest_girl_finish,"Nope",xmas_quest_girl_end;
+
+xmas_quest_girl_finish:
+	if(countitem(4005) >= 1) goto xmas_quest_girl_finish2;
+	mes "[ Annie ]";
+	mes "You meanie! You don't even have the card!";
+	close;
+
+xmas_quest_girl_finish2:
+	mes "[ Annie ]";
+	mes "Yay, thanks!";
+	next;
+	delitem 4005,1;
+	getitem 616,1;
+	getitem 12132,1;
+	set xmas_quest,xmas_quest+1;
+	mes "[ Annie ]";
+	mes "You're the greatest!!";
+	close;
+
+xmas_quest_girl_end:
+	mes "[ Annie ]";
+	mes "Aww... :(";
+	close;
+}
+
+
+pay_fild07,53,344,5	script	Charlie	706,{
+	if (xmas_quest >= 1) goto xmas_quest_boy;
+	mes "[ Charlie ]";
+	mes "Hihi~";
+	close;
+
+xmas_quest_boy:
+	mes "[ Charlie ]";
+	mes "Hi there! I bet you have lots of candy..";
+	next;
+	mes "[ Charlie ]";
+	mes "I asked my mom for candy this Christmas, but she doesn't have enough zeny!";
+	next;
+	mes "[ Charlie ]";
+	mes "I would feel bad asking her again...";
+	next;
+	if((countitem(529) >= 15) && (countitem(530) >= 10)) goto xmas_quest_boy_candy;
+	mes "[ Charlie ]";
+	mes "Oh well...";
+	close;
+
+xmas_quest_boy_candy:
+	mes "[ Charlie ]";
+	mes "Wow, you DO have lots of candy!";
+	next;
+	mes "[ Charlie ]";
+	mes "I'll trade you some for one of these strange bags I keep finding!";
+	menu "Sure!",xmas_quest_boy_finish,"You wish!",xmas_quest_boy_end;
+
+xmas_quest_boy_finish:
+	mes "[ Charlie ]";
+	mes "Wow, thanks!";
+	next;
+	delitem 529,15;
+	delitem 530,10;
+	getitem 12132,1;
+	set xmas_quest,xmas_quest+1;
+	mes "[ Charlie ]";
+	mes "You're the best! I'll trade you anytime!";
+	close;
+
+xmas_quest_boy_end:
+	mes "[ Charlie ]";
+	mes "Meanie!";
+	close;
+}
+
+payo1,72,119,5	script	Catherine	711,{
+	if (xmas_quest_done == 1) goto xmas_thanks2;
+	if (xmas_quest == 1) goto xmas_thanks;
+	if (xmas_quest >= 5) goto xmas_quest2;
+	mes "[ Catherine ]";
+	mes "Oh dear, both of my children seem to be upset now!";
+	next;
+	mes "[ Catherine ]";
+	mes "I'm too poor to give them gifts this year, whatever shall I do...";
+	next;
+	mes "[ Catherine ]";
+	mes "Do you think you could help me?";
+	menu "As if!",xmas_end,"Sure!",xmas_questy;
+
+xmas_questy:
+	mes "[ Catherine ]";
+	mes "Oh thank you! One day I will repay your kindness.";
+	set xmas_quest,1;
+	next;
+	mes "[ Catherine ]";
+	mes "The children both ran off into the woods, please find them and try to calm them down!";
+	next;
+	mes "[ Catherine ]";
+	mes "Thankyou again, " + strcharinfo(0) + ".";
+	close;
+
+xmas_end:
+	mes "[ Catherine ]";
+	mes "Oh... What a terrible Christmas it has turned out to be this year!";
+	next;
+	mes "[ Catherine ]";
+	mes "Come back if you feel like helping me " + strcharinfo(0) + ".";
+	close;
+
+xmas_thanks:
+	mes "[ Catherine ]";
+	mes "Thankyou again for offering to help, " + strcharinfo(0) + ".";
+	close;
+
+xmas_thanks2:
+	mes "[ Catherine ]";
+	mes "Thankyou again for helping my children, " + strcharinfo(0) + "!";
+	close;
+
+xmas_quest2:
+	mes "[ Catherine ]";
+	mes "Thank you so much for helping my children, " + strcharinfo(0) + ".";
+	next;
+	mes "[ Catherine ]";
+	mes "I made this hat today, it's not much but perhaps it will keep you warm over Christmas!";
+	next;
+	mes "^9966CC - Catherine hands you a cute red santa hat -^000000";
+	getitem 16037,1;
+	set xmas_quest,0;
+	set xmas_quest_done,1;
+	next;
+	mes "[ Catherine ]";
+	mes "Have a great Christmas!";
+	close;
+}

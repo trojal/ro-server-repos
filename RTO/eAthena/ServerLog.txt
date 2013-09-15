@@ -1,0 +1,44 @@
+4/28/2007 11:01:46 PM	login-server_sql.exe fail to start.
+	autorestart ignored
+4/28/2007 11:01:48 PM	login-server_sql.exe started.
+4/28/2007 11:01:51 PM	char-server_sql.exe started.
+4/28/2007 11:02:07 PM	map-server_sql.exe started.
+4/28/2007 11:02:21 PM	login-server_sql.exe shutdown.
+4/28/2007 11:02:21 PM	char-server_sql.exe shutdown.
+4/28/2007 11:02:21 PM	map-server_sql.exe shutdown.
+4/28/2007 11:05:12 PM	map-server_sql.exe fail to start.
+	autorestart ignored
+4/28/2007 11:05:14 PM	login-server_sql.exe started.
+4/28/2007 11:05:17 PM	char-server_sql.exe started.
+4/28/2007 11:05:19 PM	map-server_sql.exe started.
+4/28/2007 11:10:05 PM	login-server_sql.exe shutdown.
+4/28/2007 11:10:05 PM	char-server_sql.exe shutdown.
+4/28/2007 11:10:05 PM	map-server_sql.exe shutdown.
+4/28/2007 11:10:18 PM	login-server_sql.exe fail to start.
+	autorestart ignored
+4/28/2007 11:10:20 PM	login-server_sql.exe started.
+4/28/2007 11:10:22 PM	char-server_sql.exe started.
+4/28/2007 11:10:23 PM	map-server_sql.exe started.
+4/29/2007 1:32:11 AM	login-server_sql.exe shutdown.
+4/29/2007 1:32:12 AM	char-server_sql.exe shutdown.
+4/29/2007 1:32:13 AM	map-server_sql.exe shutdown.
+4/29/2007 1:32:19 AM	login-server_sql.exe started.
+4/29/2007 1:32:22 AM	char-server_sql.exe started.
+4/29/2007 1:32:24 AM	map-server_sql.exe started.
+4/29/2007 9:23:52 PM	map-server_sql.exe shutdown.
+4/29/2007 9:24:04 PM	map-server_sql.exe started.
+5/3/2007 12:11:08 AM	map-server_sql.exe shutdown.
+5/3/2007 12:11:09 AM	char-server_sql.exe shutdown.
+5/3/2007 12:11:10 AM	login-server_sql.exe shutdown.
+5/3/2007 12:11:19 AM	char-server_sql.exe started.
+5/3/2007 12:11:19 AM	login-server_sql.exe started.
+5/3/2007 12:11:22 AM	map-server_sql.exe started.
+5/3/2007 12:45:03 AM	map-server_sql.exe fall.
+	autorestart 15
+5/3/2007 12:45:25 AM	map-server_sql.exe started.
+5/3/2007 12:47:15 AM	map-server_sql.exe fall.
+	autorestart 3
+5/3/2007 12:47:20 AM	map-server_sql.exe started.
+5/5/2007 11:09:45 PM	map-server_sql.exe fall.
+	autorestart 3
+5/5/2007 11:10:01 PM	map-server_sql.exe started.

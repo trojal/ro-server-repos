@@ -1,0 +1,44 @@
+// MySQL Login SQL Server
+login_server_ip: 127.0.0.1
+login_server_port: 3306
+login_server_id: gemini
+login_server_pw: EaCUmS357
+login_server_db: gemini
+
+// MySQL Character SQL server
+char_server_ip: 127.0.0.1
+char_server_port: 3306
+char_server_id: gemini
+char_server_pw: EaCUmS357
+char_server_db: gemini
+
+// MySQL Map SQL Server
+map_server_ip: 127.0.0.1
+map_server_port: 3306
+map_server_id: gemini
+map_server_pw: EaCUmS357
+map_server_db: gemini
+
+// MySQL Log SQL Database
+log_db_ip: 127.0.0.1
+log_db_port: 3306
+log_db_id: gemini
+log_db_pw: EaCUmS357
+log_db_db: gemlog
+
+// MySQL Mail SQL Server
+mail_server_ip: 127.0.0.1
+mail_server_port: 3306
+mail_server_id: gemini
+mail_server_pw: EaCUmS357
+mail_server_db: gemini
+
+// for TXT -> SQL convertors
+db_server_ip: 127.0.0.1
+db_server_port: 3306
+db_server_id: gemini
+db_server_pw: EaCUmS357
+db_server_logindb: gemini
+
+//Use SQL item_db and mob_db for the map server
+use_sql_db: yes

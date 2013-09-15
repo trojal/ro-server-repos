@@ -1,0 +1,283 @@
+//------------------- Start --------------------
+prontera,190,159,0	script	racestart	139,{
+OnPCLoginEvent:
+	announce "Welcome to DuskRO~ Don't forget to vote!!", bc_blue|bc_self;
+	if(Class == Novice) end;
+	set @char_id,getcharid(0);
+	query_sql "SELECT `race` FROM `races` WHERE `char_id` = "+@char_id, @race$;
+	if (@race$ == "Daeva" || @race$ == "Onerei" || @race$ == "Aven" || @race$ == "Onerei") end;
+	if (@race$ == "" || @race$ == "Human") warp "new_zone04",179,172;
+}
+
+
+//------------------- Daeva --------------------
+
+new_zone04,177,189,5	script	Daeva Ambassador	899,{
+	if (inforace < 1) goto needinfoz;
+	if (aven == 1 || onerei == 1 || elverre == 1) goto d_close2;
+	if (daeva == 1) goto d_donez;
+	mes "[ Daeva Ambassador ]";
+	mes "We don't accept weaklings. If you want to walk the dark path kid, you are gonna have to show us you gotta bit of strength and guts...";
+	menu "Er... Sure?",d_sure,"....",d_close;
+	end;
+d_sure:
+	next;
+	mes "[ Daeva Ambassador ]";
+	mes "The smell of burning flesh. Seas of mangled corpses. These are just a few things Daeva's are exposed to. Infact we relish in such feats.";
+	Next;
+	mes "[ Daeva Ambassador ]";
+	mes "There is no kindness in our hearts. The heart of a Daeva must be as black as the wings they proudly bear. Could you slay an innocent for sheer enjoyment?";
+	menu ".....",d_close,"-smirk-",d_course;
+	end;
+d_course:
+	next;
+	mes "[ Daeva Ambassador ]";
+	mes "Haha, ok kid.";
+	mes "You sure you want to become one of us? There's no going back...";
+	menu "Mhm...",d_fin,"Uhhh...",d_close;
+	end;
+d_fin:
+	next;
+	mes "[ Daeva Ambassador ]";
+	mes "Close your eyes. Feel the darkness surround you and allow it into your heart..";
+	next;
+	mes "[ Daeva Ambassador ]";
+	set @name$, strcharinfo(0);
+	set @race$, "Daeva";
+	set @char_id, getcharid(0);
+	set @acc_id, getcharid(3);
+	set @rank, 20;
+	set @points, 0;
+	query_sql "REPLACE INTO `races` VALUES ("+@char_id+", "+@acc_id+", '"+escape_sql(@name$)+"', '"+escape_sql(@race$)+"', "+@rank+", "+@points+")";
+	mes "Open your eyes now! You have been reborn! A walker of shadows you have become. Join your fellow brothers in arms and plunge this world into darkness!";
+	set daeva, 1;
+	next;
+	getitem	16018,1;
+	getitem	16026,1;
+
+	warp "serverlobby",70,12; end;
+d_close:
+	next;
+	mes "[ Daeva Ambassador ]";
+	mes "Heh. Weakling.";
+	close;
+d_close2:
+	mes "[ Daeva Ambassador ]";
+	mes "Heh. Weakling.";
+	close;
+d_donez:
+	getitem	16018,1;
+	getitem	16026,1;
+	//savepoint "job_thief1",	180,	21;
+	warp "serverlobby",70,12; end;
+needinfoz:
+	mes "[ Daeva Ambassador ]";
+	mes "You must speak to the guide before becoming one of the chosen.";
+	mes "Be gone.";
+	close;	
+}
+
+//------------------- Aven ---------------------
+
+new_zone04,172,189,5	script	Aven Ambassador	935,{
+	if (inforace < 1) goto needinfoz;
+	if (daeva == 1 || onerei == 1 || elverre == 1) goto a_close2;
+	if (aven == 1) goto a_donez;
+	mes "[ Aven Ambassador ]";
+	mes "Darkness is all around us... Can you feel it?";
+	menu "Darkness?",a_sure,"... Crazy old man",a_close;
+	end;
+a_sure:
+	next;
+	mes "[ Aven Ambassador ]";
+	mes "The other races, those not chosen by the gods... They wreak havok, killing innocents and defiling this earth with their blasphemy.";
+	Next;
+	mes "[ Aven Ambassador ]";
+	mes "Though putting an end to this eternal war would mean brandishing a weapon, it is surely the only way in which to put a stop to their blasphemy... And so we must.";
+	menu ".....",a_close,"I wish to aid your cause...",a_course;
+	end;
+a_course:
+	next;
+	mes "[ Aven Ambassador ]";
+	mes "Once you open your heart and mind to the voices of the Gods, there's no going back... Are you sure?";
+	menu "Yeah!",a_fin,"Uhhh...",a_close;
+	end;
+a_fin:
+	next;
+	mes "[ Aven Ambassador ]";
+	mes "Allow the Gods' grace to fill you. Accept your wings and join his kingdom as a knight under their holy order. "+strcharinfo(0)+", you are no longer a mere mortal but instead the Gods Divine Wrath.";
+	next;
+	mes "[ Aven Ambassador ]";
+	set @name$, strcharinfo(0);
+	set @race$, "Aven";
+	set @char_id, getcharid(0);
+	set @acc_id, getcharid(3);
+	set @rank, 17;
+	set @points, 0;
+	query_sql "REPLACE INTO `races` VALUES ("+@char_id+", "+@acc_id+", '"+escape_sql(@name$)+"', '"+escape_sql(@race$)+"', "+@rank+", "+@points+")";
+	mes "Open yours eyes and go. Witness the chaos for yourself and allow the voice of your blade to bring about peace. Once and for all.";
+	set aven, 1;
+	next;
+	getitem 16020,1;
+	getitem	16024,1;
+	//savepoint "prt_monk",	223,	146;
+	warp "serverlobby",70,12; end;
+a_close:
+	next;
+	mes "[ Aven Ambassador ]";
+	mes "Perhaps your faith is wanning...If so be gone now, for I have no times for those weak in heart.";
+	close;
+a_close2:
+	mes "[ Aven Ambassador ]";
+	mes "Perhaps your faith is wanning...If so be gone now, for I have no times for those weak in heart.";
+	close;
+a_donez:
+	getitem 16020,1;
+	getitem	16024,1;
+	//savepoint "prt_monk",	223,	146;
+	warp "serverlobby",70,12; end;
+needinfoz:
+	mes "[ Aven Ambassador ]";
+	mes "You must speak to the guide before becoming one of the chosen.";
+	mes "Be gone.";
+	close;
+}
+
+//------------------ Elverre ---------------------
+
+new_zone04,182,189,5	script	Elverre Ambassador	868,{
+	if (inforace < 1) goto needinfoz;
+	if (aven == 1 || onerei == 1 || daeva == 1) goto e_close2;
+	if (elverre == 1) goto e_donez;
+	mes "[ Elverre Ambassador ]";
+	mes "As an Elverre fighter you will be tasked with taking on not only warriors among the other warring factions but marks far too dangerous for normal humans.";
+	menu "Sounds good",e_sure,"...?",e_close;
+	end;
+e_sure:
+	next;
+	mes "[ Elverre Ambassador ]";
+	mes "The keenest in marksmanship and magically talented... These are the qualities we Elverre seek to train.";
+	Next;
+	mes "[ Elverre Ambassador ]";
+	mes "We must fight for all that is around us. We must protect Nature and this Earth..";
+	menu ".....",e_close,"I want to fight~",e_course;
+	end;
+e_course:
+	next;
+	mes "[ Elverre Ambassador ]";
+	mes "Once you begin your training to fight for this Earth, there's no going back... Are you sure?";
+	menu "Yeah!",e_fin,"Uhhh...",e_close;
+	end;
+e_fin:
+	next;
+	mes "[ Elverre Ambassador ]";
+	mes "Now. If you will close your eyes and listen to the trees as they speak into your heart..";
+	next;
+	mes "[ Elverre Ambassador ]";
+	mes "Can you hear them? Pulling you closer to the Wood? Fall into its arms and be reborn...";
+	next;
+	mes "[ Elverre Ambassador ]";
+	set @name$, strcharinfo(0);
+	set @race$, "Elverre";
+	set @char_id, getcharid(0);
+	set @acc_id, getcharid(3);
+	set @rank, 19;
+	set @points, 0;
+	query_sql "REPLACE INTO `races` VALUES ("+@char_id+", "+@acc_id+", '"+escape_sql(@name$)+"', '"+escape_sql(@race$)+"', "+@rank+", "+@points+")";
+	mes "Open your eyes, "+strcharinfo(0)+". Welcome home.";
+	set elverre, 1;
+	next;
+	getitem 16016,1;
+	getitem	16027,1;
+	//savepoint "payon",	165,	59;
+	warp "serverlobby",70,12; end;
+e_close:
+	next;
+	mes "[ Elverre Ambassador ]";
+	mes "...";
+	close;
+e_close2:
+	mes "[ Elverre Ambassador ]";
+	mes "...";
+	close;
+e_donez:
+	getitem 16016,1;
+	getitem	16027,1;
+	//savepoint "payon",	165,	59;
+	warp "serverlobby",70,12; end;
+needinfoz:
+	mes "[ Elverre Ambassador ]";
+	mes "You must speak to the guide before becoming one of the chosen.";
+	mes "Be gone.";
+	close;
+}
+
+//------------------ Onerei ---------------------
+
+new_zone04,187,189,5	script	Onerei Ambassador	81,{
+	if (inforace < 1) goto needinfoz;
+	if (aven == 1 || daeva == 1 || elverre == 1) goto o_close2;
+	if (onerei == 1) goto o_donez;
+	mes "[ Onerei Ambassador ]";
+	mes "Tooth and claw. The ways of the beasts. Are you ready?";
+	menu "Rawr~",o_sure,"...?",o_close;
+	end;
+o_sure:
+	next;
+	mes "[ Onerei Ambassador ]";
+	mes "Outcasts.. Halflings.. That is the truth for our kind... Though we fight through the diversity of beasts...";
+	Next;
+	mes "[ Onerei Ambassador ]";
+	mes "Should you be found to be wanning in anyway... Your bones will become dust and your flesh fed to our livestock. It is the way it must be.";
+	menu "Are you nuts?",o_close,"- Steady Gaze -",o_course;
+	end;
+o_course:
+	next;
+	mes "[ Onerei Ambassador ]";
+	mes "Once you begin the transformation, there's no going back... Are you sure?";
+	menu "- Nod -",o_fin,"Uhhh...",o_close;
+	end;
+o_fin:
+	mes "[ Onerei Ambassador ]";
+	mes "Please, relax your body and shut your eyes.";
+	next;
+	mes "^993333- You close your eyes, and feel a liquid being applied to your forehead -^000000";
+	next;
+	mes "[ Onerei Ambassador ]";
+	mes "Feel Mother Gaia in your veins. Become one with her and be reborn...";
+	next;
+	mes "[ Onerei Ambassador ]";
+	set @name$, strcharinfo(0);
+	set @race$, "Onerei";
+	set @char_id, getcharid(0);
+	set @acc_id, getcharid(3);
+	set @rank, 18;
+	set @points, 0;
+	query_sql "REPLACE INTO `races` VALUES ("+@char_id+", "+@acc_id+", '"+escape_sql(@name$)+"', '"+escape_sql(@race$)+"', "+@rank+", "+@points+")";
+	mes "Welcome, child. Go now. Hone your fangs, claws and blade.";
+	set onerei, 1;
+	next;
+	getitem 16015,1;
+	getitem	16025,1;
+	//savepoint "force_1-2",	99,	25;
+	warp "serverlobby",70,12; end;
+o_close:
+	next;
+	mes "[ Onerei Ambassador ]";
+	mes "...";
+	close;
+o_close2:
+	mes "[ Onerei Ambassador ]";
+	mes "...";
+	close;
+o_donez:
+	getitem 16015,1;
+	getitem	16025,1;
+	//savepoint "in_moc_16",	18,	10;
+	warp "serverlobby",70,12; end;
+needinfoz:
+	mes "[ Onerei Ambassador ]";
+	mes "You must speak to the guide before becoming one of the chosen.";
+	mes "Be gone.";
+	close;
+}

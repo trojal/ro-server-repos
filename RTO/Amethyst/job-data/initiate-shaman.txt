@@ -1,0 +1,152 @@
+				Necromancer		[nothing further]
+Novice ----------> 	Initiate ---------------|
+				SHAMAN		[northing further]
+
+skill name - usage - max level - required skills (if)
+type	skill description, includes calculations
+of
+skill
+
+--------------------------------------------------------------------------------------------------------
+Shaman 					Max Job Lv 100					18 / 18 skills	
+
+Pugilism - Passive - 10 Lv's - Requires : Martial Training Lv 5
+n/a	Gain +5 Base Atk per Skill Lv as long as you are not using a weapon and are not 50% over 
+	burdened or more.
+
+Dark Pact - Passive - 10 Lv's - Requires : Vile Touch Lv 5
+n/a	All attacks you make, normal and skill-based, deal an additional [ Skill Lv * ( Vit + 30 ) ] points 
+	of dark property damage.  In addition, for each level in this skill you also gain a 5% resistance 
+	to dark (unholy) damage.
+
+Bane - Passive - 10 Lv's - Requires : Hexing Lv 5
+n/a	All attacks you make, normal and skill-based, have a [ Skill Lv * 3 ]% chance to afflict the 
+	victim with any status ailment.  In addition, anything attacking you has a [ Skill Lv ]% chance of 
+	being afflicted with any status ailment upon successfully damaging you.
+	[ Valid effects : Poison, Stun, Sleep, Silence, Blind, Curse, Confusion ]
+
+Turmoil - Passive - 10 Lv's - Requires : Malice Lv 10, Bane Lv 10
+n/a	Skill and Spells targeted at you - both friendly and hostile - have a [ Skill Lv * 4 + 10 ]% chance
+	of missing automatically.
+
+Pain - Passive - 10 Lv's - Requires : Turmoil Lv 10, Blood Pact Lv 1
+n/a	Whenever you recieve melee damage, your attacker recieves [ Skill Lv * 5 ]% of that damage.
+
+Anguish - Passive - 10 Lv's - Requires : Bane Lv 10
+n/a	Whenever you suffer from a status ailment, that ailment lasts twice as long and anything you 
+	damage with a physical attack also contracts the same ailment for however long your ailment's 
+	remaining duration is.
+
+Irony - Passive - 10 Lv's - Requires : Pain Lv 1
+n/a	Whenever you are struck by a critical hit your attacker takes [ Skill Lv * 10 ] damage.  Whenever 
+	you hit someone or something else with a critical hit, you take [ Skill Lv * 10 ] damage.
+	[ this is ironic because luck both gives crits, and defends against them. ]
+
+Blood Pact - Offensive - 5 Lv's - Requires : Blood Siphon Lv 10
+skill	SP : 0		Cast : Instant	Recharge : n/a		Duration : 20 s.
+	Catalyst : 1 Red Gemstone
+	For 20 seconds, all melee attacks you make also steal [ Skill Lv * 80 ] health points.  This has 
+	the opposite effect on undead enemies, which will hurt you rather than heal you.
+		note:
+		the spell casting itself will have a visual, but i do not know which one.
+		while affected by the spell, the player's attacks have an extra visual that shows up 
+		over the target per attack.  i also do not know which visual to use. [something red]
+
+Doom - Offensive - 10 Lv's - Requires : Malice Lv 10, Bane Lv 5
+spell	SP : 70		Cast : 4 s.	Recharge : 45 s.	Duration : (special)
+	For 1~45 seconds, determined randomly; target enemy suffers a [ Skill Lv * 2 ] point penalty to
+	Str, Agi, Vit, Int, and Dex.
+		note:
+		use the curse [status condition] effect, and the ruwach animation to encircle the victim
+		until the spell is done.
+
+Communing - Passive - 10 Lv's - Requires : Summon Ghost Lv 5
+n/a	Increases the number of ghosts summoned by Summon Ghost by one at Skill Lv 1, 4, 7, and 
+	10.  At Skill Lv 10, Communing, Summon Ghost will create a total of 7 ghosts.  You also gain
+	[ Skill Lv * 9 ]% resistance to Ghost Property damage.
+
+Ghostbolt - Offensive - 10 Lv's - Requires : Summon Ghost Lv 1
+spell	SP : 12		Cast : 0.4 s.	Recharge : 2.2 s.
+	Target enemy is struck by a ball of spiritual energy that deals [ ( Int + Vit ) * 5 * Skill Lv ] points 
+	of ghost property damage.
+		note:
+		use soul strike visual, only one ball!
+
+Soul Gaze - Offensive - 5 Lv's - Requires : Ghostbolt Lv 10
+skill	SP : 50		Cast : Instant	Recharge : n/a
+	Target enemy loses [ Skill Lv * 10 - Target's MDef ]% of their maximum SP, and you also lose 
+	the same amount of SP.
+		note:
+		use the hp drain visual
+
+Spirit Well - Offensive - 10 Lv's - Requires : Soul Gaze Lv 1
+spell	SP : 100	Cast : 3 s.	Recharge : n/a		Duration : (special)
+	Catalyst : 1x Blue Gemstone
+	When target enemy dies, a 3x3 spiritual fountain emerges on the spot of their death.  Any 
+	creature, friend or foe, standing inside the fountain will recover 20% of their SP every second; but 
+	also become very vulnerable to ghost property damage while inside the fountain.  This 
+	vulnerability is equal to [ Skill Lv * 15 ]%.  Targets normally immune to ghost property damage 
+	can become vulnerable to it while inside the fountain.  The fountain will dissappear after [ ( 30 - 
+	Skill Lv ) * 2 ] seconds, or when three or more creatures have stepped into the fountain.
+		note:
+		i don't know what effect to use, use a placeholder for now unless you have an idea.
+
+Spirit Storm - Offensive - 10 Lv's - Requires : Spirit Well Lv 5
+spell	SP : 60		Cast : 8 s.	Recharge : 20 s.	Duration : (special)
+	Catalyst : 1x Yellow Gemstone
+	Each enemy within a 9 cell radius of you is struck by 1 - 3 balls of spiritual energy.  Each ball 
+	causes [ Skill Lv * Int / 2 ] points of ghost property damage, and [ Skill Lv * Vit / 2 ] points of 
+	SP damage.  Once the spell is cast the shaman will unleash three spirit balls a second until all 
+	have been released. The shaman is unable to move or take any other action while the balls are 
+	being unleashed.  If the shaman sustains damage of any kind while unleashing the balls, the spell 
+	stops and the firing is interupted.  The recharge time does not begin until after the spell is 
+	completed or interupted.
+		note:
+		for the spirit balls that are released, use the soul strike visual.
+
+Ghostgrave - Offensive - 10 Lv's - Requires : Spirit Storm Lv 10, Communing Lv 10
+spell	SP : 200	Cast : 5 s.	Recharge : n/a*		Duration : 20 s.
+	Catalyst : 1x Red Gemstone
+	Summons a large ghostly specter that haunts target enemy, cursing them.  Only one of these 
+	large ghostly specters can be under your control at a time.  When the afflicted enemy dies, you 
+	lose [ 100 - ( Skill Lv * 4 ) ]% of your SP and the ghost vanishes.  When the ghost vanishes, 
+	[ Skill Lv * 2 ] spirits are spawned that attack any enemy in sight.  When these smaller spirits 
+	die, they explode violently - dealing damage to whatever is near them.  
+		note :
+		spirits have 1 hp, but their exploding death will do (INT / 100 * 2000) ghost 
+		property damage	to enemies within 2 cells <5x5 square> of the spirit.  the 
+		spirits will die anyways after 20 seconds, exploding of course.
+		sprites : 
+			large ghost = giant whisper
+			exploding spirits = horong
+			explosion itself = napalm beat visual
+
+Blackhole - Offensive - 10 Lv's - Requires : Spirit Well Lv 10, Ghostgrave Lv 5, Doom Lv 5
+spell	SP : 100	Cast : 10 s.	Recharge : n/a		Duration : 15 s.
+	Catalyst : 1x Blue Gemstone, 1x Red Gemstone, 1x Yellow Gemstone
+	Conjure forth a menacing black sphere that occupies one cell (1x1).  Any enemy that steps 
+	within 2 cells (5x5) of the sphere will cause the sphere to implode violently, dealing [ ( Base Level 
+	+ Int + Vit ) * Skill Lv * 5 ] of defense ignoring ghost property damage to each enemy in the 
+	5x5 area.  The shaman can only create a single blackhole at a time.  If the 15 second duration of 
+	the spell runs out, the blackhole explodes in a shockwave, dealing [ ( 400 + Base Lv ) * Skill Lv * 
+	2 ] ghost property damage to any enemy within 5 cells (11x11) of the black sphere's location.  
+	The black sphere is considered a trap, and therefore cannot harm or affect the Shaman or his 
+	allies.
+		note :
+		i do not know what sprite or effect could be used for this, so if you can't find one
+		or don't want to, just use a placeholder of some kind.  also, by defense ignoring, it
+		means the damage will ignore reductions from race or resistance, but not amplifications
+		from race or resistance.  in other words, this ghost property damage will do 100% of its
+		capacity to neutral property 1, instead of 25%, but will do 125-200% to undead property
+		targets - depending on their property level.		
+
+Soul Pact - Defensive - 1 Lv - Requires : Channeling Lv 1, Communing Lv 7
+spell	SP : 150	Cast : 3 s.	Recharge : n/a		Duration : 10 s.
+	For 10 seconds, if you recieve damage that would kill you, you instead drop to 1 HP and one of 
+	your summoned ghosts dies instead.  For each ghost that dies in this manner, you lose 50% of 
+	your SP.  If you have no SP left at this time you will die anyways.
+
+Channeling - Passive - 1 Lv - <QUEST SKILL>
+n/a	Ghosts you summon no longer vanish when exposed to daylight, but your maximum SP is 
+	lowered 7% for each summoned ghost under your control.  Yes, this really is worth it.
+	[ the exploding spirits from Ghostgrave do not count, but the large one does ]

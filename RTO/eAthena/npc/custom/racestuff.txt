@@ -1,0 +1,218 @@
+prontera,191,159,0	script	raceevents	139,{
+
+OnPCKillEvent:
+	set getd("$@Playerkiller"),getcharid(3);
+
+	attachrid(killedrid);
+	set $@PlayerKilled$, strcharinfo(0);
+	detachrid;
+
+	attachrid(getd("$@PlayerKiller"));
+	set $@killerID,getcharid(0);
+
+	query_sql "SELECT `race`, `rank`, `points` FROM `races` WHERE `name` = '"+escape_sql($@PlayerKilled$)+"'", @drace$, @drank, @dpoints;
+	query_sql "SELECT `race`, `rank`, `points` FROM `races` WHERE `char_id` = "+$@killerID, @krace$, @krank, @kpoints;
+
+	setarray @races$[0], "Aven", "Daeva", "Onerei", "Elverre", "Human";
+	set @raceslength, 5;
+
+	if (@drace$ == @races$[4] || @krace$ == @races$[4]) end;
+	if (@drace$ != @races$[0] && @drace$ != @races$[2] && @drace$ != @races$[1] && @drace$ != @races$[3]) end;
+
+	if (@dpoints < 20)	end;
+
+	switch(@drank) {
+		case 1:
+			set @drank2$, " Seraphim";
+			break;
+		case 2:
+			set @drank2$, " Descendant of Fenrir";
+			break;
+		case 3:
+			set @drank2$, "n Elverre Leader";
+			break;
+		case 4:
+			set @drank2$, " Terror of Hell";
+			break;
+		case 5:
+			set @drank2$, " Cherubim";
+			break;
+		case 6:
+			set @drank2$, " Black Fury";
+			break;
+		case 7:
+			set @drank2$, " Honor Guard";
+			break;
+		case 8:
+			set @drank2$, "n Arch Daeva";
+			break;
+		case 9:
+			set @drank2$, " Throne";
+			break;
+		case 10:
+			set @drank2$, " Bone Gnawer";
+			break;
+		case 11:
+			set @drank2$, " Captain";
+			break;
+		case 12:
+			set @drank2$, " Greater Daeva";
+			break;
+		case 13:
+			set @drank2$, " Virtue";
+			break;
+		case 14:
+			set @drank2$, " Wild Fang";
+			break;
+		case 15:
+			set @drank2$, " Ranger";
+			break;
+		case 16:
+			set @drank2$, " Soldier Daeva";
+			break;
+		case 17:
+			set @drank2$, " Power";
+			break;
+		case 18:
+			set @drank2$, " Child of Gaia";
+			break;
+		case 19:
+			set @drank2$, " Woodsman";
+			break;
+		case 20:
+			set @drank2$, " Lesser Daeva";
+			break;
+	}
+
+	if (@drace$ == @krace$) end;
+	
+	if (@drank <= 4) callfunc "calcPoints", 2, 2, 3, 5, 7;
+	else if (@drank <= 8) callfunc "calcPoints", 1, 2, 3, 5, 7;
+	else if (@drank <= 12) callfunc "calcPoints", 1, 2, 3, 4, 5;
+	else if (@drank <= 16) callfunc "calcPoints", 0, 1, 2, 2, 4;
+	else if (@drank <= 20) callfunc "calcPoints", 0, 0, 1, 2, 2;
+	end;
+	
+OnPCDieEvent:
+	set getd("$@KilledPlayer"),getcharid(3);
+	attachrid(killerrid);
+	set $@PlayerKill$, strcharinfo(0);
+	detachrid;
+	
+	attachrid(getd("$@KilledPlayer"));
+	set $@killedID2,getcharid(0);
+
+	query_sql "SELECT `race`, `rank`, `points` FROM `races` WHERE `name` = '"+escape_sql($@PlayerKill$)+"'", @killrace$, @killrank, @killpoints;
+	query_sql "SELECT `race`, `rank`, `points` FROM `races` WHERE `char_id` = "+$@killedID2, @deadrace$, @deadrank, @deadpoints;
+
+	if (@deadrace$ == "Human" || @killrace$ == "Human") end;
+	if (@killpoints < 20 || @deadpoints < 20) end;
+
+	switch(@killrank) {
+		case 1:
+			set @krank2$, "Seraphim";
+			break;
+		case 2:
+			set @krank2$, "Descendant of Fenrir";
+			break;
+		case 3:
+			set @krank2$, "Elverre Leader";
+			break;
+		case 4:
+			set @krank2$, "Terror of Hell";
+			break;
+		case 5:
+			set @krank2$, "Cherubim";
+			break;
+		case 6:
+			set @krank2$, "Black Fury";
+			break;
+		case 7:
+			set @krank2$, "Honor Guard";
+			break;
+		case 8:
+			set @krank2$, "Arch Daeva";
+			break;
+		case 9:
+			set @krank2$, "Throne";
+			break;
+		case 10:
+			set @krank2$, "Bone Gnawer";
+			break;
+		case 11:
+			set @krank2$, "Captain";
+			break;
+		case 12:
+			set @krank2$, "Greater Daeva";
+			break;
+		case 13:
+			set @krank2$, "Virtue";
+			break;
+		case 14:
+			set @krank2$, "Wild Fang";
+			break;
+		case 15:
+			set @krank2$, "Ranger";
+			break;
+		case 16:
+			set @krank2$, "Soldier Daeva";
+			break;
+		case 17:
+			set @krank2$, "Power";
+			break;
+		case 18:
+			set @krank2$, "Child of Gaia";
+			break;
+		case 19:
+			set @krank2$, "Woodsman";
+			break;
+		case 20:
+			set @krank2$, "Lesser Daeva";
+			break;
+	}
+
+	if (@killrace$ == @deadrace$) end;
+
+	if (@killrank <= 4) callfunc "calcDead", 2, 1, 1, 0, 0;
+	else if (@killrank <= 8) callfunc "calcDead", 3, 2, 1, 1, 0;
+	else if (@killrank <= 12) callfunc "calcDead", 5, 3, 2, 1, 1;
+	else if (@killrank <= 16) callfunc "calcDead", 8, 5, 3, 2, 1;
+	else if (@killrank <= 20) callfunc "calcDead", 10, 8, 5, 3, 2;
+	end;
+}
+
+function	script	calcPoints	{
+		set @pointname$, "points";
+		if (@krank <= 4) set @addpoints, getarg(0);
+		else if (@krank <= 8) set @addpoints, getarg(1);
+		else if (@krank <= 12) set @addpoints, getarg(2);
+		else if (@krank <= 16) set @addpoints, getarg(3);
+		else if (@krank <= 20) set @addpoints, getarg(4);
+		else if (@krank > 20) end;
+
+		if (@addpoints == 1) set @pointname$, "point";
+		set @pointsadded, (@kpoints + @addpoints);
+		query_sql "UPDATE `races` SET `points` = "+@pointsadded+" WHERE `char_id` = "+$@killerID;
+		query_sql "SELECT `points` FROM `races` WHERE `char_id` = "+$@killerID, @kpoints2;
+		announce "You killed a"+@drank2$+"! You earned "+@addpoints+" Race "+@pointname$+", totalling "+@kpoints2+"!", bc_blue|bc_self;
+
+		return;
+}
+
+function	script	calcDead	{
+	set @pointname$, "points";
+	if (@deadrank <= 4) set @takepoints, getarg(0);
+	else if (@deadrank <= 8) set @takepoints, getarg(1);
+	else if (@deadrank <= 12) set @takepoints, getarg(2);
+	else if (@deadrank <= 16) set @takepoints, getarg(3);
+	else if (@deadrank <= 20) set @takepoints, getarg(4);
+	else if (@deadrank > 20) end;
+
+	if (@takepoints == 1) set @pointname$, "point";
+	set @pointsadded, (@deadpoints - @takepoints);
+	query_sql "UPDATE `races` SET `points` = "+@pointsadded+" WHERE `char_id` = "+$@killedID2;
+	query_sql "SELECT `points` FROM `races` WHERE `char_id` = "+$@killedID2, @deadpoints2;
+	announce "You were killed by a "+@krank2$+"! You lost "+@takepoints+" Race "+@pointname$+", leaving you with "+@deadpoints2+".", bc_blue|bc_self;
+
+	return;
+}

@@ -1,0 +1,5 @@
+// Internal default is limited to 128 lines.  If you need more, you will need to modify the MOTD_LINE_SIZE definition in pc.c
+Welcome to DuskRO, Emerald Server.
+Enjoy your time here and please remember to follow the rules. You MUST vend in the vend area or a different town. You can get there using the sign near the warper.
+Don't forget to vote! duskro.net
+Sorry guys, pvp is bugged right now. GvG should still work fine. We will be fixing this in the next day or so~

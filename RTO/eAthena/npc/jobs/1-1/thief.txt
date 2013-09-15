@@ -1,0 +1,34 @@
+//===== eAthena Script =======================================
+//= Thief Job Quest
+//===== By: ==================================================
+//= eAthena dev team
+//===== Current Version: =====================================
+//= 1.6a
+//===== Compatible With: =====================================
+//= eAthena 1.0 +
+//===== Description: =========================================
+//= <Description>
+//===== Additional Comments: =================================
+//= Fully working
+//= v1.1 Added instant job change for High Novice [Lupus]
+//= 1.3 Added Baby Class support [Lupus]
+//= v1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
+//= Fixed possible EXP abuse [Lupus]
+//= 1.5 Now saves/restores all quest skills [Lupus]
+//= 1.6 Merged back JFunc [Lupus] 1.6a typos
+//============================================================
+
+
+// == Monsters ==
+//Spawn is included in this file so make shure its not elsewhere to!
+//job_thief1,0,0,0,0	monster	Orange Mushroom	1182,180,0,0,0
+//job_thief1,0,0,0,0	monster	Fabre	1184,50,0,0,0
+//job_thief1,0,0,0,0	monster	Chonchon	1183,50,0,0,0
+//job_thief1,0,0,0,0	monster	Spore	1014,30,0,0,0
+
+
+//==============================================================================
+// mapflag
+//==============================================================================
+job_thief1	mapflag	nomemo
+job_thief1	mapflag	nopenalty

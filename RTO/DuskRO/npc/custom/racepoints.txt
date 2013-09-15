@@ -1,0 +1,59 @@
+payo1.gat,108,118,5	script	Nia	882,{
+	mes "[ Nia ]";
+	mes "Hullo..";
+	next;
+	if (donepoints == 1) goto gluck;
+	if (BaseLevel >= 90) goto points;
+	mes "[ Nia ]";
+	mes "How are you today?";
+	close;
+points:
+	mes "[ Nia ]";
+	mes "You look like a brave warrior...";
+	next;
+	mes "[ Nia ]";
+	mes "My parents were once the same... Before they were consumed with hatred for all that was around them..";
+	next;
+	mes "[ Nia ]";
+	mes "Before their passing, they left me with a task.. A task to ensure that the war and all that it means will not be forgotten.";
+	next;
+	mes "[ Nia ]";
+	mes "You stand before me now, bearing the marks of your kin, your race..";
+	next;
+	mes "[ Nia ]";
+	mes "Yet it means nothing... You do not yet fight for your kin.";
+	next;
+	mes "[ Nia ]";
+	mes "This I can help with.";
+	next;
+	mes "[ Nia ]";
+	mes "I can give you the ability to fight for your kind.. To reach great ranks and even lead your race to victory.";
+	next;
+	mes "[ Nia ]";
+	mes "Would you like this?";
+	menu "Err.. Sure!",points_y,"Psh, get outta here.",points_n;
+	end;
+points_y:
+	next;
+	mes "[ Nia ]";
+	mes "I will now bless you, close your eyes";
+	next;
+	mes "^9966CC- You close your eyes and feel a light sprinkling of dust on your forehead -^000000";
+	next;
+	set donepoints, 1;
+	set @char_id, getcharid(0);
+	set @addpoints, 150;
+	query_sql "UPDATE `races` SET `points` = "+@addpoints+" WHERE `char_id` = "+@char_id;
+	mes "[ Nia ]";
+	mes "It is done, go forth and fight proudly alongside your kin.";
+	close;
+points_n:
+	next;
+	mes "[ Nia ]";
+	mes "Come back if you change your mind...";
+	close;
+gluck:
+	mes "[ Nia ]";
+	mes "Go, fight for what you believe in!";
+	close;
+}

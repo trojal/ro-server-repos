@@ -1,0 +1,57 @@
+payo1,94,134,4	script	PvP Warper::pvpguy	943,{
+	if (BaseLevel < 90) goto nowai;
+	mes "[^9966CCPvp Warper^000000]";
+	set @room1$, "PvP Arena";
+	set @room2$, "Izlude PvP";
+	set @room3$, "Alberta PvP";
+	set @room4$, "GvG";
+	mes "Hi there, would you like to go to pvp or gvg?";
+		next;
+menu @room1$ + " [ ^9966CC" + getmapusers("guild_vs2") + "^000000 ]",pvp,
+@room2$ + " [ ^9966CC" + getmapusers("pvp_y_1-2") + "^000000 ]",pvp2,
+@room3$ + " [ ^9966CC" + getmapusers("pvp_y_1-4") + "^000000 ]",pvp3,
+@room4$ + " [ ^9966CC" + getmapusers("guild_vs1") + "^000000 ]",gvg;
+
+pvp:
+warp "guild_vs2",0,0;
+end;
+pvp2:
+warp "pvp_y_1-2",0,0;
+end;
+pvp3:
+warp "pvp_y_1-4",0,0;
+end;
+gvg:
+warp "guild_vs1",0,0;
+end;
+
+nowai:
+	mes "[^9966CCPvp Warper^000000]";
+	mes "You need to be at least level 90 to pvp!";
+	close;
+}
+
+morocc,162,95,5	duplicate(pvpguy)	PvP Warper#2	943
+ayothaya,155,117,5	duplicate(pvpguy)	PvP Warper#3	943
+geffen,115,69,5	duplicate(pvpguy)	PvP Warper#4	943
+umbala,124,126,5	duplicate(pvpguy)	PvP Warper#5	943
+alberta,108,59,5	duplicate(pvpguy)	PvP Warper#6	943
+aldebaran,132,121,5	duplicate(pvpguy)	PvP Warper#7	943
+izlude,131,120,5	duplicate(pvpguy)	PvP Warper#8	943
+xmas,152,135,5	duplicate(pvpguy)	PvP Warper#9	943
+comodo,183,158,5	duplicate(pvpguy)	PvP Warper#10	943
+amatsu,202,81,5	duplicate(pvpguy)	PvP Warper#11	943
+gonryun,155,128,5	duplicate(pvpguy)	PvP Warper#12	943
+yuno,165,188,5	duplicate(pvpguy)	PvP Warper#13	943
+niflheim,196,178,5	duplicate(pvpguy)	PvP Warper#14	943
+louyang,208,102,5	duplicate(pvpguy)	PvP Warper#15	943
+rachel,123,119,5	duplicate(pvpguy)	PvP Warper#16	943
+lighthalzen,162,79,5	duplicate(pvpguy)	PvP Warper#17	943
+hugel,93,156,5	duplicate(pvpguy)	PvP Warper#18	943
+einbech,81,105,5	duplicate(pvpguy)	PvP Warper#19	943
+einbroch,68,203,5	duplicate(pvpguy)	PvP Warper#20	943
+prontera,151,190,5	duplicate(pvpguy)	PvP Warper#21	943
+//prt_monk,229,153,5	duplicate(pvpguy)	PvP Warper#22	943
+//force_1-2,91,34,4	duplicate(pvpguy)	PvP Warper#23	943
+//job_thief1,173,54,4	duplicate(pvpguy)	PvP Warper#24	943
+//payon,176,107,5	duplicate(pvpguy)	PvP Warper#25	943

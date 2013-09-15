@@ -1,0 +1,417 @@
+//porsmash3 == job_wiz
+porsmash3,101,182,5	script	Room 3 Control	770,{
+		if ($@PSR3Ready == 1) goto M_NotReady;
+	M_Menu:
+		if ($@PSR3On == 1) goto M_Menu2;
+		mes "[Room Controller]";
+		mes "Welcome to the 'Smash!' minigame!  This is a C Rank room.  Here, you will smash porings as fast as you can to gain points before the time runs out.";
+		next;
+		menu "Information and Rules",M_Info,"Start Game",-,"Leave Room",M_Exit;
+		if (getgmlevel() > 79) goto M_Start;
+		if (getmapusers("porsmash3") < 3) goto M_NotEnough;
+	M_Start:
+		next;
+		mes "[Room Controller]";
+		mes "Alright, the room will begin shortly!  The porings will appear in the center area of the room.";
+		close2;
+		set $@PSR3on,1;
+		goto L_Timer;
+	M_Menu2:
+		if ($@PSR3CD == 1) end;
+		mes "[Room Controller]";
+		mes "The game is in progress.  What would you like to do?";
+		mes " ";
+		mes " ";
+		set $@PSR3MNTM,(((getnpctimer(0,"Room 3 Control") / 2000) / 60) %60);
+		set $@PSR3SETM,((getnpctimer(0,"Room 3 Control") / 2000) % 60);
+		if ($@PSR3SETM == 0 ) goto M_NewMin1;
+		if ($@PSR3SETM >= 51 ) goto M_Addzero1;
+		mes "[Time remaining: " + (9-$@PSR3MNTM) + ":" + (60-$@PSR3SETM) + "]"; // Counts down, this is the base timer
+		goto M_Menu2a;
+	M_NewMin1:
+		mes "[Time remaining: " + (10-$@PSR3MNTM) + ":00]"; // Keeps the second from starting at 60
+		goto M_Menu2a;
+	M_Addzero1:
+		mes "[Time remaining: " + (9-$@PSR3MNTM) + ":0" + (60-$@PSR3SETM) + "]"; // Adds a 0 infront of 1-9
+		goto M_Menu2a;
+	M_Menu2a:
+		next;
+		menu "Cancel",-,"Information and Rules",M_Info,"Leave Room",M_Warpout;
+		close;
+	M_Info:
+		mes "[Room Controller]";
+		mes "This is a poring smashing minigame.  The rules are simple.  Smash as many as you can for points before the time runs out.  There must also be atleast three people here to play the game.";
+		next;
+		mes "[Room Controller]";
+		mes "There are two ways to win.  The first way is to reach the point limit first!  By doing this, you'll get a big point bonus and the game will end!";
+		next;
+		mes "[Room Controller]";
+		mes "The second way is to just smash porings for points until the timer runs out.  When the timer runs out, the porings will vanish and you can redeem your points with me for Kafra Points.";
+		next;
+		mes "[Room Controller]";
+		mes "As you hopefully know, kafra points can be redeemed with the Kafra Representative here in the Arena Lobby, or with Kafra HQ in Al De Baran for splendid prizes!";
+		next;
+		mes "[Room Controller]";
+		mes "Here is a monster point value chart:";
+		mes "Red : -5 Points!";
+		mes "Yellow : +1 Point";
+		mes "Green : +3 Points";
+		mes "Blue : +5 Points";
+		mes "Jumbo : +25 Points!";
+		mes "Fly : -25 Points!!";
+		next;
+		mes "[Room Controller]";
+		mes "Be careful about smashing the reds!  And definately don't kill the flies!  Also, we keep track of how many porings you have smashed!  Flies don't count as porings.";
+//		mes "Be careful about smashing the reds!  And definately don't kill the flies!  Also, we keep track of how many porings you have smashed!  Flies don't count as porings.  If you stick around until the game ends, then you can redeem your kill count for zeny!";
+		next;
+		mes "[Room Controller]";
+		mes "If you want to leave the room, just talk to me and I can take you out.  I'll redeem your points for Kafra Points.";
+		next;
+		mes "[Room Controller]";
+		mes "If you don't want to see the,";
+		mes "Experienced Gained Base:0 (0.00%) Job:0 (0.00%)";
+		mes "message, then type @showexp to turn the message off.";
+		mes "Don't forget you can type @showexp again to turn the message back on.";
+		next;
+		mes "[Room Controller]";
+		mes "Also, if you die you forfeit all the points you've earned and return to the station.  So be careful!  Even though they are just porings...";
+		mes "You also forfeit your points if you close the game, or if the game closes itself.";
+		next;
+		goto M_Menu;
+	M_NotEnough:
+		mes "[Room Controller]";
+		mes "I'm sorry, but there needs to be atleast 3 people here for me to start the game.";
+		next;
+		goto M_Menu;
+	M_Wait:
+		mes "[Room Controller]";
+		mes "Alright.";
+		close;
+	M_Warpout:
+		mes "[Room Controller]";
+		mes "The game is in progress, are you sure you want to leave?";
+		next;
+		menu "No, I'll stay",M_Wait,"Yes.",-;
+		mes "[Room Controller]";
+		mes "Alright.... lets see how you did.";
+		mes " ";
+		mes "Total Points : "+@PSpt;
+		mes "Total Porings Killed : "+@PSKill;
+		mes "Kafra Points Earned : "+(@PSpt/10)+" KP";
+//		mes "Total Zeny Earned : None!";
+		next;
+		mes "[Room Controller]";
+		mes "Please enjoy your stay at the Arena.";
+		set RESRVPTS,RESRVPTS + (@PSpt/10);
+		dispbottom "[You have "+RESRVPTS+" Kafra Reserve Points]";
+		set @PSpt,0;
+		set @PSKill,0;
+		close2;
+		warp "pvp_m_room", 51, 38;
+		end;
+	M_Exit:
+		mes "[Room Controller]";
+		mes "Thank you and enjoy your stay in the Arena!";
+		set @PSpt,0;
+		set @PSKill,0;
+		close2;
+		warp "pvp_m_room", 51, 38;
+		end;
+	M_NotReady:
+		mes "[Room Controller]";
+		mes "Hello "+strcharinfo(0)+", this room has been completed and is in a cooldown phase.  The room will be open again in a short while.";
+		mes " ";
+		set $@PSR3MNTM,(((getnpctimer(0,"Room 3 Control") / 2000) / 60) %60);
+		set $@PSR3SETM,((getnpctimer(0,"Room 3 Control") / 2000) % 60);
+		if ($@PSR3SETM == 0 ) goto M_NewMin2;
+		if ($@PSR3SETM >= 51 ) goto M_Addzero2;
+		mes "[Time remaining: " + (4-$@PSR3MNTM) + ":" + (60-$@PSR3SETM) + "]"; // Counts down, this is the base timer
+		goto M_NotReady2;
+	M_NewMin2:
+		mes "[Time remaining: " + (5-$@PSR3MNTM) + ":00]"; // Keeps the second from starting at 60
+		goto M_NotReady2;
+	M_Addzero2:
+		mes "[Time remaining: " + (4-$@PSR3MNTM) + ":0" + (60-$@PSR3SETM) + "]"; // Adds a 0 infront of 1-9
+		goto M_NotReady2;
+	M_NotReady2:
+		next;
+		if (@PSpt > 0) goto M_NotReady3;
+		menu "Wait in room.",M_Wait,"Leave Room",M_Exit;
+	M_NotReady3:
+		menu "Wait in room.",M_Wait,"Cash in Points",M_Cashin;
+	M_Cashin:
+		mes "[Room Controller]";
+		mes "Alright.... lets see how you did.";
+		mes " ";
+		mes "Total Points : "+@PSpt;
+		mes "Total Porings Killed : "+@PSKill;
+		mes "Kafra Points Earned : "+(@PSpt/9)+" KP";
+//		mes "Total Zeny Earned : "+(@PSKill/3)+"z";
+		next;
+		mes "[Room Controller]";
+		mes "Thank you for playing.";
+		set RESRVPTS,RESRVPTS + (@PSpt/9);
+//		set Zeny,Zeny + (@PSKill/3);
+		dispbottom "[You have "+RESRVPTS+" Kafra Reserve Points]";
+		set @PSpt,0;
+		set @PSKill,0;
+		next;
+		mes "[Room Controller]";
+		mes "Do you wish to stay here and wait for the room to become available, or return to the station?";
+		next;
+		menu "Wait in room.",M_Wait,"Leave Room",M_Exit;
+	L_Timer:
+		set $@PSR3CD,1;
+		setnpctimer 0; //safeguard
+		StartNPCTimer "Room 3 Control";
+		set $@PSR3On,1;
+		set $@PSR3Title$,"- Game in Progress";
+		mapannounce "porsmash3",strcharinfo(0) + " has started the countdown!  You have a 10 minute time limit!",1;
+		set $@PSR3Count,1;
+		end;
+	OnTimer1000:
+		if ($@PSR3Count == 0) end;
+		mapannounce "porsmash3","[10]",1;
+		end;
+	OnTimer2000:
+		if ($@PSR3Count == 0) end;
+		mapannounce "porsmash3","[9]",1;
+		end;
+	OnTimer3000:
+		if ($@PSR3Count == 0) end;
+		mapannounce "porsmash3","[8]",1;
+		end;
+	OnTimer4000:
+		if ($@PSR3Count == 0) end;
+		mapannounce "porsmash3","[7]",1;
+		end;
+	OnTimer5000:
+		if ($@PSR3Ready == 1) goto L_EndGameAnn;
+		if ($@PSR3Count == 0) end;
+		mapannounce "porsmash3","[6]",1;
+		end;
+	OnTimer6000:
+		if ($@PSR3Count == 0) end;
+		mapannounce "porsmash3","[5]",1;
+		end;
+	OnTimer7000:
+		if ($@PSR3Count == 0) end;
+		mapannounce "porsmash3","[4]",1;
+		end;
+	OnTimer8000:
+		if ($@PSR3Count == 0) end;
+		mapannounce "porsmash3","[3]",1;
+		end;
+	OnTimer9000:
+		if ($@PSR3Count == 0) end;
+		mapannounce "porsmash3","[2]",1;
+		end;
+	OnTimer10000:
+		if ($@PSR3Count == 0) end;
+		mapannounce "porsmash3","[1]",1;
+		end;
+	OnTimer11000:
+		if ($@PSR3Count == 0) end;
+		emotion 27;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		mapannounce "porsmash3","[GO!]",1;
+		set $@PSR3CD,0;
+		set $@PSR3Count,0;
+		setnpctimer 0;
+		goto L_FSpawn;
+	OnTimer30000:
+		if ($@PSR3Ready == 0) end;
+		mapannounce "porsmash3","Please redeem your points with the Room Controller, you will be returned to the station automatically in ninety seconds.",1;
+		end;
+	OnTimer60000:
+		if ($@PSR3Ready == 1) end;
+		mapannounce "porsmash3","Nine minutes remaining.",1;
+		end;
+	OnTimer60001:
+		if ($@PSR3Ready == 0) end;
+		mapannounce "porsmash3","Please redeem your points with the Room Controller, you will be returned to the station automatically in one minute.",1;
+		end;
+	OnTimer90000:
+		if ($@PSR3Ready == 0) end;
+		mapannounce "porsmash3","Please redeem your points with the Room Controller, you will be returned to the station automatically in thirty seconds.",1;
+		end;
+	OnTimer100000:
+		if ($@PSR3Ready == 0) end;
+		mapannounce "porsmash3","Please redeem your points with the Room Controller, you will be returned to the station automatically in twenty seconds.",1;
+		end;
+	OnTimer110000:
+		if ($@PSR3Ready == 0) end;
+		mapannounce "porsmash3","Please redeem your points with the Room Controller, you will be returned to the station automatically in ten seconds!",1;
+		end;
+	OnTimer115000:
+		if ($@PSR3Ready == 0) end;
+		mapannounce "porsmash3","Please redeem your points with the Room Controller, you will be returned to the station automatically in five seconds!.",1;
+		end;
+	OnTimer116000:
+		if ($@PSR3Ready == 0) end;
+		mapannounce "porsmash3","Four!",1;
+		end;
+	OnTimer117000:
+		if ($@PSR3Ready == 0) end;
+		mapannounce "porsmash3","Three!",1;
+		end;
+	OnTimer118000:
+		if ($@PSR3Ready == 0) end;
+		mapannounce "porsmash3","Two!",1;
+		end;
+	OnTimer119000:
+		if ($@PSR3Ready == 0) end;
+		mapannounce "porsmash3","One!!",1;
+		end;
+	OnTimer120000:
+		if ($@PSR3Ready == 1) goto L_ResetPC;
+		mapannounce "porsmash3","Eight minutes remaining.",1;
+		end;
+	OnTimer180000:
+		if ($@PSR3Ready == 1) end;
+		mapannounce "porsmash3","Seven minutes remaining.",1;
+		end;
+	OnTimer240000:
+		if ($@PSR3Ready == 1) end;
+		mapannounce "porsmash3","Six minutes remaining.",1;
+		end;
+	OnTimer300000:
+		if ($@PSR3Ready == 1) goto L_Reset;
+		mapannounce "porsmash3","Five minutes remaining.",1;
+		end;
+	OnTimer360000:
+		mapannounce "porsmash3","Four minutes remaining.",1;
+		end;
+	OnTimer420000:
+		mapannounce "porsmash3","Three minutes remaining.",1;
+		end;
+	OnTimer480000:
+		mapannounce "porsmash3","Two minutes remaining.",1;
+		end;
+	OnTimer540000:
+		mapannounce "porsmash3","One minute remaining.",1;
+		end;
+	OnTimer570000:
+		mapannounce "porsmash3","Thirty seconds remaining.",1;
+		end;
+	OnTimer580000:
+		mapannounce "porsmash3","Twenty seconds remaining.",1;
+		end;
+	OnTimer590000:
+		mapannounce "porsmash3","Ten seconds remaining.",1;
+		end;
+	OnTimer595000:
+		mapannounce "porsmash3","Five!",1;
+		end;
+	OnTimer596000:
+		mapannounce "porsmash3","Four!",1;
+		end;
+	OnTimer597000:
+		mapannounce "porsmash3","Three!!",1;
+		end;
+	OnTimer598000:
+		mapannounce "porsmash3","Two!!",1;
+		end;
+	OnTimer599000:
+		mapannounce "porsmash3","One!!!",1;
+		end;
+	OnTimer600000:
+		mapannounce "porsmash3","Ten minutes have elapsed and the game is over, the room will be able to start another game in 5 minutes.  You will be returned to the station automatically in two minutes.",1;
+		killmonsterall "porsmash3";
+		set $@PSR3Ready,1;
+		setnpctimer 0;
+		end;
+	L_ResetPC:
+		set $@PSR3On,0;
+		set $@PSR3Title$,"- Room in Cooldown";
+		mapannounce "porsmash3","Thank you for playing.",1;
+		areawarp "porsmash3",1,1,400,400,"pvp_m_room",51,38;
+		end;
+	L_Reset:
+		set $@PSR3Ready,0;
+		set $@PSR3Title$,"";
+		StopNPCTimer "Room 3 Control";
+		setnpctimer 0;
+		mapannounce "porsmash3","This room is now ready to start a game. ",1;
+		end;
+	L_EndGameAnn:
+		mapannounce "porsmash3","The game is over, please redeem your earned points by talking to the Room Controller.",1;
+		end;
+	L_FSpawn:
+		if ($@PSR3REP >= (2*getmapusers("porsmash3"))) goto L_FSpawnEnd;
+		set $@PSR3SP,rand(1,20);
+		if ($@PSR3SP == 19 || $@PSR3SP == 20) areamonster "porsmash3",109,91,122,104,"Red",2600,1,1,1,"Room 3 Control::OnMyMobDead1";
+		if ($@PSR3SP == 17 || $@PSR3SP == 18) areamonster "porsmash3",109,91,122,104,"Blue",2597,1,1,1,"Room 3 Control::OnMyMobDead4";
+		if ($@PSR3SP >= 13 && $@PSR3SP <= 16) areamonster "porsmash3",109,91,122,104,"Green",2599,1,1,1,"Room 3 Control::OnMyMobDead3";
+		if ($@PSR3SP >= 1 && $@PSR3SP <= 12) areamonster "porsmash3",109,91,122,104,"Yellow",2598,1,1,1,"Room 3 Control::OnMyMobDead2";
+		set $@PSR3REP,$@PSR3REP + 1;
+		set $@PSR3SP,0; // safeguard
+		goto L_FSpawn;
+	L_FSpawnEnd:
+		set $@PSR3SP,0;
+		set $@PSR3REP,0;
+		npctalk "-";
+		npctalk "--";
+		npctalk "---";
+		npctalk "----";
+		npctalk "-----";
+		npctalk "You have 10 Minutes!  First person to 250 points wins a bonus!";
+		end;
+	OnMyMobDead1:
+		set @PSpt,@PSpt - 5;
+		callsub sF_Spawn;
+		end;
+	OnMyMobDead2:
+		set @PSpt,@PSpt + 1;
+		callsub sF_Spawn;
+		end;
+	OnMyMobDead3:
+		set @PSpt,@PSpt + 3;
+		callsub sF_Spawn;
+		end;
+	OnMyMobDead4:
+		set @PSpt,@PSpt + 5;
+		callsub sF_Spawn;
+		end;
+	OnMyMobDead5:
+		set @PSpt,@PSpt + 25;
+		callsub sF_Spawn;
+		end;
+	OnMyMobDead6:
+		set @PSpt,@PSpt - 25;
+		set @PSKill,@PSKill - 1;
+		callsub sF_Spawn;
+		end;
+	sF_Spawn:
+		set @PSKill,@PSKill + 1;
+		if (@PSpt < 0) set @PSpt,0;
+		if (@PSpt > 250) set @PSpt,250;
+		dispbottom "[Points : "+@PSpt+"/250]";
+		if (@PSpt == 250) goto L_Winner;
+	L_Respawn:
+		set $@PSR3SP,rand(1,100);
+		set $@PSR3SP2,rand(1,40);
+		if ($@PSR3SP >= 97 && $@PSR3SP <= 100) areamonster "porsmash3",109,91,122,104,"Fly",2588,1,1,1,"Room 3 Control::OnMyMobDead6";
+		if ($@PSR3SP >= 95 && $@PSR3SP <= 96) areamonster "porsmash3",109,91,122,104,"Jumbo",2596,1,1,1,"Room 3 Control::OnMyMobDead5";
+		if ($@PSR3SP >= 76 && $@PSR3SP <= 94) areamonster "porsmash3",109,91,122,104,"Red",2600,1,1,1,"Room 3 Control::OnMyMobDead1";
+		if ($@PSR3SP >= 70 && $@PSR3SP <= 75) areamonster "porsmash3",109,91,122,104,"Blue",2597,1,1,1,"Room 3 Control::OnMyMobDead4";
+		if ($@PSR3SP >= 36 && $@PSR3SP <= 69) areamonster "porsmash3",109,91,122,104,"Green",2599,1,1,1,"Room 3 Control::OnMyMobDead3";
+		if ($@PSR3SP >= 1 && $@PSR3SP <= 35) areamonster "porsmash3",109,91,122,104,"Yellow",2598,1,1,1,"Room 3 Control::OnMyMobDead2";
+		if ($@PSR3SP2 == 40) goto L_Respawn;
+		set $@PSR3SP,0;
+		set $@PSR3SP2,0;
+		end;
+	L_Winner:
+		killmonsterall "porsmash3";
+		setnpctimer 0;
+		set $@PSR3Ready,1;
+		mapannounce "porsmash3",strcharinfo(0) + " has reached 250 points and won the game!  Congratulations!",1;
+		dispbottom "Congratulations "+strcharinfo(0)+"!! You have been awarded "+(5*getmapusers("porsmash3"))+" extra points, and 500 zeny!";
+		set @PSpt,@PSpt + (5*getmapusers("porsmash3"));
+		set Zeny,Zeny + 500;
+		end;
+}

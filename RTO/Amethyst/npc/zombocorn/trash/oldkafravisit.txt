@@ -1,0 +1,375 @@
+// this is all junk!
+
+//These are OnTouch warp portal scripts for tagging the character with a visitation variable.
+//The kafra use these variables to allow or disallow a player access to a town.
+//Al de Baran ---------------
+//Did the towns with OnMapLoadEvent, Need someone to go and do the dungeons then remove all the on touch portals.
+aldebaran.gat,139,34,1	script	OnTouchVALDE1	139,5,5{
+		if (vi1 == 1) goto sM_Done;
+			set vi1,1;
+			end;
+		sM_Done:
+		end;
+}
+
+aldebaran.gat,140,244,1	script	OnTouchVALDE2	139,4,4{
+		if (vi1 == 1) goto sM_Done;
+			set vi1,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Alberta -------------------
+alberta.gat,15,234,1	script	OnTouchVALBE	139,5,5{
+		if (vi2 == 1) goto sM_Done;
+			set vi2,1;
+			end;
+		sM_Done:
+		end;
+}
+//One located inside izlude.txt
+//Two located inside comodo.txt
+//---------------------------
+
+//Amatsu --------------------
+//Located inside amatsu.txt
+//---------------------------
+
+//Comodo --------------------
+comodo.gat,332,175,1	script	OnTouchVCOMO	139,5,5{
+		if (vi4 == 1) goto sM_Done;
+			set vi4,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Geffen --------------------
+geffen.gat,217,119,1	script	OnTouchVGEFF	139,5,5{
+		if (vi5 == 1) goto sM_Done;
+			set vi5,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Gonryun -------------------
+gonryun.gat,161,8,1	script	OnTouchVGONR	139,5,5{
+		if (vi6 == 1) goto sM_Done;
+			set vi6,1;
+			end;
+		sM_Done:
+		end;
+}
+
+//---------------------------
+
+//Izlude --------------------
+izlude.gat,30,78,1	script	OnTouchVIZLU	139,7,7{
+		if (vi7 == 1) goto sM_Done;
+			set vi7,1;
+			end;
+		sM_Done:
+		end;
+}
+//Two located inside comodo.txt
+//One located inside alberta.txt
+//---------------------------
+
+//Jawaii---------------------
+//One located inside Jawaii.txt
+//One located inside comodo.txt
+//---------------------------
+
+//Juno-----------------------
+juno.gat,158,15,1	script	OnTouchVJUNO	139,4,4{
+		if (vi9 == 1) goto sM_Done;
+			set vi9,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Louyang--------------------
+//Located inside louyang.txt
+//---------------------------
+
+//Lutie----------------------
+xmas.gat,150,41,1	script	OnTouchVLUTI	139,4,4{
+		if (vi11 == 1) goto sM_Done;
+			set vi11,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Morroc---------------------
+morocc.gat,302,207,1	script	OnTouchVMORR1	139,5,5{
+		if (vi12 == 1) goto sM_Done;
+			set vi12,1;
+			end;
+		sM_Done:
+		end;
+}
+morocc.gat,160,297,1	script	OnTouchVMORR2	139,5,5{
+		if (vi12 == 1) goto sM_Done;
+			set vi12,1;
+			end;
+		sM_Done:
+		end;
+}
+morocc.gat,24,164,1	script	OnTouchVMORR3	139,5,5{
+		if (vi12 == 1) goto sM_Done;
+			set vi12,1;
+			end;
+		sM_Done:
+		end;
+}
+morocc.gat,160,17,1	script	OnTouchVMORR4	139,5,5{
+		if (vi12 == 1) goto sM_Done;
+			set vi12,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Niflheim-------------------
+niflheim.gat,18,151,1	script	OnTouchVNIFL	139,5,5{
+		if (vi13 == 1) goto sM_Done;
+			set vi13,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Payon----------------------
+payon.gat,228,327,1	script	OnTouchVPAYO1	139,6,6{
+		if (vi14 == 1) goto sM_Done;
+			set vi14,1;
+			end;
+		sM_Done:
+		end;
+}
+payon.gat,122,27,1	script	OnTouchVPAYO1	139,6,6{
+		if (vi14 == 1) goto sM_Done;
+			set vi14,1;
+			end;
+		sM_Done:
+		end;
+}
+payon.gat,16,142,1	script	OnTouchVPAYO2	139,6,6{
+		if (vi14 == 1) goto sM_Done;
+			set vi14,1;
+			end;
+		sM_Done:
+		end;
+}
+payon.gat,267,90,1	script	OnTouchVPAYO3	139,5,5{
+		if (vi14 == 1) goto sM_Done;
+			set vi14,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Prontera-------------------
+prontera.gat,156,22,1	script	OnTouchVPRON1	139,6,6{
+		if (vi15 == 1) goto sM_Done;
+			set vi15,1;
+			end;
+		sM_Done:
+		end;
+}
+prontera.gat,289,203,1	script	OnTouchVPRON2	139,6,6{
+		if (vi15 == 1) goto sM_Done;
+			set vi15,1;
+			end;
+		sM_Done:
+		end;
+}
+prontera.gat,22,203,1	script	OnTouchVPRON3	139,6,6{
+		if (vi15 == 1) goto sM_Done;
+			set vi15,1;
+			end;
+		sM_Done:
+		end;
+}
+prt_castle.gat,102,181,1	script	OnTouchVPRON4	139,5,5{
+		if (vi15 == 1) goto sM_Done;
+			set vi15,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Umbala---------------------
+umbala.gat,129,78,1	script	OnTouchVUMBA	139,4,4{
+		if (vi16 == 1) goto sM_Done;
+			set vi16,1;
+			end;
+		sM_Done:
+		end;
+}
+//Lighthalzen
+lighthalzen.gat,214,329,1	script	OnTouchVLHZ	139,4,4{
+	if (vi32 != 1)
+		set vi32,1;
+	end;
+}
+//---------------------------
+
+//Treasure Island------------
+//Located inside alberta.txt
+//---------------------------
+
+//anthell--------------------
+anthell01.gat,35,262,1	script	OnTouchVANTH	139,3,3{
+		if (vi18 == 1) goto sM_Done;
+			set vi18,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Byalan Island--------------
+//Located inside izlude.txt
+//---------------------------
+
+//Coal Mine------------------
+mjolnir_02.gat,79,365,1	script	OnTouchVCOAL	139,5,5{
+		if (vi20 == 1) goto sM_Done;
+			set vi20,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Pharos Lighthouse----------
+cmd_fild07.gat,263,197,1	script	OnTouchVPHAR1	139,5,5{
+		if (vi21 == 1) goto sM_Done;
+			set vi21,1;
+			end;
+		sM_Done:
+		end;
+}
+cmd_fild07.gat,177,207,1	script	OnTouchVPHAR2	139,5,5{
+		if (vi21 == 1) goto sM_Done;
+			set vi21,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Culvert Sewers-------------
+//Located inside Prontera.txt
+//---------------------------
+
+//Glast Heim-----------------
+glast_01.gat,377,304,1	script	OnTouchVGLAS	139,5,5{
+		if (vi23 == 1) goto sM_Done;
+			set vi23,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Louyang Dungeon------------
+lou_dun02.gat,38,208,1	script	OnTouchVLOUD	139,5,5{
+		if (vi24 == 1) goto sM_Done;
+			set vi24,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Magma Cavern---------------
+yuno_fild03.gat,32,139,1	script	OnTouchVMAGM	139,5,5{
+		if (vi25 == 1) goto sM_Done;
+			set vi25,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Orc Camp-------------------
+gef_fild10.gat,370,56,1	script	OnTouchVORCC1	139,5,5{
+		if (vi26 == 1) goto sM_Done;
+			set vi26,1;
+			end;
+		sM_Done:
+		end;
+}
+gef_fild10.gat,256,371,1	script	OnTouchVORCC2	139,5,5{
+		if (vi26 == 1) goto sM_Done;
+			set vi26,1;
+			end;
+		sM_Done:
+		end;
+}
+gef_fild10.gat,180,360,1	script	OnTouchVORCC3	139,8,8{
+		if (vi26 == 1) goto sM_Done;
+			set vi26,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Payon Dungeon--------------
+pay_dun00.gat,21,184,1	script	OnTouchVPAYD	139,5,5{
+		if (vi27 == 1) goto sM_Done;
+			set vi27,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Pyramids-------------------
+moc_ruins.gat,60,161,1	script	OnTouchVPYRA	139,5,5{
+		if (vi28 == 1) goto sM_Done;
+			set vi28,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Turtle Island--------------
+//Located inside alberta.txt
+//---------------------------
+
+//Geffenia-------------------
+gefenia01.gat,250,85,1	script	OnTouchVGEFD	139,5,5{
+		if (vi30 == 1) goto sM_Done;
+			set vi30,1;
+			end;
+		sM_Done:
+		end;
+}
+//---------------------------
+
+//Labyrinth Forest-----------
+prt_maze01.gat,20,193,1	script	OnTouchVLABR	139,6,6{
+		if (vi31 == 1) goto sM_Done;
+			set vi31,1;
+			end;
+		sM_Done:
+		end;
+}

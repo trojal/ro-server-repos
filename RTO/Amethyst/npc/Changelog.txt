@@ -1,0 +1,51 @@
+'RAGNAROK ONLINE : TWISTED' NPC FOLDER CHANGELOG ---------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Important Reminders_________________________________________________________________________________________________________________________________
+
+	* No further updates to this folder are to be made from eAthena releases.
+
+	* All content that is in here must be placed manually, in order to ensure stability and compatibility.
+
+	* Obsolete content is to be removed, and placed into the /_archive/ folder.
+	
+	* Do not load any scripts from the /_archive/ folder. If it is going to be used then put it in the appropriate folder.
+
+	* DO NOT EDIT any existing changelog entries.
+
+Changelog Format Guide______________________________________________________________________________________________________________________________
+
+	../../..	<- start new entries at the top!
+
+	mm/dd/yy	folder/filename.txt	{* means everything in this folder}
+		- what was changed in the file [your name]
+		* comments
+
+== Please ====================== Please ====================== Please ====================== Please ====================== Please ==================
+============ Read ======================== Read ======================== Read ======================== Read ======================== Read ==========
+==================== Above ======================= Above ======================= Above ======================= Above ======================= Above =
+
+	../../..
+	
+	12/02/07	/npc/zombocorn/
+		- Made necessary changes to lightsout script.
+		* Mainly fixed up AdminCP so it works right.
+		- Finished Mob Spawn scripts.
+
+	11/26/07	/npc/zombocorn/
+		- Changed the words "Zombocorn" to "Ragnarok Twisted" throught several scripts. [Nexon]
+		- Changed Conductor in the realms.txt to display something extra which I think needs to be said. [Nexon]
+		
+	11/25/07	/npc/*
+		- Updated most scripts to fully function with the new setnpcdisplay script command. [Silent]
+		* setnpcdisplay is the new fakenpcname
+		
+	10/16/07	/npc/jobs/*
+		- Re-Updated entire job quest collection, and installed a couple 3rd job class quest npcs. [dubby]
+
+	10/06/07	/npc/jobs/2-1/*	/npc/jobs/2-2/*
+		- Updated 2nd job change quests to accomidate new job table.  3rd job (2nd trans) arent setup right now though. [dubby]
+
+	10/05/07	/npc/*
+		- Updated everything, created our changelog [dubby]
+		* npc folder changes go here, not in svn changelog

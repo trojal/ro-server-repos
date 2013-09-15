@@ -1,0 +1,126 @@
+//========================================================================================
+// lhz_dun04 - Bio-life Labs 4F
+//========================================================================================
+
+lhz_dun04,140,235,116,30	monster	Blaze Fury	2005,4,180000,120000,0
+lhz_dun04,140,235,116,30	monster	Nicola Marie	2004,4,180000,120000,0
+lhz_dun04,140,235,116,30	monster	Kirol Ria	2006,4,180000,120000,0
+lhz_dun04,140,235,116,30	monster	Kozan Ichikyo	2000,4,180000,120000,0
+lhz_dun04,140,235,116,30	monster	Balan Azeni	2003,4,180000,120000,0
+lhz_dun04,140,235,116,30	monster	Jiang Zejia	2001,4,180000,120000,0
+
+lhz_dun04,40,214,16,16	monster	Blaze Fury	2005,1,120000,60000,0
+lhz_dun04,40,214,16,16	monster	Nicola Marie	2004,1,120000,60000,0
+lhz_dun04,40,214,16,16	monster	Kirol Ria	2006,1,120000,60000,0
+lhz_dun04,40,214,16,16	monster	Kozan Ichikyo	2000,1,120000,60000,0
+lhz_dun04,40,214,16,16	monster	Balan Azeni	2003,1,120000,60000,0
+lhz_dun04,40,214,16,16	monster	Jiang Zejia	2001,1,120000,60000,0
+
+lhz_dun04,240,213,16,17	monster	Blaze Fury	2005,1,120000,60000,0
+lhz_dun04,240,213,16,17	monster	Nicola Marie	2004,1,120000,60000,0
+lhz_dun04,240,213,16,17	monster	Kirol Ria	2006,1,120000,60000,0
+lhz_dun04,240,213,16,17	monster	Kozan Ichikyo	2000,1,120000,60000,0
+lhz_dun04,240,213,16,17	monster	Balan Azeni	2003,1,120000,60000,0
+lhz_dun04,240,213,16,17	monster	Jiang Zejia	2001,1,120000,60000,0
+
+lhz_dun04,140,65,108,38	monster	Blaze Fury	2005,7,120000,160000,0
+lhz_dun04,140,65,108,38	monster	Nicola Marie	2004,7,120000,160000,0
+lhz_dun04,140,65,108,38	monster	Kirol Ria	2006,7,120000,160000,0
+lhz_dun04,140,65,108,38	monster	Kozan Ichikyo	2000,7,120000,160000,0
+lhz_dun04,140,65,108,38	monster	Balan Azeni	2003,7,120000,60000,0
+lhz_dun04,140,65,108,38	monster	Jiang Zejia	2001,7,120000,60000,0
+
+lhz_dun04,140,31,8,15	monster	Blaze Fury	2005,1,600000,540000,0
+lhz_dun04,140,31,8,15	monster	Nicola Marie	2004,1,540000,480000,0
+lhz_dun04,140,31,8,15	monster	Kirol Ria	2006,1,600000,540000,0
+lhz_dun04,140,31,8,15	monster	Kozan Ichikyo	2000,1,540000,480000,0
+lhz_dun04,140,31,8,15	monster	Balan Azeni	2003,1,600000,540000,0
+lhz_dun04,140,31,8,15	monster	Jiang Zejia	2001,1,540000,480000,0
+
+lhz_dun04,40,66,16,16	monster	Blaze Fury	2005,1,120000,60000,0
+lhz_dun04,40,66,16,16	monster	Nicola Marie	2004,1,120000,60000,0
+lhz_dun04,40,66,16,16	monster	Kirol Ria	2006,1,120000,60000,0
+lhz_dun04,40,66,16,16	monster	Kozan Ichikyo	2000,1,120000,60000,0
+lhz_dun04,40,66,16,16	monster	Rosa Ashwood	2002,1,120000,60000,0
+lhz_dun04,40,66,16,16	monster	Jiang Zejia	2001,1,120000,60000,0
+
+lhz_dun04,240,66,16,16	monster	Blaze Fury	2005,1,120000,60000,0
+lhz_dun04,240,66,16,16	monster	Nicola Marie	2004,1,120000,60000,0
+lhz_dun04,240,66,16,16	monster	Kirol Ria	2006,1,120000,60000,0
+lhz_dun04,240,66,16,16	monster	Kozan Ichikyo	2000,1,120000,60000,0
+lhz_dun04,240,66,16,16	monster	Rosa Ashwood	2002,1,120000,60000,0
+lhz_dun04,240,66,16,16	monster	Jiang Zejia	2001,1,120000,60000,0
+
+lhz_dun04,54,131,35,39	monster	Blaze Fury	2005,5,180000,120000,0
+lhz_dun04,54,131,35,39	monster	Nicola Marie	2004,5,180000,120000,0
+lhz_dun04,54,131,35,39	monster	Kirol Ria	2006,5,180000,120000,0
+lhz_dun04,54,131,35,39	monster	Kozan Ichikyo	2000,5,180000,120000,0
+lhz_dun04,54,131,35,39	monster	Rosa Ashwood	2002,5,120000,60000,0
+lhz_dun04,54,131,35,39	monster	Jiang Zejia	2001,5,120000,60000,0
+
+lhz_dun04,228,137,35,39	monster	Blaze Fury	2005,5,180000,120000,0
+lhz_dun04,228,137,35,39	monster	Nicola Marie	2004,5,180000,120000,0
+lhz_dun04,228,137,35,39	monster	Kirol Ria	2006,5,180000,120000,0
+lhz_dun04,228,137,35,39	monster	Kozan Ichikyo	2000,5,180000,120000,0
+lhz_dun04,228,137,35,39	monster	Rosa Ashwood	2002,5,120000,60000,0
+lhz_dun04,228,137,35,39	monster	Jiang Zejia	2001,5,120000,60000,0
+
+lhz_dun04,138,138,36,34	monster	Blaze Fury	2005,3,120000,60000,0
+lhz_dun04,138,138,36,34	monster	Nicola Marie	2004,3,120000,60000,0
+lhz_dun04,138,138,36,34	monster	Kirol Ria	2006,3,120000,60000,0
+lhz_dun04,138,138,36,34	monster	Kozan Ichikyo	2000,3,180000,120000,0
+lhz_dun04,138,138,36,34	monster	Rosa Ashwood	2002,4,0,0,0
+lhz_dun04,138,138,36,34	monster	Jiang Zejia	2001,4,0,0,0
+
+lhz_dun04,140,192,66,21	monster	Blaze Fury	2005,7,120000,60000,0
+lhz_dun04,140,192,66,21	monster	Nicola Marie	2004,7,180000,120000,0
+lhz_dun04,140,192,66,21	monster	Kirol Ria	2006,7,120000,60000,0
+lhz_dun04,140,192,66,21	monster	Kozan Ichikyo	2000,7,180000,120000,0
+lhz_dun04,140,192,66,21	monster	Rosa Ashwood	2002,7,120000,60000,0
+lhz_dun04,140,192,66,21	monster	Jiang Zejia	2001,7,120000,60000,0
+
+lhz_dun04,89,164,4,8	monster	Jiang Zejia	2001,1,120000,60000,0
+lhz_dun04,89,164,4,8	monster	Balan Azeni	2003,3,120000,60000,0
+lhz_dun04,107,167,4,5	monster	Jiang Zejia	2001,1,120000,60000,0
+lhz_dun04,107,167,4,5	monster	Rosa Ashwood	2002,3,120000,60000,0
+lhz_dun04,171,167,4,5	monster	Jiang Zejia	2001,1,120000,60000,0
+lhz_dun04,171,167,4,5	monster	Balan Azeni	2003,3,120000,60000,0
+lhz_dun04,189,164,4,8	monster	Jiang Zejia	2001,1,120000,60000,0
+lhz_dun04,189,164,4,8	monster	Rosa Ashwood	2002,3,120000,60000,0
+lhz_dun04,89,113,4,9	monster	Jiang Zejia	2001,1,120000,60000,0
+lhz_dun04,89,113,4,9	monster	Balan Azeni	2003,3,120000,60000,0
+lhz_dun04,107,109,4,5	monster	Jiang Zejia	2001,1,120000,60000,0
+lhz_dun04,107,109,4,5	monster	Rosa Ashwood	2002,3,120000,60000,0
+lhz_dun04,171,109,4,5	monster	Jiang Zejia	2001,1,120000,60000,0
+lhz_dun04,171,109,4,5	monster	Balan Azeni	2003,3,120000,60000,0
+lhz_dun04,189,113,4,9	monster	Jiang Zejia	2001,1,120000,60000,0
+lhz_dun04,189,113,4,9	monster	Rosa Ashwood	2002,3,120000,60000,0
+
+lhz_dun04,96,164,13,8	monster	Blaze Fury	2005,2,300000,120000,0
+lhz_dun04,96,164,13,8	monster	Nicola Marie	2004,2,300000,120000,0
+lhz_dun04,96,164,13,8	monster	Kozan Ichikyo	2000,2,300000,120000,0
+lhz_dun04,96,164,13,8	monster	Balan Azeni	2003,5,0,0,0
+lhz_dun04,96,164,13,8	monster	Jiang Zejia	2001,3,0,0,0
+lhz_dun04,180,164,13,8	monster	Blaze Fury	2005,2,300000,120000,0
+lhz_dun04,180,164,13,8	monster	Kirol Ria	2006,2,300000,120000,0
+lhz_dun04,180,164,13,8	monster	Kozan Ichikyo	2000,2,300000,120000,0
+lhz_dun04,180,164,13,8	monster	Rosa Ashwood	2002,5,0,0,0
+lhz_dun04,180,164,13,8	monster	Jiang Zejia	2001,3,0,0,0
+lhz_dun04,98,113,13,9	monster	Blaze Fury	2005,2,300000,120000,0
+lhz_dun04,98,113,13,9	monster	Nicola Marie	2004,2,300000,120000,0
+lhz_dun04,98,113,13,9	monster	Kirol Ria	2006,2,300000,120000,0
+lhz_dun04,98,113,13,9	monster	Balan Azeni	2003,5,0,0,0
+lhz_dun04,98,113,13,9	monster	Jiang Zejia	2001,3,0,0,0
+lhz_dun04,180,113,13,9	monster	Nicola Marie	2004,2,300000,120000,0
+lhz_dun04,180,113,13,9	monster	Kirol Ria	2006,2,300000,120000,0
+lhz_dun04,180,113,13,9	monster	Kozan Ichikyo	2000,2,300000,120000,0
+lhz_dun04,180,113,13,9	monster	Rosa Ashwood	2002,5,0,0,0
+lhz_dun04,180,113,13,9	monster	Jiang Zejia	2001,3,0,0,0
+
+lhz_dun04,240,203,3,3	monster	Champion Kozan	2007,1,2700000,2400000,1
+lhz_dun04,0,0,0,0	monster	Scholar Jiang	2008,1,3000000,2700000,1
+lhz_dun04,52,65,1,1	monster	Gypsy Rosa	2009,1,2580000,2340000,1
+lhz_dun04,40,202,1,1	monster	Minstrel Balan	2010,1,2700000,2500000,1
+lhz_dun04,140,41,2,2	monster	Stalker Nicola	2011,1,3300000,3000000,1
+lhz_dun04,139,211,2,2	monster	Paladin Blaze	2012,1,2580000,2460000,1
+lhz_dun04,226,63,1,1	monster	Creator Kirol	2013,1,2580000,2460000,1

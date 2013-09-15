@@ -1,0 +1,345 @@
+//===== eAthena Script =======================================
+//= War of Emperium - WoE Auto-Start
+//===== By: ==================================================
+//= kalen (1.0)
+//= 1.1 by Akaru and ho|yAnge|
+//===== Current Version: =====================================
+//= 1.9
+//===== Compatible With: =====================================
+//= eAthena SVN; RO Episode 4+
+//===== Description: =========================================
+//= Auto Start for War of Emperium
+//=============================================
+//= gettime(3): Gets hour (24 hour time)
+//= gettime(4): Gets day of week 1=Monday, 2=Tuesday,
+//= 3=Wednesday, 4=Thursday, etc.
+//===== Additional Comments: =================================
+//= v1.1a changed OnInit to OnAgitInit.[kobra_k88]
+//= v1.2 added gettime checks. removed $AgitStarted var.[kobra_k88]
+//= v1.3 Moved treasure spawn time here.[kobra_k88]
+//= v1.3a Implemented Shadowlady's idea to allow for different
+//= start/stop times on different days.[kobra_k88]
+//= 1.4 Fixed treasure chests spawn! We had to unroll some loops
+//= Now they appear in castles from 00:01 to 00:24. [Lupus]
+//= 1.5 Fixed WOE end messages on non-WOE days, by Avaj
+//= 1.5a missing tabs [KarLaeda]
+//= 1.6 Corrected multiple "WoE has begun" announces [ultramage]
+//= 1.7 Commented out the WoE start and end announces. [L0ne_W0lf]
+//= 1.8 Castle owners displayed when WoE starts and finished. [L0ne_W0lf]
+//= 1.8a Will now report unoccupied castles at start/end. [L0ne_W0lf]
+//= 1.8b Whoops. Fixed a mistake :D [L0ne_W0lf]
+//= 1.9 Rearranged the time-checks so they no longer use goto. [L0ne_W0lf]
+//=	Removed treasure spawning function calls. (No longer needed)
+//============================================================
+//| To know how to set up WoE times, go to doc\woe_time_explanation.txt
+// WoE Start/Stop times
+//======================================
+-	script	Agit_Event	-1,{
+	end;
+
+OnClock0000:	//start time for Tues(2), Thurs(4)
+OnClock0100:	//end time for Tues(2), Thurs(4)
+OnClock1100:	//start time for Sat(6)
+OnClock1200:	//end time for Sat(6)
+
+OnAgitInit:
+	// starting time checks
+	if((gettime(4)==0) && (gettime(3)>=00 && gettime(3)<01) ||
+	   (gettime(4)==3) && (gettime(3)>=00 && gettime(3)<01) ||
+	   (gettime(4)==1) && (gettime(3)>=11 && gettime(3)<12)) {
+		if (!agitcheck()) {
+			AgitStart;
+			callsub S_DisplayOwners;
+		}
+		end;
+	}
+
+	// end time checks
+	if ((gettime(4)==0) && (gettime(3)==01) ||
+	    (gettime(4)==3) && (gettime(3)==01) ||
+	    (gettime(4)==1) && (gettime(3)==12)) { 
+		if (agitcheck()) {
+			AgitEnd;
+			callsub S_DisplayOwners;
+		}
+		end;
+	}
+	end;
+
+S_DisplayOwners:
+	setarray .@maps$[0],"aldeg_cas01","aldeg_cas02","aldeg_cas03","aldeg_cas04","aldeg_cas05";
+	setarray .@maps$[5],"gefg_cas01","gefg_cas02","gefg_cas03","gefg_cas04","gefg_cas05";
+	setarray .@maps$[10],"payg_cas01","payg_cas02","payg_cas03","payg_cas04","payg_cas05";
+	setarray .@maps$[15],"prtg_cas01","prtg_cas02","prtg_cas03","prtg_cas04","prtg_cas05";
+	for( set .@i, 0; .@i <= 19; set .@i, .@i+1 ) {
+		if (GetCastleData(.@maps$[.@i],1)) {
+			Announce "The [" + GetCastleName(.@maps$[.@i]) + "] castle has been conquered by the [" + GetGuildName(GetCastleData(.@maps$[.@i],1)) + "] guild.",bc_all;
+		}
+		else {
+			Announce "The [" + GetCastleName(.@maps$[.@i]) + "] castle is currently unoccupied.",bc_all;
+		}		
+	}
+	end;
+}
+
+-	script	Agit_Portals	-1,{
+	end;
+
+OnClock0000:	//start time for Tues(2)
+OnClock0100:	//end time for Tues(2)
+OnClock1100:	//start time for Mon(Ocean)(1)
+OnClock1200:	//end time for Mon(Ocean)(1)
+
+//Saturday
+if((gettime(4)==0) && (gettime(3)>=00 && gettime(3)<01)) goto sat;
+if((gettime(4)==0) && (gettime(3)==01)) goto sat_end;
+
+//Tuesday
+if((gettime(4)==3) && (gettime(3)>=00 && gettime(3)<01)) goto tue;
+if((gettime(4)==3) && (gettime(3)==01)) goto tue_end;
+
+//Monday
+if((gettime(4)==1) && (gettime(3)>=11 && gettime(3)<12)) goto mon;
+if((gettime(4)==1) && (gettime(3)==12)) goto mon_end;
+
+sat_end:
+//    enablenpc "payg01";
+    enablenpc "payg02";
+    enablenpc "payg03";
+    enablenpc "payg04";
+    enablenpc "payg05";
+//    enablenpc "payg01-1";
+    enablenpc "payg02-1";
+    enablenpc "payg03-1";
+    enablenpc "payg04-1";
+    enablenpc "payg05-1";
+    enablenpc "prtg01"; // NORMAL
+    enablenpc "prtg001";
+    enablenpc "prtg002";
+//    enablenpc "prtg02-1";
+    enablenpc "prtg03-1";
+    enablenpc "prtg04-1";
+    enablenpc "prtg05-1";
+    enablenpc "aldg01";
+    enablenpc "aldg01-1";
+    enablenpc "aldg02";
+    enablenpc "aldg02-1";
+    enablenpc "aldg03";
+    enablenpc "aldg03-1";
+    enablenpc "aldg04";
+    enablenpc "aldg04-1";
+    enablenpc "aldg05";
+    enablenpc "aldg05-1";
+    enablenpc "gefg05";
+    enablenpc "gefg06";
+    enablenpc "gefg01";
+    enablenpc "gefg08";
+    enablenpc "gefg02";
+    enablenpc "gefg09";
+    enablenpc "gefg09-1";
+    enablenpc "gefg03";
+    enablenpc "gefg04";
+    enablenpc "gefg07";
+end;
+
+sat:
+//    disablenpc "payg01";
+    disablenpc "payg02";
+    disablenpc "payg03";
+    disablenpc "payg04";
+    disablenpc "payg05";
+//    disablenpc "payg01-1";
+    disablenpc "payg02-1";
+    disablenpc "payg03-1";
+    disablenpc "payg04-1";
+    disablenpc "payg05-1";
+    disablenpc "prtg01"; // NORMAL
+    disablenpc "prtg001";
+    disablenpc "prtg002";
+//    disablenpc "prtg02-1";
+    disablenpc "prtg03-1";
+    disablenpc "prtg04-1";
+    disablenpc "prtg05-1";
+    disablenpc "aldg01";
+    disablenpc "aldg01-1";
+    disablenpc "aldg02";
+    disablenpc "aldg02-1";
+    disablenpc "aldg03";
+    disablenpc "aldg03-1";
+    disablenpc "aldg04";
+    disablenpc "aldg04-1";
+    disablenpc "aldg05";
+    disablenpc "aldg05-1";
+    disablenpc "gefg05";
+    disablenpc "gefg06";
+    disablenpc "gefg01";
+    disablenpc "gefg08";
+    disablenpc "gefg02";
+    disablenpc "gefg09";
+    disablenpc "gefg09-1";
+    disablenpc "gefg03";
+    disablenpc "gefg04";
+    disablenpc "gefg07";
+end;
+
+tue_end:
+    enablenpc "payg01";
+    enablenpc "payg02";
+    enablenpc "payg03";
+    enablenpc "payg04";
+    enablenpc "payg05";
+    enablenpc "payg01-1";
+    enablenpc "payg02-1";
+    enablenpc "payg03-1";
+    enablenpc "payg04-1";
+    enablenpc "payg05-1";
+//    enablenpc "prtg01";
+    enablenpc "prtg001";
+    enablenpc "prtg002";
+    enablenpc "prtg02-1";
+    enablenpc "prtg03-1";
+    enablenpc "prtg04-1";
+    enablenpc "prtg05-1";
+//    enablenpc "aldg01"; // NORMAL
+//    enablenpc "aldg01-1"; // NORMAL
+    enablenpc "aldg02";
+    enablenpc "aldg02-1";
+    enablenpc "aldg03";
+    enablenpc "aldg03-1";
+    enablenpc "aldg04";
+    enablenpc "aldg04-1";
+    enablenpc "aldg05";
+    enablenpc "aldg05-1";
+    enablenpc "gefg05";
+    enablenpc "gefg06";
+    enablenpc "gefg01";
+    enablenpc "gefg08";
+    enablenpc "gefg02";
+    enablenpc "gefg09";
+    enablenpc "gefg09-1";
+    enablenpc "gefg03";
+    enablenpc "gefg04";
+    enablenpc "gefg07";
+end;
+
+tue:
+    disablenpc "payg01";
+    disablenpc "payg02";
+    disablenpc "payg03";
+    disablenpc "payg04";
+    disablenpc "payg05";
+    disablenpc "payg01-1";
+    disablenpc "payg02-1";
+    disablenpc "payg03-1";
+    disablenpc "payg04-1";
+    disablenpc "payg05-1";
+//    disablenpc "prtg01";
+    disablenpc "prtg001";
+    disablenpc "prtg002";
+    disablenpc "prtg02-1";
+    disablenpc "prtg03-1";
+    disablenpc "prtg04-1";
+    disablenpc "prtg05-1";
+//    disablenpc "aldg01"; // NORMAL
+//    disablenpc "aldg01-1"; // NORMAL
+    disablenpc "aldg02";
+    disablenpc "aldg02-1";
+    disablenpc "aldg03";
+    disablenpc "aldg03-1";
+    disablenpc "aldg04";
+    disablenpc "aldg04-1";
+    disablenpc "aldg05";
+    disablenpc "aldg05-1";
+    disablenpc "gefg05";
+    disablenpc "gefg06";
+    disablenpc "gefg01";
+    disablenpc "gefg08";
+    disablenpc "gefg02";
+    disablenpc "gefg09";
+    disablenpc "gefg09-1";
+    disablenpc "gefg03";
+    disablenpc "gefg04";
+    disablenpc "gefg07";
+end;
+
+//------------- Monday ------------------\\
+mon_end:
+    enablenpc "payg01";
+    enablenpc "payg02";
+    enablenpc "payg03";
+    enablenpc "payg04";
+    enablenpc "payg05";
+    enablenpc "payg01-1";
+    enablenpc "payg02-1";
+    enablenpc "payg03-1";
+    enablenpc "payg04-1";
+    enablenpc "payg05-1";
+    enablenpc "prtg01"; // NORMAL
+    enablenpc "prtg001";
+    enablenpc "prtg002";
+    enablenpc "prtg02-1";
+    enablenpc "prtg03-1";
+    enablenpc "prtg04-1";
+    enablenpc "prtg05-1";
+    enablenpc "aldg01";
+    enablenpc "aldg01-1";
+    enablenpc "aldg02";
+    enablenpc "aldg02-1";
+    enablenpc "aldg03";
+    enablenpc "aldg03-1";
+    enablenpc "aldg04";
+    enablenpc "aldg04-1";
+    enablenpc "aldg05";
+    enablenpc "aldg05-1";
+    enablenpc "gefg05";
+    enablenpc "gefg06";
+//    enablenpc "gefg01";
+    enablenpc "gefg08";
+//    enablenpc "gefg02";
+    enablenpc "gefg09";
+    enablenpc "gefg09-1";
+    enablenpc "gefg03";
+    enablenpc "gefg04";
+    enablenpc "gefg07";
+end;
+
+mon:
+    disablenpc "payg01";
+    disablenpc "payg02";
+    disablenpc "payg03";
+    disablenpc "payg04";
+    disablenpc "payg05";
+    disablenpc "payg01-1";
+    disablenpc "payg02-1";
+    disablenpc "payg03-1";
+    disablenpc "payg04-1";
+    disablenpc "payg05-1";
+    disablenpc "prtg01"; // NORMAL
+    disablenpc "prtg001";
+    disablenpc "prtg002";
+    disablenpc "prtg02-1";
+    disablenpc "prtg03-1";
+    disablenpc "prtg04-1";
+    disablenpc "prtg05-1";
+    disablenpc "aldg01";
+    disablenpc "aldg01-1";
+    disablenpc "aldg02";
+    disablenpc "aldg02-1";
+    disablenpc "aldg03";
+    disablenpc "aldg03-1";
+    disablenpc "aldg04";
+    disablenpc "aldg04-1";
+    disablenpc "aldg05";
+    disablenpc "aldg05-1";
+    disablenpc "gefg05";
+    disablenpc "gefg06";
+//    disablenpc "gefg01";
+    disablenpc "gefg08";
+//    disablenpc "gefg02";
+    disablenpc "gefg09";
+    disablenpc "gefg09-1";
+    disablenpc "gefg03";
+    disablenpc "gefg04";
+    disablenpc "gefg07";
+end;
+}

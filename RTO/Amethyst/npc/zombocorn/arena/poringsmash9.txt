@@ -1,0 +1,469 @@
+//porsmash9 == guild_vs3
+porsmash9,45,86,5	script	Room 9 Control	770,{
+		if ($@PSR9Ready == 1) goto M_NotReady;
+	M_Menu:
+		if ($@PSR9On == 1) goto M_Menu2;
+		mes "[Room Controller]";
+		mes "Welcome to the 'Smash!' minigame!  This is an A Rank room.  Here, you will smash porings as fast as you can to gain points before the time runs out.";
+		next;
+		menu "Information and Rules",M_Info,"Start Game",-,"Leave Room",M_Exit;
+		if (getgmlevel() > 79) goto M_Start;
+		if (getmapusers("porsmash9") < 7) goto M_NotEnough;
+	M_Start:
+		next;
+		mes "[Room Controller]";
+		mes "Alright, the room will begin shortly!  The porings will appear in the center area of the room.";
+		close2;
+		set $@PSR9on,1;
+		goto L_Timer;
+	M_Menu2:
+		if ($@PSR9CD == 1) end;
+		mes "[Room Controller]";
+		mes "The game is in progress.  What would you like to do?";
+		mes " ";
+		mes " ";
+		set $@PSR9MNTM,(((getnpctimer(0,"Room 9 Control") / 2000) / 60) %60);
+		set $@PSR9SETM,((getnpctimer(0,"Room 9 Control") / 2000) % 60);
+		if ($@PSR9SETM == 0 ) goto M_NewMin1;
+		if ($@PSR9SETM >= 51 ) goto M_Addzero1;
+		mes "[Time remaining: " + (9-$@PSR9MNTM) + ":" + (60-$@PSR9SETM) + "]"; // Counts down, this is the base timer
+		goto M_Menu2a;
+	M_NewMin1:
+		mes "[Time remaining: " + (10-$@PSR9MNTM) + ":00]"; // Keeps the second from starting at 60
+		goto M_Menu2a;
+	M_Addzero1:
+		mes "[Time remaining: " + (9-$@PSR9MNTM) + ":0" + (60-$@PSR9SETM) + "]"; // Adds a 0 infront of 1-9
+		goto M_Menu2a;
+	M_Menu2a:
+		next;
+		menu "Cancel",-,"Information and Rules",M_Info,"Leave Room",M_Warpout;
+		close;
+	M_Info:
+		mes "[Room Controller]";
+		mes "This is a poring smashing minigame.  The rules are simple.  Smash as many as you can for points before the time runs out.  There must also be atleast seven people here to play the game.";
+		next;
+		mes "[Room Controller]";
+		mes "There are two ways to win.  The first way is to reach the point limit first!  By doing this, you'll get a big point bonus and the game will end!";
+		next;
+		mes "[Room Controller]";
+		mes "The second way is to just smash porings for points until the timer runs out.  When the timer runs out, the porings will vanish and you can redeem your points with me for Kafra Points.";
+		next;
+		mes "[Room Controller]";
+		mes "As you hopefully know, kafra points can be redeemed with the Kafra Representative here in the Arena Lobby, or with Kafra HQ in Al De Baran for splendid prizes!";
+		next;
+		mes "[Room Controller]";
+		mes "Here is a monster point value chart:";
+		mes "Red : -5 Points!";
+		mes "Yellow : +1 Point";
+		mes "Green : +3 Points";
+		mes "Blue : +5 Points";
+		mes "Jumbo : +25 Points!";
+		mes "Fly : -75 Points!!";
+		mes "Flytrap : +10 Points";
+		mes "White : +250 Points & Bonus!!";
+		next;
+		mes "[Room Controller]";
+		mes "Be careful about smashing the reds!  And definately don't kill the flies.  Also, in this room if Jumbo dies, all the Reds die and three random porings will spawn.  As well, if the Flytrap dies, all the Flies will die and one or two Reds will spawn.  Use them to your advantage!  If you kill the White poring, you get a whopping 250 points and a bonus!";
+		next;
+		mes "[Room Controller]";
+		mes "Don't forget though, we are keeping track of how many porings you have smashed!  Flies and Flytraps don't count as porings.";
+//		mes "Don't forget though, we are keeping track of how many porings you have smashed!  Flies and Flytraps don't count as porings.  If you stick around until the game ends, then you can redeem your kill count for zeny!";
+		next;
+		mes "[Room Controller]";
+		mes "If you want to leave the room, just talk to me and I can take you out.  I'll redeem your points for Kafra Points.";
+		next;
+		mes "[Room Controller]";
+		mes "If you don't want to see the,";
+		mes "Experienced Gained Base:0 (0.00%) Job:0 (0.00%)";
+		mes "message, then type @showexp to turn the message off.";
+		mes "Don't forget you can type @showexp again to turn the message back on.";
+		next;
+		mes "[Room Controller]";
+		mes "Also, if you die you forfeit all the points you've earned and return to the station.  So be careful!  Even though they are just porings...";
+		mes "You also forfeit your points if you close the game, or if the game closes itself.";
+		next;
+		goto M_Menu;
+	M_NotEnough:
+		mes "[Room Controller]";
+		mes "I'm sorry, but there needs to be atleast 7 people here for me to start the game.";
+		next;
+		goto M_Menu;
+	M_Wait:
+		mes "[Room Controller]";
+		mes "Alright.";
+		close;
+	M_Warpout:
+		mes "[Room Controller]";
+		mes "The game is in progress, are you sure you want to leave?";
+		next;
+		menu "No, I'll stay",M_Wait,"Yes.",-;
+		mes "[Room Controller]";
+		mes "Alright.... lets see how you did.";
+		if (@PSBonus == 0) mes " ";
+		mes "Total Points : "+@PSpt;
+		mes "Total Porings Killed : "+@PSKill;
+		if (@PSBonus > 0) mes "Total White Killed : "+@PSBonus+"!";
+		mes "Kafra Points Earned : "+((@PSpt/27)*(@PSBonus+1))+" KP";
+//		mes "Total Zeny Earned : None!";
+		next;
+		mes "[Room Controller]";
+		mes "Please enjoy your stay at the Arena.";
+		set RESRVPTS,RESRVPTS + ((@PSpt/27)*(@PSBonus+1));
+		dispbottom "[You have "+RESRVPTS+" Kafra Reserve Points]";
+		set @PSpt,0;
+		set @PSKill,0;
+		set @PSBonus,0;
+		close2;
+		warp "pvp_m_room", 51, 38;
+		end;
+	M_Exit:
+		if (@PSpt > 0) goto M_Cashin;
+		mes "[Room Controller]";
+		mes "Thank you and enjoy your stay in the Arena!";
+		set @PSpt,0;
+		set @PSKill,0;
+		set @PSBonus,0;
+		close2;
+		warp "pvp_m_room", 51, 38;
+		end;
+	M_NotReady:
+		mes "[Room Controller]";
+		mes "Hello "+strcharinfo(0)+", this room has been completed and is in a cooldown phase.  The room will be open again in a short while.";
+		mes " ";
+		set $@PSR9MNTM,(((getnpctimer(0,"Room 9 Control") / 2000) / 60) %60);
+		set $@PSR9SETM,((getnpctimer(0,"Room 9 Control") / 2000) % 60);
+		if ($@PSR9SETM == 0 ) goto M_NewMin2;
+		if ($@PSR9SETM >= 51 ) goto M_Addzero2;
+		mes "[Time remaining: " + (4-$@PSR9MNTM) + ":" + (60-$@PSR9SETM) + "]"; // Counts down, this is the base timer
+		goto M_NotReady2;
+	M_NewMin2:
+		mes "[Time remaining: " + (5-$@PSR9MNTM) + ":00]"; // Keeps the second from starting at 60
+		goto M_NotReady2;
+	M_Addzero2:
+		mes "[Time remaining: " + (4-$@PSR9MNTM) + ":0" + (60-$@PSR9SETM) + "]"; // Adds a 0 infront of 1-9
+		goto M_NotReady2;
+	M_NotReady2:
+		next;
+		if (@PSpt > 0) goto M_NotReady3;
+		menu "Wait in room.",M_Wait,"Leave Room",M_Exit;
+	M_NotReady3:
+		menu "Wait in room.",M_Wait,"Cash in Points",M_Cashin;
+	M_Cashin:
+		mes "[Room Controller]";
+		mes "Alright.... lets see how you did.";
+		if (@PSBonus == 0) mes " ";
+		mes "Total Points : "+@PSpt;
+		mes "Total Porings Killed : "+@PSKill;
+		if (@PSBonus > 0) mes "Total White Killed : "+@PSBonus+"!";
+		mes "Kafra Points Earned : "+((@PSpt/25)*(@PSBonus+1))+" KP";
+//		mes "Total Zeny Earned : "+(@PSKill/2*(@PSBonus+1)*(@PSBonus+1)*(@PSBonus+1)*(@PSBonus+1))+"z";
+		next;
+		mes "[Room Controller]";
+		mes "Thank you for playing.";
+		set RESRVPTS,RESRVPTS + ((@PSpt/25)*(@PSBonus+1));
+//		set Zeny,Zeny + (@PSKill/2*(@PSBonus+1)*(@PSBonus+1)*(@PSBonus+1)*(@PSBonus+1));
+		dispbottom "[You have "+RESRVPTS+" Kafra Reserve Points]";
+		set @PSpt,0;
+		set @PSKill,0;
+		set @PSBonus,0;
+		next;
+		mes "[Room Controller]";
+		mes "Do you wish to stay here and wait for the room to become available, or return to the station?";
+		next;
+		menu "Wait in room.",M_Wait,"Leave Room",M_Exit;
+	L_Timer:
+		set $@PSR9CD,1;
+		setnpctimer 0; //safeguard
+		StartNPCTimer "Room 9 Control";
+		set $@PSR9On,1;
+		set $@PSR9Title$,"- Game in Progress";
+		mapannounce "porsmash9",strcharinfo(0) + " has started the countdown!  You have a 10 minute time limit!",1;
+		set $@PSR9Count,1;
+		end;
+	OnTimer1000:
+		if ($@PSR9Count == 0) end;
+		mapannounce "porsmash9","[10]",1;
+		end;
+	OnTimer2000:
+		if ($@PSR9Count == 0) end;
+		mapannounce "porsmash9","[9]",1;
+		end;
+	OnTimer3000:
+		if ($@PSR9Count == 0) end;
+		mapannounce "porsmash9","[8]",1;
+		end;
+	OnTimer4000:
+		if ($@PSR9Count == 0) end;
+		mapannounce "porsmash9","[7]",1;
+		end;
+	OnTimer5000:
+		if ($@PSR9Ready == 1) goto L_EndGameAnn;
+		if ($@PSR9Count == 0) end;
+		mapannounce "porsmash9","[6]",1;
+		end;
+	OnTimer6000:
+		if ($@PSR9Count == 0) end;
+		mapannounce "porsmash9","[5]",1;
+		end;
+	OnTimer7000:
+		if ($@PSR9Count == 0) end;
+		mapannounce "porsmash9","[4]",1;
+		end;
+	OnTimer8000:
+		if ($@PSR9Count == 0) end;
+		mapannounce "porsmash9","[3]",1;
+		end;
+	OnTimer9000:
+		if ($@PSR9Count == 0) end;
+		mapannounce "porsmash9","[2]",1;
+		end;
+	OnTimer10000:
+		if ($@PSR9Count == 0) end;
+		mapannounce "porsmash9","[1]",1;
+		end;
+	OnTimer11000:
+		if ($@PSR9Count == 0) end;
+		emotion 27;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		mapannounce "porsmash9","[GO!]",1;
+		set $@PSR9CD,0;
+		set $@PSR9Count,0;
+		setnpctimer 0;
+		goto L_FSpawn;
+	OnTimer30000:
+		if ($@PSR9Ready == 0) end;
+		mapannounce "porsmash9","Please redeem your points with the Room Controller, you will be returned to the station automatically in ninety seconds.",1;
+		end;
+	OnTimer60000:
+		if ($@PSR9Ready == 1) end;
+		mapannounce "porsmash9","Nine minutes remaining.",1;
+		end;
+	OnTimer60001:
+		if ($@PSR9Ready == 0) end;
+		mapannounce "porsmash9","Please redeem your points with the Room Controller, you will be returned to the station automatically in one minute.",1;
+		end;
+	OnTimer90000:
+		if ($@PSR9Ready == 0) end;
+		mapannounce "porsmash9","Please redeem your points with the Room Controller, you will be returned to the station automatically in thirty seconds.",1;
+		end;
+	OnTimer100000:
+		if ($@PSR9Ready == 0) end;
+		mapannounce "porsmash9","Please redeem your points with the Room Controller, you will be returned to the station automatically in twenty seconds.",1;
+		end;
+	OnTimer110000:
+		if ($@PSR9Ready == 0) end;
+		mapannounce "porsmash9","Please redeem your points with the Room Controller, you will be returned to the station automatically in ten seconds!",1;
+		end;
+	OnTimer115000:
+		if ($@PSR9Ready == 0) end;
+		mapannounce "porsmash9","Please redeem your points with the Room Controller, you will be returned to the station automatically in five seconds!.",1;
+		end;
+	OnTimer116000:
+		if ($@PSR9Ready == 0) end;
+		mapannounce "porsmash9","Four!",1;
+		end;
+	OnTimer117000:
+		if ($@PSR9Ready == 0) end;
+		mapannounce "porsmash9","Three!",1;
+		end;
+	OnTimer118000:
+		if ($@PSR9Ready == 0) end;
+		mapannounce "porsmash9","Two!",1;
+		end;
+	OnTimer119000:
+		if ($@PSR9Ready == 0) end;
+		mapannounce "porsmash9","One!!",1;
+		end;
+	OnTimer120000:
+		if ($@PSR9Ready == 1) goto L_ResetPC;
+		mapannounce "porsmash9","Eight minutes remaining.",1;
+		end;
+	OnTimer180000:
+		if ($@PSR9Ready == 1) end;
+		mapannounce "porsmash9","Seven minutes remaining.",1;
+		end;
+	OnTimer240000:
+		if ($@PSR9Ready == 1) end;
+		mapannounce "porsmash9","Six minutes remaining.",1;
+		end;
+	OnTimer300000:
+		if ($@PSR9Ready == 1) goto L_Reset;
+		mapannounce "porsmash9","Five minutes remaining.",1;
+		end;
+	OnTimer360000:
+		mapannounce "porsmash9","Four minutes remaining.",1;
+		end;
+	OnTimer420000:
+		mapannounce "porsmash9","Three minutes remaining.",1;
+		end;
+	OnTimer480000:
+		mapannounce "porsmash9","Two minutes remaining.",1;
+		end;
+	OnTimer540000:
+		mapannounce "porsmash9","One minute remaining.",1;
+		end;
+	OnTimer570000:
+		mapannounce "porsmash9","Thirty seconds remaining.",1;
+		end;
+	OnTimer580000:
+		mapannounce "porsmash9","Twenty seconds remaining.",1;
+		end;
+	OnTimer590000:
+		mapannounce "porsmash9","Ten seconds remaining.",1;
+		end;
+	OnTimer595000:
+		mapannounce "porsmash9","Five!",1;
+		end;
+	OnTimer596000:
+		mapannounce "porsmash9","Four!",1;
+		end;
+	OnTimer597000:
+		mapannounce "porsmash9","Three!!",1;
+		end;
+	OnTimer598000:
+		mapannounce "porsmash9","Two!!",1;
+		end;
+	OnTimer599000:
+		mapannounce "porsmash9","One!!!",1;
+		end;
+	OnTimer600000:
+		mapannounce "porsmash9","Ten minutes have elapsed and the game is over, the room will be able to start another game in 5 minutes.  You will be returned to the station automatically in two minutes.",1;
+		killmonsterall "porsmash9";
+		set $@PSR9Ready,1;
+		set $@PSR9BS,0;
+		setnpctimer 0;
+		end;
+	L_ResetPC:
+		set $@PSR9Title$,"- Room in Cooldown";
+		set $@PSR9On,0;
+		mapannounce "porsmash9","Thank you for playing.",1;
+		areawarp "porsmash9",10,10,390,390,"pvp_m_room",51,38;
+		end;
+	L_Reset:
+		set $@PSR9Ready,0;
+		set $@PSR9Title$,"";
+		StopNPCTimer "Room 9 Control";
+		setnpctimer 0;
+		mapannounce "porsmash9","This room is now ready to start a game. ",1;
+		end;
+	L_EndGameAnn:
+		mapannounce "porsmash9","The game is over, please redeem your earned points by talking to the Room Controller.",1;
+		end;
+	L_FSpawn:
+		if ($@PSR9REP == (2*getmapusers("porsmash9"))) goto L_FSpawnEnd;
+		set $@PSR9SP,rand(1,20);
+		if ($@PSR9SP >= 15 && $@PSR9SP <= 20) areamonster "porsmash9",30,30,69,69,"Red",2600,1,1,1,"Room 9 Control::OnMyMobDead1";
+		if ($@PSR9SP == 13 || $@PSR9SP == 14) areamonster "porsmash9",30,30,69,69,"Blue",2597,1,1,1,"Room 9 Control::OnMyMobDead4";
+		if ($@PSR9SP >= 10 && $@PSR9SP <= 12) areamonster "porsmash9",30,30,69,69,"Green",2599,1,1,1,"Room 9 Control::OnMyMobDead3";
+		if ($@PSR9SP >= 1 && $@PSR9SP <= 9) areamonster "porsmash9",30,30,69,69,"Yellow",2598,1,1,1,"Room 9 Control::OnMyMobDead2";
+		set $@PSR9REP,$@PSR9REP + 1;
+		set $@PSR9SP,0; // safeguard
+		goto L_FSpawn;
+	L_FSpawnEnd:
+		set $@PSR9SP,0;
+		set $@PSR9REP,0;
+		npctalk "-";
+		npctalk "--";
+		npctalk "---";
+		npctalk "----";
+		npctalk "-----";
+		npctalk "You have 10 Minutes!  First person to 1500 points wins a bonus!";
+		end;
+	OnMyMobDead1:
+		set @PSpt,@PSpt - 5;
+		callsub sF_Spawn;
+		end;
+	OnMyMobDead2:
+		set @PSpt,@PSpt + 1;
+		callsub sF_Spawn;
+		end;
+	OnMyMobDead3:
+		set @PSpt,@PSpt + 3;
+		callsub sF_Spawn;
+		end;
+	OnMyMobDead4:
+		set @PSpt,@PSpt + 5;
+		callsub sF_Spawn;
+		end;
+	OnMyMobDead5:
+		set @PSpt,@PSpt + 25;
+		set @PSKill,@PSKill + 1;
+		if (@PSpt > 1500) set @PSpt,1500;
+		dispbottom "[Points : "+@PSpt+"/1500]";
+		if (@PSpt == 1500) goto L_Winner;
+		set $@PSR9SS,0;
+		set $@PSR9SS1,0;
+		dispbottom "[Points : "+@PSpt+"/1500]";
+		killmonster "porsmash9","Room 9 Control::OnMyMobDead1";
+	L_SubSpawn:
+		if ($@PSR9SS1 == 3) end;
+		set $@PSR9SS1,$@PSR9SS1 + 1;
+		set $@PSR9SS,rand(1,3);
+		if ($@PSR9SS == 1) areamonster "porsmash9",30,30,69,69,"Blue",2597,1,1,1,"Room 9 Control::OnMyMobDead4";
+		if ($@PSR9SS == 2) areamonster "porsmash9",30,30,69,69,"Green",2599,1,1,1,"Room 9 Control::OnMyMobDead3";
+		if ($@PSR9SS == 3) areamonster "porsmash9",30,30,69,69,"Yellow",2598,1,1,1,"Room 9 Control::OnMyMobDead2";
+		goto L_SubSpawn;
+	OnMyMobDead6:
+		set @PSpt,@PSpt - 75;
+		set @PSKill,@PSKill - 1;
+		callsub sF_Spawn;
+		end;
+	OnMyMobDead7:
+		set @PSpt,@PSpt + 10;
+		if (@PSpt > 1500) set @PSpt,1500;
+		dispbottom "[Points : "+@PSpt+"/1500]";
+		if (@PSpt == 1500) goto L_Winner;
+		killmonster "porsmash9","Room 9 Control::OnMyMobDead6";
+		areamonster "porsmash9",30,30,69,69,"Red",2600,1,1,1,"Room 9 Control::OnMyMobDead2";
+		if (rand(1,2) == 2) end;
+		areamonster "porsmash9",30,30,69,69,"Red",2600,1,1,1,"Room 9 Control::OnMyMobDead2";
+		end;
+	OnMyMobDead8:
+		set @PSpt,@PSpt + 250;
+		set @PSBonus,@PSBonus + 1;
+		dispbottom "[Bonus : "+@PSBonus+"x]";
+		callsub sF_Spawn;
+		end;
+	sF_Spawn:
+		set @PSKill,@PSKill + 1;
+		if (@PSpt < 0) set @PSpt,0;
+		if (@PSpt > 1500) set @PSpt,1500;
+		dispbottom "[Points : "+@PSpt+"/1500]";
+		if (@PSpt == 1500) goto L_Winner;
+	L_Respawn:
+		set $@PSR9SP,rand(1,201);
+		set $@PSR9SP2,rand(1,10);
+		if ($@PSR9SP == 201) end;
+		if ($@PSR9SP == 200) goto L_BonusSpawn;
+		if ($@PSR9SP >= 192 && $@PSR9SP <= 199) areamonster "porsmash9",30,30,69,69,"Flytrap",2589,1,1,1,"Room 9 Control::OnMyMobDead7";
+		if ($@PSR9SP >= 170 && $@PSR9SP <= 191) areamonster "porsmash9",30,30,69,69,"Fly",2588,1,1,1,"Room 9 Control::OnMyMobDead6";
+		if ($@PSR9SP >= 158 && $@PSR9SP <= 169) areamonster "porsmash9",30,30,69,69,"Jumbo",2596,1,1,1,"Room 9 Control::OnMyMobDead5";
+		if ($@PSR9SP >= 130 && $@PSR9SP <= 157) areamonster "porsmash9",30,30,69,69,"Red",2600,1,1,1,"Room 9 Control::OnMyMobDead1";
+		if ($@PSR9SP >= 100 && $@PSR9SP <= 129) areamonster "porsmash9",30,30,69,69,"Blue",2597,1,1,1,"Room 9 Control::OnMyMobDead4";
+		if ($@PSR9SP >= 50 && $@PSR9SP <= 99) areamonster "porsmash9",30,30,69,69,"Green",2599,1,1,1,"Room 9 Control::OnMyMobDead3";
+		if ($@PSR9SP >= 1 && $@PSR9SP <= 49) areamonster "porsmash9",30,30,69,69,"Yellow",2598,1,1,1,"Room 9 Control::OnMyMobDead2";
+		if ($@PSR9SP2 == 10) goto L_Respawn;
+		set $@PSR9SP,0;
+		set $@PSR9SP2,0;
+		end;
+	L_BonusSpawn:
+		if ($@PSR9BS == 2) goto L_Respawn;
+		areamonster "porsmash9",30,30,69,69,"White",2595,1,1,1,"Room 9 Control::OnMyMobDead8";
+		set $@PSR9BS,$@PSR9BS + 1;
+		end;
+	L_Winner:
+		killmonsterall "porsmash9";
+		setnpctimer 0;
+		set $@PSR9Ready,1;
+		set $@PSR9BS,0;
+		mapannounce "porsmash9",strcharinfo(0) + " has reached 1500 points and won the game!  Congratulations!",1;
+		dispbottom "Congratulations "+strcharinfo(0)+"!! You have been awarded "+(15*getmapusers("porsmash9"))+" extra points, and 2000 zeny!";
+		set @PSpt,@PSpt + (15*getmapusers("porsmash9"));
+		set Zeny,Zeny + 2000;
+		end;
+}

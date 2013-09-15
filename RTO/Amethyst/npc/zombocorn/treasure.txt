@@ -1,0 +1,182 @@
+// Written by Dubby, crappy header also written by Dubby
+// This script makes treasure chests appear, yay!
+// When this script starts, you may see alot of [info] appear in the map-server window.  This means those maps have treasure chests on them, the message is normal.
+// -
+// v1.2 - fixed some stupid mistakes
+// v1.5 - changed script more... bah
+// v2.0 - redid the script
+
+function	script	F_SPAWNCHEST	{
+	if (rand(20)>0 && !$@T_ONINIT) end;
+	set $@TREASURE[getarg(0)],0;
+	set .@map$, "ama_dun03"; //case 0
+	switch(getarg(0)) {
+		case 1: set .@map$, "anthell02"; break;
+		case 2: set .@map$, "beach_dun3"; break;
+		case 3: set .@map$, "iz_dun04"; break;
+		case 4: set .@map$, "alde_dun04"; break;
+		case 5: set .@map$, "c_tower4"; break;
+		case 6: set .@map$, "mjo_dun03"; break;
+		case 7: set .@map$, "gef_dun03"; break;
+		case 8: set .@map$, "gl_cas02"; break;
+		case 9: set .@map$, "gl_church"; break;
+		case 10: set .@map$, "gl_chyard"; break;
+		case 11: set .@map$, "gl_dun02"; break;
+		case 12: set .@map$, "gl_prison"; break;
+		case 13: set .@map$, "gl_prison1"; break;
+		case 14: set .@map$, "gl_sew04"; break;
+		case 15: set .@map$, "gl_step"; break;
+		case 16: set .@map$, "gon_dun03"; break;
+		case 17: set .@map$, "lou_dun03"; break;
+		case 18: set .@map$, "mag_dun02"; break;
+		case 19: set .@map$, "moc_pryd06"; break;
+		case 20: set .@map$, "in_sphinx5"; break;
+		case 21: set .@map$, "orcsdun02"; break;
+		case 22: set .@map$, "pay_dun04"; break;
+		case 23: set .@map$, "prt_maze03"; break;
+		case 24: set .@map$, "prt_sewb4"; break;
+		case 25: set .@map$, "xmas_dun02"; break;
+		case 26: set .@map$, "tur_dun05"; break;
+		case 27: set .@map$, "um_dun02"; break;
+		case 28: set .@map$, "turven05"; break;
+		case 29: set .@map$, "mordlin03"; break;
+		case 30: set .@map$, "grasken02"; break;
+		case 31: set .@map$, "grasken11"; break;
+		case 32: set .@map$, "grasken12"; break;
+		case 33: set .@map$, "grasken13"; break;
+		case 34: set .@map$, "shogdun05"; break;
+		case 35: set .@map$, "gefenia01"; break;
+		case 36: set .@map$, "gefenia04"; break;
+		case 37: set .@map$, "ein_dun02"; break;
+	}
+	monster .@map$,0,0,"Treasure Chest",(1323+(rand(1,39))),1,99,99,"TREASUREMEUP::OnMyMobDead"+getarg(0);
+	return;
+}
+
+prontera,156,191,0	script	TREASUREMEUP	139,{
+OnInit:
+	set $@T_ONINIT,1;
+	for(set $@TCYC, 0; $@TCYC<38; set $@TCYC,$@TCYC+1) {
+		if (rand(5)==0) set $@TREASURE[$@TCYC],1;
+	}
+OnClock0000:
+	for(set $@TCYC, 0; $@TCYC<38; set $@TCYC,$@TCYC+1) {
+		if ($@TREASURE[$@TCYC]==1) callfunc "F_SPAWNCHEST",$@TCYC;
+	}
+	if ($@T_ONINIT) set $@T_ONINIT, 0;
+	end;
+OnMyMobDead0:
+	set $@TREASURE[0],1;
+	end;
+OnMyMobDead1:
+	set $@TREASURE[1],1;
+	end;
+OnMyMobDead2:
+	set $@TREASURE[2],1;
+	end;
+OnMyMobDead3:
+	set $@TREASURE[3],1;
+	end;
+OnMyMobDead4:
+	set $@TREASURE[4],1;
+	end;
+OnMyMobDead5:
+	set $@TREASURE[5],1;
+	end;
+OnMyMobDead6:
+	set $@TREASURE[6],1;
+	end;
+OnMyMobDead7:
+	set $@TREASURE[7],1;
+	end;
+OnMyMobDead8:
+	set $@TREASURE[8],1;
+	end;
+OnMyMobDead9:
+	set $@TREASURE[9],1;
+	end;
+OnMyMobDead10:
+	set $@TREASURE[10],1;
+	end;
+OnMyMobDead11:
+	set $@TREASURE[11],1;
+	end;
+OnMyMobDead12:
+	set $@TREASURE[12],1;
+	end;
+OnMyMobDead13:
+	set $@TREASURE[13],1;
+	end;
+OnMyMobDead14:
+	set $@TREASURE[14],1;
+	end;
+OnMyMobDead15:
+	set $@TREASURE[15],1;
+	end;
+OnMyMobDead16:
+	set $@TREASURE[16],1;
+	end;
+OnMyMobDead17:
+	set $@TREASURE[17],1;
+	end;
+OnMyMobDead18:
+	set $@TREASURE[18],1;
+	end;
+OnMyMobDead19:
+	set $@TREASURE[19],1;
+	end;
+OnMyMobDead20:
+	set $@TREASURE[20],1;
+	end;
+OnMyMobDead21:
+	set $@TREASURE[21],1;
+	end;
+OnMyMobDead22:
+	set $@TREASURE[22],1;
+	end;
+OnMyMobDead23:
+	set $@TREASURE[23],1;
+	end;
+OnMyMobDead24:
+	set $@TREASURE[24],1;
+	end;
+OnMyMobDead25:
+	set $@TREASURE[25],1;
+	end;
+OnMyMobDead26:
+	set $@TREASURE[26],1;
+	end;
+OnMyMobDead27:
+	set $@TREASURE[27],1;
+	end;
+OnMyMobDead28:
+	set $@TREASURE[28],1;
+	end;
+OnMyMobDead29:
+	set $@TREASURE[29],1;
+	end;
+OnMyMobDead30:
+	set $@TREASURE[30],1;
+	end;
+OnMyMobDead31:
+	set $@TREASURE[31],1;
+	end;
+OnMyMobDead32:
+	set $@TREASURE[32],1;
+	end;
+OnMyMobDead33:
+	set $@TREASURE[33],1;
+	end;
+OnMyMobDead34:
+	set $@TREASURE[34],1;
+	end;
+OnMyMobDead35:
+	set $@TREASURE[35],1;
+	end;
+OnMyMobDead36:
+	set $@TREASURE[36],1;
+	end;
+OnMyMobDead37:
+	set $@TREASURE[37],1;
+	end;
+}

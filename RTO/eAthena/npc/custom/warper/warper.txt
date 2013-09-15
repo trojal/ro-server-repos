@@ -1,0 +1,879 @@
+//===== eAthena Script =======================================
+//= Warper Script
+//===== By: ==================================================
+//= Script
+//===== Current Version: =====================================
+//= 1.9
+//===== Compatible With: =====================================
+//= Any eAthena Version;
+//===== Description: =========================================
+//= Generic warper...
+//============================================================
+//= To allow selecting the Level of the Dungeon you want to
+//= Warp to set the @lvlselect variable to 1 (Not implemented yet!)
+//============================================================
+
+-	script	Warper::warpra	951,{
+//	set @lvlselect,1;
+	percentheal 100,100;
+	mes "[Warper]";
+	mes "Hello,";
+	mes "I can teleport you to any Town or Dungeon!";
+	mes "Were do you want to go?";
+	next;
+	menu "To a Town",-,"To a Dungeon",L_dungeon,"To a Guild Dungeon",L_gdungeon;
+	next;
+	mes "[Warper]";
+	mes "Please select your destination.";
+	next;
+	menu "Alberta",walberta,"Aldebaran",waldebaran,"Amatsu",wamatsu,"Ayothaya",wayothaya,"Comodo",wcomodo,"Einbroch",weinbroch,"Einbech",weinbech,"Geffen",wgeffen,"Gonryun",wgonryun,"Hugel",whugel,"Izlude",wizlude,"Lighthalzen",wlighthalzen,"Louyang",wlouyang,"Lutie",wxmas,"Morroc",wmorroc,"Moscovia",wmosk,"Niflheim",wniflheim,"Payon",wpayon,"Prontera",wprontera,"Rachel",wrachel,"Umbala",wumbala,"Yuno",wyuno,"Veins",wveins;
+L_dungeon:
+	mes "[Warper]";
+	mes "Please select your destination.";
+	next;
+	menu "Abyss Lake",dabbys,"Amatsu Dungeon",damatsu,"Anthell",dant,"Ayothaya Dungeon",dayothaya,"Beach Dungeon",dbeach,"Byalan Dungeon",dbibilan,"Coal Mine (Dead Pit)",dcoal,"Clock Tower",dct,"Culvert",dculvert,"Cursed Abbey",dabbey,"Einbech Dungeon",dein,"Geffen",dgeffen,"Geffenia Dungeon",dgefenia,"Glast Heim",dglast,"Gonryun Dungeon",dgonryun,"Hidden Temple",dmaze,"Ice Dungeon",dice,"Juperos",djuperos,"Kiel Dungeon",dkiel,"Lighthalzen Bio Labs",dlighthalzen,"Louyang Dungeon",dlou,"Magma Dungeon",dmagma,"Moscovia Dungeon",dmosk,"Niflheim",dniflheim,"Odin Temple",dodin,"Orcs Dungeon",dorcs,"Payon Dungeon",dpayon,"Pyramids",dpyramids,"Rachel Dungeon",drachel,"Sphinx",dsphinx,"Sunken Ship",dsunken,"Thanatos Tower",dthanatos,"Thor's Volcano",dthor,"Toy Factory",dtoy,"Turtle Dungeon",dturtle;
+
+
+//----------------Towns----------------\\
+walberta:	warp "alberta.gat",	116,	56;	end;
+waldebaran:	warp "aldebaran.gat",	145,	120;	end;
+wamatsu:	warp "amatsu.gat",	197,	86;	end;
+wayothaya:	warp "ayothaya.gat",	149,	118;	end;
+wcomodo:   	warp "comodo.gat",	188,	161;    end;
+weinbroch:   	warp "einbroch.gat",	64, 	200;	end;
+weinbech:   	warp "einbech.gat",	70, 	95;	end;
+wgeffen:	warp "geffen.gat",	119,	66;	end;
+wgonryun:	warp "gonryun.gat",	150,    130; 	end;
+whugel:   	warp "hugel.gat",	96,	145;    end;
+wizlude:	warp "izlude.gat",	128,	111;	end;
+wlighthalzen:	warp "lighthalzen.gat",	158,	92;	end;
+wlouyang:	warp "louyang.gat",	210,	108;	end;
+wmorroc:	warp "morocc.gat",	159,	93;	end;
+wmosk:	warp "moscovia.gat",	167,	78;	end;
+wniflheim:	warp "niflheim.gat",	199,	184;	end;
+wprontera:	warp "prontera.gat",	156,	187;	end;
+wpayon:		warp "payo1.gat",	72,	103;	end;
+wrachel:	warp "rachel.gat",	130,	109;	end;
+wumbala:	warp "umbala.gat",	130,    130; 	end;
+wxmas:		warp "xmas.gat",	148,	131;	end;
+wyuno:   	warp "yuno.gat",	160,	168;    end;
+wveins:	warp "veins.gat",	196,	236;	end;
+
+//----------------Dungeons----------------\\
+dabbys:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Entrance",d_abyss_e,
+		"Level 1",d_abyss_1,
+		"Level 2",d_abyss_2,
+		"Level 3",d_abyss_3;
+
+d_abyss_e:
+	warp "hu_fild05.gat",	189,	207;	end;
+d_abyss_1:
+	warp "abyss_01.gat",	264,	271;	end;
+d_abyss_2:
+	warp "abyss_02.gat",	275,	270;	end;
+d_abyss_3:
+	warp "abyss_03.gat",	116,	27;	end;
+
+damatsu:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_ama_1,
+		"Level 2",d_ama_2,
+		"Level 3",d_ama_3;
+
+d_ama_1:
+	warp "ama_dun01.gat",	229,	12;	end;
+d_ama_2:
+	warp "ama_dun02.gat",	31,	41;	end;
+d_ama_3:
+	warp "ama_dun03.gat",	119,	14;	end;
+	
+dant:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_anthell_1,
+		"Level 2",d_anthell_2;
+
+d_anthell_1:
+	warp "anthell01.gat",	35,	262;	end;
+d_anthell_2:
+	warp "anthell02.gat",	34,	263;	end;
+	
+dayothaya:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_ayothaya_1,
+		"Level 2",d_ayothaya_2;
+
+d_ayothaya_1:
+	warp "ayo_dun01.gat",	275,	17;	end;
+d_ayothaya_2:
+	warp "ayo_dun02.gat",	282,	150;	end;
+
+dbeach:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_beach_1;
+
+d_beach_1:
+	warp "beach_dun.gat",	270,	67;	end;
+
+dbibilan:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_bylan_1,
+		"Level 2",d_bylan_2,
+		"Level 3",d_bylan_3,
+		"Level 4",d_bylan_4,
+		"Level 5",d_bylan_5;
+
+d_bylan_1:
+	warp "iz_dun00.gat",	168,	168;	end;
+d_bylan_2:
+	warp "iz_dun01.gat",	41,	37;	end;
+d_bylan_3:
+	warp "iz_dun02.gat",	236,	204;	end;
+d_bylan_4:
+	warp "iz_dun03.gat",	32,	63;	end;
+d_bylan_5:
+	warp "iz_dun04.gat",	26,	27;	end;
+
+dct:	
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Clock Tower Level 1",d_ct_1,
+		"Clock Tower Level 2",d_ct_2,
+		"Clock Tower Level 3",d_ct_3,
+		"Clock Tower Level 4",d_ct_4,
+		"Basement Level 1",d_alde_1,
+		"Basement Level 2",d_alde_2,
+		"Basement Level 3",d_alde_3,
+		"Basement Level 4",d_alde_4;
+
+d_ct_1:
+	warp "c_tower1.gat",	200,	163;	end;
+d_ct_2:
+	warp "c_tower2.gat",	268,	26;	end;
+d_ct_3:
+	warp "c_tower3.gat",	64,	148;	end;
+d_ct_4:
+	warp "c_tower4.gat",	32,	63;	end;
+d_alde_1:
+	warp "alde_dun01.gat",	197,	25;	end;
+d_alde_2:
+	warp "alde_dun02.gat",	127,	169;	end;
+d_alde_3:
+	warp "alde_dun03.gat",	276,	53;	end;
+d_alde_4:
+	warp "alde_dun04.gat",	130,	130;	end;
+
+dculvert:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_culvert_1,
+		"Level 2",d_culvert_2,
+		"Level 3",d_culvert_3,
+		"Level 4",d_culvert_4;
+
+d_culvert_1:
+	warp "prt_sewb1.gat",	126,	248;	end;
+d_culvert_2:
+	warp "prt_sewb2.gat",	19,	19;	end;
+d_culvert_3:
+	warp "prt_sewb3.gat",	180,	169;	end;
+d_culvert_4:
+	warp "prt_sewb4.gat",	100,	92;	end;
+
+dabbey:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Entrance",d_nameless_1,
+		"Level 1",d_abbey_2,
+		"Level 2",d_abbey_3,
+		"Level 3",d_abbey_4;
+
+d_nameless_1:
+	warp "nameless_n.gat",	248,	233;	end;
+d_abbey_2:
+	warp "abbey01.gat",	51,	12;	end;
+d_abbey_3:
+	warp "abbey02.gat",	0,	0;	end;
+d_abbey_4:
+	warp "abbey03.gat",	0,	0;	end;
+
+dcoal:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_coal_1,
+		"Level 2",d_coal_2,
+		"Level 3",d_coal_3;
+
+d_coal_1:
+	warp "mjo_dun01.gat",	52,	71;	end;
+d_coal_2:
+	warp "mjo_dun02.gat",	381,	343;	end;
+d_coal_3:
+	warp "mjo_dun03.gat",	308,	262;	end;
+
+dein:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_ein_1,
+		"Level 2",d_ein_2;
+
+d_ein_1:
+	warp "ein_dun01.gat",	22,	14;	end;
+d_ein_2:
+	warp "ein_dun02.gat",	292,	290;	end;
+
+dgeffen:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu	"Level 1",d_geffen_1,
+		"Level 2",d_geffen_2,
+		"Level 3",d_geffen_3,
+		"Level 4",d_geffen_4;
+
+d_geffen_1:
+	warp "gef_dun00.gat",	104,	99;	end;
+d_geffen_2:
+	warp "gef_dun01.gat",	115,	236;	end;
+d_geffen_3:
+	warp "gef_dun02.gat",	106,	132;	end;
+d_geffen_4:
+	warp "gef_dun03.gat",	203,	101;	end;
+
+dgefenia:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu	"Level 1",d_gefenia_1,
+		"Level 2",d_gefenia_2,
+		"Level 3",d_gefenia_3,
+		"Level 4",d_gefenia_4;
+
+d_gefenia_1:
+	warp "gefenia01.gat",	40,	103;	end;
+d_gefenia_2:
+	warp "gefenia02.gat",	203,	34;	end;
+d_gefenia_3:
+	warp "gefenia03.gat",	264,	236;	end;
+d_gefenia_4:
+	warp "gefenia04.gat",	33,	270;	end;
+
+dglast:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Entrance",d_glast_e,
+		"St. Abbey",d_glast_1,
+		"Churchyard",d_glast_2,
+		"Inside Glast Heim",d_glast_3,
+		"Castle Level 1",d_glast_4,
+		"Castle Level 2",d_glast_5,
+		"Chivalry Level 1",d_glast_6,
+		"Chivalry Level 2",d_glast_7,
+		"Staircaise",d_glast_8,
+		"Culvert Level 1",d_glast_9,
+		"Culvert Level 2",d_glast_10,
+		"Culvert Level 3",d_glast_11,
+		"Culvert Level 4",d_glast_12,
+		"Cave Level 1",d_glast_13,
+		"Cave Level 2",d_glast_14,
+		"Underground Prison Level 1",d_glast_15,
+		"Underground Prison Level 2",d_glast_16;
+
+d_glast_e:
+	warp "glast_01.gat",	370,	304;	end;
+d_glast_1:
+	warp "gl_church.gat",	156,	8;	end;
+d_glast_2:
+	warp "gl_chyard.gat",	147,	15;	end;
+d_glast_3:
+	warp "gl_in01.gat",	121,	59;	end;
+d_glast_4:
+	warp "gl_cas01.gat",	199,	29;	end;
+d_glast_5:
+	warp "gl_cas02.gat",	104,	25;	end;
+d_glast_6:
+	warp "gl_knt01.gat",	150,	10;	end;
+d_glast_7:
+	warp "gl_knt02.gat",	157,	287;	end;
+d_glast_8:
+	warp "gl_step.gat",	117,	124;	end;
+d_glast_9:
+	warp "gl_sew01.gat",	258,	255;	end;
+d_glast_10:
+	warp "gl_sew01.gat",	258,	255;	end;
+d_glast_11:
+	warp "gl_sew02.gat",	108,	291;	end;
+d_glast_12:
+	warp "gl_sew03.gat",	171,	273;	end;
+d_glast_13:
+	warp "gl_dun01.gat",	133,	271;	end;
+d_glast_14:
+	warp "gl_dun02.gat",	224,	274;	end;
+d_glast_15:
+	warp "gl_prison.gat",	14,	70;	end;
+d_glast_16:
+	warp "gl_prison1.gat",	150,	14;	end;
+	
+dgonryun:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_gon_1,
+		"Level 2",d_gon_2,
+		"Level 3",d_gon_3;
+		
+d_gon_1:
+	warp "gon_dun01.gat",	153,    48;	end;
+d_gon_2:
+	warp "gon_dun02.gat",	17,    113;	end;
+d_gon_3:
+	warp "gon_dun03.gat",	68,    9;	end;
+
+dmaze:
+	mes "[Warper";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_maze_1,
+		"Level 2",d_maze_2,
+		"Level 3",d_maze_3;
+
+d_maze_1:
+	warp "prt_maze01.gat",	176,	8;	end;
+d_maze_2:
+	warp "prt_maze02.gat",	196,	19;	end;
+d_maze_3:
+	warp "prt_maze03.gat",	182,	88;	end;
+dice:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu	"Level 1",d_ice_1,
+		"Level 2",d_ice_2,
+		"Level 3",d_ice_3,
+		"Level 4",d_ice_4;
+
+d_ice_1:
+	warp "ice_dun01.gat",	157,	14;	end;
+d_ice_2:
+	warp "ice_dun02.gat",	151,	155;	end;
+d_ice_3:
+	warp "ice_dun03.gat",	0,	0;	end;
+d_ice_4:
+	warp "ice_dun04.gat",	34,	139;	end;
+
+djuperos:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Entrance",d_juperos_e,
+		"Juperos Cave",d_jcave_1,
+		"Juperos 1",d_j1_2,
+		"Juperos 2",d_j2_3,
+		"Juperos Ele R",d_jeler_4,
+		"Juperos Gate",d_jgate_5,
+		"Juperos Area 1",d_jarea1_6,
+		"Juperos Area 2",d_jarea2_7;
+
+d_juperos_e:
+	warp "yuno_fild07.gat",	218,	176;	end;
+d_jcave_1:
+	warp "jupe_cave.gat",	143,	52;	end;
+d_j1_2:
+	warp "juperos_01.gat",	53,	247;	end;
+d_j2_3:
+	warp "juperos_02.gat",	36,	60;	end;
+d_jeler_4:
+	warp "yuno_fild07.gat",	218,	176;	end;
+d_jgate_5:
+	warp "jupe_gate.gat",	49,	52;	end;
+d_jarea1_6:
+	warp "jupe_area1.gat",	115,	158;	end;
+d_jarea2_7:
+	warp "jupe_area2.gat",	48,	158;	end;
+
+	
+dkiel:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",dkiel_1,
+		"Level 2",dkiel_2;
+
+dkiel_1:
+	warp "kh_dun01.gat",	3,	230;	end;
+dkiel_2:
+	warp "kh_dun02.gat",	0,	0;	end;
+
+
+dlighthalzen:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_lighthalzen_1,
+		"Level 2",d_lighthalzen_2,
+		"Level 3",d_lighthalzen_3,
+		"Level 4",d_lighthalzen_4;
+	
+d_lighthalzen_1:
+	warp "lhz_dun01.gat",	150,	286;	end;
+d_lighthalzen_2:
+	warp "lhz_dun02.gat",	150,	18;	end;
+d_lighthalzen_3:
+	if (BaseLevel < 70) goto d_lighthalzen3_no_entry;
+	if (BaseLevel < 80) goto d_lighthalzen3_lvl_7x;
+	if (BaseLevel < 90) goto d_lighthalzen3_lvl_8x;
+	warp "lhz_dun03.gat",	140,	137;	end;
+d_lighthalzen_4:
+	if (BaseLevel < 70) goto d_lighthalzen4_no_entry;
+	if (BaseLevel < 80) goto d_lighthalzen4_lvl_7x;
+	if (BaseLevel < 90) goto d_lighthalzen4_lvl_8x; 
+	warp "lhz_dun04.gat",	140,	137;	end;
+
+	d_lighthalzen4_no_entry:
+		mes "[Warper]";
+		mes "Sorry, you have to be at least level 70 to enter Biolabs level 4";
+		close;
+
+	d_lighthalzen4_lvl_7x:
+		mes "[Warper]";
+		mes "There is a 100,000z fee for your level to enter biolabs level 4. Would you still like to enter?";
+		next;
+		menu	"Yes",w_dlhz4_7x,"No",w_dlhz_deny;
+
+			w_dlhz4_7x:
+				If (Zeny < 100000) goto w_dlhz_nozeny;
+				set zeny,zeny - 100000;
+				warp "lhz_dun04.gat",	140,	137;	end;
+
+			w_dlhz_deny:
+				next;
+				mes "[Warper]";
+				mes "Come again soon~";
+				close;
+
+				w_dlhz_nozeny:
+					mes "[Warper]";
+					mes "Psht, you can't afford to go there. Come again when you have more zeny.";
+					close;
+
+	d_lighthalzen4_lvl_8x:
+		mes "[Warper]";
+		mes "There is a 50,000z fee for your level to enter biolabs level 4. Would you still like to enter?";
+		next;
+		menu	"Yes",w_dlhz4_8x,"No",w_dlhz_deny;
+
+			w_dlhz4_8x:
+				If (Zeny < 50000) goto w_dlhz_nozeny;
+				set zeny,zeny - 50000;
+				warp "lhz_dun04.gat",	140,	137;	end;
+
+	d_lighthalzen3_no_entry:
+		mes "[Warper]";
+		mes "Sorry, you have to be at least level 70 to enter Biolabs level3";
+		close;
+
+	d_lighthalzen3_lvl_7x:
+		mes "[Warper]";
+		mes "There is a 100,000z fee for your level to enter biolabs level 3. Would you still like to enter?";
+		next;
+		menu	"Yes",w_dlhz3_7x,"No",w_dlhz_deny;
+
+			w_dlhz3_7x:
+				If (Zeny < 100000) goto w_dlhz_nozeny;
+				set zeny,zeny - 100000;
+				warp "lhz_dun03.gat",	140,	137;	end;
+
+
+	d_lighthalzen3_lvl_8x:
+		mes "[Warper]";
+		mes "There is a 50,000z fee for your level to enter biolabs level 3. Would you still like to enter?";
+		next;
+		menu	"Yes",w_dlhz3_8x,"No",w_dlhz_deny;
+
+			w_dlhz3_8x:
+				If (Zeny < 50000) goto w_dlhz_nozeny;
+				set zeny,zeny - 50000;
+				warp "lhz_dun03.gat",	140,	137;	end;
+
+dlou:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu	"Level 1",d_lou_1,
+		"Level 2",d_lou_2,
+		"Level 3",d_lou_3;
+
+d_lou_1:
+	warp "lou_dun01.gat",	218,	196;	end;
+d_lou_2:
+	warp "lou_dun02.gat",	282,	20;	end;
+d_lou_3:
+	warp "lou_dun03.gat",	165,	38;	end;
+
+dmagma:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_magma_1,
+		"Level 2",d_magma_2;
+
+d_magma_1:
+	warp "mag_dun01.gat",	128,	66;	end;
+d_magma_2:
+	warp "mag_dun02.gat",	47,	30;	end;
+
+dmosk:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_mosk_1,
+		"Level 2",d_mosk_2,
+		"Level 3",d_mosk_3;
+
+d_mosk_1:
+	warp "mosk_dun01.gat",	190,	46;	end;
+d_mosk_2:
+	warp "mosk_dun02.gat",	163,	31;	end;
+d_mosk_3:
+	warp "mosk_dun02.gat",	33,	136;	end;
+
+
+dniflheim:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Entrance",d_nifleim_e,
+		"Level 1",d_nifleim_1,
+		"Level 2",d_nifleim_2;
+
+
+
+d_nifleim_e:
+	warp "niflheim.gat",	35,	161;	end;
+d_nifleim_1:
+	warp "nif_fild02.gat",	376,	235;	end;
+d_nifleim_2:
+	warp "nif_fild01.gat",	343,	322;	end;
+
+dodin:		
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_odin_1,
+		"Level 2",d_odin_2,
+		"Level 3",d_odin_3;
+
+d_odin_1:
+	warp "odin_tem01.gat",	98,	144;	end;
+d_odin_2:
+	warp "odin_tem02.gat",	22,	181;	end;
+d_odin_3:
+	warp "odin_tem03.gat",	0,	0;	end;
+
+dorcs:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Entrance",d_orcs_e,
+		"Level 1",d_orcs_1,
+		"Level 2",d_orcs_2;
+
+d_orcs_e:
+	warp "gef_fild10.gat",	70,	332;	end;
+d_orcs_1:
+	warp "orcsdun01.gat",	32,	170;	end;
+d_orcs_2:
+	warp "orcsdun02.gat",	21,	185;	end;
+	
+dpayon:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_payon_1,
+		"Level 2",d_payon_2,
+		"Level 3",d_payon_3,
+		"Level 4",d_payon_4,
+		"Level 5",d_payon_5;
+
+d_payon_1:
+	warp "pay_dun00.gat",	21,	183;	end;
+d_payon_2:
+	warp "pay_dun01.gat",	19,	33;	end;
+d_payon_3:
+	warp "pay_dun02.gat",	19,	63;	end;
+d_payon_4:
+	warp "pay_dun03.gat",	155,	159;	end;
+d_payon_5:
+	set @r,rand(4);
+	if(@r==0) goto w1;
+	if(@r==1) goto w2;
+	if(@r==2) goto w3;
+	if(@r==3) goto w4;
+	w1:	warp "pay_dun04.gat",201,204; end;
+	w2:	warp "pay_dun04.gat",189,43; end;
+	w3:	warp "pay_dun04.gat",43,40; end;
+	w4:	warp "pay_dun04.gat",34,202; end;
+
+dpyramids:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_pyr_1,
+		"Level 2",d_pyr_2,
+		"Level 3",d_pyr_3,
+		"Level 4",d_pyr_4,
+		"Basement 1",d_pyr_5,
+		"Basement 2",d_pyr_6;
+
+d_pyr_1:
+	warp "moc_pryd01.gat",	192,	9;	end;
+d_pyr_2:
+	warp "moc_pryd02.gat",	10,	192;	end;
+d_pyr_3:
+	warp "moc_pryd03.gat",	100,	92;	end;
+d_pyr_4:
+	warp "moc_pryd04.gat",	181,	11;	end;
+d_pyr_5:
+	warp "moc_pryd05.gat",	94,	96;	end;	
+d_pyr_6:
+	warp "moc_pryd06.gat",	192,	8;	end;
+
+drachel:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_rachel_1,
+		"Level 2",d_rachel_2,
+		"Level 3",d_rachel_3,
+		"Level 4",d_rachel_4,
+		"Level 5",d_rachel_5;
+
+d_rachel_1:
+	warp "ra_san01.gat",	140,	12;	end;
+d_rachel_2:
+	warp "ra_san02.gat",	34,	21;	end;
+d_rachel_3:
+	warp "ra_san03.gat",	5,	149;	end;
+d_rachel_4:
+	warp "ra_san04.gat",	36,	219;	end;
+d_rachel_5:
+	warp "ra_san05.gat",	0,	0;	end;
+
+dsphinx:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_sphinx_1,
+		"Level 2",d_sphinx_2,
+		"Level 3",d_sphinx_3,
+		"Level 4",d_sphinx_4,
+		"Level 5",d_sphinx_5;
+
+d_sphinx_1:
+	warp "in_sphinx1.gat",	288,	9;	end;
+d_sphinx_2:
+	warp "in_sphinx2.gat",	149,	81;	end;
+d_sphinx_3:
+	warp "in_sphinx3.gat",	210,	54;	end;
+d_sphinx_4:
+	warp "in_sphinx4.gat",	10,	222;	end;
+d_sphinx_5:
+	warp "in_sphinx5.gat",	100,	99;	end;
+
+dsunken:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Entrance",d_sunken_e,
+		"Level 1",d_sunken_1,
+		"Level 2",d_sunken_2;
+
+d_sunken_e:
+	warp "alb2trea.gat",	75,	98;	end;
+d_sunken_1:
+	warp "treasure01.gat",	69,	24;	end;
+d_sunken_2:
+	warp "treasure02.gat",	102,	27;	end;
+
+dthanatos:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_thanatos_1,
+		"Level 2",d_thanatos_2,
+		"Level 3",d_thanatos_3,
+		"Level 4",d_thanatos_4,
+		"Level 5",d_thanatos_5,
+		"Level 6",d_thanatos_6,
+		"Level 7",d_thanatos_7,
+		"Level 8",d_thanatos_8,
+		"Level 9",d_thanatos_9,
+		"Level 10",d_thanatos_10,
+		"Level 11",d_thanatos_11,
+		"Level 12",d_thanatos_12,
+		"Level 13",d_thanatos_13,
+		"Level 14",d_thanatos_14;
+
+d_thanatos_1:
+warp "tha_t01.gat",	150,	36;	end;
+d_thanatos_2:
+warp "tha_t02.gat",	150,	36;	end;
+d_thanatos_3:
+warp "tha_t03.gat",	220,	158;	end;
+d_thanatos_4:
+warp "tha_t04.gat",	59,	143;	end;
+d_thanatos_5:
+warp "tha_t05.gat",	62,	11;	end;
+d_thanatos_6:
+warp "tha_t06.gat",	206,	8;	end;
+d_thanatos_7:
+warp "tha_t07.gat",	65,	166;	end;
+d_thanatos_8:
+warp "tha_t08.gat",	104,	44;	end;
+d_thanatos_9:
+warp "tha_t09.gat",	88,	145;	end;
+d_thanatos_10:
+warp "tha_t10.gat",	168,	138;	end;
+d_thanatos_11:
+warp "tha_t11.gat",	90,	36;	end;
+d_thanatos_12:
+warp "tha_t12.gat",	129,	52;	end;
+d_thanatos_13:
+warp "thana_step.gat",	16,	73;	end;
+d_thanatos_14:
+warp "thana_boss.gat",	82,	78;	end;
+
+dthor:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_thor_1,
+		"Level 2",d_thor_2,
+		"Level 3",d_thor_3;
+
+d_thor_1:
+	warp "thor_v01.gat",	21,	226;	end;
+d_thor_2:
+	warp "thor_v02.gat",	74,	205;	end;
+d_thor_3:
+	warp "thor_v03.gat",	0,	0;	end;
+
+dtoy:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_toy_1,
+		"Level 2",d_toy_2;
+
+d_toy_1:
+	warp "xmas_dun01.gat",	206,	24;	end;
+d_toy_2:
+	warp "xmas_dun02.gat",	129,	133;	end;
+
+dturtle:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Level 1",d_turtle_1,
+		"Level 2",d_turtle_2,
+		"Level 3",d_turtle_3,
+		"Level 4",d_turtle_4;
+
+d_turtle_1:
+	warp "tur_dun01.gat",	149,	238;	end;
+d_turtle_2:
+	warp "tur_dun02.gat",	148,	264;	end;
+d_turtle_3:
+	warp "tur_dun03.gat",	132,	189;	end;
+d_turtle_4:
+	warp "tur_dun04.gat",	100,	192;	end;
+
+//----------------Guild Dungeon----------------\\
+L_gdungeon:
+	mes "[Warper]";
+	mes "Select the level:";
+	next;
+	menu 	"Baldur",d_guild_1,
+		"Luina",d_guild_2,
+		"Valkyrie",d_guild_3,
+		"Britoniah",d_guild_4;
+		
+d_guild_1:
+	warp "gld_dun01.gat",	0,	0;	end;
+d_guild_2:
+	warp "gld_dun02.gat",	0,	0;	end;
+d_guild_3:
+	warp "gld_dun03.gat",	0,	0;	end;
+d_guild_4:
+	warp "gld_dun04.gat",	0,	0;	end;
+
+}
+
+//----------------Towns----------------\\
+alberta.gat,123,59,4	duplicate(warpra)	Warper	951
+aldebaran.gat,145,118,4	duplicate(warpra)	Warper	951
+amatsu.gat,192,81,1	duplicate(warpra)	Warper	951
+ayothaya.gat,144,117,6	duplicate(warpra)	Warper	951
+comodo.gat,194,158,4	duplicate(warpra)	Warper	951
+einbroch.gat,59,205,4	duplicate(warpra)	Warper	951
+einbroch.gat,243,189,2	duplicate(warpra)	Warper	951
+einbech.gat,135,249,4	duplicate(warpra)	Warper	951
+geffen.gat,115,66,4	duplicate(warpra)	Warper	951
+gonryun.gat,151,130,4	duplicate(warpra)	Warper	951
+izlude.gat,133,117,4	duplicate(warpra)	Warper	951
+lighthalzen.gat,155,79,6	duplicate(warpra)	Warper	951
+louyang.gat,210,106,4	duplicate(warpra)	Warper	951
+morocc.gat,156,95,4	duplicate(warpra)	Warper	951
+niflheim.gat,197,190,4	duplicate(warpra)	Warper	951
+prontera.gat,159,190,4	duplicate(warpra)	Warper	951
+payo1.gat,102,118,4	duplicate(warpra)	Warper	951
+rachel.gat,136,119,4	duplicate(warpra)	Warper	951
+umbala.gat,132,130,4	duplicate(warpra)	Warper	951
+xmas.gat,150,136,4	duplicate(warpra)	Warper	951
+yuno.gat,137,162,5	duplicate(warpra)	Warper	951
+prt_monk.gat,231,148,5	duplicate(warpra)	Warper	951
+force_1-2.gat,108,34,5	duplicate(warpra)	Warper	951
+job_thief1.gat,184,54,5	duplicate(warpra)	Warper	951
+payon.gat,188,103,5	duplicate(warpra)	Warper	951
+
+//----------------Dungeons----------------\\
+ama_dun01.gat,233,9,1	duplicate(warpra)	Warper	951
+moc_fild04.gat,207,331,4	duplicate(warpra)	Warper	951
+ayo_fild02.gat,279,154,4	duplicate(warpra)	Warper	951
+izlu2dun.gat,104,82,4	duplicate(warpra)	Warper	951
+prt_sewb1.gat,125,253,4	duplicate(warpra)	Warper	951
+mjolnir_02.gat,85,363,4	duplicate(warpra)	Warper	951
+einbech.gat,81,101,1	duplicate(warpra)	Warper	951
+glast_01.gat,370,308,4	duplicate(warpra)	Warper	951
+yuno_fild03.gat,37,135,4	duplicate(warpra)	Warper	951
+gef_fild10.gat,71,339,4	duplicate(warpra)	Warper	951
+pay_arche.gat,39,135,4	duplicate(warpra)	Warper	951
+moc_ruins.gat,64,166,4	duplicate(warpra)	Warper	951
+moc_fild19.gat,106,97,4	duplicate(warpra)	Warper	951
+alb2trea.gat,73,101,4	duplicate(warpra)	Warper	951
+tur_dun01.gat,148,239,4	duplicate(warpra)	Warper	951
+lhz_dun01.gat,157,285,4	duplicate(warpra)	Warper	951
+hu_fild05.gat,186,210,4	duplicate(warpra)	Warper	951
+yuno_fild07.gat,221,179,4	duplicate(warpra)	Warper	951
+tha_scene01.gat,139,194,1	duplicate(warpra)	Warper	951
+odin_tem01.gat,96,149,4	duplicate(warpra)	Warper	951
+hugel.gat,89,150,5	duplicate(warpra)	Warper	951

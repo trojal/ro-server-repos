@@ -1,0 +1,1 @@
+CC="gcc -pipe" CFLAGS="-g -O2 -ffast-math -Wall -Wno-sign-compare -I../common  -I/usr/include/mysql -g -march=i386 -mcpu=i686" LIB_S="-ldl -L/usr/lib/mysql -lmysqlclient -lz -lcrypt -lnsl -lm"

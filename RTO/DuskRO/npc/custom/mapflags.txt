@@ -1,0 +1,33 @@
+payon	mapflag	nomemo
+payon	mapflag	nopenalty
+force_1-2	mapflag	nowarp
+force_1-2	mapflag	noteleport
+job_thief1	mapflag	nomemo
+job_thief1	mapflag	nopenalty
+prt_monk	mapflag	nomemo
+prt_monk	mapflag	nopenalty
+
+guild_vs5	mapflag	pvp
+guild_vs2	mapflag	pvp
+ball2	mapflag	pvp
+guild_vs1	mapflag	pvp
+guild_vs3	mapflag	pvp
+guild_vs4	mapflag	pvp
+
+guild_vs5	mapflag	pvp_noguild
+guild_vs2	mapflag	pvp_noguild
+guild_vs1	mapflag	pvp_noguild
+guild_vs3	mapflag	pvp_noguild
+guild_vs4	mapflag	pvp_noguild
+ball2	mapflag	pvp_noguild
+
+payo1	mapflag	nopenalty
+
+payo1	mapflag	nobranch
+
+payo1	mapflag	nightenabled
+
+payon	mapflag	nowarpto
+force_1-2	mapflag	nowarpto
+job_thief1	mapflag	nowarpto
+prt_monk	mapflag	nowarpto

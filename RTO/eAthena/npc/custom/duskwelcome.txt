@@ -1,0 +1,26 @@
+ordeal_1-1,149,148,5	script	Welcome to DuskRO	877,{
+	mes "[ Helper ]";
+	mes "Welcome to the wonderful world of DuskRO!";
+	next;
+	mes "[ Helper ]";
+	mes "Our lands are divided between the four legendary Races.";
+	next;
+	mes "[ Helper ]";
+	mes "You have been chosen to continue the war, and perhaps even become the Warrior that saves us from this ever present dusk..";
+	next;
+	mes "[ Helper ]";
+	mes "Onerei... Half beast, half humans who pride themselves in their diversity on the battlefield..";
+	next;
+	mes "[ Helper ]";
+	mes "Daeva... Fierce demons that thrive on pain and despair.";
+	next;
+	mes "[ Helper ]";
+	mes "Elverre... Naturally gifted in marksmanship and magic, they are the guardians of nature.";
+	next;
+	mes "[ Helper ]";
+	mes "Aven... Those who are blessed by the gods and fight purely to end this war.";
+	next;
+	mes "[ Helper ]";
+	mes "Which shall you choose.....";
+	close;
+}

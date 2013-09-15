@@ -1,0 +1,49 @@
+-	script	PCJobLvUpEvent	111,{
+	if(!Class&&JobLevel>=10) goto L_UpNovice;
+	if(Class<7&&JobLevel>=50) goto L_UpFirst;
+	if((Class>6&&Class<22)&&JobLevel>=70) goto L_UpAdvanced;
+	end;
+L_UpAdvanced:
+	jobchange (Class+4001);
+	set JobLevel,71;
+	set JobExp,0;
+	set SkillPoint,SkillPoint-70;
+	specialeffect 267;
+	if(Class==4008||Class==4014) dispbottom "You have advanced to Gladiator!";
+	if(Class==4009) dispbottom "You have advanced to Curate!";
+	if(Class==4010) dispbottom "You have advanced to Invoker!";
+	if(Class==4011) dispbottom "You have advanced to Artisan!";
+	if(Class==4012) dispbottom "You have advanced to Ranger!";
+	if(Class==4013) dispbottom "You have advanced to Slayer!";
+	if(Class==4015||Class==22) dispbottom "You have advanced to Paladin!";
+	if(Class==4016) dispbottom "You have advanced to Archon!";
+	if(Class==4017) dispbottom "You have advanced to Professor!";
+	if(Class==4018) dispbottom "You have advanced to Stalker!";
+	if(Class==4019) dispbottom "You have advanced to Creator!";
+	if(Class==4020) dispbottom "You have advanced to Clown!";
+	if(Class==4021) dispbottom "You have advanced to Gypsy!";
+	end;
+L_UpNovice:
+	skill 1,9,0;
+	set SkillPoint,0;
+	jobchange 4001;
+	set JobLevel,11;
+	set JobExp,0;
+	set SkillPoint,SkillPoint-9;
+	specialeffect2 267;
+	dispbottom "You have advanced to High Novice!";
+	end;
+L_UpFirst:
+	jobchange (Class+4001);
+	set JobLevel,51;
+	set JobExp,0;
+	set SkillPoint,SkillPoint-50;
+	specialeffect2 267;
+	if(Class==1) dispbottom "You have advanced to High Swordman!";
+	if(Class==2) dispbottom "You have advanced to High Mage!";
+	if(Class==3) dispbottom "You have advanced to High Archer!";
+	if(Class==4) dispbottom "You have advanced to High Acolyte!";
+	if(Class==5) dispbottom "You have advanced to High Merchant!";
+	if(Class==6) dispbottom "You have advanced to High Thief!";
+	end;
+}

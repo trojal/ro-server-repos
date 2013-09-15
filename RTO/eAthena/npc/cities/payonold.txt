@@ -1,0 +1,1008 @@
+//---------------------------------------------------------\\
+
+
+pay_dun00,160,142,4	script	Lesser Daeva	899,{
+	set @char_id,getcharid(0);
+	set @racet$, "Daeva";
+	query_sql "SELECT `race` FROM `races` WHERE `char_id` = "+@char_id, @race$;
+	if (raceqstart == 1) goto Start_Daeva;
+	if (daevaqstart == 1) goto Check_Items;
+	if (daevaqstart >= 2) goto Daeva_Warp;
+	if (avenqstart >= 1) goto LulAvenW;
+	if (onereiqstart >= 1) goto LulOnerereiW;
+	if (elverreqstart >= 1) goto LulElverreW;
+	if (aven == 1) goto LulAven;
+	if (onerei == 1) goto LulOnerei;
+	if (elverre == 1) goto LulElverre;
+	if (@race$ == @racet$) goto Daeva;
+	mes "[ Suspicious Man ]";
+	mes "...";
+	close;
+
+Daeva_Warp:
+	mes "[ Strife ]";
+	mes "Hrm...";
+	next;
+	warp "job_thief1.gat",	180,	21; end;	
+
+Start_Daeva:
+	mes "[ Strife ]";
+	mes "We don't accept weaklings. If you want to walk the dark path, kid. You are gonna have to show us a bit of strength and guts...";
+	next;
+	mes "[ Strife ]";
+	mes "10 Bloody Edges.. 10 Old Hilts... 10 Blade Of Darkness...";
+	next;
+	mes "[ Strife ]";
+	mes "^999999 -Eyes a bit-^000000 Hrm. Not enough...";
+	next;
+	mes "[ Strife ]";
+	mes "5 Cursed Seals, 5 Blue Tinted Feathers, 5 Red Tinted Feathers.";
+	next;
+	mes "[ Strife ]";
+	mes "^999999 -Checks watch and grins-^000000 ";
+	mes "And..";
+	next;
+	mes "[ Strife ]";
+	mes "...";
+	next;
+	mes "[ Strife ]";
+	mes "...";
+	mes ".....";
+	next;
+	mes "[ Strife ]";
+	mes "...";
+	mes ".....";
+	mes "1 Valhalla Flower.";
+	next;
+	mes "[ Strife ]";
+	mes "Yeah. That'll work. Bring me those and I'll show you just how far the rabbit hole goes...";
+	mes "If you accept, there's no going back..";
+	menu "Accept",Start_Daeva_Accept,"Decline",Start_Daeva_End;
+Start_Daeva_End:
+	mes "[ Strife ]";
+	mes "...";
+	close;
+Start_Daeva_Accept:
+	set daevaqstart, 1;
+	set raceqstart, 0;
+	close;
+Check_Items:
+	if (countitem(7024) >= 10 && countitem(7022) >= 10 && countitem(7023) >= 10 && countitem(7442) >= 5 && countitem(7441) >= 5 && countitem(7440) >= 5 && countitem(7510) >= 1) goto Daeva_Start_Done;
+	mes "[ Strife ]";
+	mes "Listen. Don't come back until you have brought me those items. If you do...well. Lets just say I hope you have a will written.";
+	close;
+Daeva_Start_Done:
+	delitem 7024,10;
+	delitem 7022,10;
+	delitem 7023,10;
+	delitem 7442,5;
+	delitem 7441,5;
+	delitem 7440,5;
+	delitem 7510,1;
+	set daevaqstart, 2;
+	mes "[ Strife ]";
+	mes "Hrm. Looks like you just might cut it as one of us. Follow.";
+	warp "job_thief1.gat",	180,	21; end;
+LulAvenW:
+	mes "[ Strife ]";
+	mes "You have the scent of an Aven wannabe. Get outta here before I wring your neck..";
+	close;	
+LulOnereiW:
+	mes "[ Strife ]";
+	mes "You have the scent of an Onerei wannabe. Get outta here before I wring your neck..";
+	close;
+LulElverreW:
+	mes "[ Strife ]";
+	mes "You have the scent of an Elverre wannabe. Get outta here before I wring your neck..";
+	close;
+LulAven:
+	mes "[ Strife ]";
+	mes "An Aven.. How pathetic. Get outta here before I use those wings of yours in a new quilt.";
+	close;
+LulElverre:
+	mes "[ Strife ]";
+	mes "Elverre.. Get you and your stupid overgrown ears outta here..";
+	close;
+LulOnerei:
+	mes "[ Strife ]";
+	mes "Onerei.. Get outta here before I tan your hide..";
+	close;
+Daeva:
+	mes "[ Strife ]";
+	mes ".. Whad'ya want?";
+	next;
+	warp "job_thief1.gat",	180,	21; end;
+	close;
+}
+
+job_thief1,178,179,4	script	Greater Daeva	853,{
+	if (daevaqstart == 2) goto Daeva_Quest2_Start;
+	mes "[ Cerunnos ]";
+	mes "...^999999 -Grumbles-^000000";
+	close;
+Daeva_Quest2_Start:
+	mes "[ Cerunnos ]";
+	mes "Heh. So what brings you around here, kid?";
+	menu "Curiosity",D_Curious,"None of your business",D_Business;
+D_Business:
+	next;
+	mes "[ Cerunnos ]";
+	mes "Do you have any idea how many mortals I've laid to waste? ^999999-grumbles-^000000";
+	set Dpersonalityquiz, Dpersonalityquiz + 1;
+	goto Daeva_Quest2_Start1;
+D_Curious:
+	next;
+	mes "[ Cerunnos ]";
+	mes "Curiosity has already claimed millions of cats. I think what we have here is its first human victim.";
+	goto Daeva_Quest2_Start1;
+Daeva_Quest2_Start1:
+	next;
+	mes "[ Cerunnos ]";
+	mes "There is no kindness in our hearts. A heart of a Daeva must be as black as the wings they proudly bear. Could you slay an innocent for sheer enjoyment?";
+	menu ".....",D_weak,"I could sure as hell slay you",D_Slay;
+D_Weak:
+	next;
+	mes "[ Cerunnos ]";
+	mes "Heh. Weakling.";
+	goto Daeva_Quest2_Start2;
+D_Slay:
+	next;
+	mes "[ Cerunnos ]";
+	mes " ^999999-glare-^000000 You could try.";
+	set Dpersonalityquiz, Dpersonalityquiz + 1;
+	goto Daeva_Quest2_Start2;		
+Daeva_Quest2_Start2:
+	next;
+	mes "[ Cerunnos ]";	
+	mes "I've heard from Strife but I'm not quite convinced you are strong enough to make a worthwhile Daeva.";
+	menu "Line em up, I'll knock em down",D_Knock,"Keep saying things like that and you'll regret it",D_regret;
+D_Knock:
+	next;
+	mes "[ Cerunnos ]";
+	mes "Heh. Cute.";
+	goto Daeva_Quest2_Start3;
+D_regret:
+	next;
+	mes "[ Cerunnos ]";
+	mes "That mouth of yours is going to get you into trouble, trash. Keep it up and there won't be anything left to identify...";
+	set Dpersonalityquiz, Dpersonalityquiz + 1;
+	goto Daeva_Quest2_Start3;
+Daeva_Quest2_Start3:
+	if (Dpersonalityquiz < 3) goto D_Fail;
+	next;
+	mes "[ Cerunnos ]";
+	mes "What's the matter, can't handle it already?";
+	menu "... I only wish to lend my strength.",D_Fail,"-Draws Blade-",D_Success;
+D_Success:
+	next;	
+	mes "[ Cerunnos ]";
+	mes "That's it!";
+	set Dpersonalityquiz, 0;
+	set daevaqstart, 3;
+	next;
+	warp "job_thief1.gat",	229,	173; end;
+D_Fail:
+	next;
+	mes "[ Cerunnos ]";
+	mes "^999999-grins-^000000 Boy. We will eat you up and spit you out. Be gone";
+	set Dpersonalityquiz, 0;
+	close;
+}
+
+job_thief1,229,179,4	script	Daeva Queen	859,{
+	if (daevaqstart == 3) goto Daeva_Q3;
+	if (daevaqstart == 4) goto Daeva_Q3_Collect;
+	if (daevaqstart == 2 || daevaqstart == 1) goto Daeva_Q3_2;
+	mes "[ Lilith ]";
+	mes "Young Daeva, leave me be.";
+	close;
+Daeva_Q3:
+	mes "[ Lilith ]";
+	mes "Hrm. I have been keeping my eye on you for quite some time. ^999999-smirk-^000000";
+	next;
+	mes "[ Lilith ]";
+	mes "You certainly have what it takes, however, I'm not quite convinced. You certainly have slain some powerful monsters but I seek a few items to add to my collection.";
+	next;
+	mes "[ Lilith ]";
+	mes "Materials used in a summoning spell. Once this spell is complete our invasion of Payon will be complete.";
+	next;
+	mes "[ Lilith ]";
+	mes "Certainly if you are able to gather this material we will have a place for you within the ranks of Hell.";
+	next;
+	mes "[ Lilith ]";
+	mes "Go now. Bring me 50 Skel-Bone, 50 Horrendous Mouth, 30 Rotten Bandages, 30 Ectoplasm, 15 Bloody Runes, 15 Will of the Darkness, and 5 Darkness Runes.";
+	next;
+	mes "[ Lilith ]";
+	mes "That should be enough to crush those foolish mortals.";
+	set daevaqstart, 4;
+	close;
+Daeva_Q3_2:
+	mes "[ Lilith ]";
+	mes "You are not fit to be in my presence.";
+	close;
+Daeva_Q3_Collect:
+	if (countitem(932) >= 50 && countitem(958) >= 50 && countitem(930) >= 30 && countitem(7220) >= 30 && countitem(7563) >= 15 && countitem(7511) >= 5 && countitem(7340) >= 15) goto Daeva_Q3_Done;
+	mes "[ Lilith ]";
+	mes "Perhaps you are not as strong as I thought you were. Surely this should be a simple task for one deserving a place among us.";
+	close;
+Daeva_Q3_Done:
+	delitem 932,50;
+	delitem 958,50;
+	delitem 930,30;
+	delitem 7220,30;
+	delitem 7563,15;
+	delitem 7511,5;
+	delitem 7340,15;
+	mes "[ Lilith ]";
+	mes "Excellent! The items will be given to our summoners for preparation. Once everything is prepared the summoning will proceed.";
+	next;
+	mes "[ Lilith ]";
+	mes "In the meantime. I must congratulate you on your tremendous victory. As previously agreed you are worthy of joining the Legion of Hell.";
+	next;
+	mes "[ Lilith ]";
+	mes "Close your eyes. Feel the darkness surround you and allow it into your heart..";
+	next;
+	getitem	16018,1;
+	mes "[ Lilith ]";
+	set @name$, strcharinfo(0);
+	set @race$, "Daeva";
+	set @char_id, getcharid(0);
+	set @acc_id, getcharid(3);
+	set @rank, 20;
+	set @points, 150;
+	query_sql "UPDATE `races` SET `race` = '"+escape_sql(@race$)+"' WHERE `char_id` = "+@char_id+"";
+	query_sql "UPDATE `races` SET `rank` = "+@rank+" WHERE `char_id` = "+@char_id+"";
+	query_sql "UPDATE `races` SET `points` = "+@points+" WHERE `char_id` = "+@char_id+"";
+	mes "Open your eyes now! You have been reborn! A walker of shadows you have become. Join your fellow brothers in arms and plunge this world into darkness!";
+	set daevaqstart, 0;
+	set daeva, 1;
+	close;
+}
+
+payo1,89,154,4	script	Sagely Old Man	900,{
+if (daeva == 1 || aven == 1 || onerei == 1 || elverre == 1 || daevaqstart >= 1 || elverreqstart >= 1 || onereiqstart >= 1 || avenqstart >= 1) goto Race_Done;
+if (racestarted == 1) goto Race_Started;
+if (Class > Job_Novice_High && BaseLevel == 99) goto Start_Races;
+	mes "[ Balthasar ]";
+	mes "...Not yet. Your time has not yet come.";
+	close;
+
+Start_Races:
+	mes "[ Balthasar ]";
+	mes "....You look strong enough...";
+	next;
+	mes "[ Balthasar ]";
+	mes "Yes. Yes! You just might be the one.";
+	next;
+	mes "[ Balthasar ]";
+	mes "Congratulations on your grand accomplishment! Please take this ring...";
+	getitem 16023,1;
+	next;
+	mes "[ Balthasar ]";
+	mes "Seek out Caspar...that drunkard. I suggest following the smell of booze...now lets see...";
+	next;
+	mes "[ Balthasar ]";
+	mes "Last I heard from him..he was in a big city. P...all I remember is the P.";
+	set racestarted,1;
+	set raceq1,1;
+	close;
+
+Race_Done:
+	mes "[ Balthasar ]";
+	mes "..So I was right..";
+	close;
+
+Race_Started:
+	mes "[ Balthasar ]";
+	mes "Seek out Caspar..";
+	close;
+}
+
+prt_in,179,10,4	script	Sagely Old Man	900,{
+	if (getequipid(7) == 16023 || getequipid(8) == 16023) goto Start_Races2;
+	mes "[ Caspar ]";
+	mes "HEY KID...HICCUP...I'M A COMPUTER...STOP..-^999999drool^000000-..";
+	next;
+	mes "[ Caspar ]";
+	mes "..STOP ALL THE DOWNLOADING..!!";
+	close;
+
+Start_Races2:
+	mes "[ Caspar ]";
+	mes "HICCUP...-^999999sniff^000000-...that...-^999999grin^000000..";
+	next;
+	mes "[ Caspar ]";
+	mes "HICCUP..You must have met..-^999999sniff^000000- my brother....Balth...HICCUP...Balthasar..";
+	next;
+	mes "[ Caspar ]";
+	mes "One of...HICCUP..those people...ehehehehe..now...Melchior is..HICCUP..the man to talk to...maybe you..-^999999stare^000000-..";
+	next;
+	mes "[ Caspar ]";
+	mes "..you can end the war..HICCUP...or just die..ehehehehe";
+	next;
+	mes "[ Caspar ]";
+	mes "Water...a city...by the..HICCUP...water..";
+	set raceq1,2;
+	close;
+}
+
+hugel,215,162,4	script	Mysterious Young Man	902,{
+	if (raceq1 == 2) goto check_ringhonor;
+	mes "[ Melchior ]";
+	mes ".....Peace...all I ask for is peace...";
+	close;
+check_ringhonor:
+	if (getequipid(7) == 16023 || getequipid(8) == 16023) goto Start_Races3;
+	mes "[ Melchior ]";
+	mes ".....Peace...all I ask for is peace...";
+	close;
+
+Start_Races3:
+	mes "[ Melchior ]";
+	mes "Say nothing. I know why you are here. My older brothers have sent you.";
+	next;
+	mes "[ Melchior ]";
+	mes "And Caspar probably said something about ending a war...hm.";
+	next;
+	mes "[ Melchior ]";
+	mes "He's never been the same since that young man. -sigh-....In any case. Caspar is right. There is a war.";
+	next;
+	mes "[ Melchior ]";
+	mes "A war that has been raging for centuries. On worlds not unlike this one. Daeva...Aven...Onerei...Elverre.. They are among us. Anonymity is their signature. Silence; Their native tongue.";
+	next;
+	mes "[ Melchior ]";
+	mes "I feel that the tides of war follow you. To whichever side you choose...the tides will favor.";
+	next;
+	mes "[ Melchior ]";
+	mes  "In the forest of Payon...the Elverre live. Protectors of the Green. In the deserts of Morroc...the Onerei. Spiritual Beasts who only find true happiness on the battlefield. In the wilds of Prontera...the Aven. Messengers of God and last...in the hidden caves beneath Payon...the Daeva. Hell's legion.";
+	next;
+	mes "[ Melchior ]";
+	delitem 16023,1;
+	set raceqstart, 1;
+	mes "Go now, Chosen one! May the wind be at your back!";
+	close;
+}
+
+moc_fild16,205,293,4	script	Onerei Warrior	813,{
+	set @char_id,getcharid(0);
+	set @racet$, "Onerei";
+	query_sql "SELECT `race` FROM `races` WHERE `char_id` = "+@char_id, @race$;
+	if (raceqstart == 1) goto Start_Onerei;
+	if (onereiqstart == 1) goto Check_Items;
+	if (onereiqstart >= 2) goto onerei_nub;
+	if (avenqstart >= 1 || elverreqstart >= 1 || daevaqstart >= 1 || aven == 1 || elverre == 1 || daeva == 1) goto LulOther;
+	if (@race$ == @racet$) goto Onerei;
+	mes "[ Warrior ]";
+	mes "....Be gone.";
+	close;
+LolOther:
+	mes "[ Warrior ]";
+	mes "I hope your feet..";
+	close;
+Onerei:
+	mes "[ Warrior ]";
+	mes "Enter...";
+	next;
+	warp "in_moc_16.gat",	18,	10; end;
+Start_Onerei:
+	mes "[ Warrior ]";
+	mes "Prove your worth.";
+	next;
+	mes "[ Warrior ]";
+	mes "20 Skulls and 10 Ancient Tooth.";
+	next;
+	mes "[ Warrior ]"; 
+	mes "We accept no weaklings.";
+	next;
+	mes "[ Warrior ]";
+	mes "If you accept, there's no going back..";
+	menu "Accept",Start_Onerei_Accept,"Decline",Start_Onerei_End;
+Start_Onerei_End:
+	mes "[ Warrior ]";
+	mes "...";
+	close;
+Start_Onerei_Accept:
+	set onereiqstart, 1;
+	set raceqstart, 0;
+	close;
+Check_Items:
+	if (countitem(7005) >= 20 && countitem(1053) >= 10) goto check_itemsdone;
+	mes "[ Warrior ]";
+	mes "Be gone.. Don't return until you have the items..";
+	close;
+check_itemsdone:
+	delitem 7005,20;
+	delitem 1053,10;
+	set onereiqstart, 2;
+	mes "[ Warrior ]";
+	mes "Enter...";
+	next;
+	warp "in_moc_16.gat",	18,	10; end;
+onerei_nub:
+	mes "[ Warrior ]";
+	mes "Enter...";
+	next;
+	warp "in_moc_16.gat",	18,	10; end;
+}
+
+in_moc_16,21,19,4	script	Onerei Elder	876,{
+	if (onereiqstart == 2) goto Onerei_Start2;
+	if (onereiqstart == 3) goto Onerei_Start22;
+	mes "[ Elder ]";
+	mes "...";
+	close;
+Onerei_Start2:
+	mes "[ Elder ]";
+	mes "You have proven your worth from a physical stand point. Your weapons are sharp but is your spirit?";
+	next;
+	mes "[ Elder ]";
+	mes "That is your current task. Show me the strength of your soul.";
+	next;
+	mes "[ Elder ]";
+	mes "I will ask that you collect these items. From them I will create a mixture that will show me your spirit. If I find it wanning in anyway...you're bones will become dust and your flesh fed to our livestock. It is the way it must be.";
+	next;
+	mes "[ Elder ]";
+	mes "Bring me 10 White Herbs, 10 Blue Herbs, 20 Scells, 5 Ment, 10 Aloe Leaflet, 10 Fluorescent Liquid, and 15 Prickly Fruit.";
+	next;
+	set onereiqstart,3;
+	mes "[ Elder ]";
+	mes "Go now. Return to me once you have gathered those items.";
+	close;
+Onerei_Start22:
+	if (countitem(509) >= 10 && countitem(510) >= 10 && countitem(911) >= 20 && countitem(708) >= 5 && countitem(521) >= 10 && countitem(7326) >= 10 && countitem(576) >= 15) goto Onerei_start2_done;
+	mes "[ Elder ]";
+	mes "Hurry child. There is no time to waste.";
+	close;
+Onerei_start2_done:
+	delitem 509,10;
+	delitem 510,10;
+	delitem 911,20;
+	delitem 708,5;
+	delitem 521,10;
+	delitem 7326,10;
+	delitem 576,15;
+	mes "[ Elder ]";
+	mes "Excellent. This will only take a few moments.";
+	next;
+	mes "[ Elder ]";
+	set onereiqstart,4;
+	mes "Hrm. You certainly have the spirit of a Onerei. Gareif has your final task. Speak to him.";
+	close;
+}
+
+in_moc_16,21,26,4	script	Onerei Elder	931,{
+	if (onereiqstart == 4) goto onerei_start3;
+	if (onereiqstart == 5) goto Onerei_Start32;
+	mes "[ Gareif ]";
+	mes "...";
+	close;
+onerei_start3:
+	mes "[ Gareif ]";
+	mes "I am not yet satisfied. You have not shown the lust for battle yet. Bring me the skulls of ten warriors...";
+	set onereiqstart,5;
+	close;
+Onerei_Start32:
+	if (countitem(7420) >= 10) goto onerei_start_done;
+	mes "[ Gareif ]";
+	set @character$,strcharinfo(0);
+	mes "Weakness will not be tolerated.";
+	next;
+	atcommand "@kill "+@character$;
+	close;
+onerei_start_done:
+	delitem 7420,10;
+	mes "[ Gareif ]";
+	mes "I see.";
+	next;
+	mes "[ Gareif ]";
+	mes "You show great promise. We will begin the ceremony immediately. Please now relax your body and shut your eyes.";
+	next;
+	mes "^993333- You close your eyes, and feel a liquid being applied to your forehead -^000000";
+	next;
+	mes "[ Gareif ]";
+	mes "Feel Mother Gaia in your veins. Become one with her and be reborn...";
+	next;
+	getitem 16015,1;
+	mes "[ Gareif ]";
+	set @name$, strcharinfo(0);
+	set @race$, "Onerei";
+	set @char_id, getcharid(0);
+	set @acc_id, getcharid(3);
+	set @rank, 18;
+	set @points, 150;
+	query_sql "UPDATE `races` SET `race` = '"+escape_sql(@race$)+"' WHERE `char_id` = "+@char_id+"";
+	query_sql "UPDATE `races` SET `rank` = "+@rank+" WHERE `char_id` = "+@char_id+"";
+	query_sql "UPDATE `races` SET `points` = "+@points+" WHERE `char_id` = "+@char_id+"";
+	mes "Welcome, child. Go now. Hone your fangs, claws and blade.";
+	set onereiqstart, 0;
+	set onerei, 1;
+	close;
+}
+
+pay_fild10,156,255,4	script	Elverre Ranger	868,{
+	set @char_id,getcharid(0);
+	set @racet$, "Elverre";
+	query_sql "SELECT `race` FROM `races` WHERE `char_id` = "+@char_id, @race$;
+	if (raceqstart == 1) goto Start_Elverre;
+	if (elverreqstart >= 1) goto elverre_nub;
+	if (avenqstart >= 1 || onereiqstart >= 1 || daevaqstart >= 1 || aven == 1 || onerei == 1 || daeva == 1) goto LulOther;
+	if (@race$ == @racet$) goto Elverre;
+	mes "[ Revion ]";
+	mes "Be wary. I have heard a powerful monster makes its home nearby...";
+	close;
+LulOther:
+	mes "[ Revion ]";
+	mes "Get outta here..";
+	close;
+Elverre:
+	mes "^993333- Nods -^000000";
+	next;
+	warp "payon.gat",	165,	59; end;
+elverre_nub:
+	mes "[ Revion ]";
+	mes "You again...";
+	next;
+	warp "payon.gat",	165,	59; end;		
+Start_Elverre:
+	mes "[ Revion ]";
+	mes "!";
+	next;
+	mes "[ Revion ]";
+	mes "Can you hear that?";
+	next;
+	set @TEMP,rand(4);
+	if (@TEMP == 0){ mes "^993333- You hear nothing -^000000";
+			close;
+			}
+	if (@TEMP == 1){ mes "^993333- You hear nothing -^000000";
+			close;
+			}
+	if (@TEMP == 2){ mes "^993333- You hear nothing -^000000";
+			close;
+			}
+	if (@TEMP == 3){ mes "^993333- You can hear whispering amongst the rustling of leaves -^000000";
+			menu "Yes",yes_elverre,"No",no_elverre;
+yes_elverre:
+	next;
+	mes "[ Revion ]";
+	mes "!";
+	next;
+	mes "[ Revion ]";
+	mes "That must mean...";
+	next;
+	mes "[ Revion ]";
+	mes "Come with me...";
+	mes "If you accept, there's no going back..";
+	menu "Accept",Start_Elverre_Accept,"Decline",Start_Elverre_End;
+Start_Elverre_End:
+	mes "[ Gareif ]";
+	mes "...";
+	close;
+Start_Elverre_Accept:
+	set elverreqstart, 1;
+	set raceqstart, 0;
+	warp "payon.gat",	165,	59; end;
+no_elverre:
+	mes "[ Revion ]";
+	mes "No? I must be mistaken than. I'm sorry.";
+	close;		
+			}
+}
+
+payon.gat,191,171,4	script	Elverre Ranger	832,{
+	if (elverreqstart == 1) goto elverre_start1;
+	mes "[ Imirathon ]";
+	mes "...";
+	close;
+elverre_start1:
+	mes "[ Imirathon ]";
+	mes "Excellent. I was told of your arrival. Welcome to the Sarine.";
+	next;
+	mes "[ Imirathon ]";
+	mes "This will be your home until the results of your test. Afterwards, depending on your test, this will become your permnant home...or...";
+	next;
+	mes "[ Imirathon ]";
+	mes "....your final resting place. Its a lot to take in but its the way it must be. Now if you....";
+	next;
+	mes "[ Imirathon ]";
+	mes "Hrm...Arun is calling you.";
+	next;
+	set elverreqstart,2;
+	warp "payon.gat",	145,	223; end;
+}
+
+payon.gat,145,230,5	script	Old Elverre	847,{
+	if (elverreqstart == 2) goto elverre_start2;
+	if (elverreqstart == 3) goto elverre_start22;
+	mes "[ Arun ]";
+	mes "Thankyou again.";
+	close;
+elverre_start2:
+	mes "[ Arun ]";
+	mes "I'm sorry to interrupt your test but a Captain's life hangs in the balance. He was poisoned by the blade of a Daeva and I am afraid all of our capable fighters have gone off to combat a formidable monster.";
+	next;
+	mes "[ Arun ]";
+	mes "I can create an antidote however...I will need some items. I would get it myself but...";
+	next;
+	mes "[ Arun ]";
+	mes "I am too old to hold a sword steady and my eyes aren't as good as they use to be.";
+	next;
+	mes "[ Arun ]";
+	mes "I need you to collect the items. As quick as possible...";
+	next;
+	mes "[ Arun ]";
+	mes "The items are..20 Sticky Poison, 10 Tough Vines, 10 Maneater Blossoms, 10 Conch, 5 Aloe leaflet and 1 Animal Gore.";
+	set elverreqstart,3;
+	next;
+	mes "[ Arun ]";
+	mes "Now. Please hurry.";
+	close;
+elverre_start22:
+	if (countitem(7565) >= 20 && countitem(7197) >= 10 && countitem(1032) >= 10 && countitem(961) >= 10 && countitem(521) >= 5 && countitem(702) >= 1) goto elverre_start_fini;
+	mes "[ Arun ]";
+	mes "Please hurry..";
+	close;
+elverre_start_fini:
+	delitem 7565,20;
+	delitem 7197,10;
+	delitem 1032,10;
+	delitem 961,10;
+	delitem 521,5;
+	delitem 702,1;
+	set elverreqstart,4;
+	mes "[ Arun ]";
+	mes "Excellent! I will create the needed antidote now. It will take only a few moments";
+	next;
+	mes "[ Arun ]";
+	mes "....He is resting now. Follow me. You must see the Elverre Lord...";
+	next;
+	warp "payon.gat",	184,	314; end;
+}
+
+payon.gat,180,319,4	script	Elverre Lord	878,{
+	if (elverreqstart == 4) goto elverre_start3;
+	if (elverreqstart == 5) goto elverre_start32;
+	mes "[ Aearion ]";
+	mes "Leave me be..";
+	close;
+elverre_start3:
+	mes "[ Aearion ]";
+	mes "I have heard what you have done for Eruadon. On his behalf and behalf of all the Elverre, I thank you.";
+	next;
+	mes "[ Aearion ]";
+	mes "Now onto the matters most pressing. Your test.";
+	next;
+	mes "[ Aearion ]";
+	mes "I will warn you now. It is not a task to be taken lightly. As an Elverre fighter you will be tasked with taking on not only warriors among the other warring factions but marks far too dangerous for normal humans.";
+	next;
+	mes "[ Aearion ]";
+	mes "In light of that situation we must ask you to bring us proof of conquests. We ask you to defeat dangerous monsters. Are you prepared?";
+	menu "Of course!",elverre_q_2,"Not yet..",elverre_q_close;
+elverre_q_close:
+	next;
+	mes "[ Aearion ]";
+	mes "I understand. This is quite the undertaking. Return to me when you are prepared...";
+	close;
+elverre_q_2:
+	next;
+	mes "[ Aearion ]";
+	mes "Great. I ask you to bring me these items as proof of your worth.";
+	next;
+	mes "[ Aearion ]";
+	mes "20 Anolian Skin, 20 Claw of Desert Wolf, 20 Turtle Shell, 20 Leopard Skin, 10 Rotten Meat, 10 Antelope Horn, 10 Nose Rings, 10 Nine Tails, 10 Sea Otter Fur, 5 Talon of Griffon, 5 Cat's Eye, 5 Claw of Monkey, 1 Ant Jaw and 1 Fang of Garm.";
+	set elverreqstart,5;
+	next;
+	mes "[ Aearion ]";
+	mes "Go now. Make haste. Our enemies do not rest nor do they waver.";
+	close;
+elverre_start32:
+	if (countitem(7003) >= 20 && countitem(7030) >= 20 && countitem(967) >= 20 && countitem(7171) >= 20 && countitem(7564) >= 10 && countitem(7106) >= 10 && countitem(941) >= 10 && countitem(1022) >= 10 && countitem(7065) >= 10 && countitem(7048) >= 5 && countitem(7263) >= 5 && countitem(7011) >= 5 && countitem(1014) >= 1 && countitem(7036) >= 1) goto elverre_done;
+	mes "[ Aearion ]";
+	mes "...If you forfeit this task..I'm afraid you forfeit your life.";
+	close;	
+elverre_done:
+	delitem 7003,20;
+	delitem 7030,20;
+	delitem 967,20;
+	delitem 7171,20;
+	delitem 7564,10;
+	delitem 7106,10;
+	delitem 941,10;
+	delitem 1022,10;
+	delitem 7065,10;
+	delitem 7048,5;
+	delitem 7263,5;
+	delitem 7011,5;
+	delitem 1014,1;
+	delitem 7036,1;
+	mes "[ Aearion ]";
+	mes "Excellent! You have succeeded in the conquests I have asked you to partake in. You truely are deserving to join us in our cause.";
+	next;
+	mes "[ Aearion ]";
+	mes "Now. If you will close your eyes and listen to the trees as they speak into your heart..";
+	next;
+	mes "[ Aearion ]";
+	mes "Can you hear them? Pulling you closer to the Wood? Fall into its arms and be reborn...";
+	next;
+	getitem 16016,1;
+	mes "[ Aearion ]";
+	set @name$, strcharinfo(0);
+	set @race$, "Elverre";
+	set @char_id, getcharid(0);
+	set @acc_id, getcharid(3);
+	set @rank, 19;
+	set @points, 150;
+	query_sql "UPDATE `races` SET `race` = '"+escape_sql(@race$)+"' WHERE `char_id` = "+@char_id+"";
+	query_sql "UPDATE `races` SET `rank` = "+@rank+" WHERE `char_id` = "+@char_id+"";
+	query_sql "UPDATE `races` SET `points` = "+@points+" WHERE `char_id` = "+@char_id+"";
+	mes "Open your eyes, "+strcharinfo(0)+". Welcome home.";
+	set elverreqstart, 0;
+	set elverre, 1;
+	close;
+}
+
+prt_fild03,366,258,4	script	Aven Guardian	935,{
+	set @char_id,getcharid(0);
+	set @racet$, "Aven";
+	query_sql "SELECT `race` FROM `races` WHERE `char_id` = "+@char_id, @race$;
+	if (raceqstart == 1) goto Start_Aven;
+	if (avenqstart == 1) goto Check_Items_A;
+	if (avenqstart >= 2) goto aven_nub;
+	if (onereiqstart >= 1 || elverreqstart >= 1 || daevaqstart >= 1 || onerei == 1 || elverre == 1 || daeva == 1) goto LulOther;
+	if (@race$ == @racet$) goto aven;
+	mes "[ Tabris ]";
+	mes "Be gone from this place, Mortal. You are insignificant.";
+	close;
+aven:
+	mes "[ Tabris ]";
+	mes "Welcome Brother...";
+	next;
+	warp "prt_monk.gat",	29,	248; end;
+LulOther:
+	mes "[ Tabris ]";
+	mes "Be gone. My blade screams for your blood.";
+	close;
+aven_nub:
+	mes "[ Tabris ]";
+	mes "Welcome...";
+	next;
+	warp "prt_monk.gat",	29,	248; end;
+Start_Aven:
+	mes "[ Tabris ]";
+	mes "....You have not yet seen the horrors of the evil we face. Only once your hands have become stained with the blood of the wicked may you gain entrance.";
+	next;
+	mes "[ Tabris ]";
+	mes "10 Helm of Dullahan, 5 Skull Rings, and 1 Sharpened Legbone of Ghoul. Those are the trophies you must collect from the bodies of the damned you slay.";
+	mes "If you accept, there's no going back..";
+	menu "Accept",Start_Aven_Accept,"Decline",Start_Aven_End;
+Start_Aven_End:
+	mes "...";
+	close;
+Start_Aven_Accept:
+	next;
+	set avenqstart, 1;
+	set raceqstart, 0;	
+	mes "[ Tabris ]";
+	mes "Go now. Show me just how far your faith will guide you.";
+	close;
+Check_Items_A:
+	if (countitem(7209) >= 10 && countitem(2609) >= 1 && countitem(1260) >= 1) goto check_itemsdone;
+	//if (countitem(7209) >= 10 && countitem(2609) >= 5 && countitem(1260) >= 1) goto aven_q1_done;
+	mes "[ Tabris ]";
+	mes "Perhaps your faith is wanning...If so be gone now, for I have no times for those weak in heart.";
+	close;
+check_itemsdone:
+	delitem 7209,10;
+	delitem 2609,5;
+	delitem 1260,1;
+	mes "[ Tabris ]";
+	mes "....I see...then Xaziel was correct.";
+	set avenqstart,2;
+	next;
+	mes "[ Tabris ]";
+	mes "Welcome to a paradise among men. The glory of God. Hulle Granz.";
+	next;
+	warp "prt_monk.gat",	29,	248; end;
+}
+
+prt_monk,31,255,4	script	Aven Cleric	908,{
+	if (avenqstart == 2) goto aven_q2_start;
+	mes "[ Leliel ]";
+	mes "...?";
+	close;
+aven_q2_start:
+	mes "[ Leliel ]";
+	mes "Its you! There have been rumors about a new ones joining our rank but I never thought.. Amazing! Hurry now! You must complete the process of purification";
+	next;
+	mes "[ Leliel ]";
+	mes "By the way. Welcome to Hulle Granz, a place where Aven's may lay down their swords and rest their God graced wings.";
+	next;
+	mes "[ Leliel ]";
+	mes "Anyways! Come come hurry!";
+	set avenqstart,3;
+	next;
+	warp "monk_in.gat",	97,	71; end;
+}
+
+monk_in,100,71,4	script	Aven Old Man	932,{
+	if (avenqstart == 3) goto aven_q3_start;
+	if (avenqstart == 4) goto aven_q3_collect;
+	mes "[ Sandalphon ]";
+	mes "...?";
+	close;
+aven_q3_start:
+	mes "[ Sandalphon ]";
+	mes "God smiles upon us. He has delivered a worthy one to us.";
+	next;
+	mes "[ Sandalphon ]";
+	mes "You will play an important role in the war to come, my child. However. Just because you are one selected by God does not mean you are free from trial and tribulation.";
+	next;
+	mes "[ Sandalphon ]";
+	mes "No. We must put your faith to test. How far will your conviction truely carry you?";
+	next;
+	mes "[ Sandalphon ]";
+	mes "You will be forced to stare evil in the face and be victorious. Bring me these trophies as proof of your conquests.";
+	next;
+	mes "[ Sandalphon ]";
+	set avenqstart,4;	
+	mes "20 Evil Horns, 20 Little Evil Wings, 20 Little Evil Horns, 10 Bloody Runes, 5 Darkness Runes, 1 Executioners Mitten.";
+	next;
+	mes "[ Sandalphon ]";
+	mes "Go now, chosen one. Do not return until your task has been completed. Only then will you be able to continue on your path of ascension.";
+	close;
+aven_q3_collect:
+	if (countitem(923) >= 20 && countitem(1039) >= 20 && countitem(1038) >= 20 && countitem(7563) >= 10 && countitem(7511) >= 5 && countitem(7017) >= 1) goto aven_q3_done;
+	mes "[ Sandalphon ]";
+	mes "I have faith in you. Go now. The wicked do not rest so neither may we.";
+	close;
+aven_q3_done:
+	delitem 923,20;
+	delitem 1039,20;
+	delitem 1038,20;
+	delitem 7563,10;
+	delitem 7511,5;
+	delitem 7017,1;
+	set avenqstart,5;
+	mes "[ Sandalphon ]";
+	mes "Excellent! Your conviction is strong. Your faith of steel! Now the last task stands before you.";
+	next;
+	mes "[ Sandalphon ]";
+	mes "Go now. Find Zeruel among our fallen brethren. He will give your final task.";
+	close;
+}
+
+prt_monk,236,262,4	script	Aven Cherubim	920,{
+	if (avenqstart == 5) goto aven_q4_start;
+	mes "[ Zeruel ]";
+	mes "....";
+	close;
+aven_q4_start:
+	mes "[ Zeruel ]";
+	mes "Do you fear death?";
+	menu "Yes",aven_q41_true,"No",aven_q41_false;
+aven_q41_true:
+	next;
+	mes "[ Zeruel ]";
+	mes "You have every right to fear death..in the end your existance is split. Your soul will know the neverending love of the Gods but your body will know only the cold embrace of the earth.";
+	goto aven_q4_2;
+aven_q41_false:
+	next;
+	mes "[ Zeruel ]";
+	set @avenqpoints, @avenqpoints+1;
+	mes "That is the answer of either a fool or a man of blind faith.";
+	goto aven_q4_2;
+aven_q4_2:
+	next;
+	mes "[ Zeruel ]";
+	mes "Look around you. The bodies of the innocent and of the brave surround you. For whom do you brandish your weapon?";
+	menu "The Brave",aven_q2_1,"The Innocent",aven_q2_2;
+aven_q2_1:
+	next;
+	mes "[ Zeruel ]";
+	mes "Revenge taints the heart. It turns man into beast and surely darkens our proud white wings.";
+	goto aven_q4_3;
+aven_q2_2:
+	next;	
+	mes "[ Zeruel ]";
+	mes "An end to suffering. It is unfortunate that it must come to this but only will the voices of our swords bring about an end to this turmoil that has taken so much.";
+	set @avenqpoints, @avenqpoints+1;
+	goto aven_q4_3;
+aven_q4_3:
+	next;
+	mes "[ Zeruel ]";
+	mes "Friends. Family. Even those you love. Are ultimately put in harms way by taking part in this crusade...either by standing beside you and in other circumstance standing against you.";
+	next;
+	mes "[ Zeruel ]";
+	mes "When the time comes...can you end the life of someone you hold dear to your heart for the greater good?";
+	menu "Yes",aven_q3_true,"No",aven_q3_false;
+aven_q3_true:
+	next;
+	mes "[ Zeruel ]";
+	set @avenqpoints, @avenqpoints+1;
+	mes "Faith can sometimes be a cold thing. By putting your trust in the cross you must be prepare to brandish your weapon against even those closest to you. It is this kind of conviction we seek.";
+	goto aven_q4_4;
+aven_q3_false:
+	next;
+	mes "[ Zeruel ]";
+	mes "It is a hard thing one must do however ending the life of one...may save the life of many. Would you throw away ten lives merely to save yourself heartache?";
+	goto aven_q4_4;
+aven_q4_4:
+	next;	
+	mes "[ Zeruel ]";
+	mes "Even the mighty fall. Defeat is something everyone tastes in one form or another. Some savor defeat and relish in its bitter sweet taste while others are disgusted by it and seek only the sweet taste of victory...which do you hunger for?";
+	menu "Sweet taste of victory..",aven_q4_victory,"Bitter taste of defeat..",aven_q4_defeat;
+aven_q4_victory:
+	next;
+	mes "[ Zeruel ]";
+	mes "That hunger is an apetite of destruction. Such drives cloud the mind and hinder true growth.";
+	goto aven_q4_5;
+aven_q4_defeat:
+	next;
+	mes "[ Zeruel ]";
+	mes "Only when one can welcome defeat and embrace it can one grow powerful. For whatever does not kill you...makes you...^999999-smirk-^000000";
+	set @avenqpoints, @avenqpoints+1;
+	goto aven_q4_5;
+aven_q4_5:
+	if (@avenqpoints < 4) goto aven_q4_fail;
+	next;
+	mes "[ Zeruel ]";
+	mes "Draw your blade and fight me.";
+	menu "-Back Away-",aven_q5_fail,"-Draw Blade-",aven_q5_pass;
+aven_q5_fail:
+	next;
+	set @avenqpoints, 0;
+	mes "[ Zeruel ]";
+	mes "Coward. Such acts are not fit for Avens.";
+	close;
+aven_q5_pass:
+	next;
+	mes "[ Zeruel ]";
+	mes "Even in the face of utter oblivion you hold fast to your blade and trust in the Gods?";
+	next;
+	mes "[ Zeruel ]";
+	mes "....";
+	next;
+	mes "[ Zeruel ]";
+	set @avenqpoints, 0;
+	set avenqstart,6;
+	mes "Bardiel is calling you. Go now.";
+	next;
+	warp "monk_test.gat",	319,	134; end;
+aven_q4_fail:
+	set @avenqpoints, 0;
+	mes "[ Zeruel ]";
+	mes "You are not yet ready..";
+	close;
+}
+
+monk_test,320,140,4	script	Child Seraphim	922,{
+	if (avenqstart == 6) goto aven_q5;
+	mes "[ Bardiel ]";
+	mes "I await the voice of God. O'Lord. Grant me guidance...";
+	close;
+aven_q5:
+	mes "[ Bardiel ]";
+	mes "It has been done. The Gods have spoken to me. You have shown us you are capable of slaying even the most darkest of evil and proven yourself to be a retainer of the proper traits of an Aven.";
+	next;
+	mes "[ Bardiel ]";
+	mes "Close your eyes.";
+	next;
+	mes "[ Bardiel ]";
+	mes "Allow the Gods' grace to fill you. Accept your wings and join his kingdom as a knight under their holy order. "+strcharinfo(0)+", you are no longer a mere mortal but instead the Gods Divine Wrath.";
+	next;
+	getitem 16020,1;
+	mes "[ Bardiel ]";
+	set @name$, strcharinfo(0);
+	set @race$, "Aven";
+	set @char_id, getcharid(0);
+	set @acc_id, getcharid(3);
+	set @rank, 17;
+	set @points, 150;
+	query_sql "UPDATE `races` SET `race` = '"+escape_sql(@race$)+"' WHERE `char_id` = "+@char_id+"";
+	query_sql "UPDATE `races` SET `rank` = "+@rank+" WHERE `char_id` = "+@char_id+"";
+	query_sql "UPDATE `races` SET `points` = "+@points+" WHERE `char_id` = "+@char_id+"";
+	mes "Open yours eyes and go. Witness the chaos for yourself and allow the voice of your blade to bring about peace. Once and for all.";
+	set avenqstart, 0;
+	set aven, 1;
+	close;
+}

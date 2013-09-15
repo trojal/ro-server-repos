@@ -1,0 +1,1746 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////\
+//  Minesweeper! // v0.95 ////////////////////////////////////////////////////////////////////////\
+///////////////////////////////////////////////////////////////////////////////////////////////////\
+//=========== Written by =========================================================================//
+// Dubby                                                                                          //
+//=========== Compatible with ====================================================================//
+// Tested with SVN 2555 Version                                                                   //
+//                                                                                                //
+//=========== Description ========================================================================//
+// This is a 9x9 poring version of the infamous pc game, Minesweeper.                             //
+//                                                                                                //
+//=========== Map Info ===========================================================================//
+// ["minesweep" is "job_knt"]                                                             //
+//                                                                                                //
+//=========== Version History ====================================================================//
+// v0.95 - [Dubby] - Fixed waiting rooms not going away (I think)                                 //
+// v0.94 - [Dubby] - Found and fixed point exploit                                                //
+// v0.93 - [Dubby] - Debugging completed, script is fully functional, albeit a few kinks          //
+//                                                                                                //
+//=========== Known Problems =====================================================================//
+// 1. [Dubby] Bizarre "shrinking" problem rarely affects tiles 72 - 81 (Does not affect the       //
+//            gameplay in the least bit)                                                          //
+// 2. [Dubby] Occassional "mismatched" victory points cause an early victory.  Only occurs when   //
+//            there are only a few porings left to click on, such as 2 or 3.                      //
+//                                                                                                //
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//---Mapflags----------------------------------------------------------------------------------
+minesweep	mapflag	nosave	SavePoint
+minesweep	mapflag	noreturn
+minesweep	mapflag	pvp	off
+minesweep	mapflag	nopenalty
+minesweep	mapflag	nozenypenalty
+minesweep	mapflag	nomemo
+minesweep	mapflag	nobranch
+minesweep	mapflag	noteleport
+minesweep	mapflag	nowarp
+minesweep	mapflag	nowarpto
+
+//---Main NPC----------------------------------------------------------------------------------
+minesweep,124,75,5	script	Minesweeper1	770,{
+		if ($@MSReady == 1) goto M_NotReady;
+	M_Menu:
+		if ($@MSOn == 1) goto M_Menu2;
+		mes "[Room Controller]";
+		mes "Hello "+strcharinfo(0)+", welcome to Minesweeper!";
+		next;
+		if (getgmlevel() == 0) menu "Information",M_Info,"Start Game",-,"Leave Room",M_Exit;
+		if (getgmlevel() > 79) menu "Information",M_Info,"Start Game",-,"Control Panel",M_Control,"Leave Room",M_Exit;
+	M_Start:
+		mes "[Room Controller]";
+		mes "The board is 9x9, with 81 tiles.  You may set the mine count to a minimum of "+$MSMinimum+", and a maximum of "+$MSMaximum+".";
+		next;
+		mes "[Room Controller]";
+		mes "Please input the amount of mines to be planted on the field.";
+	M_RepeatInput:
+		next;
+		input $@MSAmount;
+		next;
+		if ($@MSAmount < $MSMinimum || $@MSAmount > $MSMaximum) message strcharinfo(0),"The number cannot be below "+$MSMinimum+", and cannot be above "+$MSMaximum+"!";
+		if ($@MSAmount < $MSMinimum || $@MSAmount > $MSMaximum) goto M_RepeatInput;
+		mes "[Room Controller]";
+		mes "Alright, you have set "+$@MSAmount+" mines!  The room will activate shortly!";
+		close2;
+		set $@MSOn,1;
+		goto L_Timer;
+	M_Menu2:
+		if ($@MSCD == 1) end;
+		mes "[Room Controller]";
+		mes "The game is in progress.  What would you like to do?";
+		mes " ";
+		mes " ";
+		set $@MSMNTM,(((getnpctimer(0,"Minesweeper1") / 2000) / 60) %60);
+		set $@MSSETM,((getnpctimer(0,"Minesweeper1") / 2000) % 60);
+		if ($@MSSETM == 0 ) goto M_NewMin1;
+		if ($@MSSETM >= 51 ) goto M_Addzero1;
+		mes "[Time remaining: " + (4-$@MSMNTM) + ":" + (60-$@MSSETM) + "]";
+		goto M_Menu2a;
+	M_NewMin1:
+		mes "[Time remaining: " + (5-$@MSMNTM) + ":00]";
+		goto M_Menu2a;
+	M_Addzero1:
+		mes "[Time remaining: " + (4-$@MSMNTM) + ":0" + (60-$@MSSETM) + "]";
+		goto M_Menu2a;
+	M_Menu2a:
+		next;
+		if (getgmlevel() == 0) menu "Cancel",-,"Information and Rules",M_Info,"Leave Room",M_Warpout;
+		if (getgmlevel() > 79) menu "Cancel",-,"Information and Rules",M_Info,"Control Panel",M_Control,"Leave Room",M_Warpout;
+		close;
+	M_Info:
+		mes "[Room Controller]";
+		mes "Firstly, the game is a 9x9 grid of tiles (porings).  That's 81 tiles.  There are a certain number of hidden mines on the field.";
+		next;
+		mes "[Room Controller]";
+		mes "The goal of the game is to 'Flag' all the mines.  If you click on a tile and there is a mine there, game over!";
+		next;
+		mes "[Room Controller]";
+		mes "When you click on a tile, the tile will be flagged, and turn blue.  If you click on a flagged tile, it will open up.  If there's nothing there, a chain reaction will start.  If there's a number there, it'll show the number.  If there's a mine there, game over!";
+		next;
+		mes "[Room Controller]";
+		mes "Be careful!  You only have ONE chance to flag a tile!  No flagging and unflagging here.";
+		next;
+		mes "[Room Controller]";
+		if ($MSWindow == 0) mes "Now about the tiles.  Yellow means the tile has not been clicked on yet.  Blue means the tile is flagged.  And if red, it will have a waiting room window with a number inside.  Say, if there is a red tile with a '5' in the waiting room, then that means there are 5 mines within a 3x3 box centered on that tile.";
+		if ($MSWindow == 1) mes "Now about the tiles.  Yellow means the tile has not been clicked on yet.  Blue means the tile is flagged.  And if red, the npc's name will be the number of that tile.  Say, if there is a red tile with a '5' in the waiting room, then that means there are 5 mines within a 3x3 box centered on that tile.";
+		if ($MSWindow == 2) mes "Now about the tiles.  Yellow means the tile has not been clicked on yet.  Blue means the tile is flagged.  And if red, it will have a waiting room window with a number inside and a waiting room with the number in there too.  Say, if there is a red tile with a '5' in the waiting room, then that means there are 5 mines within a 3x3 box centered on that tile.";
+		next;
+		mes "[Room Controller]";
+		mes "You get points for clicking on a tile that has a number on it.  You have to finish the game to get any kind of reward though!";
+		next;
+		mes "[Room Controller]";
+		mes "Reward is based on the amount of points you accumulate from opening numbered tiles, and how many mines there are on the field.";
+		next;
+		mes "[Room Controller]";
+		mes "This is also a minigame you can play by yourself.  And that's about it!";
+		next;
+		goto M_Menu;
+	M_Wait:
+		mes "[Room Controller]";
+		mes "Alright.";
+		close;
+	M_Warpout:
+		mes "[Room Controller]";
+		mes "The game is in progress, are you sure you want to leave?";
+		next;
+		menu "No, I'll stay",M_Wait,"Yes.",M_Exit;
+	M_Exit:
+		if (@MSpt > 0) set @MSpt,0;
+		close2;
+	warp "prontera",173,183;
+		end;
+	M_NotReady:
+		mes "[Room Controller]";
+		mes "Hello "+strcharinfo(0)+", this room has ended and is in a cooldown phase.  The room will be open again in a short while.";
+		mes " ";
+		set $@MSMNTM,(((getnpctimer(0,"Minesweeper1") / 2000) / 60) %60);
+		set $@MSSETM,((getnpctimer(0,"Minesweeper1") / 2000) % 60);
+		if ($@MSSETM == 0 ) goto M_NewMin2;
+		if ($@MSSETM >= 51 ) goto M_Addzero2;
+		mes "[Time remaining: " + (2-$@MSMNTM) + ":" + (60-$@MSSETM) + "]"; // Counts down, this is the base timer
+		goto M_NotReady2;
+	M_NewMin2:
+		mes "[Time remaining: " + (3-$@MSMNTM) + ":00]"; // Keeps the second from starting at 60
+		goto M_NotReady2;
+	M_Addzero2:
+		mes "[Time remaining: " + (2-$@MSMNTM) + ":0" + (60-$@MSSETM) + "]"; // Adds a 0 infront of 1-9
+		goto M_NotReady2;
+	M_NotReady2:
+		next;
+		if ($@MSLose == 1) goto M_NotReady4;
+		if (@MSpt > 0) goto M_NotReady3;
+	M_NotReady4:
+		if (getgmlevel() > 79) menu "Wait in room.",M_Wait,"Control Panel",M_Control,"Leave Room",M_Exit;
+		if (getgmlevel() < 80) menu "Wait in room.",M_Wait,"Leave Room",M_Exit;
+	M_NotReady3:
+		if (getgmlevel() > 79) menu "Wait in room.",M_Wait,"Control Panel",M_Control,"Cash in",M_Cashin;
+		if (getgmlevel() < 80) menu "Wait in room.",M_Wait,"Cash in",M_Cashin;
+	M_Cashin:
+		mes "[Room Controller]";
+		mes "Alright.... lets see how you did.";
+		mes " ";
+		mes " ";
+		mes " ";
+		mes "Total Points : "+@MSpt;
+		if ($MSRewType == 0) mes "Kafra Points Earned : "+((@MSpt*$MSReward)+($@MSAmount*$@MSAmount)/$MSReward)+" KP";
+		if ($MSRewType == 1) mes "Zeny Earned : "+((((@MSpt*$MSReward)+($@MSAmount*$@MSAmount)*50)/10)/$MSReward)+"z";
+		next;
+		mes "[Room Controller]";
+		mes "Thank you for playing.";
+		if ($MSRewType == 0) set RESRVPTS,RESRVPTS + ((@MSpt*$MSReward)+($@MSAmount*$@MSAmount)/$MSReward);
+		if ($MSRewType == 1) set Zeny,Zeny + ((@MSpt*$MSReward)+($@MSAmount*$@MSAmount)*50/10/$MSReward);
+		if ($MSRewType == 0) dispbottom "[You have "+RESRVPTS+" Kafra Reserve Points]";
+		set @MSpt,0;
+		next;
+		mes "[Room Controller]";
+		mes "Do you wish to stay here and wait for the room to become available, or return to town?";
+		next;
+		menu "Wait in room.",M_Wait,"Leave Room",M_Exit;
+	L_Timer:
+		set $@MSCD,1;
+		setnpctimer 0; //safeguard
+		StartNPCTimer "Minesweeper1";
+		set $@MSOn,1;
+		set $@MSTitle$,"- Game in Progress";
+		mapannounce "minesweep",strcharinfo(0) + " has started the countdown!  There are "+$@MSAmount+" mines on the field!  You have a 5 minute time limit!",1;
+		set $@MSCount,1;
+		cleararray $@MSState[0],0,82;
+		cleararray $@MSMines[0],0,82;
+		cleararray $@MSField[0],0,82;
+		goto L_Start;
+	OnTimer1000:
+		if ($@MSCount == 0) end;
+		mapannounce "minesweep","[10]",1;
+		end;
+	OnTimer2000:
+		if ($@MSCount == 0) end;
+		mapannounce "minesweep","[9]",1;
+		end;
+	OnTimer3000:
+		if ($@MSCount == 0) end;
+		mapannounce "minesweep","[8]",1;
+		end;
+	OnTimer4000:
+		if ($@MSCount == 0) end;
+		mapannounce "minesweep","[7]",1;
+		end;
+	OnTimer5000:
+		if ($@MSReady == 1 && $@MSLose == 0) mapannounce "minesweep","The game is over, please redeem your earned points by talking to the Room Controller.",1;
+		if ($@MSCount == 0) end;
+		mapannounce "minesweep","[6]",1;
+		end;
+	OnTimer6000:
+		if ($@MSCount == 0) end;
+		mapannounce "minesweep","[5]",1;
+		end;
+	OnTimer7000:
+		if ($@MSCount == 0) end;
+		mapannounce "minesweep","[4]",1;
+		end;
+	OnTimer8000:
+		if ($@MSCount == 0) end;
+		mapannounce "minesweep","[3]",1;
+		end;
+	OnTimer9000:
+		if ($@MSCount == 0) end;
+		mapannounce "minesweep","[2]",1;
+		end;
+	OnTimer10000:
+		if ($@MSCount == 0) end;
+		mapannounce "minesweep","[1]",1;
+		end;
+	OnTimer11000:
+		if ($@MSCount == 0) end;
+		emotion 27;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		specialeffect 267;
+		mapannounce "minesweep","[GO!]",1;
+		set $@MSCD,0;
+		set $@MSCount,0;
+		set $@MSCYCLE,0;
+		set $@MSTotal,0;
+		setnpctimer 0;
+		goto L_TurnOn;
+	OnTimer30000:
+		if ($@MSReady == 1 && $@MSLose == 0) mapannounce "minesweep","Please redeem your points with the Room Controller, you will be returned to town automatically in one minute.",1;
+		if ($@MSLose == 1) mapannounce "minesweep","The game is over, you will be returned to town automatically in one minute.",1;
+		end;
+	OnTimer60000:
+		if ($MSAutoRst == 0 && getmapusers("minesweep") == 0) goto L_GMReset;
+		if ($@MSReady == 0) mapannounce "minesweep","Four minutes remaining.",1;
+		if ($@MSReady == 1 && $@MSLose == 0) mapannounce "minesweep","Please redeem your points with the Room Controller, you will be returned to town automatically in thirty seconds.",1;
+		if ($@MSLose == 1) mapannounce "minesweep","The game is over, you will be returned to town automatically in thirty seconds.",1;
+		end;
+	OnTimer70000:
+		if ($@MSReady == 1 && $@MSLose == 0) mapannounce "minesweep","Please redeem your points with the Room Controller, you will be returned to town automatically in twenty seconds.",1;
+		if ($@MSLose == 1) mapannounce "minesweep","You will be returned to town automatically in twenty seconds.",1;
+		end;
+	OnTimer80000:
+		if ($@MSReady == 1 && $@MSLose == 0) mapannounce "minesweep","Please redeem your points with the Room Controller, you will be returned to town automatically in ten seconds.",1;
+		if ($@MSLose == 1) mapannounce "minesweep","You will be returned to town automatically in ten seconds.",1;
+		end;
+	OnTimer85000:
+		if ($@MSReady == 1 && $@MSLose == 0) mapannounce "minesweep","Please redeem your points with the Room Controller, you will be returned to town automatically in five seconds.",1;
+		if ($@MSLose == 1) mapannounce "minesweep","You will be returned to town automatically in five seconds.",1;
+		end;
+	OnTimer86000:
+		if ($@MSReady == 1) mapannounce "minesweep","Four!",1;
+		end;
+	OnTimer87000:
+		if ($@MSReady == 1) mapannounce "minesweep","Three!",1;
+		end;
+	OnTimer88000:
+		if ($@MSReady == 1) mapannounce "minesweep","Two!",1;
+		end;
+	OnTimer89000:
+		if ($@MSReady == 1) mapannounce "minesweep","One!!",1;
+		end;
+	OnTimer90000:
+		if ($MSAutoRst == 0 && getmapusers("minesweep") == 0) goto L_GMReset;
+		if ($@MSReady == 1) goto L_ResetPC;
+		mapannounce "minesweep","Three minutes remaining.",1;
+		end;
+	OnTimer120000:
+		if ($MSAutoRst == 0 && getmapusers("minesweep") == 0) goto L_GMReset;
+		mapannounce "minesweep","Two minutes remaining.",1;
+		end;
+	OnTimer180000:
+		if ($MSAutoRst == 0 && getmapusers("minesweep") == 0) goto L_GMReset;
+		if ($@MSReady == 0) mapannounce "minesweep","One minute remaining.",1;
+		end;
+	OnTimer210000:
+		mapannounce "minesweep","Thirty seconds remaining.",1;
+		end;
+	OnTimer220000:
+		mapannounce "minesweep","Twenty seconds remaining.",1;
+		end;
+	OnTimer230000:
+		mapannounce "minesweep","Ten seconds remaining.",1;
+		end;
+	OnTimer235000:
+		mapannounce "minesweep","Five!",1;
+		end;
+	OnTimer236000:
+		mapannounce "minesweep","Four!",1;
+		end;
+	OnTimer237000:
+		mapannounce "minesweep","Three!!",1;
+		end;
+	OnTimer238000:
+		mapannounce "minesweep","Two!!",1;
+		end;
+	OnTimer239000:
+		mapannounce "minesweep","One!!!",1;
+		end;
+	OnTimer240000:
+		if ($MSAutoRst == 0 && getmapusers("minesweep") == 0) goto L_GMReset;
+		mapannounce "minesweep","You have FAILED!!  Five minutes have elapsed and the game is over, the room will be able to start another game in 3 minutes.  You will be returned to town automatically in ninety seconds.",1;
+		set $@MSReady,1;
+		set $@MSLose,1;
+		set $@MSCYCLE,0;
+		set $@MSSequence,0;
+		setnpctimer 0;
+		goto L_TurnOff;
+	L_ResetPC:
+		set $@MSOn,0;
+		set $@MSLose,0;
+		set $@MSTitle$,"- Room in Cooldown";
+		mapannounce "minesweep","Thank you for playing.",1;
+		areawarp "minesweep",1,1,400,400,"prontera",173,183;
+		end;
+	L_Reset:
+		set $@MSReady,0;
+		set $@MSTitle$,"";
+		StopNPCTimer "Minesweeper1";
+		setnpctimer 0;
+		mapannounce "minesweep","This room is now ready to start a game.",1;
+		end;
+	L_GMReset:
+		set $@MSOn,0;
+		set $@MSLose,0;
+		set $@MSReady,0;
+		set $@MSTitle$,"";
+		cleararray $@MSMines[0],0,82;
+		cleararray $@MSField[0],0,82;
+		cleararray $@MSState[0],0,82;
+		StopNPCTimer "Minesweeper1";
+		setnpctimer 0;
+		areawarp "minesweep",1,1,400,400,"prontera",173,183;
+		goto L_TurnOff;
+	L_TurnOn:
+		if ($@MSCYCLE == 81 && $@MSDebug == 1) debugmes "81 Tiles loaded into grid";
+		if ($@MSCYCLE == 81) goto L_StopCycle;
+		set $@MSCYCLE,$@MSCYCLE + 1;
+		enablenpc "Tile1_"+$@MSCYCLE+"";
+		setnpcdisplay "Tile1_"+$@MSCYCLE," ",1113;
+		donpcevent "Tile1_"+$@MSCYCLE+"::OnFlip";
+		goto L_TurnOn;
+	L_TurnOff:
+		if ($@MSCYCLE == 81 && $@MSDebug == 1) debugmes "81 Tiles removed from grid";
+		if ($@MSCYCLE == 81) goto L_StopCycle;
+		set $@MSCYCLE,$@MSCYCLE + 1;
+		delwaitingroom "Tile1_"+$@MSCYCLE;
+		donpcevent "Tile1_"+$@MSCYCLE+"::OnFlip";
+		disablenpc "Tile1_"+$@MSCYCLE+"";
+		goto L_TurnOff;
+	L_StopCycle:
+		cleararray $@MSMines[0],0,82;
+		cleararray $@MSState[0],0,82;
+		set $@MSCYCLE,0;
+		end;
+//---GM Control Panel----------------------------------------------------------------------------------
+	M_Control:
+		next;
+		mes "[Room Controller]";
+		mes "What would you like to do?";
+		next;
+		if (getgmlevel() < 99 && @MSOn == 1) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu;
+		if (getgmlevel() < 99 && @MSLose == 1 || $@MSReady == 1) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu;
+		if (getgmlevel() < 99) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu;
+		if (getgmlevel() == 99 && @MSOn == 1) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu,"Console Debug",M_Debug;
+		if (getgmlevel() == 99 && @MSLose == 1 || $@MSReady == 1) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu,"Console Debug",M_Debug;
+		if (getgmlevel() == 99) menu "Change Auto Reset",M_AutoReset,"Change Settings",-,"Change Reward",M_Reward,"Reset Room",M_RmReset,"Return to Menu",M_Menu,"Console Debug",M_Debug;
+	M_Settings:
+		mes "[Room Controller]";
+		mes "Please select a setting to alter.";
+		next;
+		menu "Number Display",-,"Change Boom",M_Boom,"Set Min/Max Mines",M_MinMax,"Set Pain",M_Pain,"Change Sequence Cap",M_Sequence,"Reset Room",M_RmReset,"Return",M_Control;
+		mes "[Room Controller]";
+		mes "This changes the number display.";
+		mes "0 = Display Waiting Room, NPC has no name";
+		mes "1 = NPC name displays number, no waiting room";
+		mes "2 = Display Waiting Room, NPC's name displays the number";
+		next;
+	L_Input:
+		input $MSWindow;
+		next;
+		if ($MSWindow < 0 || $MSWindow > 2) message strcharinfo(0),"Number must be 0, 1, or 2.";
+		if ($MSWindow < 0 || $MSWindow > 2) goto L_Input;
+		mes "[Room Controller]";
+		mes "Setting changed to "+$MSWindow+".";
+		next;
+		goto M_Control;
+	M_Sequence:
+		mes "[Room Controller]";
+		mes "This controls how much the reaction will fission, or how many chain reactions can fire one after another.  The higher the reaction number is, the more points players will be able to gain from empty tiles.  This feature is pointless on minefields with a high number of mines, as there are no empty tiles.";
+		next;
+		mes "[Room Controller]";
+		mes "The setting cannot be higher then 15, or lower then 2.";
+		mes " ";
+		mes " ";
+		mes "Current setting : "+$MSFission+".";
+		next;
+	L_Sequence:
+		input $MSFission;
+		next;
+		if ($MSFission < 2 || $MSFission > 15) message strcharinfo(0),"Number must be between 2 and 15!";
+		if ($MSFission < 2 || $MSFission > 15) goto L_Sequence;
+		mes "[Room Controller]";
+		mes "Thank you, the setting has been changed to "+$MSFission+".";
+		next;
+		goto M_Control;
+	M_Boom:
+		mes "[Room Controller]";
+		if ($MSBoom == 0) mes "The chain explosion on a game over is currently on.  Turn off?";
+		if (($MSBoom == 0) && select("Yes","No") == 1) set $MSBoom,1;
+		if ($MSBoom == 1) mes "The chain explosion on a game over is currently off.  Turn on?";
+		if (($MSBoom == 1) && select("Yes","No") == 1) set $MSBoom,0;
+		next;
+		goto M_Control;
+	M_MinMax:
+		mes "[Room Controller]";
+		mes "Here you may set the minimum, and maximum, limitations of the mines players can designate per game.  Suggested range is 8-25 mines.";
+		next;
+		mes "[Room Controller]";
+		mes "The minimum cannot be lower then 5, or higher then 60.";
+		mes " ";
+		mes "Please input the Minimum limit.";
+		next;
+	L_Minimum:
+		input $MSMinimum;
+		next;
+		if ($MSMinimum < 5 || $MSMinimum > 60) message strcharinfo(0),"Number must be between 5 and 60!";
+		if ($MSMinimum < 5 || $MSMinimum > 60) goto L_Minimum;
+		mes "[Room Controller]";
+		mes "The maximum cannot be lower then 15, or higher then 75.";
+		mes " ";
+		mes "Please input the Maximum limit.";
+		next;
+	L_Maximum:
+		input $MSMaximum;
+		next;
+		if ($MSMaximum < 15 || $MSMaximum > 75) message strcharinfo(0),"Number must be between 15 and 75!";
+		if ($MSMaximum < 15 || $MSMaximum > 75) goto L_Maximum;
+		mes "[Room Controller]";
+		mes "The mine range is now "+$MSMinimum+" to "+$MSMaximum+" mines.";
+		next;
+		goto M_Control;
+	M_Pain:
+		mes "[Room Controller]";
+		mes "This controls whether or not to damage the player who clicks the losing mine, and how much.";
+		next;
+		if ($MSHurts == 2) menu "Turn Off",M_PainOff,"Change to Percent",M_PainPercent,"Change damage",-;
+		if ($MSHurts == 1) menu "Turn Off",M_PainOff,"Change to Digits",M_PainDigit,"Change damage",-;
+		if ($MSHurts == 0) menu "Turn On",M_PainOn;
+	M_PainPercent:
+		mes "[Room Controller]";
+		mes "This damage is percentile based.  Set the number of hp damage between -1% and -100%.  (Input the number, not the - sign)";
+		mes " ";
+		if ($MSHurts == 1) mes "Current setting is "+$MSOw+"%.";
+		next;
+	L_Pain1Input:
+		input $MSOw;
+		next;
+		if ($MSOw < 1 || $MSOw > 100) message strcharinfo(0),"Number must be between 1 and 100!";
+		if ($MSOw < 1 || $MSOw > 100) goto L_Pain1Input;
+		set $MSOw,($MSOw*-1);
+		set $MSHurts,1;
+		goto M_Control;
+	M_PainDigit:
+		mes "[Room Controller]";
+		mes "This damage is number based.  Set the number of hp damage between -1 and -999999.  (Input the number, not the - sign)";
+		mes " ";
+		if ($MSHurts == 2) mes "Current setting is "+$MSOw+".";
+		next;
+	L_Pain2Input:
+		input $MSOw;
+		next;
+		if ($MSOw < 1 || $MSOw > 999999) message strcharinfo(0),"Number must be between 1 and 999999!";
+		if ($MSOw < 1 || $MSOw > 999999) goto L_Pain2Input;
+		set $MSHurts,2;
+		set $MSOw,($MSOw*-1);
+		goto M_Control;
+	M_PainOn:
+		set $MSHurts,1;
+		set $MSOw,-75;
+		mes "[Room Controller]";
+		mes "Players will now be damaged if they click on a mine.  Damage type is defaulted to Percent and Damage is set to -75%.";
+		goto M_Control;
+	M_PainOff:
+		set $MSHurts,0;
+		set $MSOw,1;
+		mes "[Room Controller]";
+		mes "Players will no longer be harmed if they click on a mine, and damage is set to 1.";
+		goto M_Control;
+	M_Debug:
+		mes "[Room Controller]";
+		mes "Beep!";
+		next;
+		mes "While on, this will cause the minigame to return feedback to the map-server.exe console window.  Use this to check for minefield abnormalities, excessive cycles, or other odd behavior.";
+		next;
+		mes "^FF0000ONLY USE THIS IF YOU KNOW EXACTLY WHAT YOU ARE DOING.!!!!!!!!!!!!!!!!!!!!!!!!!!^000000";
+		mes "^FF0000ONLY USE THIS IF YOU KNOW EXACTLY WHAT YOU ARE DOING.!!!!!!!!!!!!!!!!!!!!!!!!!!^000000";
+		mes "^FF0000ONLY USE THIS IF YOU KNOW EXACTLY WHAT YOU ARE DOING.!!!!!!!!!!!!!!!!!!!!!!!!!!^000000";
+		mes "^FF0000ONLY USE THIS IF YOU KNOW EXACTLY WHAT YOU ARE DOING.!!!!!!!!!!!!!!!!!!!!!!!!!!^000000";
+		next;
+		mes "This is a temporary server variable, and will reset to OFF if the server is reset!  Please ONLY use this if you suspect a problem with the script and wish to observe the script move to uncover the suspected problem.";
+		next;
+		if ($@MSDebug == 0) menu "TURN ON DEBUG",L_DebugOn,"Cancel",-;
+		if ($@MSDebug == 1) menu "TURN OFF DEBUG",L_DebugOff,"Cancel",-;
+		goto M_Control;
+	L_DebugOn:
+		set $@MSDebug,1;
+		message strcharinfo(0),"DEBUG IS NOW -ON-";
+		debugmes "MINESWEEPER DEBUG HAS BEEN TURNED ON.";
+		next;
+		goto M_Control;
+	L_DebugOff:
+		set $@MSDebug,0;
+		message strcharinfo(0),"DEBUG IS NOW -OFF-";
+		debugmes "MINESWEEPER DEBUG HAS BEEN TURNED OFF.";
+		next;
+		goto M_Control;
+	M_AutoReset:
+		mes "[Room Controller]";
+		if ($MSAutoRst == 0) mes "The room is set to automatically reset if the room is empty.  The room checks this once every minute while the timer is active.  Do you wish to turn this feature off?";
+		if ($MSAutoRst == 1) mes "The room is set to wait the full 20 minutes before reseting, even if the room is empty.  Do you wish to turn the automatic reset feature on?";
+		next;
+		if ($MSAutoRst == 0) menu "Yes",M_AutOff,"No",M_Control;
+		if ($MSAutoRst == 1) menu "Yes",-,"No",M_Control;
+		set $MSAutoRst,0;
+		goto M_Control;
+	M_AutOff:
+		set $MSAutoRst,1;
+		goto M_Control;
+	M_Reward:
+		mes "[Room Controller]";
+		mes "How would you like to setup the reward?";
+		next;
+		menu "Change Modifier",-,"Change Type",M_RewType,"Return",M_Control;
+		mes "[Room Controller]";
+		mes "This modifier controls how the player's points are divided when they complete the game.";
+		next;
+		mes "[Room Controller]";
+		mes "The player's points is divided by this modifier.  If the reward type is set to zeny, then a multiplier is added to the equation to give reasonable amounts of zeny.";
+		next;
+		mes "[Room Controller]";
+		mes "The variable cannot be 0, and cannot be more then 10.";
+		mes "Current Setting is ["+$MSReward+"]";
+		next;
+		input $MSReward;
+		next;
+		if ($MSReward == 0 || $MSReward > 10) goto M_RewInError;
+		mes "[Room Controller]";
+		mes "The reward modifier has been set to "+$MSReward+".";
+		next;
+		goto M_Control;
+	M_RewType:
+		mes "[Room Controller]";	
+		mes "Do you want the players do receive a KP (Kafra Point) reward, or a Zeny reward?";
+		if ($MSRewType == 1) mes "[Reward currently set to Zeny]";
+		if ($MSRewType == 0) mes "[Reward currently set to Kafra Points]";
+		next;
+		menu "Zeny",-,"Kafra Point",M_RewKP;
+		set $MSRewType,1;
+	M_RewInf:
+		mes "[Room Controller]";
+		if ($MSRewType == 1) mes "Thank you, the reward is now set to Zeny.";
+		if ($MSRewType == 0) mes "Thank you, the reward is now set to Kafra Points.";
+		goto M_Control;
+	M_RewKP:
+		set $MSRewType,0;
+		goto M_RewInf;
+	M_RmReset:
+		mes "[Room Controller]";
+		mes "Resetting room...";
+		goto L_GMReset;
+//---Events----------------------------------------------------------------------------------
+	OnWin:
+		set $@MSReady,1;
+		mapannounce "minesweep","Victory!  Congratulations!",1;
+		setnpctimer 0;
+		goto L_TurnOff;
+	OnBoom:
+		setnpctimer 0;
+		end;
+	OnInit:
+		if ($MSFission == 0) set $MSFission,8;
+		if ($MSOw == 0) set $MSOw,-75;
+		if ($MSMinimum == 0 && $MSHurts == 0) set $MSHurts,1;
+		if ($MSMinimum == 0) set $MSMinimum,8;
+		if ($MSMaximum == 0) set $MSMaximum,25;
+		if ($MSReward == 0) set $MSReward,2;
+		setnpcdisplay "Minesweeper1","Room Controller",770;
+		L_Disable:
+			disablenpc "Tile1_"+$@MSCYCLE+"";
+			if ($@MSCYCLE == 81) goto L_DisEnd;
+			set $@MSCYCLE,$@MSCYCLE + 1;
+			goto L_Disable;
+		L_DisEnd:
+			set $@MSCYCLE,0;
+			end;
+//---Mine Generator----------------------------------------------------------------------------------
+L_Start:
+	set $@MSMinetick,0;
+	set $@MSCYCLE,0;
+	set $@MSTile,0;
+L_MTrigger:
+	if ($@MSMinetick >= $@MSAmount) goto L_MStop;
+	set $@MSCYCLE,$@MSCYCLE + 1;
+	set $@MSTile,rand(1,81);
+//	if ($@MSDebug == 1) debugmes "[Mine Generation Tick: "+$@MSCYCLE+"]";
+	if ($@MSMines[$@MSTile] == 0) goto L_MTick;
+	goto L_MTrigger;
+L_MTick:
+	set $@MSMines[$@MSTile],1;
+	set $@MSMinetick,$@MSMinetick + 1;
+	goto L_MTrigger;
+L_MStop:
+	//Some of these are always on to detect if there are abnormalities in the mine generation revolver
+	if ($@MSDebug == 0 && $@MSCYCLE >= 1900) debugmes "[!WARNING! DANGEROUS MINEFIELD ANOMOLY DETECTED!! - "+$@MSCYCLE+" cycles processed!]";
+	if ($@MSDebug == 0 && $@MSCYCLE >= 1900) debugmes "[!WARNING! DANGEROUS MINEFIELD ANOMOLY DETECTED!! - "+$@MSCYCLE+" cycles processed!]";
+	if ($@MSDebug == 0 && $@MSCYCLE >= 1900) debugmes "[!WARNING! DANGEROUS MINEFIELD ANOMOLY DETECTED!! - "+$@MSCYCLE+" cycles processed!]";
+	if ($@MSDebug == 0 && $@MSCYCLE >= 1400 && $@MSCYCLE < 1900) debugmes "[!WARNING! ABNORMAL MINEFIELD CYCLE! - "+$@MSCYCLE+" cycles processed!]";
+	if ($@MSDebug == 0 && $@MSCYCLE >= 1400 && $@MSCYCLE < 1900) debugmes "[!WARNING! ABNORMAL MINEFIELD CYCLE! - "+$@MSCYCLE+" cycles processed!]";
+	if ($@MSDebug == 0 && $@MSCYCLE >= 700 && $@MSCYCLE < 1400) debugmes "[!WARNING! LARGE MINEFIELD CYCLE! - "+$@MSCYCLE+" cycles processed!]";
+	if ($@MSDebug == 0 && $@MSCYCLE >= 250 && $@MSCYCLE < 700) debugmes "[!WARNING! BIG MINEFIELD CYCLE! - "+$@MSCYCLE+" cycles processed!]";
+	if ($@MSDebug == 1) debugmes ".===============================.";
+	if ($@MSDebug == 1) debugmes "|  Minesweeper Room 1 Readout   |";
+	if ($@MSDebug == 1) debugmes "|       [mine locations]        |";
+	if ($@MSDebug == 1) debugmes "|===============================|";
+	if ($@MSDebug == 1 && $@MSCYCLE > 1499) debugmes "| !WARNING! DANGEROUSLY HIGH    |";
+	if ($@MSDebug == 1 && $@MSCYCLE > 1499) debugmes "|    CYCLE TICK!! "+$@MSCYCLE+"!!       |";
+	if ($@MSDebug == 1 && $@MSCYCLE < 10) debugmes "| Field generated in 00"+$@MSCYCLE+" cycles.|";
+	if ($@MSDebug == 1 && $@MSCYCLE < 100 && $@MSCYCLE > 99) debugmes "| Field generated in 0"+$@MSCYCLE+" cycles.|";
+	if ($@MSDebug == 1 && $@MSCYCLE > 99 && $@MSCYCLE < 1000) debugmes "| Field generated in "+$@MSCYCLE+" cycles.|";
+	if ($@MSDebug == 1 && $@MSCYCLE > 999 && $@MSCYCLE < 1500) debugmes "| Field generated in "+$@MSCYCLE+" cycles|";
+	if ($@MSDebug == 1 && $@MSMinetick < 10) debugmes "| Field should contain 0"+$@MSMinetick+" mines.|";
+	if ($@MSDebug == 1 && $@MSMinetick > 9) debugmes "| Field should contain "+$@MSMinetick+" mines.|";
+	if ($@MSDebug == 1) debugmes "|-------------------------------|";
+	if ($@MSDebug == 1) debugmes "| 9 ["+$@MSMines[73]+"]["+$@MSMines[74]+"]["+$@MSMines[75]+"]["+$@MSMines[76]+"]["+$@MSMines[77]+"]["+$@MSMines[78]+"]["+$@MSMines[79]+"]["+$@MSMines[80]+"]["+$@MSMines[81]+"] |";
+	if ($@MSDebug == 1) debugmes "| 8 ["+$@MSMines[64]+"]["+$@MSMines[65]+"]["+$@MSMines[66]+"]["+$@MSMines[67]+"]["+$@MSMines[68]+"]["+$@MSMines[69]+"]["+$@MSMines[70]+"]["+$@MSMines[71]+"]["+$@MSMines[72]+"] |";
+	if ($@MSDebug == 1) debugmes "| 7 ["+$@MSMines[55]+"]["+$@MSMines[56]+"]["+$@MSMines[57]+"]["+$@MSMines[58]+"]["+$@MSMines[59]+"]["+$@MSMines[60]+"]["+$@MSMines[61]+"]["+$@MSMines[62]+"]["+$@MSMines[63]+"] |";
+	if ($@MSDebug == 1) debugmes "| 6 ["+$@MSMines[46]+"]["+$@MSMines[47]+"]["+$@MSMines[48]+"]["+$@MSMines[49]+"]["+$@MSMines[50]+"]["+$@MSMines[51]+"]["+$@MSMines[52]+"]["+$@MSMines[53]+"]["+$@MSMines[54]+"] |";
+	if ($@MSDebug == 1) debugmes "| 5 ["+$@MSMines[37]+"]["+$@MSMines[38]+"]["+$@MSMines[39]+"]["+$@MSMines[40]+"]["+$@MSMines[41]+"]["+$@MSMines[42]+"]["+$@MSMines[43]+"]["+$@MSMines[44]+"]["+$@MSMines[45]+"] |";
+	if ($@MSDebug == 1) debugmes "| 4 ["+$@MSMines[28]+"]["+$@MSMines[29]+"]["+$@MSMines[30]+"]["+$@MSMines[31]+"]["+$@MSMines[32]+"]["+$@MSMines[33]+"]["+$@MSMines[34]+"]["+$@MSMines[35]+"]["+$@MSMines[36]+"] |";
+	if ($@MSDebug == 1) debugmes "| 3 ["+$@MSMines[19]+"]["+$@MSMines[20]+"]["+$@MSMines[21]+"]["+$@MSMines[22]+"]["+$@MSMines[23]+"]["+$@MSMines[24]+"]["+$@MSMines[25]+"]["+$@MSMines[26]+"]["+$@MSMines[27]+"] |";
+	if ($@MSDebug == 1) debugmes "| 2 ["+$@MSMines[10]+"]["+$@MSMines[11]+"]["+$@MSMines[12]+"]["+$@MSMines[13]+"]["+$@MSMines[14]+"]["+$@MSMines[15]+"]["+$@MSMines[16]+"]["+$@MSMines[17]+"]["+$@MSMines[18]+"] |";
+	if ($@MSDebug == 1) debugmes "| 1 ["+$@MSMines[1]+"]["+$@MSMines[2]+"]["+$@MSMines[3]+"]["+$@MSMines[4]+"]["+$@MSMines[5]+"]["+$@MSMines[6]+"]["+$@MSMines[7]+"]["+$@MSMines[8]+"]["+$@MSMines[9]+"] |";
+	if ($@MSDebug == 1) debugmes "|    1  2  3  4  5  6  7  8  9  |";
+	if ($@MSDebug == 1) debugmes "|===============================|";
+	if ($@MSDebug == 1) debugmes "|  1 = Mine        0 = Nothing  |";
+	if ($@MSDebug == 1) debugmes "`==============================='";
+	set $@MSMinetick,0;
+	set $@MSCYCLE,0;
+	set $@MSTile,0;
+	cleararray $@MSField[0],0,82;
+	set $@MSC,1;
+	set $@MSNW,0;
+	set $@MSW,0;
+	set $@MSSW,0;
+	set $@MSS,0;
+	set $@MSSE,0;
+	set $@MSE,0;
+	set $@MSN,0;
+	set $@MSNW,0;
+	set $@MSN,0;
+L_FTrigger:
+	if ($@MSCYCLE == 81) goto L_FStop;
+	set $@MSCYCLE,$@MSCYCLE + 1;
+	set $@MSC,$@MSCYCLE;
+//	if ($@MSDebug == 1) debugmes "[Field Generation Tick: "+$@MSCYCLE+"]";
+	if ($@MSMines[$@MSCYCLE] == 1) goto L_FSetup;
+	goto L_FTrigger;
+L_FSetup:
+	set $@MSNW,0;
+	set $@MSW,0;
+	set $@MSSW,0;
+	set $@MSS,0;
+	set $@MSSE,0;
+	set $@MSE,0;
+	set $@MSN,0;
+	set $@MSNW,0;
+	set $@MSN,0;
+	set $@MSNW,$@MSC + 8;
+	set $@MSW,$@MSC - 1;
+	set $@MSSW,$@MSC - 10;
+	set $@MSS,$@MSC - 9;
+	set $@MSSE,$@MSC - 8;
+	set $@MSE,$@MSC + 1;
+	set $@MSNE,$@MSC + 10;
+	set $@MSN,$@MSC + 9;
+	if ($@MSC == 1 || $@MSC == 10 || $@MSC == 19 || $@MSC == 28 || $@MSC == 37 || $@MSC == 46 || $@MSC == 55 || $@MSC == 64 || $@MSC > 72) set $@MSNW,0;
+	if ($@MSC == 1 || $@MSC == 10 || $@MSC == 19 || $@MSC == 28 || $@MSC == 37 || $@MSC == 46 || $@MSC == 55 || $@MSC == 64 || $@MSC == 73) set $@MSW,0;
+	if ($@MSC < 11 || $@MSC == 19 || $@MSC == 28 || $@MSC == 37 || $@MSC == 46 || $@MSC == 55 || $@MSC == 64 || $@MSC == 73) set $@MSSW,0;
+	if ($@MSC < 10) set $@MSS,0;
+	if ($@MSC < 10 || $@MSC == 18 || $@MSC == 27 || $@MSC == 36 || $@MSC == 45 || $@MSC == 54 || $@MSC == 63 || $@MSC == 72 || $@MSC == 81) set $@MSSE,0;
+	if ($@MSC == 9 || $@MSC == 18 || $@MSC == 27 || $@MSC == 36 || $@MSC == 45 || $@MSC == 54 || $@MSC == 63 || $@MSC == 72 || $@MSC == 81) set $@MSE,0;
+	if ($@MSC == 9 || $@MSC == 18 || $@MSC == 27 || $@MSC == 36 || $@MSC == 45 || $@MSC == 54 || $@MSC == 63 || $@MSC > 71) set $@MSNE,0;
+	if ($@MSC > 72) set $@MSN,0;
+	set $@MSField[$@MSC],9;
+	if ($@MSNW != 0) set $@MSField[$@MSNW],$@MSField[$@MSNW] + 1;
+	if ($@MSW != 0) set $@MSField[$@MSW],$@MSField[$@MSW] + 1;
+	if ($@MSSW != 0) set $@MSField[$@MSSW],$@MSField[$@MSSW] + 1;
+	if ($@MSS != 0) set $@MSField[$@MSS],$@MSField[$@MSS] + 1;
+	if ($@MSSE != 0) set $@MSField[$@MSSE],$@MSField[$@MSSE] + 1;
+	if ($@MSE != 0) set $@MSField[$@MSE],$@MSField[$@MSE] + 1;
+	if ($@MSNE != 0) set $@MSField[$@MSNE],$@MSField[$@MSNE] + 1;
+	if ($@MSN != 0) set $@MSField[$@MSN],$@MSField[$@MSN] + 1;
+	if ($@MSField[$@MSNW] > 9) set $@MSField[$@MSNW],9;
+	if ($@MSField[$@MSW] > 9) set $@MSField[$@MSW],9;
+	if ($@MSField[$@MSSW] > 9) set $@MSField[$@MSSW],9;
+	if ($@MSField[$@MSS] > 9) set $@MSField[$@MSS],9;
+	if ($@MSField[$@MSSE] > 9) set $@MSField[$@MSSE],9;
+	if ($@MSField[$@MSE] > 9) set $@MSField[$@MSE],9;
+	if ($@MSField[$@MSNE] > 9) set $@MSField[$@MSNE],9;
+	if ($@MSField[$@MSN] > 9) set $@MSField[$@MSN],9;
+	set $@MSC,0;
+	goto L_FTrigger;
+L_FCheck:
+	if ($@MSCYCLE == 81) goto L_FResume;
+	set $@MSCYCLE,$@MSCYCLE + 1;
+	if ($@MSField[$@MSCYCLE] < 9 && $@MSField[$@MSCYCLE] > 0) set $@MSFCheck,$@MSFCheck + $@MSField[$@MSCYCLE];
+	goto L_FCheck;
+L_FStop:
+	set $@MSCYCLE,0;
+	set $@MSFCheck,0;
+	if ($@MSDebug == 1) goto L_FCheck;
+L_FResume:
+	set $@MSC,0;
+	set $@MSNW,0;
+	set $@MSW,0;
+	set $@MSSW,0;
+	set $@MSS,0;
+	set $@MSSE,0;
+	set $@MSE,0;
+	set $@MSNE,0;
+	set $@MSN,0;
+	cleararray $@MSMines[0],0,82;
+	if ($@MSDebug == 1) debugmes ".===============================.";
+	if ($@MSDebug == 1) debugmes "|  Minesweeper Room 1 Readout   |";
+	if ($@MSDebug == 1) debugmes "|      [point value map]        |";
+	if ($@MSDebug == 1) debugmes "|===============================|";
+	if ($@MSDebug == 1 && $@MSFCheck < 10) debugmes "| Total Point Value : "+$@MSFCheck+" pts     |";
+	if ($@MSDebug == 1 && $@MSFCheck < 100 && $@MSFCheck > 9) debugmes "| Total Point Value : "+$@MSFCheck+" pts    |";
+	if ($@MSDebug == 1 && $@MSFCheck < 1000 && $@MSFCheck > 99) debugmes "| Total Point Value : "+$@MSFCheck+" pts   |";
+	if ($@MSDebug == 1 && $@MSFCheck < 10000 && $@MSFCheck > 999) debugmes "| Total Point Value : "+$@MSFCheck+" pts  |";
+	if ($@MSDebug == 1 && $@MSAmount < 10) debugmes "| Field should contain 0"+$@MSAmount+" mines.|";
+	if ($@MSDebug == 1 && $@MSAmount > 9) debugmes "| Field should contain "+$@MSAmount+" mines.|";
+	if ($@MSDebug == 1) debugmes "|-------------------------------|";
+	if ($@MSDebug == 1) debugmes "| 9 ["+$@MSField[73]+"]["+$@MSField[74]+"]["+$@MSField[75]+"]["+$@MSField[76]+"]["+$@MSField[77]+"]["+$@MSField[78]+"]["+$@MSField[79]+"]["+$@MSField[80]+"]["+$@MSField[81]+"] |";
+	if ($@MSDebug == 1) debugmes "| 8 ["+$@MSField[64]+"]["+$@MSField[65]+"]["+$@MSField[66]+"]["+$@MSField[67]+"]["+$@MSField[68]+"]["+$@MSField[69]+"]["+$@MSField[70]+"]["+$@MSField[71]+"]["+$@MSField[72]+"] |";
+	if ($@MSDebug == 1) debugmes "| 7 ["+$@MSField[55]+"]["+$@MSField[56]+"]["+$@MSField[57]+"]["+$@MSField[58]+"]["+$@MSField[59]+"]["+$@MSField[60]+"]["+$@MSField[61]+"]["+$@MSField[62]+"]["+$@MSField[63]+"] |";
+	if ($@MSDebug == 1) debugmes "| 6 ["+$@MSField[46]+"]["+$@MSField[47]+"]["+$@MSField[48]+"]["+$@MSField[49]+"]["+$@MSField[50]+"]["+$@MSField[51]+"]["+$@MSField[52]+"]["+$@MSField[53]+"]["+$@MSField[54]+"] |";
+	if ($@MSDebug == 1) debugmes "| 5 ["+$@MSField[37]+"]["+$@MSField[38]+"]["+$@MSField[39]+"]["+$@MSField[40]+"]["+$@MSField[41]+"]["+$@MSField[42]+"]["+$@MSField[43]+"]["+$@MSField[44]+"]["+$@MSField[45]+"] |";
+	if ($@MSDebug == 1) debugmes "| 4 ["+$@MSField[28]+"]["+$@MSField[29]+"]["+$@MSField[30]+"]["+$@MSField[31]+"]["+$@MSField[32]+"]["+$@MSField[33]+"]["+$@MSField[34]+"]["+$@MSField[35]+"]["+$@MSField[36]+"] |";
+	if ($@MSDebug == 1) debugmes "| 3 ["+$@MSField[19]+"]["+$@MSField[20]+"]["+$@MSField[21]+"]["+$@MSField[22]+"]["+$@MSField[23]+"]["+$@MSField[24]+"]["+$@MSField[25]+"]["+$@MSField[26]+"]["+$@MSField[27]+"] |";
+	if ($@MSDebug == 1) debugmes "| 2 ["+$@MSField[10]+"]["+$@MSField[11]+"]["+$@MSField[12]+"]["+$@MSField[13]+"]["+$@MSField[14]+"]["+$@MSField[15]+"]["+$@MSField[16]+"]["+$@MSField[17]+"]["+$@MSField[18]+"] |";
+	if ($@MSDebug == 1) debugmes "| 1 ["+$@MSField[1]+"]["+$@MSField[2]+"]["+$@MSField[3]+"]["+$@MSField[4]+"]["+$@MSField[5]+"]["+$@MSField[6]+"]["+$@MSField[7]+"]["+$@MSField[8]+"]["+$@MSField[9]+"] |";
+	if ($@MSDebug == 1) debugmes "|    1  2  3  4  5  6  7  8  9  |";
+	if ($@MSDebug == 1) debugmes "|===============================|";
+	if ($@MSDebug == 1) debugmes "|  9 = Mine        0 = Nothing  |";
+	if ($@MSDebug == 1) debugmes "`==============================='";
+	end;
+}
+
+//---Chain Reaction Function----------------------------------------------------------------------------------
+function	script	F_MFission	{
+	if ($@MSSequence == $MSFission) end;
+	set $@MSTotal,$@MSTotal + 2;
+	if ($@MSDebug == 1) debugmes "Victory Total "+$@MSTotal+"/"+(162-$@MSAmount)+", tile : "+getarg(0);
+	set $@MSSequence,$@MSSequence + 1;
+	set $@MSState[getarg(0)],2;
+	set $@MSMines[getarg(0)],3;
+	set $@MSNW,0;
+	set $@MSW,0;
+	set $@MSSW,0;
+	set $@MSS,0;
+	set $@MSSE,0;
+	set $@MSE,0;
+	set $@MSN,0;
+	set $@MSNW,0;
+	set $@MSN,0;
+	set $@MSNW,getarg(0) + 8;
+	set $@MSW,getarg(0) - 1;
+	set $@MSSW,getarg(0) - 10;
+	set $@MSS,getarg(0) - 9;
+	set $@MSSE,getarg(0) - 8;
+	set $@MSE,getarg(0) + 1;
+	set $@MSNE,getarg(0) + 10;
+	set $@MSN,getarg(0) + 9;
+	if (getarg(0) == 1 || getarg(0) == 10 || getarg(0) == 19 || getarg(0) == 28 || getarg(0) == 37 || getarg(0) == 46 || getarg(0) == 55 || getarg(0) == 64 || getarg(0) > 72) set $@MSNW,0;
+	if (getarg(0) == 1 || getarg(0) == 10 || getarg(0) == 19 || getarg(0) == 28 || getarg(0) == 37 || getarg(0) == 46 || getarg(0) == 55 || getarg(0) == 64 || getarg(0) == 73) set $@MSW,0;
+	if (getarg(0) < 11 || getarg(0) == 19 || getarg(0) == 28 || getarg(0) == 37 || getarg(0) == 46 || getarg(0) == 55 || getarg(0) == 64 || getarg(0) == 73) set $@MSSW,0;
+	if (getarg(0) < 10) set $@MSS,0;
+	if (getarg(0) < 10 || getarg(0) == 18 || getarg(0) == 27 || getarg(0) == 36 || getarg(0) == 45 || getarg(0) == 54 || getarg(0) == 63 || getarg(0) == 72 || getarg(0) == 81) set $@MSSE,0;
+	if (getarg(0) == 9 || getarg(0) == 18 || getarg(0) == 27 || getarg(0) == 36 || getarg(0) == 45 || getarg(0) == 54 || getarg(0) == 63 || getarg(0) == 72 || getarg(0) == 81) set $@MSE,0;
+	if (getarg(0) == 9 || getarg(0) == 18 || getarg(0) == 27 || getarg(0) == 36 || getarg(0) == 45 || getarg(0) == 54 || getarg(0) == 63 || getarg(0) > 71) set $@MSNE,0;
+	if (getarg(0) > 72) set $@MSN,0;
+	if ($@MSNW != 0 && $@MSState[$@MSNW] == 1) set $@MSMines[$@MSNW],3;
+	if ($@MSW != 0 && $@MSState[$@MSW] == 1) set $@MSMines[$@MSW],3;
+	if ($@MSSW != 0 && $@MSState[$@MSSW] == 1) set $@MSMines[$@MSSW],3;
+	if ($@MSS != 0 && $@MSState[$@MSS] == 1) set $@MSMines[$@MSS],3;
+	if ($@MSSE != 0 && $@MSState[$@MSSE] == 1) set $@MSMines[$@MSSE],3;
+	if ($@MSE != 0 && $@MSState[$@MSE] == 1) set $@MSMines[$@MSE],3;
+	if ($@MSNE != 0 && $@MSState[$@MSNE] == 1) set $@MSMines[$@MSNE],3;
+	if ($@MSN != 0 && $@MSState[$@MSN] == 1) set $@MSMines[$@MSN],3;
+	if ($@MSNW != 0 && $@MSField[$@MSNW] == 0 && $@MSMines[$@MSNW] == 0) set $@MSMines[$@MSNW],1;
+	if ($@MSW != 0 && $@MSField[$@MSW] == 0 && $@MSMines[$@MSW] == 0) set $@MSMines[$@MSW],1;
+	if ($@MSSW != 0 && $@MSField[$@MSSW] == 0 && $@MSMines[$@MSSW] == 0) set $@MSMines[$@MSSW],1;
+	if ($@MSS != 0 && $@MSField[$@MSS] == 0 && $@MSMines[$@MSS] == 0) set $@MSMines[$@MSS],1;
+	if ($@MSSE != 0 && $@MSField[$@MSSE] == 0 && $@MSMines[$@MSSE] == 0) set $@MSMines[$@MSSE],1;
+	if ($@MSE != 0 && $@MSField[$@MSE] == 0 && $@MSMines[$@MSE] == 0) set $@MSMines[$@MSE],1;
+	if ($@MSNE != 0 && $@MSField[$@MSNE] == 0 && $@MSMines[$@MSNE] == 0) set $@MSMines[$@MSNE],1;
+	if ($@MSN != 0 && $@MSField[$@MSN] == 0 && $@MSMines[$@MSN] == 0) set $@MSMines[$@MSN],1;
+	if ($@MSNW != 0 && $@MSField[$@MSNW] > 0 && $@MSField[$@MSNW] < 9 && $@MSMines[$@MSNW] == 0) set $@MSMines[$@MSNW],2;
+	if ($@MSW != 0 && $@MSField[$@MSW] > 0 && $@MSField[$@MSW] < 9 && $@MSMines[$@MSW] == 0) set $@MSMines[$@MSW],2;
+	if ($@MSSW != 0 && $@MSField[$@MSSW] > 0 && $@MSField[$@MSSW] < 9 && $@MSMines[$@MSSW] == 0) set $@MSMines[$@MSSW],2;
+	if ($@MSS != 0 && $@MSField[$@MSS] > 0 && $@MSField[$@MSS] < 9 && $@MSMines[$@MSS] == 0) set $@MSMines[$@MSS],2;
+	if ($@MSSE != 0 && $@MSField[$@MSSE] > 0 && $@MSField[$@MSSE] < 9 && $@MSMines[$@MSSE] == 0) set $@MSMines[$@MSSE],2;
+	if ($@MSE != 0 && $@MSField[$@MSE] > 0 && $@MSField[$@MSE] < 9 && $@MSMines[$@MSE] == 0) set $@MSMines[$@MSE],2;
+	if ($@MSNE != 0 && $@MSField[$@MSNE] > 0 && $@MSField[$@MSNE] < 9 && $@MSMines[$@MSNE] == 0) set $@MSMines[$@MSNE],2;
+	if ($@MSN != 0 && $@MSField[$@MSN] > 0 && $@MSField[$@MSN] < 9 && $@MSMines[$@MSN] == 0) set $@MSMines[$@MSN],2;
+	if ($@MSNW != 0 && $@MSField[$@MSNW] == 9 && $@MSMines[$@MSNW] == 0) set $@MSMines[$@MSNW],3;
+	if ($@MSW != 0 && $@MSField[$@MSW] == 9 && $@MSMines[$@MSW] == 0) set $@MSMines[$@MSW],3;
+	if ($@MSSW != 0 && $@MSField[$@MSSW] == 9 && $@MSMines[$@MSSW] == 0) set $@MSMines[$@MSSW],3;
+	if ($@MSS != 0 && $@MSField[$@MSS] == 9 && $@MSMines[$@MSS] == 0) set $@MSMines[$@MSS],3;
+	if ($@MSSE != 0 && $@MSField[$@MSSE] == 9 && $@MSMines[$@MSSE] == 0) set $@MSMines[$@MSSE],3;
+	if ($@MSE != 0 && $@MSField[$@MSE] == 9 && $@MSMines[$@MSE] == 0) set $@MSMines[$@MSE],3;
+	if ($@MSNE != 0 && $@MSField[$@MSNE] == 9 && $@MSMines[$@MSNE] == 0) set $@MSMines[$@MSNE],3;
+	if ($@MSN != 0 && $@MSField[$@MSN] == 9 && $@MSMines[$@MSN] == 0) set $@MSMines[$@MSN],3;
+	if ($@MSNW != 0 && $@MSMines[$@MSNW] == 2) donpcevent "Tile1_"+$@MSNW+"::OnDisplay";
+	if ($@MSW != 0 && $@MSMines[$@MSW] == 2) donpcevent "Tile1_"+$@MSW+"::OnDisplay";
+	if ($@MSSW != 0 && $@MSMines[$@MSSW] == 2) donpcevent "Tile1_"+$@MSSW+"::OnDisplay";
+	if ($@MSS != 0 && $@MSMines[$@MSS] == 2) donpcevent "Tile1_"+$@MSS+"::OnDisplay";
+	if ($@MSSE != 0 && $@MSMines[$@MSSE] == 2) donpcevent "Tile1_"+$@MSSE+"::OnDisplay";
+	if ($@MSE != 0 && $@MSMines[$@MSE] == 2) donpcevent "Tile1_"+$@MSE+"::OnDisplay";
+	if ($@MSNE != 0 && $@MSMines[$@MSNE] == 2) donpcevent "Tile1_"+$@MSNE+"::OnDisplay";
+	if ($@MSN != 0 && $@MSMines[$@MSN] == 2) donpcevent "Tile1_"+$@MSN+"::OnDisplay";
+	attachrid(getcharid(3,$@MSNAME$));
+	if ($@MSNW != 0 && $@MSMines[$@MSNW] == 2) set @MSpt,@MSpt + $@MSField[$@MSNW];
+	if ($@MSW != 0 && $@MSMines[$@MSW] == 2) set @MSpt,@MSpt + $@MSField[$@MSW];
+	if ($@MSSW != 0 && $@MSMines[$@MSSW] == 2) set @MSpt,@MSpt + $@MSField[$@MSSW];
+	if ($@MSS != 0 && $@MSMines[$@MSS] == 2) set @MSpt,@MSpt + $@MSField[$@MSS];
+	if ($@MSSE != 0 && $@MSMines[$@MSSE] == 2) set @MSpt,@MSpt + $@MSField[$@MSSE];
+	if ($@MSE != 0 && $@MSMines[$@MSE] == 2) set @MSpt,@MSpt + $@MSField[$@MSE];
+	if ($@MSNE != 0 && $@MSMines[$@MSNE] == 2) set @MSpt,@MSpt + $@MSField[$@MSNE];
+	if ($@MSN != 0 && $@MSMines[$@MSN] == 2) set @MSpt,@MSpt + $@MSField[$@MSN];
+	if ($@MSMines[$@MSNW] == 2 || $@MSMines[$@MSW] == 2 || $@MSMines[$@MSSW] == 2 || $@MSMines[$@MSS] == 2 || $@MSMines[$@MSSE] == 2 || $@MSMines[$@MSE] == 2 || $@MSMines[$@MSNE] == 2 || $@MSMines[$@MSN] == 2) dispbottom "[Points : "+@MSpt+"]";
+	detachrid;
+	if ($@MSNW != 0 && $@MSMines[$@MSNW] == 2) set $@MSTotal,$@MSTotal + 2;
+	if ($@MSW != 0 && $@MSMines[$@MSW] == 2) set $@MSTotal,$@MSTotal + 2;
+	if ($@MSSW != 0 && $@MSMines[$@MSSW] == 2) set $@MSTotal,$@MSTotal + 2;
+	if ($@MSS != 0 && $@MSMines[$@MSS] == 2) set $@MSTotal,$@MSTotal + 2;
+	if ($@MSSE != 0 && $@MSMines[$@MSSE] == 2) set $@MSTotal,$@MSTotal + 2;
+	if ($@MSE != 0 && $@MSMines[$@MSE] == 2) set $@MSTotal,$@MSTotal + 2;
+	if ($@MSNE != 0 && $@MSMines[$@MSNE] == 2) set $@MSTotal,$@MSTotal + 2;
+	if ($@MSN != 0 && $@MSMines[$@MSN] == 2) set $@MSTotal,$@MSTotal + 2;
+	if ($@MSDebug == 1 && $@MSNW != 0 && $@MSMines[$@MSNW] == 2) debugmes "Victory Total "+$@MSTotal+"/"+(162-$@MSAmount)+", tile : "+$@MSNW;
+	if ($@MSDebug == 1 && $@MSW != 0 && $@MSMines[$@MSW] == 2) debugmes "Victory Total "+$@MSTotal+"/"+(162-$@MSAmount)+", tile : "+$@MSW;
+	if ($@MSDebug == 1 && $@MSSW != 0 && $@MSMines[$@MSSW] == 2) debugmes "Victory Total "+$@MSTotal+"/"+(162-$@MSAmount)+", tile : "+$@MSSW;
+	if ($@MSDebug == 1 && $@MSS != 0 && $@MSMines[$@MSS] == 2) debugmes "Victory Total "+$@MSTotal+"/"+(162-$@MSAmount)+", tile : "+$@MSS;
+	if ($@MSDebug == 1 && $@MSSE != 0 && $@MSMines[$@MSSE] == 2) debugmes "Victory Total "+$@MSTotal+"/"+(162-$@MSAmount)+", tile : "+$@MSSE;
+	if ($@MSDebug == 1 && $@MSE != 0 && $@MSMines[$@MSE] == 2) debugmes "Victory Total "+$@MSTotal+"/"+(162-$@MSAmount)+", tile : "+$@MSE;
+	if ($@MSDebug == 1 && $@MSNE != 0 && $@MSMines[$@MSNE] == 2) debugmes "Victory Total "+$@MSTotal+"/"+(162-$@MSAmount)+", tile : "+$@MSNE;
+	if ($@MSDebug == 1 && $@MSN != 0 && $@MSMines[$@MSN] == 2) debugmes "Victory Total "+$@MSTotal+"/"+(162-$@MSAmount)+", tile : "+$@MSN;
+	if ($@MSNW != 0 && $@MSMines[$@MSNW] == 2) set $@MSMines[$@MSNW],3;
+	if ($@MSW != 0 && $@MSMines[$@MSW] == 2) set $@MSMines[$@MSW],3;
+	if ($@MSSW != 0 && $@MSMines[$@MSSW] == 2) set $@MSMines[$@MSSW],3;
+	if ($@MSS != 0 && $@MSMines[$@MSS] == 2) set $@MSMines[$@MSS],3;
+	if ($@MSSE != 0 && $@MSMines[$@MSSE] == 2) set $@MSMines[$@MSSE],3;
+	if ($@MSE != 0 && $@MSMines[$@MSE] == 2) set $@MSMines[$@MSE],3;
+	if ($@MSNE != 0 && $@MSMines[$@MSNE] == 2) set $@MSMines[$@MSNE],3;
+	if ($@MSN != 0 && $@MSMines[$@MSN] == 2) set $@MSMines[$@MSN],3;
+	if ($@MSNW != 0 && $@MSMines[$@MSNW] == 1) donpcevent "Tile1_"+$@MSNW+"::OnReaction";
+	if ($@MSW != 0 && $@MSMines[$@MSW] == 1) donpcevent "Tile1_"+$@MSW+"::OnReaction";
+	if ($@MSSW != 0 && $@MSMines[$@MSSW] == 1) donpcevent "Tile1_"+$@MSSW+"::OnReaction";
+	if ($@MSS != 0 && $@MSMines[$@MSS] == 1) donpcevent "Tile1_"+$@MSS+"::OnReaction";
+	if ($@MSSE != 0 && $@MSMines[$@MSSE] == 1) donpcevent "Tile1_"+$@MSSE+"::OnReaction";
+	if ($@MSE != 0 && $@MSMines[$@MSE] == 1) donpcevent "Tile1_"+$@MSE+"::OnReaction";
+	if ($@MSNE != 0 && $@MSMines[$@MSNE] == 1) donpcevent "Tile1_"+$@MSNE+"::OnReaction";
+	if ($@MSN != 0 && $@MSMines[$@MSN] == 1) donpcevent "Tile1_"+$@MSN+"::OnReaction";
+	if ($@MSDebug == 1) debugmes "Fission cycle completed by tile "+getarg(0)+".";	
+	disablenpc "Tile1_"+getarg(0);
+	end;
+}
+
+//---Chain Reaction Display Maker----------------------------------------------------------------------------------
+function	script	F_MSubchain	{
+	if ($@MSDebug == 1) debugmes "Tile "+getarg(0)+" / Point Value "+$@MSField[getarg(0)];
+	if ($MSWindow == 0) setnpcdisplay "Tile1_"+getarg(0)," ",1002;
+	if ($MSWindow == 1) setnpcdisplay "Tile1_"+getarg(0),""+$@MSField[getarg(0)]+"",1002;
+	if ($MSWindow == 0) waitingroom "----- "+$@MSField[getarg(0)]+" -----",0;
+	if ($MSWindow == 2) setnpcdisplay "Tile1_"+getarg(0),""+$@MSField[getarg(0)]+"",1002;
+	if ($MSWindow == 2) waitingroom "----- "+$@MSField[getarg(0)]+" -----",0;
+	if ($MSState[getarg(0)] == 0) set $@MSState[getarg(0)],2;
+	donpcevent "Tile1_"+getarg(0)+"::OnFlip";
+	end;
+}
+
+//---Tile Dialogue----------------------------------------------------------------------------------
+function	script	F_MTile	{
+	set $@MSNAME$,strcharinfo(0);
+	if ($@MSState[getarg(0)] == 2) end;
+	if ($@MSState[getarg(0)] == 0) goto L_Flag;
+	if ($@MSState[getarg(0)] < 2) set $@MSState[getarg(0)],2;
+	if ($@MSField[getarg(0)] == 0) goto L_Chain;
+	if ($@MSField[getarg(0)] == 9) goto L_Lose;
+	if ($@MSDebug == 1) debugmes "Tile "+getarg(0)+" / Point Value "+$@MSField[getarg(0)];
+	if ($MSWindow == 0) setnpcdisplay "Tile1_"+getarg(0)," ",1002;
+	if ($MSWindow == 1) setnpcdisplay "Tile1_"+getarg(0),""+$@MSField[getarg(0)]+"",1002;
+	if ($MSWindow == 0) waitingroom "----- "+$@MSField[getarg(0)]+" -----",0;
+	if ($MSWindow == 2) setnpcdisplay "Tile1_"+getarg(0),""+$@MSField[getarg(0)]+"",1002;
+	if ($MSWindow == 2) waitingroom "----- "+$@MSField[getarg(0)]+" -----",0;
+	if ($MSState[getarg(0)] == 0) set $@MSState[getarg(0)],2;
+	set $@MSTotal,$@MSTotal + 1;
+	if ($@MSDebug == 1) debugmes "Victory Total "+$@MSTotal+"/"+(162-$@MSAmount)+", tile : "+getarg(0);
+	donpcevent "Tile1_"+getarg(0)+"::OnFlip";
+	set @MSpt,@MSpt + $@MSField[getarg(0)];
+	dispbottom "[Points : "+@MSpt+"]";
+	if ($@MSTotal == (162 - $@MSAmount)) donpcevent "Minesweeper1::OnWin";
+	end;
+L_Flag:
+	set $@MSTotal,$@MSTotal + 1;
+	if ($@MSDebug == 1) debugmes "Victory Total "+$@MSTotal+"/"+(162-$@MSAmount)+", tile : "+getarg(0);
+	set $@MSState[getarg(0)],1;
+	setnpcdisplay "Tile1_"+getarg(0),"?",1242;
+	donpcevent "Tile1_"+getarg(0)+"::OnFlip";
+	if ($@MSTotal == (162 - $@MSAmount)) donpcevent "Minesweeper1::OnWin";
+	end;
+L_Lose:
+	if ($@MSDebug == 1) debugmes strcharinfo(0)+" triggered mine "+getarg(0);
+	mapannounce "minesweep",strcharinfo(0)+" has hit a mine!! Game over!  You will be returned to town automatically in ninety seconds.",1;
+	set $@MSReady,1;
+	set $@MSTotal,0;
+	set $@MSLose,1;
+	set @MSpt,0;
+	specialeffect 183;
+	specialeffect 107;
+	specialeffect 17;
+	specialeffect 8;
+	specialeffect 8;
+	if ($MSHurts == 1) percentheal $MSOw,0;
+	if ($MSHurts == 2) heal $MSOw,0;
+	donpcevent "Minesweeper1::OnBoom";
+	donpcevent "Tile1_"+getarg(0)+"::OnFlip";
+	if ($@MSDebug == 1) debugmes "Tile "+getarg(0)+" exploded!";
+	set $@MSCYCLE,0;
+L_BoomCycle:
+	if ($@MSCYCLE == 81) goto L_BoomStop;
+	set $@MSCYCLE,$@MSCYCLE + 1;
+	donpcevent "Tile1_"+$@MSCYCLE+"::OnFlip";
+	disablenpc "Tile1_"+$@MSCYCLE;
+	goto L_BoomCycle;
+L_BoomStop:
+	set $@MSCYCLE,0;
+	end;
+L_Chain:
+	set $@MSTotal,$@MSTotal - 1;
+	if ($@MSDebug == 1) debugmes "Victory Total "+$@MSTotal+"/"+(162-$@MSAmount)+", tile : "+getarg(0);
+	set $@MSSequence,0;
+	donpcevent "Tile1_"+getarg(0)+"::OnReaction";
+	end;
+}
+
+//---Tile Animation----------------------------------------------------------------------------------
+function	script	F_MFlip	{
+	if ($@MSLose == 1) specialeffect 150;
+	if ($@MSLose == 0 && $@Ready == 1) specialeffect 70;
+	if ($@MSLose == 0 && $@Ready == 0) specialeffect 423;
+	end;
+}
+
+//---Tile NPC List----------------------------------------------------------------------------------
+minesweep,132,44,5	script	Tile1_1	139,{
+	callfunc "F_MTile",1;
+OnReaction:
+	callfunc "F_MFission",1;
+OnDisplay:
+	callfunc "F_MSubchain",1;
+OnFlip:
+	callfunc "F_MFlip",1;
+}
+minesweep,135,44,5	script	Tile1_2	139,{
+	callfunc "F_MTile",2;
+OnReaction:
+	callfunc "F_MFission",2;
+OnDisplay:
+	callfunc "F_MSubchain",2;
+OnFlip:
+	callfunc "F_MFlip",2;
+}
+minesweep,138,44,5	script	Tile1_3	139,{
+	callfunc "F_MTile",3;
+OnReaction:
+	callfunc "F_MFission",3;
+OnDisplay:
+	callfunc "F_MSubchain",3;
+OnFlip:
+	callfunc "F_MFlip",3;
+}
+minesweep,141,44,5	script	Tile1_4	139,{
+	callfunc "F_MTile",4;
+OnReaction:
+	callfunc "F_MFission",4;
+OnDisplay:
+	callfunc "F_MSubchain",4;
+OnFlip:
+	callfunc "F_MFlip",4;
+}
+minesweep,144,44,5	script	Tile1_5	139,{
+	callfunc "F_MTile",5;
+OnReaction:
+	callfunc "F_MFission",5;
+OnDisplay:
+	callfunc "F_MSubchain",5;
+OnFlip:
+	callfunc "F_MFlip",5;
+}
+minesweep,147,44,5	script	Tile1_6	139,{
+	callfunc "F_MTile",6;
+OnReaction:
+	callfunc "F_MFission",6;
+OnDisplay:
+	callfunc "F_MSubchain",6;
+OnFlip:
+	callfunc "F_MFlip",6;
+}
+minesweep,150,44,5	script	Tile1_7	139,{
+	callfunc "F_MTile",7;
+OnReaction:
+	callfunc "F_MFission",7;
+OnDisplay:
+	callfunc "F_MSubchain",7;
+OnFlip:
+	callfunc "F_MFlip",7;
+}
+minesweep,153,44,5	script	Tile1_8	139,{
+	callfunc "F_MTile",8;
+OnReaction:
+	callfunc "F_MFission",8;
+OnDisplay:
+	callfunc "F_MSubchain",8;
+OnFlip:
+	callfunc "F_MFlip",8;
+}
+minesweep,156,44,5	script	Tile1_9	139,{
+	callfunc "F_MTile",9;
+OnReaction:
+	callfunc "F_MFission",9;
+OnDisplay:
+	callfunc "F_MSubchain",9;
+OnFlip:
+	callfunc "F_MFlip",9;
+}
+minesweep,132,47,5	script	Tile1_10	139,{
+	callfunc "F_MTile",10;
+OnReaction:
+	callfunc "F_MFission",10;
+OnDisplay:
+	callfunc "F_MSubchain",10;
+OnFlip:
+	callfunc "F_MFlip",10;
+}
+minesweep,135,47,5	script	Tile1_11	139,{
+	callfunc "F_MTile",11;
+OnReaction:
+	callfunc "F_MFission",11;
+OnDisplay:
+	callfunc "F_MSubchain",11;
+OnFlip:
+	callfunc "F_MFlip",11;
+}
+minesweep,138,47,5	script	Tile1_12	139,{
+	callfunc "F_MTile",12;
+OnReaction:
+	callfunc "F_MFission",12;
+OnDisplay:
+	callfunc "F_MSubchain",12;
+OnFlip:
+	callfunc "F_MFlip",12;
+}
+minesweep,141,47,5	script	Tile1_13	139,{
+	callfunc "F_MTile",13;
+OnReaction:
+	callfunc "F_MFission",13;
+OnDisplay:
+	callfunc "F_MSubchain",13;
+OnFlip:
+	callfunc "F_MFlip",13;
+}
+minesweep,144,47,5	script	Tile1_14	139,{
+	callfunc "F_MTile",14;
+OnReaction:
+	callfunc "F_MFission",14;
+OnDisplay:
+	callfunc "F_MSubchain",14;
+OnFlip:
+	callfunc "F_MFlip",14;
+}
+minesweep,147,47,5	script	Tile1_15	139,{
+	callfunc "F_MTile",15;
+OnReaction:
+	callfunc "F_MFission",15;
+OnDisplay:
+	callfunc "F_MSubchain",15;
+OnFlip:
+	callfunc "F_MFlip",15;
+}
+minesweep,150,47,5	script	Tile1_16	139,{
+	callfunc "F_MTile",16;
+OnReaction:
+	callfunc "F_MFission",16;
+OnDisplay:
+	callfunc "F_MSubchain",16;
+OnFlip:
+	callfunc "F_MFlip",16;
+}
+minesweep,153,47,5	script	Tile1_17	139,{
+	callfunc "F_MTile",17;
+OnReaction:
+	callfunc "F_MFission",17;
+OnDisplay:
+	callfunc "F_MSubchain",17;
+OnFlip:
+	callfunc "F_MFlip",17;
+}
+minesweep,156,47,5	script	Tile1_18	139,{
+	callfunc "F_MTile",18;
+OnReaction:
+	callfunc "F_MFission",18;
+OnDisplay:
+	callfunc "F_MSubchain",18;
+OnFlip:
+	callfunc "F_MFlip",18;
+}
+minesweep,132,50,5	script	Tile1_19	139,{
+	callfunc "F_MTile",19;
+OnReaction:
+	callfunc "F_MFission",19;
+OnDisplay:
+	callfunc "F_MSubchain",19;
+OnFlip:
+	callfunc "F_MFlip",19;
+}
+minesweep,135,50,5	script	Tile1_20	139,{
+	callfunc "F_MTile",20;
+OnReaction:
+	callfunc "F_MFission",20;
+OnDisplay:
+	callfunc "F_MSubchain",20;
+OnFlip:
+	callfunc "F_MFlip",20;
+}
+minesweep,138,50,5	script	Tile1_21	139,{
+	callfunc "F_MTile",21;
+OnReaction:
+	callfunc "F_MFission",21;
+OnDisplay:
+	callfunc "F_MSubchain",21;
+OnFlip:
+	callfunc "F_MFlip",21;
+}
+minesweep,141,50,5	script	Tile1_22	139,{
+	callfunc "F_MTile",22;
+OnReaction:
+	callfunc "F_MFission",22;
+OnDisplay:
+	callfunc "F_MSubchain",22;
+OnFlip:
+	callfunc "F_MFlip",22;
+}
+minesweep,144,50,5	script	Tile1_23	139,{
+	callfunc "F_MTile",23;
+OnReaction:
+	callfunc "F_MFission",23;
+OnDisplay:
+	callfunc "F_MSubchain",23;
+OnFlip:
+	callfunc "F_MFlip",23;
+}
+minesweep,147,50,5	script	Tile1_24	139,{
+	callfunc "F_MTile",24;
+OnReaction:
+	callfunc "F_MFission",24;
+OnDisplay:
+	callfunc "F_MSubchain",24;
+OnFlip:
+	callfunc "F_MFlip",24;
+}
+minesweep,150,50,5	script	Tile1_25	139,{
+	callfunc "F_MTile",25;
+OnReaction:
+	callfunc "F_MFission",25;
+OnDisplay:
+	callfunc "F_MSubchain",25;
+OnFlip:
+	callfunc "F_MFlip",25;
+}
+minesweep,153,50,5	script	Tile1_26	139,{
+	callfunc "F_MTile",26;
+OnReaction:
+	callfunc "F_MFission",26;
+OnDisplay:
+	callfunc "F_MSubchain",26;
+OnFlip:
+	callfunc "F_MFlip",26;
+}
+minesweep,156,50,5	script	Tile1_27	139,{
+	callfunc "F_MTile",27;
+OnReaction:
+	callfunc "F_MFission",27;
+OnDisplay:
+	callfunc "F_MSubchain",27;
+OnFlip:
+	callfunc "F_MFlip",27;
+}
+minesweep,132,53,5	script	Tile1_28	139,{
+	callfunc "F_MTile",28;
+OnReaction:
+	callfunc "F_MFission",28;
+OnDisplay:
+	callfunc "F_MSubchain",28;
+OnFlip:
+	callfunc "F_MFlip",28;
+}
+minesweep,135,53,5	script	Tile1_29	139,{
+	callfunc "F_MTile",29;
+OnReaction:
+	callfunc "F_MFission",29;
+OnDisplay:
+	callfunc "F_MSubchain",29;
+OnFlip:
+	callfunc "F_MFlip",29;
+}
+minesweep,138,53,5	script	Tile1_30	139,{
+	callfunc "F_MTile",30;
+OnReaction:
+	callfunc "F_MFission",30;
+OnDisplay:
+	callfunc "F_MSubchain",30;
+OnFlip:
+	callfunc "F_MFlip",30;
+}
+minesweep,141,53,5	script	Tile1_31	139,{
+	callfunc "F_MTile",31;
+OnReaction:
+	callfunc "F_MFission",31;
+OnDisplay:
+	callfunc "F_MSubchain",31;
+OnFlip:
+	callfunc "F_MFlip",31;
+}
+minesweep,144,53,5	script	Tile1_32	139,{
+	callfunc "F_MTile",32;
+OnReaction:
+	callfunc "F_MFission",32;
+OnDisplay:
+	callfunc "F_MSubchain",32;
+OnFlip:
+	callfunc "F_MFlip",32;
+}
+minesweep,147,53,5	script	Tile1_33	139,{
+	callfunc "F_MTile",33;
+OnReaction:
+	callfunc "F_MFission",33;
+OnDisplay:
+	callfunc "F_MSubchain",33;
+OnFlip:
+	callfunc "F_MFlip",33;
+}
+minesweep,150,53,5	script	Tile1_34	139,{
+	callfunc "F_MTile",34;
+OnReaction:
+	callfunc "F_MFission",34;
+OnDisplay:
+	callfunc "F_MSubchain",34;
+OnFlip:
+	callfunc "F_MFlip",34;
+}
+minesweep,153,53,5	script	Tile1_35	139,{
+	callfunc "F_MTile",35;
+OnReaction:
+	callfunc "F_MFission",35;
+OnDisplay:
+	callfunc "F_MSubchain",35;
+OnFlip:
+	callfunc "F_MFlip",35;
+}
+minesweep,156,53,5	script	Tile1_36	139,{
+	callfunc "F_MTile",36;
+OnReaction:
+	callfunc "F_MFission",36;
+OnDisplay:
+	callfunc "F_MSubchain",36;
+OnFlip:
+	callfunc "F_MFlip",36;
+}
+minesweep,132,56,5	script	Tile1_37	139,{
+	callfunc "F_MTile",37;
+OnReaction:
+	callfunc "F_MFission",37;
+OnDisplay:
+	callfunc "F_MSubchain",37;
+OnFlip:
+	callfunc "F_MFlip",37;
+}
+minesweep,135,56,5	script	Tile1_38	139,{
+	callfunc "F_MTile",38;
+OnReaction:
+	callfunc "F_MFission",38;
+OnDisplay:
+	callfunc "F_MSubchain",38;
+OnFlip:
+	callfunc "F_MFlip",38;
+}
+minesweep,138,56,5	script	Tile1_39	139,{
+	callfunc "F_MTile",39;
+OnReaction:
+	callfunc "F_MFission",39;
+OnDisplay:
+	callfunc "F_MSubchain",39;
+OnFlip:
+	callfunc "F_MFlip",39;
+}
+minesweep,141,56,5	script	Tile1_40	139,{
+	callfunc "F_MTile",40;
+OnReaction:
+	callfunc "F_MFission",40;
+OnDisplay:
+	callfunc "F_MSubchain",40;
+OnFlip:
+	callfunc "F_MFlip",40;
+}
+minesweep,144,56,5	script	Tile1_41	139,{
+	callfunc "F_MTile",41;
+OnReaction:
+	callfunc "F_MFission",41;
+OnDisplay:
+	callfunc "F_MSubchain",41;
+OnFlip:
+	callfunc "F_MFlip",41;
+}
+minesweep,147,56,5	script	Tile1_42	139,{
+	callfunc "F_MTile",42;
+OnReaction:
+	callfunc "F_MFission",42;
+OnDisplay:
+	callfunc "F_MSubchain",42;
+OnFlip:
+	callfunc "F_MFlip",42;
+}
+minesweep,150,56,5	script	Tile1_43	139,{
+	callfunc "F_MTile",43;
+OnReaction:
+	callfunc "F_MFission",43;
+OnDisplay:
+	callfunc "F_MSubchain",43;
+OnFlip:
+	callfunc "F_MFlip",43;
+}
+minesweep,153,56,5	script	Tile1_44	139,{
+	callfunc "F_MTile",44;
+OnReaction:
+	callfunc "F_MFission",44;
+OnDisplay:
+	callfunc "F_MSubchain",44;
+OnFlip:
+	callfunc "F_MFlip",44;
+}
+minesweep,156,56,5	script	Tile1_45	139,{
+	callfunc "F_MTile",45;
+OnReaction:
+	callfunc "F_MFission",45;
+OnDisplay:
+	callfunc "F_MSubchain",45;
+OnFlip:
+	callfunc "F_MFlip",45;
+}
+minesweep,132,59,5	script	Tile1_46	139,{
+	callfunc "F_MTile",46;
+OnReaction:
+	callfunc "F_MFission",46;
+OnDisplay:
+	callfunc "F_MSubchain",46;
+OnFlip:
+	callfunc "F_MFlip",46;
+}
+minesweep,135,59,5	script	Tile1_47	139,{
+	callfunc "F_MTile",47;
+OnReaction:
+	callfunc "F_MFission",47;
+OnDisplay:
+	callfunc "F_MSubchain",47;
+OnFlip:
+	callfunc "F_MFlip",47;
+}
+minesweep,138,59,5	script	Tile1_48	139,{
+	callfunc "F_MTile",48;
+OnReaction:
+	callfunc "F_MFission",48;
+OnDisplay:
+	callfunc "F_MSubchain",48;
+OnFlip:
+	callfunc "F_MFlip",48;
+}
+minesweep,141,59,5	script	Tile1_49	139,{
+	callfunc "F_MTile",49;
+OnReaction:
+	callfunc "F_MFission",49;
+OnDisplay:
+	callfunc "F_MSubchain",49;
+OnFlip:
+	callfunc "F_MFlip",49;
+}
+minesweep,144,59,5	script	Tile1_50	139,{
+	callfunc "F_MTile",50;
+OnReaction:
+	callfunc "F_MFission",50;
+OnDisplay:
+	callfunc "F_MSubchain",50;
+OnFlip:
+	callfunc "F_MFlip",50;
+}
+minesweep,147,59,5	script	Tile1_51	139,{
+	callfunc "F_MTile",51;
+OnReaction:
+	callfunc "F_MFission",51;
+OnDisplay:
+	callfunc "F_MSubchain",51;
+OnFlip:
+	callfunc "F_MFlip",51;
+}
+minesweep,150,59,5	script	Tile1_52	139,{
+	callfunc "F_MTile",52;
+OnReaction:
+	callfunc "F_MFission",52;
+OnDisplay:
+	callfunc "F_MSubchain",52;
+OnFlip:
+	callfunc "F_MFlip",52;
+}
+minesweep,153,59,5	script	Tile1_53	139,{
+	callfunc "F_MTile",53;
+OnReaction:
+	callfunc "F_MFission",53;
+OnDisplay:
+	callfunc "F_MSubchain",53;
+OnFlip:
+	callfunc "F_MFlip",53;
+}
+minesweep,156,59,5	script	Tile1_54	139,{
+	callfunc "F_MTile",54;
+OnReaction:
+	callfunc "F_MFission",54;
+OnDisplay:
+	callfunc "F_MSubchain",54;
+OnFlip:
+	callfunc "F_MFlip",54;
+}
+minesweep,132,62,5	script	Tile1_55	139,{
+	callfunc "F_MTile",55;
+OnReaction:
+	callfunc "F_MFission",55;
+OnDisplay:
+	callfunc "F_MSubchain",55;
+OnFlip:
+	callfunc "F_MFlip",55;
+}
+minesweep,135,62,5	script	Tile1_56	139,{
+	callfunc "F_MTile",56;
+OnReaction:
+	callfunc "F_MFission",56;
+OnDisplay:
+	callfunc "F_MSubchain",56;
+OnFlip:
+	callfunc "F_MFlip",56;
+}
+minesweep,138,62,5	script	Tile1_57	139,{
+	callfunc "F_MTile",57;
+OnReaction:
+	callfunc "F_MFission",57;
+OnDisplay:
+	callfunc "F_MSubchain",57;
+OnFlip:
+	callfunc "F_MFlip",57;
+}
+minesweep,141,62,5	script	Tile1_58	139,{
+	callfunc "F_MTile",58;
+OnReaction:
+	callfunc "F_MFission",58;
+OnDisplay:
+	callfunc "F_MSubchain",58;
+OnFlip:
+	callfunc "F_MFlip",58;
+}
+minesweep,144,62,5	script	Tile1_59	139,{
+	callfunc "F_MTile",59;
+OnReaction:
+	callfunc "F_MFission",59;
+OnDisplay:
+	callfunc "F_MSubchain",59;
+OnFlip:
+	callfunc "F_MFlip",59;
+}
+minesweep,147,62,5	script	Tile1_60	139,{
+	callfunc "F_MTile",60;
+OnReaction:
+	callfunc "F_MFission",60;
+OnDisplay:
+	callfunc "F_MSubchain",60;
+OnFlip:
+	callfunc "F_MFlip",60;
+}
+minesweep,150,62,5	script	Tile1_61	139,{
+	callfunc "F_MTile",61;
+OnReaction:
+	callfunc "F_MFission",61;
+OnDisplay:
+	callfunc "F_MSubchain",61;
+OnFlip:
+	callfunc "F_MFlip",61;
+}
+minesweep,153,62,5	script	Tile1_62	139,{
+	callfunc "F_MTile",62;
+OnReaction:
+	callfunc "F_MFission",62;
+OnDisplay:
+	callfunc "F_MSubchain",62;
+OnFlip:
+	callfunc "F_MFlip",62;
+}
+minesweep,156,62,5	script	Tile1_63	139,{
+	callfunc "F_MTile",63;
+OnReaction:
+	callfunc "F_MFission",63;
+OnDisplay:
+	callfunc "F_MSubchain",63;
+OnFlip:
+	callfunc "F_MFlip",63;
+}
+minesweep,132,65,5	script	Tile1_64	139,{
+	callfunc "F_MTile",64;
+OnReaction:
+	callfunc "F_MFission",64;
+OnDisplay:
+	callfunc "F_MSubchain",64;
+OnFlip:
+	callfunc "F_MFlip",64;
+}
+minesweep,135,65,5	script	Tile1_65	139,{
+	callfunc "F_MTile",65;
+OnReaction:
+	callfunc "F_MFission",65;
+OnDisplay:
+	callfunc "F_MSubchain",65;
+OnFlip:
+	callfunc "F_MFlip",65;
+}
+minesweep,138,65,5	script	Tile1_66	139,{
+	callfunc "F_MTile",66;
+OnReaction:
+	callfunc "F_MFission",66;
+OnDisplay:
+	callfunc "F_MSubchain",66;
+OnFlip:
+	callfunc "F_MFlip",66;
+}
+minesweep,141,65,5	script	Tile1_67	139,{
+	callfunc "F_MTile",67;
+OnReaction:
+	callfunc "F_MFission",67;
+OnDisplay:
+	callfunc "F_MSubchain",67;
+OnFlip:
+	callfunc "F_MFlip",67;
+}
+minesweep,144,65,5	script	Tile1_68	139,{
+	callfunc "F_MTile",68;
+OnReaction:
+	callfunc "F_MFission",68;
+OnDisplay:
+	callfunc "F_MSubchain",68;
+OnFlip:
+	callfunc "F_MFlip",68;
+}
+minesweep,147,65,5	script	Tile1_69	139,{
+	callfunc "F_MTile",69;
+OnReaction:
+	callfunc "F_MFission",69;
+OnDisplay:
+	callfunc "F_MSubchain",69;
+OnFlip:
+	callfunc "F_MFlip",69;
+}
+minesweep,150,65,5	script	Tile1_70	139,{
+	callfunc "F_MTile",70;
+OnReaction:
+	callfunc "F_MFission",70;
+OnDisplay:
+	callfunc "F_MSubchain",70;
+OnFlip:
+	callfunc "F_MFlip",70;
+}
+minesweep,153,65,5	script	Tile1_71	139,{
+	callfunc "F_MTile",71;
+OnReaction:
+	callfunc "F_MFission",71;
+OnDisplay:
+	callfunc "F_MSubchain",71;
+OnFlip:
+	callfunc "F_MFlip",71;
+}
+minesweep,156,65,5	script	Tile1_72	139,{
+	callfunc "F_MTile",72;
+OnReaction:
+	callfunc "F_MFission",72;
+OnDisplay:
+	callfunc "F_MSubchain",72;
+OnFlip:
+	callfunc "F_MFlip",72;
+}
+minesweep,132,68,5	script	Tile1_73	139,{
+	callfunc "F_MTile",73;
+OnReaction:
+	callfunc "F_MFission",73;
+OnDisplay:
+	callfunc "F_MSubchain",73;
+OnFlip:
+	callfunc "F_MFlip",73;
+}
+minesweep,135,68,5	script	Tile1_74	139,{
+	callfunc "F_MTile",74;
+OnReaction:
+	callfunc "F_MFission",74;
+OnDisplay:
+	callfunc "F_MSubchain",74;
+OnFlip:
+	callfunc "F_MFlip",74;
+}
+minesweep,138,68,5	script	Tile1_75	139,{
+	callfunc "F_MTile",75;
+OnReaction:
+	callfunc "F_MFission",75;
+OnDisplay:
+	callfunc "F_MSubchain",75;
+OnFlip:
+	callfunc "F_MFlip",75;
+}
+minesweep,141,68,5	script	Tile1_76	139,{
+	callfunc "F_MTile",76;
+OnReaction:
+	callfunc "F_MFission",76;
+OnDisplay:
+	callfunc "F_MSubchain",76;
+OnFlip:
+	callfunc "F_MFlip",76;
+}
+minesweep,144,68,5	script	Tile1_77	139,{
+	callfunc "F_MTile",77;
+OnReaction:
+	callfunc "F_MFission",77;
+OnDisplay:
+	callfunc "F_MSubchain",77;
+OnFlip:
+	callfunc "F_MFlip",77;
+}
+minesweep,147,68,5	script	Tile1_78	139,{
+	callfunc "F_MTile",78;
+OnReaction:
+	callfunc "F_MFission",78;
+OnDisplay:
+	callfunc "F_MSubchain",78;
+OnFlip:
+	callfunc "F_MFlip",78;
+}
+minesweep,150,68,5	script	Tile1_79	139,{
+	callfunc "F_MTile",79;
+OnReaction:
+	callfunc "F_MFission",79;
+OnDisplay:
+	callfunc "F_MSubchain",79;
+OnFlip:
+	callfunc "F_MFlip",79;
+}
+minesweep,153,68,5	script	Tile1_80	139,{
+	callfunc "F_MTile",80;
+OnReaction:
+	callfunc "F_MFission",80;
+OnDisplay:
+	callfunc "F_MSubchain",80;
+OnFlip:
+	callfunc "F_MFlip",80;
+}
+minesweep,156,68,5	script	Tile1_81	139,{
+	callfunc "F_MTile",81;
+OnReaction:
+	callfunc "F_MFission",81;
+OnDisplay:
+	callfunc "F_MSubchain",81;
+OnFlip:
+	callfunc "F_MFlip",81;
+}
+
+//---Minigame Rep----------------------------------------------------------------------------------
+prontera,172,180,2	script	MINESWEEP1	770,{
+	mes "[Minigame Rep]";
+	mes "This is a Minesweeper type minigame.";
+M_Menu:
+	next;
+	menu  "[9x9] [" + getmapusers("minesweep") + "/10] " + $@MSTitle$,M_RM,"Cancel",M_End;
+M_RM:
+	if ($@MSOn == 1) goto M_RMb;
+	if (getmapusers("minesweep") == 10) goto L_Full;
+	if (@MSpt > 0) set @MSpt,0;
+	percentheal 100,100;
+	savepoint "prontera",173,183;
+	warp "minesweep",132,72;
+	end;
+M_RMb:
+	mes "[Minigame Rep]";
+	mes "I'm sorry, but the game is in progress and the room is locked.  Please wait until the game is done.";
+	close;
+M_End:
+	close;
+L_Full:
+	mes "[Minigame Rep]";
+	mes "I'm sorry but this room is full.  Please choose another one to participate in....";
+	goto M_Menu;
+OnInit:
+	setnpcdisplay "MINESWEEP1","Minigame Rep",770;
+	waitingroom "Minesweeper!",0;
+	end;
+}
