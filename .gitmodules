@@ -28,3 +28,6 @@
 [submodule "idAthena"]
 	path = idAthena
 	url = git@github.com:idathena/trunk.git
+[submodule "rathena"]
+	path = rathena
+	url = git@github.com:rathena/rathena.git
