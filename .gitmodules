@@ -3,7 +3,7 @@
 	url = git@github.com:trojal/SeAr-mirror.git
 [submodule "athena-fr"]
 	path = athena-fr
-	url = git@github.com/Cedroux/athena-fr
+	url = git@github.com:Cedroux/athena-fr.git
 [submodule "bookofymir"]
 	path = bookofymir
 	url = git@github.com:trojal/bookofymir-mirror.git
