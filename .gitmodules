@@ -34,3 +34,6 @@
 [submodule "ruAthena"]
 	path = ruAthena
 	url = git@github.com:trojal/ruAthena-mirror.git
+[submodule "srAthena"]
+	path = srAthena
+	url = https://github.com/M45T3Ryu/srAthena
