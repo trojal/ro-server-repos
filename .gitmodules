@@ -31,3 +31,6 @@
 [submodule "rathena"]
 	path = rathena
 	url = git@github.com:rathena/rathena.git
+[submodule "ruAthena"]
+	path = ruAthena
+	url = git@github.com:trojal/ruAthena-mirror.git
